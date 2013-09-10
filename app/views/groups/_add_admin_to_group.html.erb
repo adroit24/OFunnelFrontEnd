@@ -1,0 +1,36 @@
+<div id="add-admin-popup" class="display-none">
+  <!-- START Add a group administrator LIGHT BOX -->
+  <div class="lightbox">
+    <h2 class="col-blue">Add a group administrator</h2>
+    <a href="#" class="cancel-icon"></a>
+
+    <form action="<%= add_admin_path %>" method="post" class="all-box" id="add-admin-to-group-form">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <label for="requests" class="bold font-14">Select from members list: <span class="col-red font-18" id="add-admin-to-group-error" style="display: none;"> * </span></label>
+      <div class="input-relative">
+        <input type="text" name="member" class="admin-search input_100" readonly="true" placeholder="" /><a href="#" class="downarrow" id="downarrow-expand" ></a>
+        <input type="hidden" name="user_id" value="">
+        <input type="hidden" name="tag_id" value="<%= @tag_id %>">
+        <div class="admin-autocomplete-box display-none">
+          <table width="100%" align="center" cellpadding="6" cellspacing="0">
+            <tbody>
+            <% unless @group_members.nil? %>
+                <% @group_members.each  do |member| %>
+                    <tr>
+                      <td width="6%" ><img class="photo" src="<%= member_profile_pic(member) %>" alt="" title="" /></td>
+                      <td><%= member_user_name(member) %></td>
+                      <input type="hidden" value="<%= member_id(member) %>"/>
+                    </tr>
+                <% end %>
+            <% else %>
+                <div class="search-connection-no-result" style="height: 55%;">No Other Members in this group</div>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="send-box txt-L"><input class="send-btn calibrib" type="submit" value="Add Administrator"></div>
+    </form>
+
+  </div><!-- START Add a group administrator LIGHT BOX -->
+</div>

@@ -1,0 +1,89 @@
+<!--start mobile container gray-->
+<div class="mobile-container-white" style="min-height:485px;">
+  <!--start mobile-container-Box-->
+  <div class="mobile-container-box">
+    <div class="userprofile-box">
+      <div class="profile-title">OFunnel Alerts</div>
+    </div>
+    <div class="alert-text-box">
+      <span class="col-blue">Monitor LinkedIn as your Network Expands</span>
+      <p>OFunnel Alerts are email updates of your expanding network.</p>
+      <p>Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role. Some handy uses of OFunnel Alerts include:</p>
+      <p>• You are in Sales and trying to get into Nike as an    account. OFunnel will notify you when someone in your    network connects to someone at Nike</p>
+      <p>• You are connected to one of your competitors on    LinkedIn. Select that person and OFunnel will notify you    every time that person makes a new   connection.</p>
+      <p>• You are looking for a database administrator. OFunnel    will notify you when anyone in your network connects    with someone with that job title or headline.</p>
+    </div>
+  </div><!--end mobile-container-Box-->
+</div><!--end mobile container gray-->
+<!--start mobile container white-->
+<div class="mobile-container-gray bg-none">
+  <!--start mobile-container-Box-->
+  <div class="mobile-container-box">
+    <div class="container mrg-T5">
+      <div class="ofunnelalert-box">
+        <div class="all-box">
+          <%= form_tag(add_relationships_path, :id => "add_relationships_form", :class => "alert-gray") do %>
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+              <div class="alert-details">
+                <% unless @alerts.nil? or @alerts.empty? %>
+                    <% @alerts.each do |alert| %>
+                        <div class="addmore-box ofunnel-alerts">
+                          <div class="input-relative comp-select">
+                            <div class="select-box">
+                              <select class="select alert-type" title="">
+                                <option<%= ' selected="true"' if alert["type"] == "COMPANY" %>>Company</option>
+                                <option<%= ' selected="true"' if alert["type"] == "PERSON" %>>Person</option>
+                                <option<%= ' selected="true"' if alert["type"] == "ROLE" %>>Role</option>
+                              </select>
+                            </div>
+                          </div>
+                          <input type="text" name="name" class="name-select" value="<%= alert["name"] %>" Placeholder="Nike" />
+                          <input type="hidden" name="alertId" value="<%= alert["alertId"] %>" />
+                          <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
+                        </div>
+                    <% end %>
+                <% else %>
+                    <div class="addmore-box ofunnel-alerts">
+                      <div class="input-relative comp-select">
+                        <div class="select-box">
+                          <select class="select alert-type" title="">
+                            <option selected="true">Company</option>
+                            <option>Person</option>
+                            <option>Role</option>
+                          </select>
+                        </div>
+                      </div>
+                      <input type="text" name="name" class="name-select" value="" Placeholder="Nike" />
+                      <input type="hidden" name="alertId" value="" />
+                      <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
+                    </div>
+                <% end %>
+              </div><!-- End Alert Details -->
+              <br>
+              <a id="alert-add-target-account" class="font-17 bold mrg-T10 float-L" href="#">(Add more)</a>
+              <input type="hidden" name="alertJson" value="" />
+              <div class="send-box txt-L mrg-T15 mrg-B10"><input type="submit" name="" value="Submit" class="send-btn pad-L40 pad-R40 pad-T5 pad-B5 font-24"></div>
+          <% end %>
+        </div><!-- End All Box -->
+      </div><!-- End Ofunnelalert Box -->
+    </div>
+  </div><!--end mobile-container-Box-->
+</div>
+<!--end mobile container white-->
+<div class="extra-alert-container display-none">
+  <div class="addmore-box ofunnel-alerts">
+    <div class="input-relative comp-select">
+      <div class="select-box">
+        <select class="select alert-type" title="">
+          <option selected="true">Company</option>
+          <option>Person</option>
+          <option>Role</option>
+        </select>
+      </div>
+    </div>
+    <input type="text" name="name" class="name-select" value="" Placeholder="Nike" />
+    <input type="hidden" name="alertId" value="" />
+    <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
+  </div>
+</div>
+

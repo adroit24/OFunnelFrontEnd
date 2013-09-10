@@ -1,0 +1,35 @@
+<div class="white-box pad-all-10">
+  <h1>Pending groups</h1>
+  <table width="100%" align="left" cellpadding="6" cellspacing="0">
+    <thead>
+    <tr class="requests-got-header">
+      <td width="40%" class="border-B calibrib font-16">Group name</td>
+      <td width="40%" class="border-B calibrib font-16">Created by</td>
+      <td width="14%" class="border-B calibrib font-16 txt-L pad-L20">Action</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% groups = @admin_groups["pendingStatusGroups"] %>
+    <% unless groups.nil? %>
+        <% groups.each do |group| %>
+            <tr>
+              <td class="pad-T15">
+            <span class="col-blue">
+              <%= group["tagName"] %>
+            </span>
+              </td>
+              <td class="pad-T15">
+            <span class="col-blue">
+              <%= "#{group["groupCreatorFirstName"]} #{group["groupCreatorLastName"]}" %>
+            </span>
+              </td>
+              <td class="pad-T15 txt-C action">
+                <a href="<%= edit_admin_group_path({:id => group["tagId"], :status => "APPROVED"}) %>" class="accept">Approve</a>
+                <a href="<%= edit_admin_group_path({:id => group["tagId"], :status => "DECLINED"}) %>" class="decline">Decline</a>
+              </td>
+            </tr>
+        <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>

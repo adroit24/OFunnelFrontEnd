@@ -1,0 +1,16 @@
+linkedin:
+  API_KEY: 'dr57ldqujcak'
+  API_SECRET: 'pMZTMTxzE8Ujbhem'
+  REDIRECT_URI: 'http://localhost:3000/linkedin/linkedin_authorization_callback'
+  STATE: SecureRandom.hex(15)
+
+google:
+  CLIENT_ID: '808198664488-0ksonsptmudrc7bes6mk72nvrn0ck3ch.apps.googleusercontent.com'
+  CLIENT_SECRET: 'Dx9i3MXX17F0plcqXN15bpGT'
+  REDIRECT_URI: 'http://localhost:3000/google/google_authorization_callback'
+  SCOPE: 'https://www.google.com/m8/feeds/'
+
+twitter:
+  CONSUMER_KEY: 'mTBMfWpcUI4sME6SW3WQ'
+  CONSUMER_SECRET: 'agvQflS7UDJPuxXcivdvwgmJd8W88YSRT5GRr0ogo'
+  REDIRECT_URI: 'http://192.168.1.88:3000/twitter/twitter_authorization_callback'

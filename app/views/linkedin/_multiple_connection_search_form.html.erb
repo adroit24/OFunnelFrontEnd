@@ -1,0 +1,103 @@
+<div class="userprofile-box">
+  <div class="profile-title mrg-T20"><%= @company %> Connections Report </div>
+  <p class="font-13 italic">Add target accounts and your company network to find all the connections within those targets. </p>
+</div>
+
+<div class="contoso-page mrg-T15">
+  <div class="all-box">
+    <div class="target-company-box" id="company-box">
+      <h2>Target Accounts <span class="col-red font-18" id="target-account-error" style="display: none;"> * </span></h2>
+      <ul>
+        <%
+           unless @selected_accounts.nil?
+             @selected_accounts.each do |account|
+        %>
+                <li><span><%= account %></span><a href="<%= remove_company_path({:company => account,:tag_id => @tag_id}) %>" class="remove-company"></a></li>
+            <%
+               end
+               end
+            %>
+        <li>
+        <a href="#" id="add-target">Add Target</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="target-company-box float-R" id="accounts-box">
+      <h2>Company Network </h2>
+      <ul class="add-connection">
+        <%
+           unless @connections.nil?
+             @connections.each do |connection|
+        %>
+                <li>
+                  <%= connection["name"] %>
+                  <input type="hidden" name="account_id" value="<%= connection["connectionId"] %>">
+                </li>
+            <%
+               end
+               end
+            %>
+        <%
+           unless @updated_connections.nil?
+             @updated_connections.each do |connection|
+        %>
+                <li>
+                  <%= connection[:name] %>
+                  <input type="hidden" name="account_id" value="<%= connection[:connectionId] %>">
+                </li>
+            <%
+               end
+               end
+            %>
+        <li id="add-connection-li">
+          <a href="<%= connections_path("nil","nil") %>" id="add-connection-link">Add another connection </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="send-box"><input class="send-btn float-R mrg-T15 pad-T10 pad-B10 font-18 txt-C" id="multi-company-search" type="submit" value="Find Connections " name="" /></div>
+  </div>
+</div>
+<%= form_tag(multiple_company_search_results_path, :id => "multi-company-search-form", :class => "all-box", :style => "width:68%;") do %>
+    <input type="hidden" name="company" value="<%= @company %>">
+    <input type="hidden" name="tag_id" value="<%= @tag_id %>">
+    <input type="hidden" name="accounts" value="">
+    <input type="hidden" name="connections" value="">
+    <input type="hidden" name="companies" value="" id="multi-companies-input">
+<% end %>
+<script type="text/javascript">
+    var gRemoveCompanyPath = '<%= remove_company_path({:company => "dummy",:tag_id => @tag_id}) %>'
+    var companyName = "<%= @company %>"
+    $(function() {
+        $('a#add-connection-link').focus();
+    });
+    var gCompanyMembersName = "First Level Connection";
+    var gCompanyMembersIds = ""
+    <%
+       unless @connections.nil?
+         @connections.each do |connection|
+    %>
+    gCompanyMembersName = gCompanyMembersName + '|' + "<%= connection["name"] %>"
+    if(gCompanyMembersIds == "")
+        gCompanyMembersIds = "<%= connection["connectionId"] %>"
+    else
+    gCompanyMembersIds = gCompanyMembersIds + ',' + "<%= connection["connectionId"] %>"
+    <%
+       end
+       end
+    %>
+    <%
+       unless @updated_connections.nil?
+         @updated_connections.each do |connection|
+    %>
+    gCompanyMembersName = gCompanyMembersName + '|' + "<%= connection[:name] %>"
+    if(gCompanyMembersIds == "")
+        gCompanyMembersIds = "<%= connection[:connectionId] %>"
+    else
+        gCompanyMembersIds = gCompanyMembersIds + ',' + "<%= connection[:connectionId] %>"
+    <%
+       end
+       end
+    %>
+</script>

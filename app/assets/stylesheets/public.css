@@ -1,0 +1,439 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body {
+    height: 100%;
+    min-width: 100%;
+    position: absolute;
+}
+.wrapper{
+    min-height: 100%;
+    position: relative;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+body{
+    background:url(../assets/body-bg.jpg) repeat-x #f3f3f3;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#222222;
+    padding:0;
+    margin:0;
+}
+.body-bg-small{ background:url(../assets/body-bg-small.jpg) repeat-x #f3f3f3 !important;  }
+.body-bg-2{ background:url(../assets/body-bg-2.jpg) repeat-x #f3f3f3 !important;  }
+.main{
+    width:950px;
+    margin:auto;
+    position:relative;
+}
+
+/******************* FONT STYLE *********************************/
+@font-face {
+    font-family: 'calibri';
+    src: url('../assets/calibri.eot');
+    src: url('../assets/calibri.eot?#iefix') format('embedded-opentype'),url('../assets/calibri.woff') format('woff'),url('../assets/calibri.ttf') format('truetype');
+}
+@font-face {
+    font-family: calibrib;
+    src: url(../assets/calibrib.eot) /* EOT file for IE */
+}
+@font-face {
+    font-family: calibrib;
+    src: url(../assets/calibrib.ttf) /* TTF file for CSS3 browsers */
+}
+@font-face {
+    font-family: 'Museo-700';
+    src: url('../assets/2712FE_0_0.eot');
+    src: url('../assets/2712FE_0_0.eot?#iefix') format('embedded-opentype'),url('../assets/2712FE_0_0.woff') format('woff'),url('../assets/2712FE_0_0.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Museo-500';
+    src: url('../assets/2712FE_1_0.eot');
+    src: url('../assets/2712FE_1_0.eot?#iefix') format('embedded-opentype'),url('../assets/2712FE_1_0.woff') format('woff'),url('../assets/2712FE_1_0.ttf') format('truetype');
+}
+.calibri { font-family: 'calibri' !important; }
+.calibrib{ font-family: calibrib !important;}
+.Museo-700{ font-family: 'Museo-700' !important;}
+.Museo-500{ font-family: 'Museo-500' !important;}
+
+/******************* HEADER STYLE *********************************/
+.header{
+    width:100%;
+    float:left;
+    position:relative;
+}
+.header .logo_menu_box{
+    width:100%;
+    height:83px;
+    float:left;
+    margin:18px 0 0 0;
+    position:relative;
+}
+.logo_menu_box .logo{ float:left;}
+
+.logo_menu_box ul.topmenu {
+    float: right;
+    height: 70%;
+    margin: 0;
+    padding: 31px 0 0;
+    margin-right:100px;
+}
+ul.topmenu li{
+    margin:0 0 0 25px;
+    padding:0;
+    height:100%;
+    list-style:none;
+    float:left;
+}
+ul.topmenu li a{
+    font-size:20px;
+    font-family: 'Museo-500';
+}
+ul.topmenu li.selected{
+    background: url("../assets/selected-arrow.jpg") no-repeat scroll center bottom transparent;
+}
+ul.topmenu li.selected-about{
+    background: url("../assets/selected-arrow-about.png") no-repeat scroll center bottom transparent;
+}
+ul.topmenu li.selected-contact{
+    background: url("../assets/selected-arrow-contact.png") no-repeat scroll center bottom transparent;
+}
+
+
+
+.logo_menu_box .logout{
+    font-size: 13px;
+    position: absolute;
+    right: 0;
+    top: 36px;
+}
+
+
+
+.banner-box{
+    background:url(../assets/banner-img.png) center bottom  no-repeat;
+    float: left;
+    height:355px;
+    overflow:hidden;
+    width: 113%;
+}
+.banner-box-small{
+    background: url("../assets/banner-img-small.png") no-repeat scroll 554px -52px transparent;
+    float: left;
+    height: 110px;
+    overflow: hidden;
+    width: 100%;
+}
+.signup-box{
+    width:100%;
+    float:left;
+    padding:20px 0 0;
+}
+.signup-box .personal-intro{
+    width:100%;
+    float:left;
+    font-family: 'Museo-700';
+    font-size:38px;
+    text-shadow:0 3px 3px #000;
+    color:#fff;
+    line-height:42px;
+    margin-bottom:15px;
+    margin-top:0;
+}
+.input-box{
+    width:100%;
+    float:left;
+}
+
+.input-box .input{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D7D7D7;
+    float: left;
+    font-size: 19px;
+    height: 35px;
+    padding: 0 1%;
+    width: 34%;
+}
+.input-box .input:focus{ font-style:normal; color:#333;}
+
+.input-box .posted-btn{
+    background: none repeat scroll 0 0 #FF5D00;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    min-width:100px;
+}
+
+/******************* CONTAINER STYLE *********************************/
+.container {
+    float: left;
+    margin-top: 40px;
+    margin-bottom:150px;
+    min-height: 300px;
+    position: relative;
+    width: 100%;
+}
+
+.container .icon-section{
+    width:100%;
+    float:left;
+    margin-bottom:50px;
+}
+
+.icon-section .icon-boxes{
+    width:280px;
+    text-align:center;
+    float:left;
+}
+.icon-boxes .content{
+    width:100%;
+    float:left;
+}
+.icon-boxes .content .heading{
+    font-size:19px;
+    color:#ff5d00;
+    border-bottom:1px solid #b0b0b0;
+    text-transform:uppercase;
+    width:100%;
+    float:left;
+    font-weight:bold;
+    margin:10px 0 5px;
+    padding-bottom: 8px;
+}
+.icon-boxes .content .text{
+    font-size:16px;
+    line-height:23px;
+    width:100%;
+    float:left;
+    color:#7e7e7e;
+    text-align:left;
+    text-align:justify;
+}
+
+/*------ Page Content ----*/
+.page-text{
+    color: #6A6A6A;
+    float: left;
+    line-height: 25px;
+    text-align: justify;
+    width: 70%;
+}
+.page-text .title{
+    font-size:23px;
+    color:#0068a3;
+    float:left;
+    font-weight:bold;
+    width:100%;
+    margin-bottom:15px;
+}
+
+p{ margin:5px 0 15px;}
+
+
+/******************* FOOTER STYLE *********************************/
+.footer {
+    background: none repeat scroll 0 0 #2F2F2F;
+    float: left;
+    padding: 20px 0;
+    width: 100%;
+    position:absolute;
+    bottom:0;
+}
+
+.footer .footer_box{
+    width:950px;
+    margin:auto;
+    color:#fff;
+    font-family: 'calibri';
+    font-size:18px;
+}
+.footer_box .menu{
+    margin:0 0 0 15px;
+    padding:0;
+    float:left;
+    color:#818181;
+    width:50%;
+}
+.footer_box .menu li{
+    list-style:none;
+    float:left;
+    display:inline-block;
+
+}
+.footer_box .menu li a{
+    text-decoration:none;
+    color:#818181;
+    padding:0 10px;
+}
+.footer_box .menu li a:hover{ text-decoration:underline; color:#fff;}
+
+.footer_box .social-icon-box{
+    float:right;
+    margin-top:-50px;
+}
+.social-icon-box .facebook-icon{
+    background: url("../assets/social-icons.jpg") no-repeat ;
+    height:30px;
+    width:30px;
+    float:left;
+    margin-left:10px;
+}
+.social-icon-box .twitter-icon{
+    background: url("../assets/social-icons.jpg") no-repeat -38px 0px ;
+    height:30px;
+    width:30px;
+    float:left;
+    margin-left:10px;
+}
+.social-icon-box .linkedin-icon{
+    background: url("../assets/social-icons.jpg") no-repeat -77px 0px ;
+    height:30px;
+    width:30px;
+    float:left;
+    margin-left:10px;
+}
+
+
+/******************* LIGHT BOX STYLE *********************************/
+.lightbox{
+    background:#fff;
+    border: 3px solid #34acee;
+    border-radius:4px;
+    box-shadow: 0 0 5px #000;
+    width:500px;
+    height:auto;
+    min-height:100px;
+    padding:17px 25px;
+    position:fixed;
+
+    left:400px;
+    top:300px;
+    display:none;
+}
+.lightbox h2{ margin:0 0 15px; padding-right:40px; font-family: 'Museo-700'; font-size:28px; }
+
+
+
+
+
+
+/*=======================discover btn ========================================*/
+.disc-intro-box{
+    width:220px;
+    float:left;
+    color:#fff;
+    text-align:center;
+    margin-right:10px;
+}
+.disc-intro-box .in-btn{
+    background: url("../assets/in-btn.png") no-repeat scroll 17px center #FF5D00;
+    box-shadow: 0 0 5px #333333;
+    color: #FFFFFF;
+    float: left;
+    font-size: 17px;
+    font-weight: bold;
+    height: 65px;
+    text-align: left;
+    width: 200px;
+    margin:0 5px;
+}
+.in-btn span{
+    border-left: 1px solid #FFFFFF;
+    float: left;
+    height: 70%;
+    margin: 6px 10px 0 60px;
+    padding: 6px 0 0 13px;
+}
+
+/*============== Ofunnel Aleart style ==============*/
+.ofunnelalert-box{
+    width:96%;
+    float:left;
+    padding:1% 2%;
+}
+.alert-gray{ padding:10px; width:53%; float:left;  }
+
+.alert-details{ width:100%; float:left; }
+.addmore-box{
+    width:100%;
+    float:left;
+    border-bottom:1px solid #d2d2d2;
+    padding:10px 0;
+}
+.addmore-box .comp-select{ width:180px; height:31px; font-size:15px; float:left; position:relative;}
+.comp-select .input_90{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D8D8D8;
+    float: left;
+    margin:0;
+    padding: 10px;
+    width: 88%;
+    color:#000;
+}
+.addmore-box .name-select{
+    border: 1px solid #D8D8D8;
+    float: left;
+    height: 29px;
+    margin-left: 12px;
+    padding: 0 10px;
+    position: relative;
+    width: 238px;
+    color:#000 !important;
+}
+.addmore-box .delete-icon{
+    background: url("../assets/cancel-icon-small.png") center right no-repeat ;
+    height:16px;
+    width:16px;
+    float:right;
+    margin: 8px 6px 0 0;
+}
+
+.alert-text-box{
+    width:42%;
+    float:right;
+}
+.alert-text-box p{ margin:13px 0 ; font-size:14px; }
+
+.input-relative .downarrow {
+    background: url("../assets/down-arrow-3.png") no-repeat scroll center center #FFFFFF;
+    height: 33px;
+    position: absolute;
+    right: 4px;
+    top: 7px;
+    width: 30px;
+}
+
+.select-box{position:relative;}
+.select-box select.select{
+    position:relative;
+    z-index:10;
+    width:180px !important;
+    height:31px !important;
+    line-height:31px;
+}
+
+.select-box span.select{
+    position:absolute;
+    bottom:0;
+    float:left;
+    left:0;
+    width:100%;
+    height:100%;
+    line-height:31px;
+    text-indent:10px;
+    background:url(../assets/select-bg.jpg) no-repeat 0 0;
+    cursor:default;
+    z-index:1;
+}
+
+.select-box select.select option{ border-bottom:1px solid #ccc; padding:8px; }

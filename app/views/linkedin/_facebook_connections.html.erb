@@ -1,0 +1,22 @@
+<% if !@facebook_connections.nil? and @facebook_connections["error"].nil? %>
+    <% @facebook_connections = @facebook_connections["data"] %>
+    <% @facebook_connections.each do |connection| %>
+        <tr class="USR-details-box">
+          <td class="main-user-section">
+            <div class="photo-box"><img class="main-usr-photo" src="<%= connection_facebook_profile_pic_url(connection) %>" width="65" height="65"></div>
+            <div class="main-usr-text">
+              <span class="name">
+                <%= connection_facebook_name(connection) %>
+                <span class="friendlabel-big">Ist</span>
+              </span>
+              <span class="font-13">
+                <%= connection_facebook_position(connection) %>
+                <%= connection_facebook_position(connection).blank? ? connection_facebook_company(connection) : " • #{connection_facebook_company(connection)}" %>
+              </span>
+            </div>
+            </div>
+          </td>
+          <td class="display-none">First Level Connection</td>
+        </tr>
+    <% end %>
+<% end %>

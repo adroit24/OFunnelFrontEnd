@@ -1,0 +1,34 @@
+<div class="search-panel all-box-3">
+  <div class="all-box-2 border-B pad-B15">
+    <div class="font-32 calibrib" style="max-width:370px;">Group Search Results </div>
+    <a href="#" class="send-btn float-R font-17 add-group-no-result" style="margin-top:-33px;">Create a New Group</a>
+  </div>
+  <% unless @groups.nil? %>
+      <% @groups.each do |group| %>
+          <div class="userprofile-box mrg-T20">
+            <div class="profile-details-box group-hover" rel="<%= group_path(profile_tag_id(group)) %>">
+              <img class="grouplogo" src="<%= profile_tag_logo(group) %>" alt="" title="" />
+              <div class="info" style="width: 65%;">
+                <strong>Group:</strong> <strong class="col-blue"><%= profile_tag_name(group) %> </strong>
+                <br />
+                <strong>Administrator: </strong>
+                <% @organizers = group["organizers"] %>
+                <% unless @organizers.nil? %>
+                    <% @organizers.each_with_index  do |organizer,i| %>
+                        <strong class="col-blue">
+                          <%= link_to organizer["organizerName"], organizer["profileUrl"], :target => "_blank", :class=>"no-popup" %> <%= "," unless (i+1 == @organizers.length) %>
+                        </strong>
+                    <% end %>
+                <% end %>
+                <br />
+                <strong>Members:</strong> <a href="<%= group_members_path(profile_tag_id(group)) %>" class="no-popup"><%= group["noOfMemberInTag"] %></a>
+                <input type="hidden" value="<%= profile_tag_id(group) %>" name="hidden-group-id">
+              </div>
+            </div>
+          </div>
+      <% end %>
+  <% else %>
+      <p class="all-box mrg-T30 font-16"><strong class="col-blue">Sorry!</strong> There were no results for your search "<%= @query %>" </p>
+  <% end %>
+</div>
+<%= render :partial => "groups/create_new_group" %>

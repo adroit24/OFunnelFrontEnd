@@ -1,0 +1,96 @@
+<!-- START Send a Request LIGHT BOX -->
+<div class="lightbox" style="width:600px;">
+  <div class="target-wrapper">
+    <h2 class="col-blue">Add to Company Network</h2>
+    <div class="requestor-list-box" style="width: 63%;">
+      <%= form_tag("#", :class => "requests_USR mrg-0", :id => "add_connection_form") do %>
+          <div class="sent_received_section mrg-0">
+            <div id="tab_content_1" class="white-box accepted-request">
+              <table width="100%" cellspacing="0" cellpadding="0" align="center" id="dataTable-search">
+                <thead>
+                <tr style="display:none;">
+                  <th>image</th>
+                  <th>name</th>
+                  <th>company</th>
+                </tr>
+                </thead>
+                <tbody class="accepted-request-list">
+                <% unless @connections.nil? %>
+                    <% @connections.each_with_index do |connection,index| %>
+                        <tr class="float-L mrg-B20">
+                          <td  class="float-L">
+                                <span class="check-checkbox">
+                                  <input name="userLinkedInId" type="checkbox" value="<%= linkedin_id(connection) %>" style="float:left;">
+                                </span>
+                                <span class="USR-phto-box" style="width:30px;">
+                                    <img width="28" height="28" src="<%= linkedin_profile_pic(connection) %>" class="userpic">
+                                </span>
+                          </td>
+                          <td class="float-L">
+                            <div class="USR-info line-hit-16">
+                              <span class="col-blue calibrib font-15 "><%= linkedin_connection_name(connection) %></span>
+                            </div>
+                          </td>
+                          <td  class="float-L">
+                            <div class="USR-info line-hit-16">
+                              <span><%= linkedin_headline(connection) %></span>
+                            </div>
+                          </td>
+                        </tr>
+                    <% end %>
+                <% else %>
+                    <tr>
+                      <td>
+                        <strong>No connection found.</strong>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+                <tfoot>
+                <tr style="display:none;">
+                  <th>image</th>
+                  <th>name</th>
+                  <th>company</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="send-box txt-L"><input type="submit" value="Add" class="send-btn calibrib"></div>
+      <% end %>
+    </div>
+    <div class="chances-box">
+      <ul>
+        <li>Select connections who are directly or indirectly part of Microsoft’s network.</li>
+        <li>These are the connections who can help with business development and getting the connections you need for business growth.</li>
+        <li>Select those connections and click Add.</li>
+      </ul>
+    </div>
+  </div>
+</div><!-- START Send a Request LIGHT BOX -->
+
+<% unless @connections.nil? %>
+    <script type="text/javascript">
+        var gTempCompanyMembersIds = gCompanyMembersIds;
+        var gTempCompanyMembersName = gCompanyMembersName;
+        $(document).ready(function(){
+            gCompanyMembersIdsArray = gCompanyMembersIds.split(',');
+            for(i=0;i<gCompanyMembersIdsArray.length;i++){
+                $('table#dataTable-search span.check-checkbox input[value="' + gCompanyMembersIdsArray[i] + '"]').prop('checked', true);
+            }
+
+            oTable = $('#dataTable-search').dataTable({
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sSearch": ""
+                },
+                "aoColumns"   : [{ "bSearchable": false, "bVisible": true }, null, null]
+            });
+        });
+    </script>
+<% end %>

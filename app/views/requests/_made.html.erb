@@ -1,0 +1,178 @@
+<% unless @requests.nil? %>
+    <table width="100%" align="left" cellpadding="6" cellspacing="0">
+      <tbody>
+      <tr>
+        <td width="40%" class="border-B calibrib font-16">Asking</td>
+        <td width="40%" class="border-B calibrib font-16">For an Introduction To</td>
+        <td width="14%" class="border-B calibrib font-16  txt-C">Status</td>
+      </tr>
+      <% @requests.each do |request| %>
+          <% if is_to_user_exists(request) and is_for_user_exists(request) %>
+              <tr>
+                <td class="pad-T15">
+                  <span class="USR-phto-box"><img class="userpic" src="<%= to_user_profile_pic(request) %>" width="40" height="40"> </span>
+                  <div class="USR-info">
+                      <span class="col-blue font-16 calibrib">
+                        <%= link_to to_user_name(request), to_user_profile_url(request), :target => "_blank" %>
+                      </span>
+                    <br>
+                    <span class="multiline-ellipsis" style="width:245px !important; float: left;"><%= to_user_headline(request) %>, <%= to_user_company(request) %></span>
+                    <!--<br>-->
+                    <!--<span class="col-orange bold font-14">Score: <%#= to_user_score(request) %></span>-->
+                    <br>
+                    <!--<a href="#" class="show-request-details">Show request details <img src="/assets/left-arrow.png" alt="" /></a>-->
+                  </div>
+                  <div class="show-Rqst-details" style="font-style:normal;">
+                    <% unless request_status(request) == "Accepted" %>
+                        <strong class="float-L">Request for: </strong>
+                        <span class="float-L multiline-ellipsis">
+                            <a href="#update-request" class="col-blue italic multiline-ellipsis" id="update-request-info2-<%= request_id(request) %>"> <%= request_query(request) %>></a>
+                        </span>
+                    <% else %>
+                        <strong class="float-L">Request for: </strong>
+                        <span class="float-L multiline-ellipsis">
+                            <a href="#update-request" class="col-blue italic multiline-ellipsis"> <%= request_query(request) %></a>
+                        </span>
+                    <% end %>
+                    <p style="display: none;"><%= request_query(request) %></p>
+                    <p style="display: none;"><%= request_message(request) %></p>
+                    <p style="display: none;"><%= request_id(request) %></p>
+                    <p style="display: none;"><%= get_visibility_tags(request) %></p>
+                    <p style="display: none;"><%= for_user_name(request) %></p>
+                    <p style="display: none;"><%= for_user_linkedin_id(request) %></p>
+                    <br/>
+                  </div>
+                  <div class="show-Rqst-details" style="display: none;">
+                    <%= request_message(request) %>
+                    <p><a href="#" class="hide-request-details">Hide request details <img src="/assets/down-arrow.png" alt="" /></a> </p>
+                  </div>
+                </td>
+                <td class="pad-T15">
+                  <span class="USR-phto-box"><img class="userpic" src="<%= for_user_profile_pic(request) %>" width="40" height="40"> </span>
+                  <div class="USR-info">
+                      <span class="col-blue font-16 calibrib">
+                        <%= link_to for_user_name(request), for_user_profile_url(request), :target => "_blank" %>
+                      </span>
+                    <br>
+                    <% if forUserAccountType(request) == "LINKEDIN" %>
+                        <span class="multiline-ellipsis" style="width:245px !important; float: left;"><%= for_user_headline(request) %>, <%= for_user_company(request) %></span>
+                    <% elsif forUserAccountType(request) == "GMAIL" %>
+                        <span><%= forUserGoogleAccountId(request) %></span>
+                    <% elsif forUserAccountType(request) == "FACEBOOK" %>
+                        <span class="multiline-ellipsis" style="width:245px !important; float: left;"><%= forUserFacebookHeadline(request) %></span>
+                    <% elsif forUserAccountType(request) == "OTHERS" %>
+                        <span></span>
+                    <% end %>
+                    <!--<br>-->
+                    <!--<span class="col-orange bold font-14">Score: <%#= for_user_score(request) %></span>-->
+                    <!--<br>-->
+                    <!--<strong>Request for:</strong> <a href="#" class="col-blue italic">"<%#= request_query(request) %>"</a>-->
+                  </div>
+                </td>
+                <td class="pad-T15 action txt-C font-12">
+                  <%= render :partial => "request_made_status", :locals => {:sent_request => request} %>
+                </td>
+              </tr>
+          <% else%>
+              <tr>
+                <td class="pad-T15">
+                  <div class="USR-info">
+                    <span class="col-blue bold calibrib font-16 request-visibility-tags">
+                        <%
+                           visibility_tags = request["RequestVisibilityTags"]
+                           unless visibility_tags.nil?
+                             visibility_tags.each_with_index do |tag,i|
+                        %>
+                          <a href="<%= group_path(tag["tagId"]) %>"><%= "#{tag["tagName"]}#{comma_separator(i,visibility_tags.length)}" %></a>
+                        <%
+                           end
+                           end
+                        %>
+              	    </span>
+                  </div>
+                  <div class="show-Rqst-details pad-0" style="font-style:normal;">
+                    <% unless request_status(request) == "Accepted" %>
+                        <strong class="float-L">Request for: </strong>
+                            <span class="float-L multiline-ellipsis">
+                                <a href="#update-request" class="col-blue italic multiline-ellipsis" id="update-request-info2-<%= request_id(request) %>"> <%= request_query(request) %></a>
+                            </span>
+                    <% else %>
+                        <strong class="float-L">Request for: </strong>
+                            <span class="float-L multiline-ellipsis">
+                                <a href="#update-request" class="col-blue italic multiline-ellipsis"> <%= request_query(request) %></a>
+                            </span>
+                    <% end %>
+                    <p style="display: none;"><%= request_query(request) %></p>
+                    <p style="display: none;"><%= request_message(request) %></p>
+                    <p style="display: none;"><%= request_id(request) %></p>
+                    <p style="display: none;"><%= get_visibility_tags(request) %></p>
+                    <p style="display: none;"><%= for_user_name(request) %></p>
+                    <p style="display: none;"><%= for_user_linkedin_id(request) %></p>
+                    <br/>
+                  </div>
+                </td>
+                <% if is_for_user_exists(request) %>
+                    <td class="pad-T15">
+                      <span class="USR-phto-box"><img class="userpic" src="<%= for_user_profile_pic(request) %>" width="40" height="40"> </span>
+                      <div class="USR-info nowrap-ellipsis">
+                      <span class="col-blue font-16 calibrib">
+                        <%= link_to for_user_name(request), for_user_profile_url(request), :target => "_blank" %>
+                      </span>
+                        <br>
+                        <% if forUserAccountType(request) == "LINKEDIN" %>
+                            <span class="multiline-ellipsis" style="width:245px !important; float: left;"><%= for_user_headline(request) %>, <%= for_user_company(request) %></span>
+                        <% elsif forUserAccountType(request) == "GMAIL" %>
+                            <span><%= forUserGoogleAccountId(request) %></span>
+                        <% elsif forUserAccountType(request) == "FACEBOOK" %>
+                            <span class="multiline-ellipsis" style="width:245px !important; float: left;"><%= forUserFacebookHeadline(request) %></span>
+                        <% elsif forUserAccountType(request) == "OTHERS" %>
+                            <span></span>
+                        <% end %>
+                        <br/>
+                      </div>
+                    </td>
+                <% else %>
+                    <td class="pad-T15">
+                      <div class="USR-info mrg-B20" style="overflow: visible;">
+                        <% unless request_status(request) == "Accepted" %>
+                            <span class="openrequests-2 col-blue multiline-ellipsis" style="width:225px; cursor: pointer;" id="update-request-info-<%= request_id(request) %>"> <%= request_query(request) %> </span>
+                        <% else %>
+                            <span class="openrequests-2 col-blue multiline-ellipsis" style="width:225px; cursor: pointer;"> <%= request_query(request) %> </span>
+                        <% end %>
+                        <br>
+                        <p style="display: none;"><%= request_query(request) %></p>
+                        <p style="display: none;"><%= request_message(request) %></p>
+                        <p style="display: none;"><%= request_id(request) %></p>
+                        <p style="display: none;"><%= get_visibility_tags(request) %></p>
+                        <br/>
+                        <!--<a href="#" class="show-open-request-details">Show request details <img src="/assets/left-arrow.png" alt="" /></a>-->
+                        <div class="show-sent-open-Rqst-details" style="display:none;width:150%;">
+                          <%= request_message(request) %>
+                          <br/>
+                          <a href="#" class="hide-open-request-details">Hide request details <img src="/assets/down-arrow.png" alt="" /></a>
+                        </div>
+                      </div>
+                    </td>
+                <% end %>
+                <td class="txt-C pad-T15 font-12">
+                  <%= render :partial => "request_made_status", :locals => {:sent_request => request} %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="search-panel all-box-3">
+      <p class="font-14"><i>No request found.</i></p>
+    </div>
+<% end %>
+<!--<a href="#" class="showmore">Show more sent requests-->
+<!--<img class="userpic" src="/assets/showmore-arrow.jpg" width="31" height="29">-->
+<!--</a>-->
+<%= render :partial => 'update_request_info'%>
+<script type="text/javascript">
+    $('span.request-visibility-tags').dotdotdot({
+        height : 60
+    });
+</script>

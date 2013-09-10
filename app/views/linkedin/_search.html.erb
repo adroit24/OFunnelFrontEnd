@@ -1,0 +1,23 @@
+<div class="search-panel mrg-T20 mrg-L20" style=" width:93%; float:left;">
+  <%= form_tag(linkedin_search_path) do %>
+      <ul class="red-radio-box">
+        <li class="font-22 calibrib" style="max-width:370px;">Search Existing Connections </li>
+        <li class="float-R mrg-T5 col-black-2">
+          <label for="radio4" class="mrg-L30 font-16 calibrib">by company</label>
+          <span></span>
+          <input type="radio" id="radio4" name="type" checked="checked" value="COMPANY" onclick="$('input#search-connections-input').attr('placeholder','E.g. Marketing at Nike')"/>
+          <span></span>
+        </li>
+        <li class="mrg-R40 float-R mrg-T5 col-black-2">
+          <label for="radio3" class="mrg-L30 font-16 calibrib">by person </label>
+          <span></span>
+          <input type="radio" id="radio3"  name="type" value="PERSON" onclick="$('input#search-connections-input').attr('placeholder','E.g. John Doe')"/>
+          <span></span>
+        </li>
+      </ul>
+      <div class="input-box">
+        <input class="input" id="search-connections-input" name="query"  style="height:38px; font-size:22px; width:92%; padding-right:6%;" type="text" placeholder="E.g. Marketing at Nike">
+        <input class="searchicon-big" type="submit" value="">
+      </div>
+  <% end %>
+</div>

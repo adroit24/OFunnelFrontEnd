@@ -1,0 +1,102 @@
+<% results_flag = (@direct_connections.nil? and @indirect_connections.nil?) %>
+<% unless results_flag %>
+    <%
+       company = {}
+       company["companyName"] = @query
+       index = 0
+       tab_selected = false
+    %>
+    <% unless @multiple.nil? %>
+        <% unless @direct_connections.nil? %>
+            <%= render :partial => 'first_level_connections' %>
+        <% end %>
+        <% unless @indirect_connections.nil? %>
+            <%= render :partial => 'second_level_connections' %>
+        <% end %>
+        <% if @connections_remaining and @connections_remaining > 0 %>
+            <tr id="show-more-parent-node">
+              <td>
+                <%= form_tag(salesforce_show_more_path, :id => 'search-existing-show-more') do %>
+                    <%= hidden_field_tag :query ,@query %>
+                    <%= hidden_field_tag :offset ,@offset %>
+                    <%= hidden_field_tag :type, @type %>
+                    <%= hidden_field_tag :multiple, false %>
+                    <img src="/assets/ajax-loader-more.gif" class="show-more-loader">
+                    <%= submit_tag "Show more search results" ,:class => 'showmore showmore-position' %>
+                <% end %>
+              </td>
+              <td class="display-none"></td>
+            </tr>
+        <% end %>
+    <% else %>
+        <% unless @direct_connections.nil? %>
+            <%= render :partial => 'first_level_connections', :locals => {:company => company,:tab_selected => tab_selected} %>
+        <% end %>
+        <% unless @indirect_connections.nil? %>
+            <%= render :partial => 'second_level_connections', :locals => {:company => company,:tab_selected => tab_selected} %>
+        <% end %>
+        <% if @offset < 150 and @connections_remaining and @connections_remaining > 0 %>
+            <tr class="<%= company["companyName"] %><%= " display-none" unless index == 0 %> show-more-company-results">
+              <td>
+                <%= form_tag(linkedin_search_path) do %>
+                    <%= hidden_field_tag :query, company["companyName"] %>
+                    <%= hidden_field_tag :offset, @offset %>
+                    <%= hidden_field_tag :type, 'COMPANY' %>
+                    <%= hidden_field_tag :account_id, @account_id %>
+                    <%= hidden_field_tag :salesforce_contacts, @salesforce_contacts.join(',') %>
+                    <%= hidden_field_tag :salesforce_contact_hash, @salesforce_contact_hash %>
+                    <% unless @multiple.nil? %>
+                        <%= hidden_field_tag :multiple, false %>
+                    <% end %>
+                    <img src="/assets/ajax-loader-more.gif" class="show-more-loader">
+                    <%= submit_tag "Show more search results" ,:class => 'showmore showmore-position' %>
+                <% end %>
+              </td>
+              <td class="display-none">First Level Connection</td>
+            </tr>
+            <form action="<%= salesforce_mark_connected_path %>" method="post" class="all-box mark-to-salesforce-form">
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+              <input type="hidden" name="contactsIdJson" value="" />
+            </form>
+        <% end %>
+        <% tab_selected = true %>
+    <% end %>
+<% end %>
+
+<% if @multiple.nil? %>
+    <% unless results_flag %>
+        <style type="text/css">
+            div#dataTable-request-filter_filter {
+                display: none;
+            }
+            div#dataTable-request-filter_wrapper {
+                float: none;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function() {
+                var gCompanyFilter = $('#dataTable-request-filter').dataTable({
+                    "bPaginate": false,
+                    "bLengthChange": false,
+                    "bFilter": true,
+                    "bSort": false,
+                    "bInfo": false,
+                    "bAutoWidth": false,
+                    "oLanguage": {
+                        "sSearch": ""
+                    }
+                }).columnFilter({ aoColumns:
+                                [
+                                    {},
+                                    { type: "text", bRegex: true }
+                                ]
+
+                        });
+                applyOnlyCompanyConnectionsFilter();
+
+                form = $('form.mark-to-salesforce-form').last();
+                markConnectedToSalesForce(form);
+            });
+        </script>
+    <% end %>
+<% end %>

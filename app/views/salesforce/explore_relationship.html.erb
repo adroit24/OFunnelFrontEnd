@@ -1,0 +1,130 @@
+<%= render :partial => "company_report_form"  %>
+<% results_flag = (@Company_result.nil? or @Company_result.length == 0) %>
+<div class="results_box" id="top">
+  <div class="all-box mrg-B10">
+    <ul class="red-radio-box" style="width: 68%;">
+      <% results_flag = (@Company_result.nil? or @Company_result.length == 0 or !@Company_result[0]["error"].nil?) %>
+      <% unless results_flag %>
+          <% tab_selected = false %>
+          <% @Company_result.each_with_index do |company,index| %>
+              <% if company["error"].nil? %>
+                  <li class="mrg-R40 mrg-T5">
+                    <label class="mrg-L30 font-16 calibrib"><%= company["companyName"] %> </label>
+                    <span></span>
+                    <input type="radio" class="company-filter" name="company-radio" checked="checked" value="<%= company["companyName"] %>"/>
+                    <span></span>
+                  </li>
+                  <% tab_selected = true %>
+              <% end %>
+          <% end %>
+      <% end %>
+    </ul>
+    <div class="float-R">
+      <div class="checkboxFour">
+        <input type="checkbox" value="only-company-connections" id="only-company-filter" name="company-checkbox" />
+        <label for="only-company-filter"></label>
+      </div>
+      <span class="mrg-L10 font-16 calibrib">Only Company Connections</span>
+    </div>
+  </div>
+
+  <% unless results_flag %>
+      <div class="sent_received_section">
+        <table class="all-box" align="left" cellpadding="0" cellspacing="0" id="dataTable-request-filter">
+          <thead>
+          <tr style="display:none;">
+            <td width="40%" class="border-B calibrib font-16">First Level</td>
+            <td width="40%" class="border-B calibrib font-16">Second Level</td>
+          </tr>
+          </thead>
+          <tbody>
+          <% unless results_flag %>
+              <% tab_selected = false %>
+              <% @Company_result.each_with_index do |company,index| %>
+                  <% if company["error"].nil? %>
+                      <%
+                         @direct_connections = company["firstlevelpersons"].nil? ? nil : company["firstlevelpersons"]
+                         @indirect_connections = company["secondlevelpersons"].nil? ? nil : company["secondlevelpersons"]
+                         @connections_remaining = company["connectionsRemaining"].to_i
+                      %>
+                      <% unless @direct_connections.nil? %>
+                          <%= render :partial => 'first_level_connections', :locals => {:company => company,:tab_selected => tab_selected} %>
+                      <% end %>
+                      <% unless @indirect_connections.nil? %>
+                          <%= render :partial => 'second_level_connections', :locals => {:company => company,:tab_selected => tab_selected} %>
+                      <% end %>
+                      <% if @offset < 150 and @connections_remaining and @connections_remaining > 0 %>
+                          <tr class="<%= company["companyName"] %><%= " display-none" if tab_selected %> show-more-company-results">
+                            <td>
+                              <%= form_tag(salesforce_show_more_path) do %>
+                                  <%= hidden_field_tag :query ,company["companyName"] %>
+                                  <%= hidden_field_tag :offset ,@offset %>
+                                  <%= hidden_field_tag :type, 'COMPANY' %>
+                                  <%= hidden_field_tag :account_id, @account_id %>
+                                  <%= hidden_field_tag :salesforce_contacts, @salesforce_contacts.join(',') %>
+                                  <%= hidden_field_tag :salesforce_contact_hash, @salesforce_contact_hash %>
+                                  <img src="/assets/ajax-loader-more.gif" class="show-more-loader">
+                                  <%= submit_tag "Show more search results" ,:class => 'showmore showmore-position' %>
+                              <% end %>
+                            </td>
+                            <td class="display-none">First Level Connection</td>
+                          </tr>
+                      <% end %>
+                      <% tab_selected = true %>
+                  <% end %>
+              <% end %>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <tr style="display:none;">
+            <th>First Level</th>
+            <th>Second Level</th>
+          </tr>
+          </tfoot>
+        </table>
+        <form action="<%= salesforce_mark_connected_path %>" method="post" class="all-box mark-to-salesforce-form">
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+          <input type="hidden" name="contactsIdJson" value="" />
+        </form>
+      </div>
+  <% else %>
+      <div class="sent_received_section">
+        <strong>No connections found at the <%= @company %> account.</strong>
+      </div>
+  <% end %>
+</div><!-- End Results Box -->
+<% unless results_flag %>
+    <style type="text/css">
+        div#dataTable-request-filter_filter {
+            display: none;
+        }
+        div#dataTable-request-filter_wrapper {
+            float: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            gCompanyFilter = $('#dataTable-request-filter').dataTable({
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sSearch": ""
+                }
+            }).columnFilter({ aoColumns:
+                            [
+                                { type: "text", bRegex: true },
+                                { type: "text", bRegex: true }
+                            ]
+                    });
+
+            form = $('form.mark-to-salesforce-form').last();
+            markConnectedToSalesForce(form);
+            $('input#only-company-filter').prop('checked', true);
+            applyOnlyCompanyConnectionsFilter();
+        });
+    </script>
+<% end %>

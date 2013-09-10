@@ -1,0 +1,31 @@
+<div id="import-from-csv-popup" class="display-none">
+  <!-- START Import from CSV LIGHT BOX -->
+  <div class="lightbox">
+    <h2 class="col-blue">Import from CSV</h2>
+    <a href="#" class="cancel-icon"></a>
+    <div class="import-group-csv-box">
+      <%= form_tag(groups_import_csv_path, :id=> "import-csv-form") do %>
+          <div class="send-box txt-L"><a class="send-btn calibrib add-csv-file">Add csv file</a></div>
+          <div style='height: 0px;width: 0px; overflow:hidden;'>
+            <input type="file" name="csv" class="add-csv-input" onchange="addCsvFile(this.files);" value="Add csv file">
+          </div>
+          <span class="col-red font-18" id="group-csv-error" style="display: none;"> * </span>
+          <div class="send-box txt-L"><input type="submit" value="Upload" class="send-btn calibrib upload-csv-input display-none"></div>
+      <% end %>
+    </div>
+    <div class="requestor-list-box import-group-csv-result-box display-none" style="width:100%;">
+      <%= form_tag(invite_imported_members_path, :id=> "invite-imported-form", :class => "requests_USR mrg-0") do %>
+          <input type="hidden" name="tag_id" value="<%= @tag_id %>">
+          <div class="sent_received_section">
+            <div class="white-box border-all pad-all-5" style="height:192px; width:97%; overflow-y:auto; overflow-x:hidden; border:1px solid #CCCCCC ">
+              <table width="100%" cellspacing="0" cellpadding="7" align="center" id="import-results">
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <div class="send-box txt-L mrg-T20"><input type="submit" value="Import Selected" class="send-btn calibrib"></div>
+          </div>
+      <% end %>
+    </div>
+  </div><!-- START Import from CSV LIGHT BOX -->
+</div>

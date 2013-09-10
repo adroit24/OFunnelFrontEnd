@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OFunnel</title>
+  <%= stylesheet_link_tag "application.html5", :media => "all" %>
+  <%= stylesheet_link_tag "colorbox", :media => "all" %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript">
+      var userName = '<%= user_name %>'
+      var addGroupUrl = '<%= add_group_path %>'
+      var getPeopleInCompanyUrl = '<%= get_people_in_company_path %>'
+      var getPersonsForQueryUrl = '<%= get_people_for_query_path %>'
+      var searchGroupForQueryUrl = '<%= search_group_path %>'
+      var searchMemberInGroupUrl = '<%= search_member_in_group_path %>'
+      <% unless current_user.nil? %>
+      var userProfilePath = '<%= "#{user_path(current_user_id)}#user-tags-focus" %>'
+      <% end %>
+      // Commented due to bug#324
+      //var showOfunnelHelp = <%#= show_ofunnel_help %>
+  </script>
+</head>
+<body>
+<div class="wrapper">
+  <!-- START MAIN DIV-->
+  <div class="main clearfix">
+    <!-- START HEADER -->
+    <div class="header">
+      <div class="logo_menu_box">
+        <a href="<%= discover_relationships_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
+      </div>
+    </div><!-- END HEADER -->
+    <!-- START CONTAINER -->
+    <div class="container">
+      <%= yield %>
+    </div><!-- END CONTAINER -->
+  </div><!-- END MAIN DIV-->
+  <!-- START FOOTER -->
+  <div class="footer">
+    <div class="footer_box"> &copy; 2013 OFunnel </div>
+  </div><!-- START FOOTER -->
+</div>
+</body>
+</html>

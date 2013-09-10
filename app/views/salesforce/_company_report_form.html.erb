@@ -1,0 +1,100 @@
+<div class="userprofile-box">
+  <div class="profile-title mrg-T20">Company <%= @company %> Connections Report </div>
+</div>
+
+<div class="contoso-page mrg-T15">
+  <div id="salesforce-target-form" class="all-box-2 display-none" style="background: #EDEDED; padding: 20px; width: 94%;">
+    <p class="font-13 italic mrg-T5">Add your company network to find all the connections within those targets. </p>
+    <div style="width: 310px; float: left;">
+      <h2 class="mrg-B5 font-18 calibrib">Target Accounts <span class="col-red font-18" id="target-account-error" style="display: none;"> * </span></h2>
+      <div class="target-company-box" id="company-box" style="background: #fff; width: 92%;">
+        <ul>
+          <%
+             unless @selected_accounts.nil?
+               @selected_accounts.each do |account|
+          %>
+                  <li><span><%= account %></span>
+                    <!--<a href="#" class="remove-company"></a>-->
+                  </li>
+              <%
+                 end
+                 end
+              %>
+        </ul>
+      </div>
+    </div>
+
+    <div style="width: 310px; float: right;">
+      <h2 class="mrg-B5 font-18 calibrib">Company Network </h2>
+      <div class="target-company-box " id="accounts-box" style="background: #fff; width: 92%;">
+        <ul class="add-connection">
+          <%
+             unless @connections.nil?
+               @connections.each do |connection|
+          %>
+                  <li>
+                    <%= connection["name"] %>
+                    <input type="hidden" name="account_id" value="<%= connection["connectionId"] %>">
+                  </li>
+              <%
+                 end
+                 end
+              %>
+          <%
+             unless @updated_connections.nil?
+               @updated_connections.each do |connection|
+          %>
+                  <li>
+                    <%= connection[:name] %>
+                    <input type="hidden" name="account_id" value="<%= connection[:connectionId] %>">
+                  </li>
+              <%
+                 end
+                 end
+              %>
+          <li id="add-connection-li">
+            <a href="<%= connections_path("nil","nil") %>" id="add-connection-link">Add another connection </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <a id="show-salesforce-target-form" class="showmore-2 showmore-position" style="line-height:45px;cursor: pointer;">Set Target Accounts and Networks
+    <img src="/assets/down-arrow-white.png"/>
+    <img src="/assets/up-arrow-white.png" class="display-none" />
+  </a>
+</div>
+<script type="text/javascript">
+    var companyName = "<%= @company %>"
+    $(function() {
+        $('a#add-connection-link').focus();
+    });
+    var gCompanyMembersName = "First Level Connection";
+    var gCompanyMembersIds = ""
+    <%
+       unless @connections.nil?
+         @connections.each do |connection|
+    %>
+    gCompanyMembersName = gCompanyMembersName + '|' + "<%= connection["name"] %>"
+    if(gCompanyMembersIds == "")
+        gCompanyMembersIds = "<%= connection["connectionId"] %>"
+    else
+        gCompanyMembersIds = gCompanyMembersIds + ',' + "<%= connection["connectionId"] %>"
+    <%
+       end
+       end
+    %>
+    <%
+       unless @updated_connections.nil?
+         @updated_connections.each do |connection|
+    %>
+    gCompanyMembersName = gCompanyMembersName + '|' + "<%= connection[:name] %>"
+    if(gCompanyMembersIds == "")
+        gCompanyMembersIds = "<%= connection[:connectionId] %>"
+    else
+        gCompanyMembersIds = gCompanyMembersIds + ',' + "<%= connection[:connectionId] %>"
+    <%
+       end
+       end
+    %>
+</script>

@@ -1,0 +1,439 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ *
+ * Detailed information about this CSS: h5bp.com/css
+ *
+ * ==|== normalize ==========================================================
+ */
+
+
+/* =============================================================================
+   HTML5 display definitions
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, title { display: block; }
+audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+audio:not([controls]) { display: none; }
+[hidden] { display: none; }
+
+
+
+/* =============================================================================
+   Base
+   ========================================================================== */
+
+/*
+ * 1. Correct text resizing oddly in IE6/7 when body font-size is set using em units
+ * 2. Prevent iOS text size adjust on device orientation change, without disabling user zoom: h5bp.com/g
+ */
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+html, button, input, select, textarea { font-family: sans-serif; }
+
+/********************************** COMMON STYLE ********************************************************************************/
+.hit-100{height:100%; margin-bottom:1%;}
+
+.all-box{
+    width:100%;
+    float:left;
+    margin-bottom:10px;
+}
+.all-box-2{
+    width:100%;
+    float:left;
+    margin-top:10px;
+}
+.all-box-3{
+    width:100%;
+    float:left;
+}
+.all-box-4{
+    width:100%;
+    float:left;
+    margin:0 5px;
+}
+/*.all-box-5{*/
+    /*background:#fff;*/
+    /*float: left;*/
+    /*padding: 0 20px;*/
+    /*width: 95%;*/
+/*}*/
+
+.B-radius-6{
+    border-radius:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    -o-border-radius:6px;
+    -ms-border-radius:6px;
+}
+.B-radius-100{
+    border-radius:100px;
+    -moz-border-radius:100px;
+    -webkit-border-radius:100px;
+    -o-border-radius:100px;
+    -ms-border-radius:100px;
+}
+
+.bg-none{ background: none !important;}
+.bg-black{ background:#000000 !important; color:#fff !important;}
+.bg-black-2{ background:#343434 !important; color:#fff !important;}
+.bg-yello{ background:#FC0 !important; color: #000 !important ;}
+.bg-yello-lit{ background:#FF0 !important; color: #000 !important ;}
+.bg-white{ background:#ffffff !important; color:#000 !important ;}
+.bg-gray{ background:#6e6e6e !important;}
+.bg-gray-2{ background:#d2d2d2 !important;}
+.bg-gray-drk{ background:#999 !important; color:#fff !important;}
+.bg-blue{background:#46a0d1 !important; color:#fff !important;}
+.bg-blue-drk{background:#0068a1 !important; color:#fff !important;}
+.bg-blue-lit{background:#DDEEF5 !important; color:#333 !important;}
+.bg-green{background:#5ba101 !important; color:#fff !important;}
+.bg-red{ background:#d91c1c !important; color:#fff !important;}
+.bg-purple{ background:#550885 !important; color:#fff !important;}
+.bg-orange{ background:#ff5d00 !important; color:#fff !important;}
+.bg-orange-lit{ background:#ffa200 !important; color:#fff !important;}
+
+.col-white{ color:#fff !important;}
+.col-black{ color:#000 !important;}
+.col-black-2{ color:#333 !important;}
+.col-gray{ color:#7E7E7E !important;}
+.col-red{ color:#d91c1c !important;}
+.col-yello{color: #FF0 !important;}
+.col-blue{color:#0068a1 !important;}
+.col-green{color:#5ba101 !important;}
+.col-orange{color:#ff5d00 !important;}
+.col-orange-lit{color:#ffa200 !important;}
+
+.float-L{float:left !important;}
+.float-R{float:right !important;}
+
+.txt-R{text-align:right !important;}
+.txt-L{text-align:left !important;}
+.txt-C{text-align:center !important;}
+
+.font-10{font-size:10px !important;}
+.font-11{font-size:11px !important;}
+.font-12{font-size:12px !important;}
+.font-13{font-size:13px !important;}
+.font-14{font-size:14px !important;}
+.font-15{font-size:15px !important;}
+.font-16{font-size:16px !important;}
+.font-17{font-size:17px !important;}
+.font-18{font-size:18px !important;}
+.font-19{font-size:19px !important;}
+.font-20{font-size:20px !important;}
+.font-22{font-size:22px !important;}
+.font-24{font-size:24px !important;}
+.font-26{font-size:26px !important;}
+.font-28{font-size:28px !important;}
+.font-30{font-size:30px !important;}
+.font-32{font-size:32px !important;}
+.font-34{font-size:34px !important;}
+.font-36{font-size:36px !important;}
+.font-38{font-size:38px !important;}
+.font-40{font-size:40px !important;}
+.font-42{font-size:42px !important;}
+.font-44{font-size:44px !important;}
+.font-46{font-size:46px !important;}
+.font-48{font-size:48px !important;}
+.font-50{font-size:50px !important;}
+
+.bold{ font-weight: bold !important;}
+
+.mrg-0{margin:0 !important;}
+.mrg-auto{margin:auto !important; float:none !important;}
+.mrg-all-5{margin:5px !important;}
+.mrg-all-10{margin:10px !important;}
+.mrg-T5{margin-top:5px !important;}
+.mrg-T10{margin-top:10px !important;}
+.mrg-T15{margin-top:15px !important;}
+.mrg-T20{margin-top:20px !important;}
+.mrg-T25{margin-top:25px !important;}
+.mrg-T30{margin-top:30px !important;}
+.mrg-T35{margin-top:35px !important;}
+.mrg-T40{margin-top:40px !important;}
+.mrg-T45{margin-top:45px !important;}
+.mrg-T50{margin-top:50px !important;}
+.mrg-T100{margin-top:100px !important;}
+
+.mrg-B5{margin-bottom:5px !important;}
+.mrg-B10{margin-bottom:10px !important;}
+.mrg-B15{margin-bottom:15px !important;}
+.mrg-B20{margin-bottom:20px !important;}
+.mrg-B25{margin-bottom:25px !important;}
+.mrg-B30{margin-bottom:30px !important;}
+.mrg-B35{margin-bottom:35px !important;}
+.mrg-B40{margin-bottom:40px !important;}
+.mrg-B45{margin-bottom:45px !important;}
+.mrg-B50{margin-bottom:50px !important;}
+
+.mrg-L5{margin-left:5px !important;}
+.mrg-L10{margin-left:10px !important;}
+.mrg-L15{margin-left:15px !important;}
+.mrg-L20{margin-left:20px;}
+.mrg-L25{margin-left:25px !important;}
+.mrg-L30{margin-left:30px !important;}
+.mrg-L35{margin-left:35px !important;}
+.mrg-L40{margin-left:40px !important;}
+.mrg-L45{margin-left:45px !important;}
+.mrg-L50{margin-left:50px !important;}
+
+.mrg-R5{margin-right:5px !important;}
+.mrg-R10{margin-right:10px !important;}
+.mrg-R15{margin-right:15px !important;}
+.mrg-R20{margin-right:20px !important;}
+.mrg-R25{margin-right:25px !important;}
+.mrg-R30{margin-right:30px !important;}
+.mrg-R35{margin-right:35px !important;}
+.mrg-R40{margin-right:40px !important;}
+.mrg-R45{margin-right:45px !important;}
+.mrg-R50{margin-right:50px !important;}
+
+.pad-0{ padding: 0 !important;}
+.pad-all-5{padding:5px !important;}
+.pad-all-10{padding:10px !important;}
+.pad-T5{padding-top:5px !important;}
+.pad-T10{padding-top:10px !important;}
+.pad-T15{padding-top:15px !important;}
+.pad-T20{padding-top:20px !important;}
+.pad-T25{padding-top:25px !important;}
+.pad-T30{padding-top:30px !important;}
+.pad-T35{padding-top:35px !important;}
+.pad-T40{padding-top:40px !important;}
+.pad-T45{padding-top:45px !important;}
+.pad-T50{padding-top:50px !important;}
+
+.pad-B5{padding-bottom:5px !important;}
+.pad-B10{padding-bottom:10px !important;}
+.pad-B15{padding-bottom:15px !important;}
+.pad-B20{padding-bottom:20px !important;}
+.pad-B25{padding-bottom:25px !important;}
+.pad-B30{padding-bottom:30px !important;}
+.pad-B35{padding-bottom:35px !important;}
+.pad-B40{padding-bottom:40px !important;}
+.pad-B45{padding-bottom:45px !important;}
+.pad-B50{padding-bottom:50px !important;}
+
+.pad-L5{padding-left:5px !important;}
+.pad-L10{padding-left:10px !important;}
+.pad-L15{padding-left:15px !important;}
+.pad-L20{padding-left:20px !important;}
+.pad-L25{padding-left:25px !important;}
+.pad-L30{padding-left:30px !important;}
+.pad-L35{padding-left:35px !important;}
+.pad-L40{padding-left:40px !important;}
+.pad-L45{padding-left:45px !important;}
+.pad-L50{padding-left:50px !important;}
+
+.pad-R5{padding-right:5px !important;}
+.pad-R10{padding-right:10px !important;}
+.pad-R15{padding-right:15px !important;}
+.pad-R20{padding-right:20px !important;}
+.pad-R25{padding-right:25px !important;}
+.pad-R30{padding-right:30px !important;}
+.pad-R35{padding-right:35px !important;}
+.pad-R40{padding-right:40px !important;}
+.pad-R45{padding-right:45px !important;}
+.pad-R50{padding-right:50px !important;}
+
+.border-TB{border-top:1px solid #ccc; border-bottom:1px solid #ccc;}
+.border-B{ border-bottom:1px solid #ccc; }
+.border-T{ border-top:1px solid #ccc; }
+.border-L{ border-left:1px solid #ccc; }
+.border-R{ border-right:1px solid #ccc; }
+.border-all{ border:1px solid #ccc; }
+
+.line-hit-50{ line-height:50px !important ;}
+.line-hit-40{ line-height:40px !important ;}
+.line-hit-35{ line-height:35px !important ;}
+.line-hit-30{ line-height:30px !important ;}
+.line-hit-25{ line-height:25px !important ;}
+.line-hit-20{ line-height:20px !important ;}
+.line-hit-16{ line-height:16px !important ;}
+
+.hit-auto{ height:auto !important; }
+
+.italic{ 	font-style:italic !important; }
+/******************************************************************************************************************/
+
+
+/* =============================================================================
+   Links
+   ========================================================================== */
+
+a { color: #1979ad; text-decoration:none; }
+a:hover {  }
+a:focus { outline: 0; }
+
+/* Improve readability when focused and hovered in all browsers: h5bp.com/h */
+a:hover, a:active { outline: 0; }
+
+
+/* =============================================================================
+   Typography
+   ========================================================================== */
+
+abbr[title] { border-bottom: 1px dotted; }
+
+b, strong { font-weight: bold; }
+
+blockquote { margin: 1em 40px; }
+
+dfn { font-style: italic; }
+
+hr { display: block; height: 1px; border: 0; border-top: 3px solid #34acee; margin: 1em 0; padding: 0; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+/* Redeclare monospace font family: h5bp.com/j */
+pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
+
+/* Improve readability of pre-formatted text in all browsers */
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+
+q { quotes: none; }
+q:before, q:after { content: ""; content: none; }
+
+small { font-size: 85%; }
+
+/* Position subscript and superscript content without affecting line-height: h5bp.com/k */
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+
+/* =============================================================================
+   Lists
+   ========================================================================== */
+
+ul, ol { margin: 1em 0; padding: 0 0 0 20px; }
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+
+/* =============================================================================
+   Embedded content
+   ========================================================================== */
+
+/*
+ * 1. Improve image quality when scaled in IE7: h5bp.com/d
+ * 2. Remove the gap between images and borders on image containers: h5bp.com/e
+ */
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+/*
+ * Correct overflow not hidden in IE9
+ */
+
+svg:not(:root) { overflow: hidden; }
+
+
+/* =============================================================================
+   Figures
+   ========================================================================== */
+
+figure { margin: 0; }
+
+
+/* =============================================================================
+   Forms
+   ========================================================================== */
+
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+
+/* Indicate that 'label' will shift focus to the associated form element */
+label { cursor: pointer; float:left; }
+
+/*
+ * 1. Correct color not inheriting in IE6/7/8/9
+ * 2. Correct alignment displayed oddly in IE6/7
+ */
+
+legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
+
+/*
+ * 1. Correct font-size not inheriting in all browsers
+ * 2. Remove margins in FF3/4 S5 Chrome
+ * 3. Define consistent vertical alignment display in all browsers
+ */
+
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+
+/*
+ * 1. Define line-height as normal to match FF3/4 (set using !important in the UA stylesheet)
+ */
+
+button, input { line-height: normal; }
+
+/*
+ * 1. Display hand cursor for clickable form elements
+ * 2. Allow styling of clickable form elements in iOS
+ * 3. Correct inner spacing displayed oddly in IE7 (doesn't effect IE6)
+ */
+
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+
+/*
+ * Re-set default cursor for disabled elements
+ */
+
+button[disabled], input[disabled] { cursor: default; }
+
+/*
+ * Consistent box sizing and appearance
+ */
+
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
+input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/*
+ * Remove inner padding and border in FF3/4: h5bp.com/l
+ */
+
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+/*
+ * 1. Remove default vertical scrollbar in IE6/7/8/9
+ * 2. Allow only vertical resizing
+ */
+
+textarea { overflow: auto; vertical-align: top; resize: vertical; }
+
+/* Colors for form validity */
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+
+/* =============================================================================
+   Tables
+   ========================================================================== */
+
+/*table { border-collapse: collapse; border-spacing: 0; }*/
+td { vertical-align: top; }
+
+.mrg-T100 {
+    margin-top: 100px !important;
+}
+
+.display-none {
+    display: none;
+}
+
+.nowrap-ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.no-click {
+    pointer-events: none;
+}

@@ -1,0 +1,38 @@
+<div class="received-filter-section">
+  <div class="filter-option-box" id="filter-option-box">
+    <div class="heading">Filter Options</div>
+    <!--Commented due to bug#184 and 190-->
+    <!--<div class="item-box">-->
+      <!--<div class="check-items">-->
+        <!--<div class="checkboxFour">-->
+          <!--<input type="checkbox" value="1" id="checkboxFourInput" name="above-80-filter" />-->
+          <!--<label for="checkboxFourInput"></label>-->
+        <!--</div>-->
+        <!--<span class="float-L mrg-L5">Requests with score above 80</span>-->
+      <!--</div>-->
+      <!--<div class="check-items">-->
+        <!--<div class="checkboxFour">-->
+          <!--<input type="checkbox" value="1" id="checkboxFourInput-2" name="all-request-filter" />-->
+          <!--<label for="checkboxFourInput-2"></label>-->
+        <!--</div>-->
+        <!--<span class="float-L mrg-L5">All requests</span>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="item-box">
+      <div class="font-13 bold mrg-B10">Groups:</div>
+      <% unless @user_tags.nil? %>
+          <% @user_tags.each do |tag| %>
+              <div class="check-items">
+                <div class="checkboxFour">
+                  <input type="checkbox" value="1" id="checkboxFourInput-<%= profile_tag_id(tag) %>" name="tag-filter" />
+                  <label for="checkboxFourInput-<%= profile_tag_id(tag) %>"></label>
+                </div>
+                <span class="float-L mrg-L5"><%= profile_tag_name(tag) %></span>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+  <a href="#" id="showfilter" class="show-hide-filter">Show Filter Options  <img src="assets/left-arrow-2.png" alt="" /> </a>
+  <a href="#" id="hidefilter" class="show-hide-filter" style="display:none;">Hide Filter Options <img src="assets/down-arrow-2.png" alt="" /></a>
+</div>

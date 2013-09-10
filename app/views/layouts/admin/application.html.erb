@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OFunnel</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= 'body-bg-small' if (current_user.nil?  or is_tab_selected?("users") == "selected" or is_tab_selected?("groups") == "selected") %>">
+<div class="wrapper">
+  <!-- START MAIN DIV-->
+  <div class="main clearfix">
+    <!-- START HEADER -->
+    <div class="header">
+      <div class="logo_menu_box">
+        <a href="#"><img class="logo" src="/assets/logo.jpg" width="238" height="71" alt="OFunnel" title="OFunnel" /></a>
+      </div>
+    </div><!-- END HEADER -->
+
+
+    <!-- START CONTAINER -->
+    <div class="container">
+      <%= yield %>
+    </div><!-- END CONTAINER -->
+  </div><!-- END MAIN DIV-->
+
+  <!-- START FOOTER -->
+  <div class="footer">
+    <div class="footer_box"> &copy; 2012 OFunnel </div>
+  </div><!-- END FOOTER -->
+</div>
+</body>
+</html>

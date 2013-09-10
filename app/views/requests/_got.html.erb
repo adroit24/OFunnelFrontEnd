@@ -1,0 +1,181 @@
+<% unless @requests.nil? %>
+    <table width="100%" align="left" cellpadding="6" cellspacing="0" id="dataTable-request-filter">
+      <thead>
+      <tr class="requests-got-header">
+        <td width="40%" class="border-B calibrib font-16">Requestor</td>
+        <td width="40%" class="border-B calibrib font-16">Need an Introduction To</td>
+        <td width="14%" class="border-B calibrib font-16 txt-C">Action</td>
+        <td class="display-none">score</td>
+        <td class="display-none">groups</td>
+      </tr>
+      </thead>
+      <tbody>
+      <% @requests.each_with_index do |request,index| %>
+          <% show_details = (index == 0) ? true : false %>
+          <% unless is_open_request(request) %>
+              <tr id="<%= request_id(request) %>">
+                <td class="pad-T15">
+                  <span class="USR-phto-box"><img class="userpic" src="<%= from_user_profile_pic(request) %>" width="40" height="40"> </span>
+                  <div class="USR-info">
+                      <span class="col-blue font-16 calibrib">
+                        <%= link_to from_user_name(request), from_user_profile_url(request), :target => "_blank" %>
+                      </span>
+                    <% if is_from_user_score_exists(request) %>
+                        <span class="col-orange bold font-14"> (<%= from_user_score(request) %>)</span>
+                    <% end %>
+                    <br>
+                    <span class="multiline-ellipsis float-L" style="width:245px !important;"><%= from_user_headline(request) %>, <%= from_user_company(request) %></span>
+                    <br>
+                    <!--<a href="#" class="show-request-details">Show request details <img src="/assets/left-arrow.png" alt="" /></a>-->
+                  </div>
+                  <div class="show-Rqst-details mrg-T5" style="font-style:normal;">
+                    <span class="float-L multiline-ellipsis"><strong>Request for</strong> <a href="#update-request" class="show-request-details"><%= request_query(request) %> </a> </span>
+                    <br>
+                  </div>
+                  <div class="show-Rqst-details" style="<%= 'display: none;' unless show_details %>">
+                    <%= request_message(request) %>
+                    <p><a href="#" class="hide-request-details">Hide request details <img src="/assets/down-arrow.png" alt="" /></a> </p>
+                  </div>
+                </td>
+                <td class="pad-T15">
+                  <span class="USR-phto-box"><img class="userpic" src="<%= for_user_profile_pic(request) %>" width="40" height="40"> </span>
+                  <div class="USR-info">
+                      <span class="col-blue font-16 calibrib">
+                        <%= link_to for_user_name(request), for_user_profile_url(request), :target => "_blank" %>
+                      </span>
+                    <% if is_for_user_score_exists(request) %>
+                        <span class="col-orange bold font-14"> (<%= for_user_score(request) %>)</span>
+                    <% end %>
+                    <br>
+                    <span class="multiline-ellipsis float-L" style="width:245px !important;"><%= for_user_headline(request) %>, <%= for_user_company(request) %></span>
+                  </div>
+                </td>
+                <td class="pad-T15 txt-C action" >
+                  <% if request_status(request) == "Pending" %>
+                      <a href="<%= connections_path(request_id(request),"ACCEPTED") %>" class="accept colorbox-popup cboxElement">Accept</a>
+                      <br />
+                      <span class="font-10 all-box mrg-T5">
+                        <!--<a href="<%#= more_info_path(request_id(request)) %>" class="font-10 float-L more-colorbox-popup" style="text-decoration:underline;">More info</a> | -->
+                        <a href="<%= ignore_path({:id => request_id(request)}) %>" class="font-10 mrg-R5 ignore-request" style="text-decoration:underline;">Ignore</a>
+                      </span>
+                  <% else %>
+                        <span class="col-<%= request_class(request) %> line-hit-30">
+                          <%= request_outcome(request) %>
+                        </span>
+                  <% end %>
+                </td>
+                <td class="display-none">
+                  <% if is_from_user_score_exists(request) %>
+                      <%= from_user_score(request) %>
+                  <% end %>
+                </td>
+                <td class="display-none">
+                  <%
+                     tags = request["RequestVisibilityTags"]
+                     user_tag = []
+                     unless tags.nil?
+                       tags.each do |tag|
+                         user_tag << profile_tag_name(tag)
+                       end
+                     end
+                  %>
+                  <%= user_tag.join(' ') %>
+                </td>
+              </tr>
+          <% else %>
+              <tr id="<%= request_id(request) %>">
+                <td class="pad-T15">
+                  <span class="USR-phto-box"><img class="userpic" src="<%= from_user_profile_pic(request) %>" width="40" height="40"> </span>
+                  <div class="USR-info">
+                      <span class="col-blue font-16 calibrib">
+                        <%= link_to from_user_name(request), from_user_profile_url(request), :target => "_blank" %>
+                      </span>
+                    <% if is_from_user_score_exists(request) %>
+                        <span class="col-orange bold font-14"> (<%= from_user_score(request) %>)</span>
+                    <% end %>
+                    <br>
+                    <span class="multiline-ellipsis float-L" style="width:245px !important;"><%= from_user_headline(request) %>, <%= from_user_company(request) %></span>
+                    <br>
+                    <!--<a href="#" class="show-request-details">Show request details <img src="/assets/left-arrow.png" alt="" /></a>-->
+                  </div>
+                  <div class="show-Rqst-details" style="<%= 'display: none;' unless show_details %>">
+                    <%= request_message(request) %>
+                    <p><a href="#" class="hide-request-details">Hide request details <img src="/assets/down-arrow.png" alt="" /></a> </p>
+                  </div>
+                </td>
+                <td class="pad-T15">
+                  <span class="openrequests-2 col-blue multiline-ellipsis show-request-details2" style="width:225px; cursor: pointer;"> <%= request_query(request) %> </span>
+                </td>
+                <td class="pad-T15 txt-C action" >
+                  <% if request_status(request) == "Pending" %>
+                      <a href="<%= connections_path(request_id(request),"ACCEPTED") %>" class="accept colorbox-popup cboxElement">Accept</a>
+                      <br />
+                      <span class="font-10 all-box mrg-T5">
+                        <!--<a href="<%#= more_info_path(request_id(request)) %>" class="font-10 float-L more-colorbox-popup" style="text-decoration:underline;">More info</a> | -->
+                        <a href="<%= ignore_path({:id => request_id(request)}) %>" class="font-10 mrg-R5 ignore-request" style="text-decoration:underline;">Ignore</a>
+                      </span>
+                  <% else %>
+                    <span class="col-<%= request_class(request) %> line-hit-30">
+                      <%= request_outcome(request) %>
+                    </span>
+                  <% end %>
+                </td>
+                <td class="display-none"><%= from_user_score(request) %></td>
+                <td class="display-none">
+                  <%
+                     tags = request["RequestVisibilityTags"]
+                     user_tag = []
+                     unless tags.nil?
+                       tags.each do |tag|
+                         user_tag << profile_tag_name(tag)
+                       end
+                     end
+                  %>
+                  <%= user_tag.join(' ') %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+      <tfoot>
+      <tr style="display:none;">
+        <th>Requestor</th>
+        <th>Target</th>
+        <th>Action</th>
+        <th>Score</th>
+        <th>Groups</th>
+      </tr>
+      </tfoot>
+    </table>
+<% else %>
+    <div class="search-panel all-box-3">
+      <p class="font-14"><i>No request found.</i></p>
+    </div>
+<% end %>
+<style type="text/css">
+    div#dataTable-request-filter_filter {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    var requestFilter = $('#dataTable-request-filter').dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bSort": false,
+        "bInfo": false,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sSearch": ""
+        }
+    }).columnFilter({ aoColumns: [
+                {},
+                {},
+                {},
+                // Commented due to bug#184
+                { /*type: "number-range"*/ },
+                { type: "text", bRegex: true }
+            ]
+            });
+</script>
+

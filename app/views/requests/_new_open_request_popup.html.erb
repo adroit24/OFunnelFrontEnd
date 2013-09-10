@@ -1,0 +1,63 @@
+<div id="open-request" style="display: none;">
+  <!-- START Send a Request LIGHT BOX -->
+  <div class="lightbox" style="width:650px;">
+    <h2 class="col-blue"><img class="mrg-R10" src="/assets/open-requset-2.png" alt="" title="" />Ask for an Introduction</h2>
+    <%= form_tag(new_open_request_path, :id => "new_open_request", :class => "all-box", :style => "width:68%;") do %>
+        <span class="bold font-14 mrg-B10 float-L">To the following groups</span>
+        <div class="tag-box" id="open-request-tags" style="width: 147%;">
+          <%
+             unless @user_tags.nil?
+               requestTags = nil
+          %>
+              <% @user_tags.each do |tag| %>
+                  <% next if (@user_tags.length > 1 and profile_tag_name(tag) == "OFunnel") %>
+                  <span class="tagname"><%= link_to profile_tag_name(tag), group_path(profile_tag_id(tag)) %> <a href="#" class="delete-btn remove-group-from-request"></a></span>
+                  <input type="hidden" value="<%= profile_tag_id(tag) %>" name="tag_id"/>
+                  <%
+                     if requestTags == nil
+                       requestTags = profile_tag_id(tag).to_s
+                     else
+                       requestTags = requestTags + "," + profile_tag_id(tag).to_s
+                     end
+                  %>
+                  <!--<span class="tagname">-->
+                  <%#= link_to profile_tag_name(tag), group_path(profile_tag_id(tag)) %>
+                  <!--<a href="<%#= delete_group_path(profile_user_tag_id(tag)) %>" class="delete-btn ajax-delete-tag"></a>-->
+                  <!--<%# if profile_is_pending_tag(tag) or !profile_is_approved_tag(tag) %>-->
+                  <!--<span class="red-flag requested-info">-->
+                  <!--<div class="tooltip">-->
+                  <!--<span class="arrow"></span>-->
+                  <!--<p>Awaiting join permission from Administrator.</p>-->
+                  <!--</div>-->
+                  <!--</span>-->
+                  <!--<%# end %>-->
+                  <!--</span>-->
+                  <!--<%# if profile_is_pending_tag(tag) %>-->
+                  <!--<span class="red-flag"></span>-->
+                  <!--<%# end %>-->
+              <% end %>
+              <input type="hidden" value="<%= requestTags %>" name="visibility_tags"/>
+          <% end %>
+          <!--<a href="#" class="addtag">Add a group</a>-->
+        </div>
+        <label for="requests" class="bold font-14">Request Title: <span class="col-red font-18" id="open-request-title-error" style="display: none;"> * </span></label>
+        <input name="title" type="text" class="input_100" value="<%= @query %>">
+        <label for="requests" class="bold font-14">Who do you want an introduction with?</label>
+        <div class="input-relative">
+          <input type="text" name="query" class="input_100 request_connection_search italic" placeholder="Anyone" /><a href="#" class="downarrow" ></a>
+          <input type="hidden" name="linkedin_id" value=""/>
+          <%= render :partial => 'requests/search_connections' %>
+        </div>
+        <label for="Message" class="bold font-14">Why do you want this introduction? <span class="col-red font-18" id="open-request-message-error" style="display: none;"> * </span></label>
+        <textarea name="message" type="text" class="input_100 textarea"></textarea>
+        <div class="send-box"><input class="send-btn calibrib" type="submit" value="Send Request"></div>
+    <% end %>
+    <div class="chances-box">
+      <span class="col-blue font-14 bold float-L mrg-B10 mrg-T10">Increase your chances of getting an introduction:</span>
+      <ul>
+        <li>Show that you've done your research on the company and person you are asking for an introduction to.</li>
+        <li>Be as descriptive as possible when describing why you want an introduction.</li>
+      </ul>
+    </div>
+  </div><!-- START Send a Request LIGHT BOX -->
+</div>

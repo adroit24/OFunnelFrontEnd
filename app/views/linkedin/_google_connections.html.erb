@@ -1,0 +1,20 @@
+<% if !@google_connections.nil? and @google_connections["error"].nil? %>
+    <% @google_connections = @google_connections["feed"].nil? ? nil : @google_connections["feed"]["entry"] %>
+    <% @google_connections.each do |connection| %>
+        <tr class="USR-details-box">
+          <td class="main-user-section">
+            <div class="photo-box"><img class="main-usr-photo" src="/assets/user_photo.jpg" width="65" height="65"></div>
+            <div class="main-usr-text">
+              <span class="name">
+                <%= google_username(connection) %>
+                <span class="friendlabel-big">Ist</span>
+              </span>
+              <span class="font-13"> <%= google_email(connection) %> </span>
+            </div>
+            </div>
+          </td>
+          <td class="display-none">First Level Connection</td>
+        </tr>
+    <% end %>
+<% end %>
+

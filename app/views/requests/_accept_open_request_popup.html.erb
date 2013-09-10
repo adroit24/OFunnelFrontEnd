@@ -1,0 +1,179 @@
+<!-- START Send a Request LIGHT BOX -->
+<div class="lightbox" style="width:720px;">
+  <div class="accept-wrapper">
+    <h2 class="col-blue">Accept an Introduction Request</h2>
+    <div class="requestor-list-box">
+      <%= form_tag(accept_path, :class => "requests_USR mrg-0", :id => "accept_request_form") do %>
+          <%= hidden_field_tag "id", @id %>
+          <div class="sent_received_section mrg-0">
+            <div id="tab_content_1" class="white-box accepted-request">
+              <table width="100%" cellspacing="0" cellpadding="0" align="center" id="dataTable-search">
+                <thead>
+                <tr class="accept-request-header" style="display:none;">
+                  <th>image</th>
+                  <th>name</th>
+                  <th>company</th>
+                </tr>
+                </thead>
+                <tbody class="accepted-request-list">
+                <% unless @connections.nil? and @google_connections.nil? and @facebook_connections.nil? %>
+                    <% unless @connections.nil? %>
+                        <% @connections.each_with_index do |connection,index| %>
+                            <tr class="float-L mrg-B20">
+                              <td  class="float-L">
+                                <span class="check-radio">
+                                  <input name="forUserAccountId" type="radio" value="<%= linkedin_id(connection) %>" type="radio" style="float:left;">
+                                  <input name="type" value="LINKEDIN" type="hidden">
+                                  <input name="name" value="<%= linkedin_connection_name(connection) %>" type="hidden">
+                                </span>
+                                <span class="USR-phto-box" style="width:30px;">
+                                    <img width="28" height="28" src="<%= linkedin_profile_pic(connection) %>" class="userpic">
+                                </span>
+                              </td>
+                              <td class="float-L">
+                                <div class="USR-info line-hit-16">
+                                  <span class="col-blue calibrib font-15 "><%= linkedin_connection_name(connection) %></span>
+                                </div>
+                              </td>
+                              <td  class="float-L">
+                                <div class="USR-info line-hit-16">
+                                  <span><%= linkedin_headline(connection) %></span>
+                                </div>
+                              </td>
+                            </tr>
+                        <% end %>
+                    <% end %>
+                    <% if !@google_connections.nil? and @google_connections["error"].nil? %>
+                        <% @google_connections = @google_connections["feed"].nil? ? nil : @google_connections["feed"]["entry"] %>
+                        <% @google_connections.each do |connection| %>
+                            <tr class="float-L mrg-B20">
+                              <td  class="float-L">
+                                <span class="check-radio">
+                                  <input name="forUserAccountId" type="radio" value="<%= google_email(connection) %>" type="radio" style="float:left;">
+                                  <input name="type" value="GMAIL" type="hidden">
+                                  <input name="name" value="<%= google_username(connection) %>" type="hidden">
+                                </span>
+                                <span class="USR-phto-box" style="width:30px;">
+                                    <img width="28" height="28" src="/assets/user_photo.jpg" class="userpic">
+                                </span>
+                                      </td>
+                              <td class="float-L">
+                                <div class="USR-info line-hit-16">
+                                  <span class="col-blue calibrib font-15 "><%= google_username(connection) %></span>
+                                </div>
+                              </td>
+                              <td  class="float-L">
+                                <div class="USR-info line-hit-16">
+                                  <span><%= google_email(connection) %></span>
+                                </div>
+                              </td>
+                            </tr>
+                        <% end %>
+                    <% end %>
+                    <% if !@facebook_connections.nil? and @facebook_connections["error"].nil? %>
+                       <% @facebook_connections = @facebook_connections["data"] %>
+                        <% @facebook_connections.each do |connection| %>
+                            <tr class="float-L mrg-B20">
+                              <td  class="float-L">
+                                <span class="check-radio">
+                                  <input name="forUserAccountId" type="radio" value="<%= connection_facebook_id(connection) %>" type="radio" style="float:left;">
+                                  <input name="type" value="FACEBOOK" type="hidden">
+                                  <input name="name" value="<%= connection_facebook_name(connection) %>" type="hidden">
+                                </span>
+                                <span class="USR-phto-box" style="width:30px;">
+                                    <img width="28" height="28" src="<%= connection_facebook_profile_pic_url(connection) %>" class="userpic">
+                                </span>
+                              </td>
+                              <td class="float-L">
+                                <div class="USR-info line-hit-16">
+                                  <span class="col-blue calibrib font-15 "><%= connection_facebook_name(connection) %></span>
+                                </div>
+                              </td>
+                              <td  class="float-L">
+                                <div class="USR-info line-hit-16">
+                                  <span><%= connection_facebook_headline(connection) %></span>
+                                </div>
+                              </td>
+                            </tr>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <tr>
+                      <td>
+                        <strong>No connection found.</strong>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+                <tfoot>
+                <tr style="display:none;">
+                  <th>image</th>
+                  <th>name</th>
+                  <th>company</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="send-box txt-L"><input type="submit" value="Accept" class="send-btn calibrib"></div>
+      <% end %>
+    </div>
+    <div class="requestor-info-box">
+      <span class="font-14 bold float-L mrg-B10">Requestor information:</span>
+      <div class="sent_received_section mrg-0">
+        <% unless @request.nil? %>
+            <div class="white-box accepted-request-info">
+              <span class="USR-phto-box" style="width:30px;"><img width="28" height="28" src="<%= from_user_profile_pic(@request) %>" class="userpic"> </span>
+              <div class="USR-info">
+          <span class="col-blue font-15 calibrib">
+            <%= link_to from_user_name(@request), from_user_profile_url(@request), :target => "_blank" %>
+          </span>
+                <br>
+                <span><%= from_user_headline(@request) %>, <%= from_user_company(@request) %></span>
+                <br>
+                <span class="col-orange bold font-14">Score: <%= from_user_score(@request) %></span>
+              </div>
+            </div>
+            <p class="italic font-13"><%= request_message(@request) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="accept-confirmation display-none">
+    <h2 class="title font-26 col-blue">Thank you.</h2>
+    <p>	Thank you for helping <span class="col-blue font-16 calibrib" id="from-user-name-span"></span> with an introduction to <span class="col-blue font-16 calibrib" id="for-user-name-span"></span>.
+      Your new OFunnel score is <span class="col-orange bold font-14" id="to-user-score"></span>. You can look at your score history through the Profile page.
+    </p>
+    <a href="#" class="display-none send-accepted-mail"></a>
+  </div>
+</div><!-- START Send a Request LIGHT BOX -->
+
+<%
+   unless @connections.nil?
+     search_string = ""
+     unless (@request["forUserName"] =~ /\S/).nil?
+       search_string = @request["forUserName"]
+     else
+       unless (@request["companySearched"] =~ /\S/).nil?
+         search_string = @request["companySearched"]
+       end
+     end
+%>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            oTable = $('#dataTable-search').dataTable({
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sSearch": ""
+                },
+                "aoColumns"   : [{ "bSearchable": false, "bVisible": true }, null, null]
+            });
+            oTable.fnFilter("<%= search_string %>");
+        });
+    </script>
+<% end %>

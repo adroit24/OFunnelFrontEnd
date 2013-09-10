@@ -1,0 +1,221 @@
+<% if @profile["error"].nil? %>
+    <% self_profile = (@id == current_user_id.to_s) %>
+    <div class="userprofile-box">
+      <div class="profile-title"><%= profile_user_name %></div>
+      <div class="profile-details-box">
+        <img class="photo" src="<%= profile_user_profile_pic_url %>" alt="" title="" />
+        <div class="info">
+          <strong>Company: </strong>  <span><%= profile_user_company %></span>
+          <br />
+          <strong>Email:</strong>  <a href="mailto:<%= profile_user_email %>"><%= profile_user_email %></a>
+          <br />
+          <strong>Location: </strong>  <span><%= profile_user_location %></span>
+        </div>
+
+        <% unless self_profile %>
+            <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
+              <strong>History: </strong>
+              <br />
+              <strong>Introductions made:</strong> <%= @profile["noOfRequestAccepted"] %>
+              <br />
+              <strong>Introductions requested:</strong> <%= @profile["noOfRequestMade"] %>
+            </div>
+        <% else %>
+            <div class="info float-R">
+              <div class="social-integration">
+                <strong>Logged in with:</strong>
+                <a href="<%= authorize_with_likedin_path %>">
+                  <img src="/assets/linkedin_32.png" class="enabled" />
+                </a>
+                <a href="<%= authorize_with_google_path %>">
+                  <img src="/assets/gmail.png" class="<%= check_google_session ? "enabled" : "disabled" %>" />
+                </a>
+                <a href="<%= authorize_with_facebook_path %>">
+                  <img src="/assets/facebook_32.png" class="<%= check_facebook_session ? "enabled" : "disabled" %>" />
+                </a>
+              </div>
+              <a href="<%= connections_strength_path({:user_name => profile_user_first_name}) %>" id="connection-strength-link" class="font-14 col-blue"> Strength of Connections </a>
+            </div>
+        <% end %>
+      </div>
+
+      <div class="all-box mrg-T20">
+        <div class="all-box font-18 bold">Groups:</div>
+        <% if self_profile %>
+            <p class="italic font-12">Trust is very important when asking for an introduction. Hence, we verify any groups added. Please add/edit them carefully. </p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="sent_received_section">
+      <div class="white-box score-history">
+        <% tags = profile_user_tags %>
+        <% unless tags.nil? %>
+            <% if tags.length > 0 %>
+                <table width="100%" align="left" cellpadding="6" cellspacing="0">
+                  <tbody>
+                  <%
+                     (0..tags.length-1).step(2) do |offset|
+                       odd = tags[offset]
+                       even = tags[offset +1]
+                  %>
+                      <tr>
+                        <td class="pad-T15 pad-B15" style="width: 50%;<%= 'border-bottom: none !important;' unless show_bottom_border(offset,tags) %>">
+                          <span class="USR-phto-box" style="position: relative;"><img class="userpic" src="<%= profile_tag_logo(odd) %>" width="55" height="40">
+                            <% verification = (profile_is_pending_tag(odd) or !profile_is_approved_tag(odd)) %>
+                            <% if verification %>
+                                <a href="#" class="red-flag">
+                                  <div class="tooltip">
+                                    <span class="arrow"></span>
+                                    <p><%= profile_is_pending_tag(odd) ? "Awaiting approval from Administrator." : "In verification." %></p>
+                                  </div>
+                                </a>
+                            <% end %>
+                          </span>
+                          <div class="USR-info nowrap-ellipsis">
+                                <span class="col-blue calibrib font-16" style="margin-left: 15px;">
+                                  <%= link_to profile_tag_name(odd), verification ? '#' : group_path(profile_tag_id(odd)), :class => "#{verification ? "verification" : " "}" %>
+                                </span>
+                            <br>
+                            <!--<span class="nowrap-ellipsis"><%#= odd["organizerName"] %></span>-->
+                          </div>
+                        </td>
+                        <% if even %>
+                            <td class="pad-T15 pad-B15" style="<%= 'border-bottom: none !important;' unless show_bottom_border(offset,tags) %>">
+                              <span class="USR-phto-box" style="position: relative;"><img class="userpic" src="<%= profile_tag_logo(even) %>" width="55" height="40">
+                                <% verification = (profile_is_pending_tag(even) or !profile_is_approved_tag(even)) %>
+                                <% if verification %>
+                                      <a href="#" class="red-flag">
+                                        <div class="tooltip">
+                                          <span class="arrow"></span>
+                                          <p><%= profile_is_pending_tag(even) ? "Awaiting approval from Administrator." : "In verification." %></p>
+                                        </div>
+                                      </a>
+                                  <% end %>
+                              </span>
+                              <div class="USR-info nowrap-ellipsis">
+                                    <span class="col-blue calibrib font-16" style="margin-left: 15px;">
+                                      <%= link_to profile_tag_name(even), verification ? '#' : group_path(profile_tag_id(even)), :class => "#{verification ? "verification" : " "}" %>
+                                    </span>
+                                <br>
+                                <!--<span class="nowrap-ellipsis"><%#= even["organizerName"] %></span>-->
+                              </div>
+                            </td>
+                        <% end %>
+                        <% if (offset + 1) == tags.length && even.nil? and self_profile %>
+                            <td class="pad-T15 pad-B15" style="border-bottom: none !important;">
+                              <div class="all-box-3  "><a href="#" class="add-group-btn addtag-big">Add a group</a></div>
+                            </td>
+                        <%
+                           break
+                           end
+                        %>
+                      </tr>
+                      <% if (offset + 2) == tags.length and self_profile %>
+                          <tr>
+                            <td colspan="2" class="pad-T15 pad-B15" style="border-bottom: none !important;">
+                              <div class="all-box"><a href="#" class="add-group-btn addtag-big">Add a group</a></div>
+                            </td>
+                          </tr>
+                      <% end %>
+                  <% end %>
+                  </tbody>
+                </table>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <% if self_profile %>
+        <div class="sent_received_section mrg-T20">
+          <div class="white-box score-history">
+            <div class="all-box font-18 bold">Score History:</div>
+              <% requests = profile_request_details %>
+              <% unless requests.nil? %>
+                <table width="100%" align="left" cellpadding="6" cellspacing="0">
+                  <tbody>
+                  <tr class="calibrib">
+                    <td width="40%"  class="border-B bold font-16 pad-B10">Requestor </td>
+                    <td width="40%"  class="border-B bold font-16">Introduced To</td>
+                    <td width="14%"  class="border-B bold font-16 txt-C">Outcome</td>
+                  </tr>
+                  <% if requests.length > 0
+                       score = 80
+                       ((requests.length) -1).downto 0 do |i|
+                         score = ((request_outcome(requests[i]) == "Accepted") && (from_user_id(requests[i]) != current_user_id)) ? request_point(requests[i]).to_i + score : score
+                         requests[i]["score"] = score
+                       end
+                       requests.each do |request| %>
+                          <tr>
+                            <td class="pad-T15">
+                              <span class="USR-phto-box"><img class="userpic" src="<%= from_user_profile_pic(request) %>" width="40" height="40"> </span>
+                              <div class="USR-info">
+                                <span class="col-blue font-16 calibrib">
+                                  <%= link_to from_user_name(request), from_user_profile_url(request), :target => "_blank" %>
+                                </span>
+                                <br>
+                                <span class="multiline-ellipsis float-L" style="width:245px !important;"><%= from_user_headline(request) %>, <%= from_user_company(request) %></span>
+                                <br>
+                              </div>
+                              <% if is_for_user_exists(request) %>
+                                  <div class="show-Rqst-details mrg-T5" style="font-style:normal;">
+                                    <span class="float-L multiline-ellipsis"><strong>Request for</strong> <a href="#" class="col-blue italic"><%= request_query(request) %></a> </span>
+                                    <br>
+                                  </div>
+                              <% end %>
+                              <div class="show-Rqst-details" style="display: none;">
+                                <%= request_message(request) %>
+                                <p><a href="#" class="hide-request-details">Hide request details <img src="/assets/down-arrow.png" alt="" /></a> </p>
+                              </div>
+                            </td>
+                            <% if is_for_user_exists(request) %>
+                                <td class="pad-T15">
+                                  <span class="USR-phto-box"><img class="userpic" src="<%= for_user_profile_pic(request) %>" width="40" height="40"> </span>
+                                  <div class="USR-info">
+                                <span class="col-blue font-16 calibrib">
+                                  <%= link_to for_user_name(request), for_user_profile_url(request), :target => "_blank" %>
+                                </span>
+                                    <br>
+                                    <% if forUserAccountType(request) == "LINKEDIN" %>
+                                        <span class="multiline-ellipsis float-L" style="width:245px !important;"><%= for_user_headline(request) %>, <%= for_user_company(request) %></span>
+                                    <% elsif forUserAccountType(request) == "GMAIL" %>
+                                        <span class="nowrap-ellipsis float-L" style="width:210px !important;"><%= forUserGoogleAccountId(request) %></span>
+                                    <% elsif forUserAccountType(request) == "FACEBOOK" %>
+                                        <span class="multiline-ellipsis float-L" style="width:245px !important;"><%= forUserFacebookHeadline(request) %></span>
+                                    <% elsif forUserAccountType(request) == "OTHERS" %>
+                                        <span></span>
+                                    <% end %>
+                                  </div>
+                                </td>
+                            <% else %>
+                                <td class="pad-T15">
+                                  <span class="openrequests-2 col-blue multiline-ellipsis show-request-details2" style="width:225px; cursor: pointer;"> Anyone at  <%= request_query(request) %> </span>
+                                </td>
+                            <% end %>
+                            <td class="txt-C pad-T15 col-<%= request_class(request) %>">
+                              <%= request_outcome(request) %>
+                              <% if ((request_outcome(request) == "Accepted") && (from_user_id(request) != current_user_id)) %>
+                                  <br/>
+                                  <span class="points bg-<%= request_class(request) %> mrg-T10"><%= request["score"] %></span>
+                              <% end %>
+                            </td>
+                          </tr>
+                      <% end %>
+                  <% end %>
+                  </tbody>
+                  </table>
+                <% else %>
+                <div class="search-panel all-box-3">
+                  <p class="font-14"><i>No request found.</i></p>
+                </div>
+              <% end %>
+            <!--<a href="#" class="showmore">Show more sent history <img class="userpic" src="/assets/showmore-arrow.jpg" width="31" height="29"> </a>-->
+          </div>
+        </div>
+    <% end %>
+    <%= render :partial => "groups/new_group_popup" %>
+<% else %>
+    <div class="userprofile-box">
+      <strong>Error in retrieving profile, please try again.</strong>
+    </div>
+<% end %>

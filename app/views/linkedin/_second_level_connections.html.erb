@@ -1,0 +1,38 @@
+<% unless (@indirect_connections.nil? or @indirect_connections.blank?) %>
+    <% @indirect_connections.each do |connection| %>
+        <% person = connection["person"] %>
+        <% shared_persons = connection["shared-person"] %>
+        <tr class="USR-details-box">
+          <td class="main-user-section">
+            <div class="photo-box"><img class="main-usr-photo" src="<%= connection_profile_pic(person) %>" width="65" height="65"></div>
+            <div class="main-usr-text">
+              <span class="name">
+                <%= link_to connection_user_name(person), connection_profile_url(person), :target => "_blank" %>
+                <span class="friendlabel-big">2nd</span>
+              </span>
+              <span class="font-13"> <%= connection_job_title(person) %> • <%= connection_company_name(person) %> • <%= connection_location(person) %> </span>
+            </div>
+          </td>
+          <td>
+          <% unless shared_persons.nil? %>
+              <% shared_persons.each do |shared_person| %>
+                  <div class="sub-user-section">
+                    <div class="photo-box">
+                      <span class="sub-border"></span>
+                      <img class="sub-usr-photo" src="<%= connection_profile_pic(shared_person) %>" width="40" height="40">
+                      <!--<span class="msg-number"> <%#= shared_person["sharedCount"] %> </span>-->
+                    </div>
+                    <div class="sub-usr-text">
+                      <span class="name">
+                        <%= link_to connection_user_name(shared_person), connection_profile_url(shared_person), :target => "_blank" %>
+                        <span class="friendlabel-small">1st</span>
+                      </span>
+                      <span class="font-13"> <%= connection_job_title(shared_person) %> • <%= connection_company_name(shared_person) %> </span>
+                    </div>
+                  </div>
+              <% end %>
+          <% end %>
+          </td>
+        </tr>
+    <% end %>
+<% end %>

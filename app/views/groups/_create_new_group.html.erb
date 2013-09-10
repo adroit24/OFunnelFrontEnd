@@ -1,0 +1,31 @@
+<div id="create-group" style="display: none;">
+  <!-- START new Group LIGHT BOX -->
+  <div class="lightbox" style="width:705px;">
+    <a href="#" class="cancel-icon"></a>
+    <form action="<%= add_group_path %>" id="new-group-form" method="post" class="all-box" enctype="multipart/form-data">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <div class="new-group-form">
+        <h2 class="col-blue font-22">Create a group</h2>
+        <div class="all-box" style="width:69%;">
+          <label for="requests" class="bold font-14">Name your group</label>
+          <input type="text" name="group-name" class="input_100"  placeholder="Type name here" />
+          <label for="requests" class="bold font-14">Assign the group administrator</label>
+          <div class="input-relative">
+            <input type="text" name="group-admin" readonly="true" class="input_100"  value="<%= user_name %>" /><a href="#" class="downarrow"></a>
+          </div>
+          <label for="requests" class="bold font-14">Group description <span class="col-red font-18" id="group-description-error" style="display: none;"> * </span></label>
+          <textarea class="input_100 textarea" name="description-message" type="text"></textarea>
+          <div class="send-box txt-L"><input class="send-btn calibrib" name="description" type="submit" value="Create and Add Group"></div>
+        </div>
+        <img src="" class="upload-image-preview-box">
+        <div class="upload-logo-box">
+          <div id="upload-btn" class="group-upload-button">Click here to <br /> upload your logo <span class="col-red font-18" id="group-logo-error" style="display: none;"> * </span></div>
+          <div style='height: 0px;width: 0px; overflow:hidden;'>
+            <%= file_field_tag 'group_logo', :accept => 'image/png,image/gif,image/jpeg', :id => "uploadfile", :class => "group-upload-input", :value => "upload", :onchange => "showImagePreview(this.files)" %>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- START new Group LIGHT BOX -->
+</div>

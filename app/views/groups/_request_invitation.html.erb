@@ -1,0 +1,14 @@
+<div id="confirm-request-group" class="display-none">
+  <!-- START LIGHT BOX -->
+  <div class="lightbox" style="width:705px;">
+    <form action="<%= group_request_path %>" id="group-request-confirm-form" method="post" class="all-box" enctype="multipart/form-data">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <input type="hidden" name="group-id" value="<%= @tag_id %>"/>
+      <div class="group-exist">
+        <p class="font-14">Do you want to ask the administrator for an invitation?</p>
+        <div class="send-box txt-L"><input class="send-btn calibrib" type="submit" value="Request Invitation"></div>
+      </div>
+    </form>
+  </div>
+  <!-- START LIGHT BOX -->
+</div>

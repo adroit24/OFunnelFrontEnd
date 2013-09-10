@@ -1,0 +1,123 @@
+linkedin:
+  API_KEY: '3fryxuuxfurg'
+  API_SECRET: '7E1voJ5UNv24HFhr'
+  REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/linkedin/linkedin_authorization_callback'
+  STATE: SecureRandom.hex(15)
+
+google:
+  CLIENT_ID: '808198664488-75it57po88eolbrq29p3jg12qpurctse.apps.googleusercontent.com'
+  CLIENT_SECRET: '8taACyK88qgXz1lpb9aqrp5C'
+  REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/google/google_authorization_callback'
+  SCOPE: 'https://www.google.com/m8/feeds/'
+
+facebook:
+  APP_ID: '482831405128767'
+  APP_SECRET: '5a20ece916b3a9023b921a4f39edc57f'
+  REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/facebook/facebook_authorization_callback'
+  SCOPE: 'email,read_friendlists,user_education_history,friends_work_history,user_work_history,offline_access'
+
+salesforce:
+  CLIENT_ID: '3MVG9A2kN3Bn17hu2QGI93p0weQWoqM4q3.MJbiRQ82H7zsgen4KoU0POqm1J.pZ4JSY7nOQwAfkzYOXaixpF'
+  CLIENT_SECRET: '7376237337804847714'
+  REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/salesforce/salesforce_authorization_callback'
+
+twitter:
+  CONSUMER_KEY: 'mTBMfWpcUI4sME6SW3WQ'
+  CONSUMER_SECRET: 'agvQflS7UDJPuxXcivdvwgmJd8W88YSRT5GRr0ogo'
+  REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/twitter/twitter_authorization_callback'
+
+api_endpoints:
+  #LinkedIn API Endpoints
+  GetConnectionsInCompany: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getConnectionsInCompany"
+  GetLinkedInList: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getLinkedInListWithUserId"
+
+  #Twitter API EndPoints
+  GetTweetsFromTwitter: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/tweets"
+  AddTweeterDetails: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addTwitterDetails"
+
+  #User API Endpoints
+  AddOFunnelUser: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addOFunnelUser"
+  UserDetailsFromUserID: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/userDetailsFromUserID"
+  UserDetailsFromLinkedInID: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/userDetailsFromLinkedInID"
+  GetUserProfileFromUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/GetUserProfileFromUserId"
+  UserProfileFromLinkedInID: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/userProfileFromLinkedInID"
+  AddUser: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addUser"
+  SendWelcomeMail: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/sendWelcomeMail"
+  UpdateUser: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/updateUser"
+  IsValidSignUpToken: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/isValidSignUpToken"
+  DeleteSignUpUserToken: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/deleteSignUpUserToken"
+  MarkTokenAsUsedRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/MarkTokenAsUsed"
+  GetPersonsInCompany: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getPersonsInCompany"
+  GetPersonsForQuery: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getPersonsForQuery"
+  CheckOFunnelUserExist: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/checkOFunnelUserExist"
+  GetPersonsWithPersonName: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getPersonsWithPersonName"
+  GetConnectionsInMultipleCompanies: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getConnectionsInMultipleCompanies"
+  GetLinkedInListForCompany: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getLinkedInListForCompany"
+  Login: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/login"
+  Logout: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/logout"
+  GetGmailConnectionsWithUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getGmailConnectionsWithUserId"
+  GetFacebookConnectionsWithUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getFacebookConnectionsWithUserId"
+  GetConnectionsReport: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/GetConnectionsReport"
+  UpdateConnectionsStrength: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/UpdateConnectionsStrength"
+  LoginOnSalesForce: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/loginOnSalesForce"
+  GetSalesForceConnections: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getSalesForceConnections"
+  AddSalesForceConnection: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addSalesForceConnection"
+  MarkedContactConnected: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/markedContactConnected"
+  ImportSalesForceCompaniesFromLeads: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/importSalesForceCompaniesFromLeads"
+
+  #Groups API Endpoints
+  AddTag: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/addTag"
+  DeleteTag: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/deleteTag"
+  GetUserTagsFromUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/GetUserTagsFromUserId"
+  GetUserTagsFromLinkedInId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/GetUserTagsFromLinkedInId"
+  GetOrganizerAndRequestsDetailsInGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getOrganizerAndRequestsDetailsInGroup"
+  InviteMemberToGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/inviteMemberToGroup"
+  AddMemberToGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/addMemberToGroup"
+  GetGroupsForQuery: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getGroupsForQuery"
+  RequestToJoinGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/requestToJoinGroup"
+  UpdateStatusForMembershipRequestToGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/updateStatusForMembershipRequestToGroup"
+  GetOrganizersAndMembersInGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getOrganizersAndMembersInGroup"
+  AddOrganizerToGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/addOrganizerToGroup"
+  GetMembersInGroupForQuery: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getMembersInGroupForQuery"
+  GetAllPendingStatusGroups: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/GetAllPendingStatusGroups"
+  GetOrganizersAndGroupForQuery: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getOrganizersAndGroupForQuery"
+  GetMembersInGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getMembersInGroup"
+  CheckGroupJoinInvitationToken: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/checkGroupJoinInvitationToken"
+  UpdateGroupStatus: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/updateGroupStatus"
+  InviteMemberToGroupV1: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/InviteMemberToGroupV1"
+  PersistCompanyNetworkConnections: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/PersistCompanyNetworkConnections"
+  GetCompanyNetworkGroupConnections: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getCompanyNetworkGroupConnections"
+  AddInvitedMemberToGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/addInvitedMemberToGroup"
+  AddMemberToExistingGroupOrCreateGroup: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/addMemberToExistingGroupOrCreateGroup"
+  DeleteTargetAccount: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/deleteTargetAccount"
+  PersistNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/persistNetworkAlerts"
+  GetNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/getNetworkAlerts"
+  RemoveNetworkAlert: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/removeNetworkAlert"
+
+  #Request API Endpoints
+  AddRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/addRequest"
+  UpdateScoreWithUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/updateScoreWithUserId"
+  UpdateScoreWithLinkedInId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/updateScoreWithLinkedInId"
+  UpdateRequestStatus: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/updateRequestStatus"
+  SendRequestEmail: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/sendRequestEmail"
+  SendRequestStatusEmail: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/sendRequestStatusEmail"
+  AlertRequestEmail: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/alertRequestEmail"
+  GetAllRequests: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/getallrequests"
+  GetAllRequestsMade: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/getrequestsmade"
+  GetAllRequestsGot: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/getrequestsgot"
+  GetRequestForRequestId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/getRequestforrequestid"
+  RequestForMoreInformation: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/requestForMoreInformation"
+  UpdateRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/updateRequest"
+  AcceptRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/AcceptRequest"
+  IgnoreRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/IgnoreRequest"
+
+  #Logs API Endpoints
+  Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"
+
+http_url: "http://ofunnel.cloudapp.net:4444"
+logout_redirect: "http://ofunnel.com"
+wrong_token_redirect: "http://ofunnel.com?signup-error"
+linkedin_auth_url: "http://ofunnel.cloudapp.net:4444/linkedin/authorize_with_likedin"
+google_auth_url: "http://ofunnel.cloudapp.net:4444/google/authorize_with_google"
+facebook_auth_url: "http://ofunnel.cloudapp.net:4444/facebook/authorize_with_facebook"
+salesforce_auth_url: "http://ofunnel.cloudapp.net:4444/salesforce/authorize_with_salesforce"

@@ -1,0 +1,37 @@
+<div class="number-box">
+  <% if @total_pages < 6 %>
+      <% (0..(@total_pages -1)).each do |index| %>
+          <% if index == 0 %>
+              <a href="<%= discover_relationships_path({:offset => 0}) %>" class="<%= dr_pg_link_class(@current_page,(index + 1)) %>"><%= index + 1 %></a>
+          <% else %>
+              <a href="<%= discover_relationships_path({:offset => (index) * @count}) %>" class="<%= dr_pg_link_class(@current_page,(index + 1)) %>"><%= index + 1 %></a>
+          <% end %>
+      <% end %>
+  <% else %>
+      <%
+         left, middle, right = windowed_page_numbers(@current_page,@total_pages)
+         #p left
+         #p middle
+         #p right
+      %>
+      <% left.each do |index|  %>
+          <a href="<%= discover_relationships_path({:offset => (index - 1) * @count}) %>" class="<%= dr_pg_link_class(@current_page,(index)) %>"><%= index %></a>
+      <% end %>
+      <% unless middle.nil? %>
+          <% if (@current_page - 2 > 1) %>
+              <a href="#" class="pl-inactive">...</a>
+          <% end %>
+          <% middle.each do |index|  %>
+              <a href="<%= discover_relationships_path({:offset => (index - 1) * @count}) %>" class="<%= dr_pg_link_class(@current_page,(index)) %>"><%= index %></a>
+          <% end %>
+          <% if (@current_page + 2 < @total_pages) %>
+              <a href="#" class="pl-inactive">...</a>
+          <% end %>
+      <% else %>
+          <a href="#" class="pl-inactive">...</a>
+      <% end %>
+      <% right.each do |index|  %>
+          <a href="<%= discover_relationships_path({:offset => (index - 1) * @count}) %>" class="<%= dr_pg_link_class(@current_page,(index)) %>"><%= index %></a>
+      <% end %>
+  <% end %>
+</div>

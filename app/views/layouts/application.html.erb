@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OFunnel</title>
+  <%= stylesheet_link_tag "application.html5", :media => "all" %>
+  <%= stylesheet_link_tag "colorbox", :media => "all" %>
+  <%= stylesheet_link_tag "jquery-ui-1.10.3.custom", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript">
+      var userName = '<%= user_name %>';
+      var addGroupUrl = '<%= add_group_path %>';
+      var getPeopleInCompanyUrl = '<%= get_people_in_company_path %>';
+      var getPersonsForQueryUrl = '<%= get_people_for_query_path %>';
+      var searchGroupForQueryUrl = '<%= search_group_path %>';
+      var searchMemberInGroupUrl = '<%= search_member_in_group_path %>';
+      <% unless current_user.nil? %>
+      var userProfilePath = '<%= "#{user_path(current_user_id)}#user-tags-focus" %>';
+      <% end %>
+      var csrfToken = '<%= form_authenticity_token %>';
+      // Commented due to bug#324
+      //var showOfunnelHelp = <%#= show_ofunnel_help %>
+  </script>
+</head>
+<body>
+<div class="wrapper">
+  <!-- START MAIN DIV-->
+  <div class="main clearfix">
+    <!-- START HEADER -->
+    <div class="header">
+      <div class="logo_menu_box">
+        <a href="<%= requests_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
+        <div class="userstatus-box width-auto">
+          <% unless current_user.nil? %>
+              <div class="userscorebox">
+                <span class="col-orange font-13 bold calibrib">SCORE</span>
+                <br />
+                <div class="userscore bg-orange"> <%= current_user_score %></div>
+              </div>
+              <div class="signout-box">
+                <div class="links">
+                  <div class="mygroups-dbox col-blue" onclick="return userTagsFocus(event)">My Groups <span class="arrow"></span>
+                    <div class="g-dropdown">
+                      <% unless @user_tags.nil? %>
+                          <% if @user_tags.length > 5 %>
+                              <% @user_tags[0..4].each do |tag| %>
+                                  <%# verification = (profile_is_pending_tag(tag) or !profile_is_approved_tag(tag)) %>
+                                  <%# unless verification %>
+                                  <a href="<%= group_path(profile_tag_id(tag)) %>"><%= profile_tag_name(tag) %></a>
+                                  <%# end %>
+                              <% end %>
+                          <% else %>
+                              <% @user_tags.each do |tag| %>
+                                  <%# verification = (profile_is_pending_tag(tag) or !profile_is_approved_tag(tag)) %>
+                                  <%# unless verification %>
+                                  <a href="<%= group_path(profile_tag_id(tag)) %>"><%= profile_tag_name(tag) %></a>
+                                  <%# end %>
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                      <a href="#" class="addtag-big">Add Group</a>
+                    </div>
+                  </div>
+                  <a href="<%= user_path(current_user_id) %>">Profile</a>
+                  <a href="<%= logout_path %>">Log out</a>
+                </div>
+                <div class="search-panel">
+                  <form action="<%= search_group_path %>" method="post" class="all-box" enctype="multipart/form-data">
+                    <div class="input-box">
+                      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+                      <input class="input" type="text" placeholder="Search groups..." name="query">
+                      <input class="searchicon" type="submit" value="">
+                    </div>
+                  </form>
+                </div>
+              </div>
+          <% else %>
+              <div class="username">
+                <%= link_to image_tag('signin.png'), authorize_with_likedin_path(:id=>"no_back"), :id => 'linkedin-login' %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- END HEADER -->
+
+    <!-- START CONTAINER -->
+    <% unless current_user.nil? %>
+        <div class="container section-bg" style="border:1px solid #d8d8d8; margin-top:0; box-shadow:1px 0px 3px #c0ced6; min-height:200px;">
+          <%= render :partial => "shared/left_box" %>
+          <div class="right-panel">
+            <div class="sent_received_section">
+              <%= yield %>
+              <%= render :partial => "groups/new_group_popup" %>
+            </div>
+          </div>
+    <% end %>
+    <!-- END CONTAINER -->
+    </div>
+  </div>
+  <!-- END MAIN DIV-->
+
+  <!-- START FOOTER -->
+  <div class="footer">
+    <div class="footer_box"> &copy; 2013 OFunnel </div>
+  </div><!-- END FOOTER -->
+</div>
+<!--Commented due to bug#324-->
+<%# if show_ofunnel_help %>
+<%#= render :partial => "shared/welcome_to_ofunnel" %>
+<%# session[:show_help] = false %>
+<%# end %>
+</body>
+</html>

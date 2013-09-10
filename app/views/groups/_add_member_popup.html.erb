@@ -1,0 +1,45 @@
+<div id="add-member" style="display: none;">
+  <!-- START Invite a Member LIGHT BOX -->
+  <div class="lightbox" style="width:620px; padding:17px 0;">
+    <form action="<%= add_member_path %>" method="post" class="all-box" id="add-member-to-group">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <div class="outer-row">
+        <h2 class="col-blue">Invite a Member</h2>
+      </div>
+      <a href="#" class="cancel-icon"></a>
+      <div class="invite-member-row" style="padding-right: 0; width: 97%;">
+        <div class="all-box" style="width:65%;">
+          <label for="requests" class="bold font-14">Name: <span class="col-red font-18 add-member-query-error" style="display: none;"> * </span></label>
+          <input type="text" name="query" class="input_100" placeholder="Enter name" />
+          <label for="requests" class="bold font-14">Email: <span class="col-red font-18 add-member-email-error" style="display: none;"> * </span></label>
+          <input type="text" class="input_100" name="email" placeholder="Enter email">
+        </div>
+        <div class="chances-box" style="position:static; min-height:93px; margin-top:20px;">
+          <ul>
+            <li style="margin:0; list-style:none;">Enter the name and email address of the individual or group alias whom you want to invite to join the <%= @tag_name %> group.</li>
+          </ul>
+        </div>
+      </div><!-- end invite member row -->
+      <div class="outer-row">
+        <input type="hidden" name="invite_member_tag_id" value="<%= @tag_id %>"/>
+        <a href="#" id="add-more-members" style="text-decoration: underline;">Invite More</a>
+        <span class="already-exist2 col-red font-14 display-none">Person already exists in the group.</span>
+        <div class="send-box txt-L"><input class="send-btn calibrib mrg-T10" type="submit" value="Invite"></div>
+      </div>
+    </form>
+  </div><!-- START Invite a Member LIGHT BOX -->
+</div>
+
+
+
+<div id="add-more-members-content" class="display-none">
+  <div class="invite-member-row">
+    <div class="all-box" style="width:67%;">
+      <label for="requests" class="bold font-14">Name: <span class="col-red font-18 add-member-query-error" style="display: none;"> * </span></label>
+      <input type="text" name="query" class="input_100" placeholder="Enter name" />
+      <label for="requests" class="bold font-14">Email: <span class="col-red font-18 add-member-email-error" style="display: none;"> * </span></label>
+      <input type="text" class="input_100" name="email" placeholder="Enter email">
+    </div>
+  </div>
+</div>
+

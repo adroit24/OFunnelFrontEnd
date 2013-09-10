@@ -1,0 +1,30 @@
+<div class="left-panel">
+  <div class="left-box">
+    <div class="send-box mrg-B15"><a href="#open-request" class="send-btn pad-B10 pad-T10 float-L font-18 no-result-open-request" style="width:83%;">Get an Introduction</a></div>
+    <div class=" all-box font-18 col-orange calibrib">
+      <%= link_to 'Requests Received', requests_path("received"), :class => "all-box calibrib #{is_tab_active?('received')}" %>
+    </div>
+    <table width="100%" align="left" cellpadding="2" cellspacing="3" class="<%= 'grey-out-table' if is_tab_active?('received') != "active"%>">
+      <tbody>
+      <% unless @user_tags.nil? %>
+          <% @user_tags.each do |tag| %>
+              <tr>
+                <td>
+                  <div class="checkboxFour">
+                    <input type="checkbox" value="1" id="checkboxFourInput-<%= profile_tag_id(tag) %>" checked="true" name="tag-filter" />
+                    <label for="checkboxFourInput-<%= profile_tag_id(tag) %>"></label>
+                  </div>
+                </td>
+                <td class="font-14 tag-name nowrap-ellipsis"><%= profile_tag_name(tag) %></td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <div class=" all-box-2 font-18 col-blue calibrib">
+      <%= link_to 'Requests Sent', requests_path("sent"), :class => "all-box-2 calibrib border-B mrg-T20 pad-B15 #{is_tab_active?('sent')}" %>
+    </div>
+    <div class="send-box mrg-T25"><a href="<%= search_connections_path %>" class="send-btn bg-blue float-L font-14 pad-all-10" style="width:89%;">Search Existing Connections</a></div>
+  </div>
+</div>
+<%= render 'requests/new_open_request_popup' %>

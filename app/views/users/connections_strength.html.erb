@@ -1,0 +1,78 @@
+<div class="userprofile-box">
+  <div class="profile-title"><%= @user_name %>'s Connections Report </div>
+  <p class="font-13 italic">Strength of your LinkedIn connections. Adjust it accordingly so that we can get the high quality introductions you need for business growth </p>
+  <div class="send-box mrg-B10">
+    <input class="send-btn float-R pad-L30 pad-R30 pad-T10 pad-B10 update_connection_strength_input" type="submit" value="Save" name="" />
+        <span class="float-R mrg-T10 mrg-R30">
+            <a href="<%= connections_strength_path({:user_name => @user_name,:offset => (@offset.to_i - 200)}) %>" class="<%= (@prev_flag == true) ? 'active-prev-arrow' : 'prev-arrow no-click' %>"></a>
+            <a href="<%= connections_strength_path({:user_name => @user_name,:offset => @offset}) %>" class="<%= (@next_flag == true) ? 'active-next-arrow' : 'next-arrow no-click' %>"></a>
+        </span>
+  </div>
+</div>
+<div class="contoso-page">
+  <div class="sent_received_section mrg-0">
+    <div class="white-box score-history">
+      <table width="100%" align="center" cellpadding="6" cellspacing="0">
+        <tbody>
+        <tr>
+          <td class="bold font-20">Connection</td>
+          <td class="bold font-20 txt-R">Strength of Connection</td>
+        </tr>
+        <% unless (@connections.nil? or @connections.empty?) %>
+            <%= form_tag(update_connections_strength_path, :id => "update_connection_strength_form") do %>
+                <% @connections.each_with_index do |connection| %>
+                    <% next if user_account_id(connection) == "private" %>
+                    <script type="text/javascript">
+                        gConnectionsStrength["<%= user_account_id(connection) %>"] = <%= user_connection_strength(connection) %>;
+                    </script>
+                    <tr>
+                      <td class="pad-T15">
+                        <span class="USR-phto-box"><img class="userpic" src="<%= user_profile_pic_url(connection) %>" width="40" height="40"> </span>
+                        <div class="USR-info" style="width:300px !important;">
+                          <span class="col-blue bold font-16 calibrib"><%= linkedin_connection_name(connection) %></span>
+                          <br>
+                          <span class="nowrap-ellipsis float-L font-14" style="width:300px !important;"><%= linkedin_headline(connection) %><%= linkedin_headline(connection) %><%= linkedin_headline(connection) %></span>
+                        </div>
+                      </td>
+                      <td class="pad-T15" style="vertical-align:middle;">
+                        <div class="strength-box">
+                          <span class="strenght-number"><%= user_connection_strength(connection) %></span>
+                          <div class="strength-slider-box">
+                            <div id="slider-<%= user_account_id(connection) %>"></div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                <% end %>
+                <input name="connectionsStrengthJson" value="" type="hidden">
+                <input name="user_name" value="<%= @user_name %>" type="hidden">
+                <input name="offset" value="<%= (@offset - 100) %>" type="hidden">
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="send-box mrg-T10">
+      <input class="send-btn float-R pad-L30 pad-R30 pad-T10 pad-B10 update_connection_strength_input" type="submit" value="Save" name="" />
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        for (var key in gConnectionsStrength){
+            $("#slider-" + key).slider({
+                range: "min",
+                value: gConnectionsStrength[key],
+                min: 0,
+                max: 100,
+                slide: function( event, ui ) {
+                    key = event.target.id.split('slider-')[1];
+                    value = ui.value;
+                    gConnectionsStrength[key] = value;
+                    $(this).parent().prev().text(value);
+                }
+            });
+        }
+    });
+</script>

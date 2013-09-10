@@ -1,0 +1,62 @@
+<%= render :partial => "search" %>
+
+<div class="results_box">
+  <% if @direct_connections.nil? and @indirect_connections.nil? and @google_connections.nil? and @facebook_connections %>
+      <p class="txt-C line-hit-25">
+        <span class="col-blue bold">Sorry!</span> There were no results for your search "<%= @query %>" <br /> Click on the button below to ask for an introduction for this inquiry.</p>
+      <div class="send-box mrg-T20">
+        <a href="#open-request" class="send-btn calibrib no-result-open-request">
+          <img class="mrg-R10" src="assets/open-requset-3.png"> Ask for an Introduction</a>
+      </div>
+  <% else %>
+      <h2>Results for "<%= @query %>" </h2>
+      <p id="" class="italic font-13">Please find your 1st and 2nd level connections for '<%= @query %>'. You can contact them or if you are looking for some one else, ask for an introduction through the link below.</p>
+      <a href="#open-request" class="openrequests mrg-B10" style="position:inherit; right:0; top:0;"> Ask for an Introduction</a>
+      <div class="sent_received_section">
+        <table class="all-box" align="left" cellpadding="0" cellspacing="0" id="dataTable-request-filter">
+          <thead>
+          <tr style="display:none;">
+            <td width="40%" class="border-B calibrib font-16">First Level</td>
+            <td width="40%" class="border-B calibrib font-16">Second Level</td>
+          </tr>
+          </thead>
+          <tbody>
+          <% unless @direct_connections.nil? %>
+              <%= render 'first_level_connections' %>
+          <% end %>
+          <% unless @google_connections.nil? %>
+              <%= render 'google_connections' %>
+          <% end %>
+          <% unless @facebook_connections.nil? %>
+              <%= render 'facebook_connections' %>
+          <% end %>
+          <% unless @indirect_connections.nil? %>
+              <%= render 'second_level_connections' %>
+          <% end %>
+          <% if @connections_remaining and @connections_remaining > 0 %>
+              <tr id="show-more-parent-node">
+                <td>
+                  <%= form_tag(linkedin_search_path, :id => 'search-existing-show-more') do %>
+                      <%= hidden_field_tag :query ,@query %>
+                      <%= hidden_field_tag :offset ,@offset %>
+                      <%= hidden_field_tag :type, @type %>
+                      <%= hidden_field_tag :multiple, false %>
+                      <img src="/assets/ajax-loader-more.gif" class="show-more-loader">
+                      <%= submit_tag "Show more search results" ,:class => 'showmore showmore-position' %>
+                  <% end %>
+                </td>
+                <td class="display-none">First Level Connection</td>
+              </tr>
+          <% end %>
+          </tbody>
+          <tfoot>
+          <tr style="display:none;">
+            <th>First Level</th>
+            <th>Second Level</th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+  <% end %>
+  <%= render 'requests/new_open_request_popup' %>
+</div>

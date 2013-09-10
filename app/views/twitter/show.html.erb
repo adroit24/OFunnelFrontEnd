@@ -1,0 +1,11 @@
+<% unless (@tweets.nil? or @tweets.blank?) %>
+    <% @tweets.each do |tweet| %>
+        <div class="tweet">
+          <h3>
+            <%= tweet["tweet"] %>
+          </h3>
+        </div>
+    <% end %>
+<% else %>
+    <h3>No tweets found</h3>
+<% end %>

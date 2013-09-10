@@ -1,0 +1,68 @@
+<div id="new-group" style="display: none;">
+  <!-- START new Group LIGHT BOX -->
+  <div class="lightbox" style="width:705px;">
+    <h2 class="col-blue">Add a Group</h2>
+    <a href="#" class="cancel-icon"></a>
+    <label for="requests" class="bold font-14">Group Name:
+      <span class="col-red font-18" id="group-name-error" style="display: none;"> * </span>
+    </label>
+    <div class="input-relative">
+      <input type="text" class="input_100 search-group" name="group" style="width:96.4%" placeholder="Type Group Name" /><a href="#" class="downarrow" ></a>
+      <p class="search-group-info display-none" style="top:40px;color:#8E8A8A;position:absolute;"><img src="/assets/loading.gif"> Searching for this group...</p>
+      <p class="already-part display-none">You are already part of this group.</p>
+      <div class="send-box txt-L">
+        <a href="#" class="send-btn calibrib group-already-exist-ok display-none">OK</a>
+      </div>
+      <div class="group-autocomplete-box display-none">
+        <!--<div class="search-group-loader"></div>-->
+        <table width="100%" align="center" cellpadding="6" cellspacing="0">
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="display:block;">
+      <div class="send-box txt-L">
+        <a href="#" class="send-btn calibrib search-group-submit">Search</a>
+      </div>
+    </div>
+    <form action="<%= group_request_path %>" id="request-group-form" method="post" class="all-box" enctype="multipart/form-data">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <input type="hidden" name="group-id"/>
+      <div class="group-exist display-none">
+        <p class="font-14">This group already exists. Do you want to ask the administrator for an invitation?</p>
+        <div class="send-box txt-L"><input class="send-btn calibrib" type="submit" value="Request Invitation"></div>
+      </div>
+    </form>
+    <div class="group-not-exist display-none">
+      <p class="font-14">This group does not exist. Take the lead and create it!</p>
+      <div class="send-box txt-L">
+        <a class="create-group send-btn calibrib">Create group</a></div>
+    </div>
+    <form action="<%= add_group_path %>" id="new-group-form" method="post" class="all-box" enctype="multipart/form-data">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <div class="new-group-form display-none">
+        <h2 class="col-blue font-22">Create a group</h2>
+        <div class="all-box" style="width:69%;">
+          <label for="requests" class="bold font-14">Name your group</label>
+          <input type="text" name="group-name" class="input_100"  placeholder="Type name here" />
+          <label for="requests" class="bold font-14">Assign the group administrator</label>
+          <div class="input-relative">
+            <input type="text" name="group-admin" readonly="true" class="input_100"  placeholder="Anyone" /><a href="#" class="downarrow"></a>
+          </div>
+          <label for="requests" class="bold font-14">Group description <span class="col-red font-18" id="group-description-error" style="display: none;"> * </span></label>
+          <textarea class="input_100 textarea" name="description-message" type="text"></textarea>
+          <div class="send-box txt-L"><input class="send-btn calibrib" name="description" type="submit" value="Create and Add Group"></div>
+        </div>
+        <img src="" class="upload-image-preview-box">
+        <div class="upload-logo-box">
+          <div id="upload-btn" class="group-upload-button">Click here to <br /> upload your logo
+            <span class="col-red font-18" id="group-logo-error" style="display: none;"> * </span>
+            <%= file_field_tag 'group_logo', :accept => 'image/png,image/gif,image/jpeg', :id => "uploadfile", :class => "group-upload-input upload-logo", :value => "upload", :onchange => "showImagePreview(this.files)" %>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- START new Group LIGHT BOX -->
+</div>

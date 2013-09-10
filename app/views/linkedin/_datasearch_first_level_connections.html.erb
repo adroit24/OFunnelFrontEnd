@@ -1,0 +1,19 @@
+<% unless (@direct_connections.nil? or @direct_connections.blank?) %>
+    <% @direct_connections.each do |connection| %>
+        <% person = connection["person"] %>
+        <tr class="USR-details-box<%= " #{company["companyName"]}" %><%= " display-none" if tab_selected %> all-companies">
+          <td class="main-user-section">
+            <div class="photo-box"><img class="main-usr-photo" src="<%= connection_profile_pic(person) %>" width="65" height="65"></div>
+            <div class="main-usr-text">
+              <span class="name">
+                <%= link_to connection_user_name(person), connection_profile_url(person), :target => "_blank" %>
+                <span class="friendlabel-big">Ist</span>
+              </span>
+              <span class="font-13"> <%= connection_job_title(person) %> • <%= connection_company_name(person) %> • <%= connection_location(person) %> </span>
+            </div>
+          </td>
+          <td class="display-none">First Level Connection</td>
+        </tr>
+    <% end %>
+<% end %>
+

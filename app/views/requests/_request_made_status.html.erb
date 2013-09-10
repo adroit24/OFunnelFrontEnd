@@ -1,0 +1,16 @@
+<% status = request_status(sent_request) %>
+<% case status %>
+<% when "Pending", "Ignored" %>
+    <span class="col-grey">
+    <%= request_outcome(sent_request) %>
+    </span>
+<% when "Requested More Info" %>
+    <span class="col-blue">
+    <%= request_outcome(sent_request) %>
+    </span>
+<% when "Accepted", "Declined" %>
+    <span class="col-<%= request_class(sent_request) %> line-hit-30">
+        <%= request_outcome(sent_request) %>
+     </span>
+    <br/>
+<% end %>

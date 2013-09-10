@@ -1,0 +1,97 @@
+<div class="all-box-5">
+  <a class=" float-L col-orange calibrib mrg-B20 font-18" href="<%= group_path(@tag_id) %>"> <span class="font-24"> « </span> Click here to return to group description page</a>
+  <div class="userprofile-box">
+    <div class="profile-title">Group Profile</div>
+    <div class="profile-details-box">
+      <img class="grouplogo" src="<%= @tag_logo %>" alt="" title="" />
+      <div class="info" style="overflow: visible; width: 60%;">
+        <strong>Group:</strong> <strong class="col-blue"><%= @tag_name %> </strong>
+        <a href="#" class="font-10 bold groupinfo2">(info)
+          <div class="tooltip-box t-wide" style="left:30px; top:-50px; max-height:150px; ">
+            <span class="arrow arrow-bottom" style="left:287px;"></span>
+            <div class="title">About this group:</div>
+            <p class="font-13" style="overflow:hidden; max-height:110px;"><%= @tag_description %>  </p>
+          </div>
+        </a>
+        <br />
+        <span class=" all-box-3 nowrap-ellipsis" id="admin-box">
+          <span id="heading-width">
+            <strong>Administrator: </strong>
+          </span>
+          <span id="admin-width">
+            <% unless @organizers.nil? %>
+            <% @organizers.each_with_index  do |organizer,i| %>
+                <strong class="col-blue">
+                  <%= link_to organizer_user_name(organizer), organizer_profile_url(organizer), :target => "_blank" %><%= ", " unless (i+1 == @organizers.length) %>
+                </strong>
+            <% end %>
+        <% end %>
+        </span>
+        </span>
+        <% if @organizers_array.include?(current_user_id) %>
+            <a href="#" id="add-admin" class="font-11 bold">(add)</a>
+        <% end %>
+        <br />
+        <strong>Members:</strong> <strong class="col-blue"><a href="<%= group_members_path(@tag_id) %>"><%= @member_count %></a></strong>
+        <% if @organizers_array.include?(current_user_id) %>
+            <a href="#" id="add-member-to-group" class="font-11 bold">(add member)</a> <a href="#" id="import-from-csv" class="font-11 bold">(import from csv)</a> <a href="mailto:?to=&subject=Invitation%20to%20join%20group&body=<%= join_login_bypass_url({:tag_id=>@tag_id}) %>" id="share-invite-link" class="font-11 bold">(share invite link)</a>
+        <% end %>
+        <br />
+      </div>
+    </div>
+  </div>
+
+  <div class="all-box">
+    <div class="sent_received_section mrg-0">
+      <div class="white-box score-history" id="tab_content_1">
+        <table width="100%" align="center" cellpadding="6" cellspacing="0">
+          <tbody>
+          <tr>
+            <td colspan="2"  class="bold font-14">Group members:</td>
+          </tr>
+          <% unless @members.nil? %>
+              <% @members.each do |member| %>
+                  <tr>
+                    <td class="pad-T15 border-T">
+                      <span class="USR-phto-box"><img class="userpic" src="<%= organizer_profile_pic(member) %>" width="40" height="40"> </span>
+                      <div class="USR-info nowrap-ellipsis">
+                        <span class="col-blue font-16 calibrib"><a href="<%= user_path(member_id(member)) %>"><%= organizer_user_name(member) %></a></span>
+                        <br>
+                        <span class="font-14"><%= member["headline"] %></span>
+                        <br/>
+                        <span class="col-orange bold font-14">Score: <%= member["score"] %></span>
+                      </div>
+                    </td>
+                    <td class="pad-T15 border-T">
+                      <% tags = member["memberTags"] %>
+                      <div class="USR-info" style="white-space: normal; height: 65px;">
+                        <span class="bold font-16 italic calibrib">Also a member of:</span>
+                        <br>
+                        <span class="font-14 col-blue multiline-ellipsis">
+                        <% unless tags.nil? %>
+                            <% tags.each_with_index do |tag,i| %>
+                                <%= link_to tag["tagName"], group_path(tag["tagId"]) %><%= ", " unless (i+1 == tags.length) %>
+                            <% end %>
+                        <% end %>
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+              <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div><!-- end All Box-5 -->
+
+<%= render :partial => 'add_member_popup' %>
+<%= render :partial => 'import_csv_popup' %>
+<%= render :partial => 'add_admin_to_group' %>
+<script type="text/javascript">
+    $('span.multiline-ellipsis').dotdotdot({
+        height : 40
+    });
+    adjustAddAdminLink();
+</script>

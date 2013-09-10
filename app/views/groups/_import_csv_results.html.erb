@@ -1,0 +1,13 @@
+<% @email_array.each_with_index do |email,index| %>
+<tr>
+  <td>
+    <div class="float-L mrg-R10">
+      <div class="checkboxFour">
+        <input type="checkbox" name="emails[]" id="email-<%= index %>" value="<%= email %>">
+        <label for="email-<%= index %>"></label>
+      </div>
+    </div>
+    <span class="font-14"> <%= email %> </span>
+  </td>
+</tr>
+<% end %>

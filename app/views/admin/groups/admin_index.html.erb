@@ -1,0 +1,10 @@
+<div class="white-box pad-all-10">
+  <%= form_tag(admin_import_companies_path, :class => "requests_USR mrg-0", :enctype => "multipart/form-data") do %>
+      <div class="sent_received_section">
+        <div class="white-box border-all pad-all-5" style="height:25px; width:97%; overflow-y:auto; overflow-x:hidden; border:1px solid #CCCCCC ">
+          <%= file_field_tag 'companies_data', :name => "xls", :class => "companies-upload-input"%>
+        </div>
+        <div class="send-box txt-L mrg-T20"><input type="submit" value="Import Companies" class="send-btn calibrib"></div>
+      </div>
+  <% end %>
+</div>

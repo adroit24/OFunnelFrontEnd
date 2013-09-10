@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>OFunnel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href='/favicon.ico' rel='icon' type='image/x-icon' />
+  <%= stylesheet_link_tag    "application.html5", :media => "all" %>
+  <%= stylesheet_link_tag    "public", :media => "all" %>
+  <%= stylesheet_link_tag    "responsive", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="wrapper">
+  <!-- START MAIN DIV-->
+  <div class="main clearfix">
+    <!-- START HEADER -->
+    <div class="header">
+      <div class="logo_menu_box">
+        <a href="<%= discover_relationships_path %>" id="sitelogo"><img class="logo" src="/assets/logo.jpg" width="238" height="71" alt="OFunnel" title="OFunnel" /></a>
+      </div>
+    </div><!-- END HEADER -->
+  </div><!-- END MAIN DIV-->
+
+  <!-- START MOBILE MAIN DIV-->
+  <div class="mobile-main clearfix">
+    <!--start mobile container white-->
+    <%= yield %>
+    <!--end mobile container white-->
+  </div><!-- END MOBILE MAIN DIV-->
+
+  <!-- START FOOTER -->
+  <div class="footer">
+    <div class="footer_box">
+            <span id="web-footer-menu">
+                <span class="col-gray all-box"> Contact us at <a href="mailto:info@ofunnel.com" class="col-white"  style="text-decoration: underline;"> info@ofunnel.com    </a> </span>
+                <br />
+                <span class="all-box col-gray font-15 "> © 2013 OFunnel &nbsp;&nbsp;  | &nbsp;&nbsp;  <a href="<%= Settings.logout_redirect %>/terms.html" class="col-white" style="text-decoration: underline;"> Terms &amp; Conditions   </a> </span>
+            </span>
+      <div class="social-icon-box">
+        <a href="http://www.facebook.com/ofunnel" target="_blank" class="facebook-icon"></a>
+        <a href="http://www.twitter.com/ofunnel" target="_blank" class="twitter-icon"></a>
+        <a href="http://www.linkedin.com/company/ofunnel" target="_blank" class="linkedin-icon"></a>
+      </div>
+    </div>
+  </div><!-- START FOOTER -->
+
+</div>
+</body>
+</html>
