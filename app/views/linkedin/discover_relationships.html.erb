@@ -54,15 +54,15 @@
         <input type="hidden" name="alertJson" value="" />
         <% if @total_pages > 0 %>
             <div class="alert-pagination">
-              <% unless @current_page == 1 %>
+              <% if @current_page != 1 %>
                   <a href="<%= discover_relationships_path({:offset => @offset - @count}) %>" class="last-text pl-active"><span class="font-12">◄</span> Last 25</a>
-              <% else %>
+              <% elsif @total_pages > 1 %>
                   <a href="#" class="last-text pl-inactive"><span class="font-12">◄</span> Last <%= @count %></a>
               <% end %>
               <%= render "ds_pagination_links" %>
-              <% unless @page_remaining == 0 %>
+              <% if @page_remaining != 0 %>
                   <a href="<%= discover_relationships_path({:offset => @offset + @count}) %>" class="next-text pl-active">Next 25 <span class="font-12">►</span></a>
-              <% else %>
+              <% elsif @total_pages > 1 %>
                   <a href="#" class="next-text pl-inactive">Next <%= @count %> <span class="font-12">►</span></a>
               <% end %>
         <% end %>

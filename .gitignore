@@ -1,8 +1,10 @@
 .idea/
 *.gem
+*.log
 *.rbc
 .bundle
 .config
+development.sqlite3
 coverage
 InstalledFiles
 lib/bundler/man
