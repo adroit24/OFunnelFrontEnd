@@ -145,30 +145,34 @@ class GroupsController < ApplicationController
     tag_id =params[:tag_id]
 
     api_response = nil
-    emails.each_with_index do |email,i|
-      name = names[i]
-      name_array = name.split
-      name_length = name_array.length
-      if name_length > 1
-        first_name = name_array[0..(name_length-2)].join(" ")
-        last_name = name_array[(name_length-1)]
-      else
-        first_name = name
-        last_name = ""
+    unless (names.blank? or emails.blank? or tag_id.blank?)
+      emails.each_with_index do |email,i|
+        name = names[i]
+        name_array = name.split
+        name_length = name_array.length
+        if name_length > 1
+          first_name = name_array[0..(name_length-2)].join(" ")
+          last_name = name_array[(name_length-1)]
+        else
+          first_name = name
+          last_name = ""
+        end
+        api_endpoint = "#{Settings.api_endpoints.InviteMemberToGroupV1}"
+        response = Typhoeus.post(api_endpoint, body: {
+            adminUserId: current_user_id,
+            invitedUserEmail: email,
+            tagId: tag_id,
+            invitedUserFirstName: first_name,
+            invitedUserLastNameName: last_name
+        })
+        if response.success? && !api_contains_error("InviteMemberToGroupV1", response)
+          api_response = JSON.parse(response.response_body)["InviteMemberToGroupV1Result"]
+        else
+          api_response = {"error" => true}
+        end
       end
-      api_endpoint = "#{Settings.api_endpoints.InviteMemberToGroupV1}"
-      response = Typhoeus.post(api_endpoint, body: {
-          adminUserId: current_user_id,
-          invitedUserEmail: email,
-          tagId: tag_id,
-          invitedUserFirstName: first_name,
-          invitedUserLastNameName: last_name
-      })
-      if response.success? && !api_contains_error("InviteMemberToGroupV1", response)
-        api_response = JSON.parse(response.response_body)["InviteMemberToGroupV1Result"]
-      else
-        api_response = {"error" => true}
-      end
+    else
+      redirect_to root_path and return
     end
 
     if request.xhr?

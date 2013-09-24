@@ -23,6 +23,8 @@ OFunnel::Application.routes.draw do
   match 'add_relationships' => "linkedin#add_relationships", :as => :add_relationships
   match 'remove_relationship' => "linkedin#remove_relationship", :as => :remove_relationship
   match 'alerts_import_csv' => "linkedin#alerts_import_csv", :as => :alerts_import_csv
+  match 'add_recipients' => "linkedin#add_recipients", :as => :add_recipients
+  match 'remove_recipient' => "linkedin#remove_recipient", :as => :remove_recipient
 
   get "/google/authorize_with_google" => "google#authorize_with_google", :as => :authorize_with_google
   get "/google/google_authorization_callback" => "google#google_authorization_callback"
@@ -52,6 +54,9 @@ OFunnel::Application.routes.draw do
   match '/logout' => "users#logout", :as => :logout
   match '/connections_strength/:user_name' => "users#connections_strength", :as => :connections_strength
   match '/update_connections_strength' => "users#update_connections_strength", :as => :update_connections_strength
+  match '/alerts' => "users#alerts", :as => :alerts
+  match '/add_to_salesforce' => "users#add_to_salesforce", :as => :add_to_salesforce
+  match '/all_alerts/:id/:type' => "users#all_alerts", :as => :all_alerts
 
   match '/group_members/:id' => "groups#members", :as => :group_members
   match '/add_group' => "groups#add", :as => :add_group

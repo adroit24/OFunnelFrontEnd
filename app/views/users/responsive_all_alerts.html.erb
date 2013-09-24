@@ -1,0 +1,69 @@
+<!--start mobile container white-->
+<div class="mobile-container-white" style="border-top: 2px solid #CCC;">
+  <!--start mobile-container-Box-->
+  <div class="mobile-container-box">
+    <div class="container mrg-T5">
+      <a class=" float-L col-orange calibrib mrg-B20 font-18" href="<%= alerts_path %>"> <span class="font-24"> « </span> Click here to return to profile page</a>
+      <div class="sent_received_section">
+        <div class="white-box score-history">
+          <table width="100%" style="width:100%; float:left" align="left" cellpadding="1" cellspacing="0" id="dataTable-search">
+            <thead>
+            <tr class="alerts-header" style="display:none;">
+              <th>friend</th>
+              <th>f_connected</th>
+            </tr>
+            </thead>
+            <tbody class="alerts-list">
+            <tr class="td-heading">
+              <td width="40%" class="border-B col-orange bold pad-T5 pad-B5">Your current connection: </td>
+              <td width="40%"  class="border-B col-orange bold pad-T5 pad-B5">Is now connected to:</td>
+            </tr>
+            <% unless @alerts.nil? %>
+                <tr class="td-heading-2">
+                  <td colspan="2" class="bold bg-gray-2 pad-T5 pad-B5">Target Company: <%= @type %></td>
+                  <td class="display-none"></td>
+                </tr>
+                <% total_alerts = @alerts["networkAlert"].length %>
+                <% unless total_alerts < 1 %>
+                    <% a_alert = @alerts["networkAlert"] %>
+                    <% (0..(total_alerts - 1)).each do |i| %>
+                        <% friend = a_alert[i]["yourConnection"] %>
+                        <% f_connected = a_alert[i]["connectedTo"] %>
+                        <tr>
+                          <td class="pad-T10 pad-B10">
+                            <span class="USR-phto-box"><img class="userpic" src="<%= friend_profile_pic_url(friend) %>" width="25" height="25"> </span>
+                            <div class="USR-info">
+                              <span class="col-blue bold calibrib td-heading-2"><%= friend_name(friend) %> </span>
+                              <br>
+                              <span class="multiline-ellipsis"><%= friend_headline(friend) %></span>
+                            </div>
+                          </td>
+                          <% unless f_connected.nil? %>
+                              <td class="pad-T10 pad-B10">
+                                <span class="USR-phto-box"><img class="userpic" src="<%= f_connected_profile_pic_url(f_connected) %>" width="25" height="25"> </span>
+                                <div class="USR-info">
+                                  <span class="col-blue bold calibrib td-heading-2"><%= f_connected_name(f_connected) %></span>
+                                  <br>
+                                  <span class="multiline-ellipsis"><%= f_connected_headline(f_connected) %></span>
+                                </div>
+                              </td>
+                          <% end %>
+                        </tr>
+                    <% end %>
+                <% end %>
+            <% end %>
+            </tbody>
+            <tfoot>
+            <tr style="display:none;">
+              <th>friend</th>
+              <th>f_connected</th>
+            </tr>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- End sent_received_section -->
+    </div>
+  </div><!--end mobile-container-Box-->
+</div>
+<!--end mobile container white-->

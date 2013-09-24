@@ -747,9 +747,9 @@ $(function() {
         if ($('input[name=last_name]').exists()) {
             $('input[name=last_name]').last().val($(this).find('p').first().next().next().html());
         }
-        $('input.request_connection_search').last().val($(this).first().find('span').first().html());
-        $('input[name=query]').last().focus();
-        $('input[name=query]').last().css('font-style','normal');
+        $('input.request_connection_search:visible').last().val($(this).first().find('span').first().html());
+        $('input[name=query]:visible').last().focus();
+        $('input[name=query]:visible').last().css('font-style','normal');
         $('div.autocomplete-box').fadeOut();
     });
 
@@ -777,17 +777,18 @@ $(function() {
         $('input[name=member]').last().css('font-style','normal');
         $('div.admin-autocomplete-box').hide();
         $.colorbox.resize();
+        return false;
     });
 
     $(document).on('keyup','input[name=query]',function(){
-        if($('.request_connection_search').last().val().length < 4) {
-            $('.autocomplete-box').fadeOut();
+        if($(this).val().length < 4) {
+            $(this).parent('div').find('.autocomplete-box').fadeOut();
         }
-        else if($('.request_connection_search').last().val().length > 3) {
-            $('.autocomplete-box table tbody').html("");
-            $('.search-connection-no-result').hide();
-            $('.search-connection-loader').show();
-            $('.autocomplete-box').fadeIn();
+        else if($(this).val().length > 3) {
+            $(this).parent('div').find('.autocomplete-box table tbody').html("");
+            $(this).parent('div').find('.search-connection-no-result').hide();
+            $(this).parent('div').find('.search-connection-loader').show();
+            $(this).parent('div').find('.autocomplete-box').fadeIn();
         }
     });
 
@@ -834,6 +835,7 @@ $(function() {
             $('input[name=query]').last().css('font-style','normal');
             $('.autocomplete-box').fadeOut();
         }
+        return false;
     });
 
     $(".ignore-request").click(function(){
@@ -959,6 +961,10 @@ $(function() {
 
     $(document).on('click','input#only-company-filter',function() {
         applyOnlyCompanyConnectionsFilter();
+    });
+
+    $(document).on('keyup','input[name=search-alerts]',function() {
+        applySearchAlertsFilter(this);
     });
 
     $(document).on('submit','tr.show-more-company-results form',function() {
@@ -1137,7 +1143,7 @@ $(function() {
 //    });
 
     $(document).on('click','a#alert-add-target-account',function(){
-        if($('input[name=name]:visible').last().val() != "") {
+        if($('input[name=query]:visible').last().val() != "") {
             $('div.alert-details').append($('div.extra-alert-container').html());
             initialiseSelectBox();
         }
@@ -1145,10 +1151,27 @@ $(function() {
         return false;
     });
 
+    $(document).on('change',".alert-type",function() {
+        console.log("Select box changed");
+        searchPeopleForQuery();
+        $(this).parents('.ofunnel-alerts').find('.autocomplete-box:visible').hide();
+
+        if($(this).val() == 'Person') {
+            $(this).parents('.ofunnel-alerts').find('input.normal:visible').hide();
+            $(this).parents('.ofunnel-alerts').find('input.person').show();
+            $(this).parents('.ofunnel-alerts').find('a.person-downarrow').show();
+        }
+        else {
+            $(this).parents('.ofunnel-alerts').find('input.normal').show();
+            $(this).parents('.ofunnel-alerts').find('input.person').hide();
+            $(this).parents('.ofunnel-alerts').find('a.person-downarrow:visible').hide();
+        }
+    });
+
     $(document).on('click','a.alert-remove-target',function(){
         removePath = $(this).attr('href');
         type = $(this).prevAll('div').find('select.alert-type').val();
-        name = $(this).prevAll('input[name=name]').val();
+        name = $(this).prevAll('input[name=query]').val();
         alertId = $(this).prevAll('input[name=alertId]').val();
         elementToRemove = $(this).parents('div.ofunnel-alerts');
         if(name === "") {
@@ -1174,7 +1197,7 @@ $(function() {
         targetAlerts = $('div.ofunnel-alerts:visible');
         i = 0;
         targetAlerts.each(function() {
-            if($(this).find('input[name=name]').val() != "")
+            if($(this).find('input.name-select:visible').val() != "")
                 i++;
         });
         if(i < 1) {
@@ -1185,7 +1208,7 @@ $(function() {
             alertJson = [];
             targetAlerts.each(function() {
                 type = $(this).find('select.alert-type').val();
-                name = $(this).find('input[name=name]').val();
+                name = $(this).find('input.name-select:visible').val();
                 alertId = $(this).find('input[name=alertId]').val();
                 if(type != "" && name != "")
                     alertJson.push({
@@ -1198,6 +1221,103 @@ $(function() {
             $('span#alert-target-account-error').hide();
         }
     });
+
+    $(document).on('click','#add-recipient',function(){
+        $('#add-recipient-form').toggle();
+        $('#add-recipient span').toggleText('▼','►');
+        return false;
+    });
+
+    $(document).on('click','a#alert-add-recipient',function() {
+        if($('div.recipient-box input').last().val().match(/\S/))
+            $(this).parent().before('<div class="recipient-box all-box-3 mrg-T15"><input class="input-field" type="text" name="email" value="" placeholder="johnathanjones@companyxyz.com"><a href="#" class="delete-icon2 alert-remove-recipient"></a></div>');
+        return false;
+    });
+
+    $(document).on('click','a.alert-remove-recipient',function() {
+        url = $(this).attr("href");
+        elementToRemove = $(this);
+        if($(this).attr("href") == "#"){
+            if($('div.recipient-box').length > 1)
+                elementToRemove.parent().remove();
+        }
+        else {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                data : {},
+                success : function(data) {
+//                    if(data == "SUCCESS") {
+//                        if($('div.recipient-box').length > 1)
+//                            elementToRemove.parent().remove();
+//                        else {
+//                            elementToRemove.prev().val("");
+//                            elementToRemove.attr("href","#");
+//                        }
+//                    }
+                }
+            });
+        }
+        return false;
+    });
+
+    $(document).on('submit','form#add-recipient-form',function() {
+        submitForm = true;
+        $.each($(this).find('input.input-field'),function(index, value) {
+            if(!($(value).val().match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/))) {
+                $('div.add-recipient-error').show();
+                submitForm = false;
+            }
+        });
+        if(submitForm) {
+            $('div.add-recipient-error').hide();
+            recipientArray = [];
+            $.each($(this).find('input.input-field'),function(index, value) {
+                recipientArray.push($(value).val());
+            });
+            $.ajax({
+                type : 'POST',
+                url : $(this).attr('action'),
+                data : {recipientEmails:recipientArray},
+                success : function(data) {
+//                    if(data == "SUCCESS") {
+//                        $('.add-recipient-confirmation').show();
+//                        $('.add-recipient-confirmation').delay(5000).fadeOut();
+//                    }
+                }
+            });
+        }
+        return false;
+    });
+
+    $('input.name-select').click(function(){
+        initializeRecipientAutoComplete(this);
+    });
+
+    $('input.name-select').select(function(){
+        initializeRecipientAutoComplete(this);
+    });
+
+    $(document).on('click','a.add-to-salesforce-crm',function() {
+        elementToChange = $(this);
+        url = elementToChange.attr("href");
+        firstName = elementToChange.attr("firstName");
+        lastName = elementToChange.attr("lastName");
+        title = elementToChange.attr("title");
+        company = elementToChange.attr("company");
+            $.ajax({
+                type : 'POST',
+                url : url,
+                data : {firstName:firstName,lastName:lastName,title:title,company:company},
+                success : function(data) {
+                    if(data == "SUCCESS") {
+                        elementToChange.parent().html("Added");
+                    }
+                }
+            });
+        return false;
+    });
+
 
     // select element styling
     initialiseSelectBox();
@@ -1307,8 +1427,12 @@ function requestAutoComplete() {
 function searchPeopleForQuery() {
     $(".request_connection_search").autocomplete({
         source: function( request, response ) {
+            var url,data, alertBox = null;
             query = $('input[name="query"]').last().val();
-            var url,data = null;
+            if(query == "") {
+                query = $('input.request_connection_search:focus').val();
+                alertBox = true;
+            }
             url = getPersonsForQueryUrl;
             data = {
                 query: query
@@ -1338,10 +1462,13 @@ function searchPeopleForQuery() {
                                 name = name + " " + persons[i]["last-name"];
                                 lastName = persons[i]["last-name"];
                             }
-                            if((name + headline).length > 51) {
+                            if(((name + headline).length > 51) && alertBox) {
                                 headline = headline.substring(0,(51 - name.length - 2)) + "..."
                             }
-                            $('.autocomplete-box table tbody').last().append('<tr><td width="6%" ><img class="photo" src="' + pictureUrl + '" alt="" title="" /></td><td><span class="col-blue font-16 calibrib">' + name + '</span><span> ' + headline + '</span><p class="display-none">' + linkedinId + '</p><p class="display-none">' + firstName + '</p><p class="display-none">' + lastName + '</p></td></tr>')
+                            else if((name + headline).length > 51) {
+                                headline = headline.substring(0,(51 - name.length - 2)) + "..."
+                            }
+                            $('.autocomplete-box table tbody:visible').last().append('<tr><td width="6%" ><img class="photo" src="' + pictureUrl + '" alt="" title="" /></td><td><span class="col-blue font-16 calibrib">' + name + '</span><span> ' + headline + '</span><p class="display-none">' + linkedinId + '</p><p class="display-none">' + firstName + '</p><p class="display-none">' + lastName + '</p></td></tr>')
                         };
                         $('div.search-connection-loader').hide();
                     }
@@ -1548,6 +1675,12 @@ function applyOnlyCompanyConnectionsFilter() {
     $("tr[class*='" + selectedCompany + "']").show();
 }
 
+function applySearchAlertsFilter(searchInput) {
+    query = $(searchInput).val();
+    $('div.search-box input.filter-input').val(query);
+    $('div.search-box input.filter-input').trigger('keyup');
+}
+
 function userTagsFocus(e) {
     if(e.target.className == "mygroups-dbox col-blue")
         window.location.href = userProfilePath;
@@ -1581,6 +1714,35 @@ function initialiseSelectBox() {
     });
 }
 
+function initializeRecipientAutoComplete(refObject) {
+    console.log("Initializing searchPeopleForQuery()");
+    searchPeopleForQuery();
+    $(refObject).parents('.ofunnel-alerts').find('.autocomplete-box:visible').hide();
+
+    if($(refObject).parents('.ofunnel-alerts').find('select').val() == 'Person') {
+        $(refObject).parents('.ofunnel-alerts').find('input.normal:visible').hide();
+        $(refObject).parents('.ofunnel-alerts').find('input.person').show();
+        $(refObject).parents('.ofunnel-alerts').find('a.person-downarrow').show();
+    }
+    else {
+        $(refObject).parents('.ofunnel-alerts').find('input.normal').show();
+        $(refObject).parents('.ofunnel-alerts').find('input.person').hide();
+        $(refObject).parents('.ofunnel-alerts').find('a.person-downarrow:visible').hide();
+    }
+}
+
 jQuery.fn.exists = function(){
     return this.length>0;
 }
+
+jQuery.fn.toggleText = function (value1, value2) {
+    return this.each(function () {
+        var $this = $(this),
+            text = $this.text();
+
+        if (text.indexOf(value1) > -1)
+            $this.text(text.replace(value1, value2));
+        else
+            $this.text(text.replace(value2, value1));
+    });
+};

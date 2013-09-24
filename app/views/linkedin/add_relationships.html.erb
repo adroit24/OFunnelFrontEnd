@@ -4,7 +4,10 @@
   </div>
   <div class="contoso-page">
     <p class="font-17 mrg-T20" style="margin:0;"> <strong class="col-blue"> Thank you.</strong>  We have registered your target accounts. We will notify you when you have new connections here.</p>
-    <div class="send-box txt-L mrg-T15 mrg-B35"><a href="<%= discover_relationships_path %>" style="width:280px;" class="send-btn txt-C pad-T15 pad-B15 float-L">Add more Target Accounts</a></div>
+    <a href="#" id="add-recipient" class="bold font-15 float-L mrg-T35">If you want to add more recipients to recieve these alerts, click here <span class="font-11">▼</span></a>
+    <%= render "linkedin/add_recipient_form" %>
+    <p class="all-box font-17 mrg-T25">Want to add more accounts to receive alerts?</p>
+    <div class="send-box txt-L mrg-B35"><a href="<%= discover_relationships_path %>" style="width:280px;" class="send-btn txt-C pad-T15 pad-B15 float-L">Add more Target Accounts</a></div>
     <p class="all-box font-17">Also try out our solution for introductions!</p>
     <div class="send-box txt-L"><a href="<%= requests_path %>" style="width:280px;" class="send-btn txt-C pad-T15 pad-B15 float-L" target="ofunnel">Ask for Introductions</a></div>
   </div> <!-- End Contoso Page -->

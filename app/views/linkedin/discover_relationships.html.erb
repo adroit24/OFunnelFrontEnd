@@ -25,7 +25,11 @@
                         </select>
                       </div>
                     </div>
-                    <input type="text" name="name" class="name-select" value="<%= alert["name"] %>" Placeholder="Nike" />
+                    <div class="input-relative2">
+                      <input type="text" name="name" class="name-select normal" value="<%= alert["name"] %>" Placeholder="Nike" />
+                      <input type="text" name="query" class="name-select request_connection_search person display-none" value="<%= alert["name"] %>" placeholder="Nike" /><a href="#" class="downarrow person-downarrow display-none" ></a>
+                      <%= render :partial => 'search_alert_connections' %>
+                    </div>
                     <input type="hidden" name="alertId" value="<%= alert["alertId"] %>" />
                     <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
                   </div>
@@ -41,7 +45,11 @@
                     </select>
                   </div>
                 </div>
-                <input type="text" name="name" class="name-select" value="" Placeholder="Nike" />
+                <div class="input-relative2">
+                  <input type="text" name="name" class="name-select normal" value="" Placeholder="Nike" />
+                  <input type="text" name="query" class="name-select request_connection_search person display-none" value="" placeholder="Nike" /><a href="#" class="downarrow person-downarrow display-none" ></a>
+                  <%= render :partial => 'search_alert_connections' %>
+                </div>
                 <input type="hidden" name="alertId" value="" />
                 <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
               </div>
@@ -94,7 +102,11 @@
         </select>
       </div>
     </div>
-    <input type="text" name="name" class="name-select" value="" Placeholder="Nike" />
+    <div class="input-relative2">
+      <input type="text" name="name" class="name-select normal" value="" Placeholder="Nike" />
+      <input type="text" name="query" class="name-select request_connection_search person display-none" value="" placeholder="Nike" /><a href="#" class="downarrow person-downarrow display-none" ></a>
+      <%= render :partial => 'search_alert_connections' %>
+    </div>
     <input type="hidden" name="alertId" value="" />
     <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
   </div>

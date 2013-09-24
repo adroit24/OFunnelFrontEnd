@@ -1,0 +1,41 @@
+<% unless @alerts_for_person.nil? %>
+    <% @alerts_for_person.each_with_index do |c_alert,index| %>
+        <tr class="td-heading-2">
+          <td colspan="2" class="bold bg-gray-2 pad-T5 pad-B5">Target Person: <%= c_alert["targetName"] %></td>
+          <td class="display-none"></td>
+        </tr>
+        <% total_alerts = c_alert["networkAlert"].length %>
+        <% unless total_alerts < 1 %>
+            <% a_alert = c_alert["networkAlert"] %>
+            <% (0..(total_alerts - 1)).each do |i| %>
+                <% friend = a_alert[i]["yourConnection"] %>
+                <% f_connected = a_alert[i]["connectedTo"] %>
+                <tr>
+                  <td class="pad-T10 pad-B10">
+                    <span class="USR-phto-box"><img class="userpic" src="<%= friend_profile_pic_url(friend) %>" width="25" height="25"> </span>
+                    <div class="USR-info">
+                      <span class="col-blue bold calibrib td-heading-2"><%= friend_name(friend) %> </span>
+                      <br>
+                      <span class="multiline-ellipsis"><%= friend_headline(friend) %></span>
+                    </div>
+                  </td>
+                  <td class="pad-T10 pad-B10">
+                    <span class="USR-phto-box"><img class="userpic" src="<%= f_connected_profile_pic_url(f_connected) %>" width="25" height="25"> </span>
+                    <div class="USR-info">
+                      <span class="col-blue bold calibrib td-heading-2"><%= f_connected_name(f_connected) %></span>
+                      <br>
+                      <span class="multiline-ellipsis"><%= f_connected_headline(f_connected) %></span>
+                    </div>
+                  </td>
+                </tr>
+            <% end %>
+            <% if c_alert["totalCompanyAlerts"].to_i > 5 %>
+                <tr>
+                  <td class="bg-blue pad-T5 pad-B5" colspan="2"><a class="bold col-white td-heading" href="<%= all_alerts_path(c_alert["targetAccountId"],"Company") %>">See all alerts for "Target Person: <%= c_alert["targetName"] %>" <span class="font-10">►</span></a></td>
+                  <td class="display-none"></td>
+                </tr>
+                <tr><td colspan="2" style="height:15px;"></td><td class="display-none"></td></tr>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>

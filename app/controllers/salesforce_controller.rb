@@ -30,7 +30,6 @@ class SalesforceController < ApplicationController
           userId: current_user_id,
           accessToken: token.token,
           instanceUrl: token.params['instance_url']
-
       })
 
       if response.success? && !api_contains_error("LoginOnSalesForce", response)
@@ -268,7 +267,7 @@ class SalesforceController < ApplicationController
       if response.success? && !api_contains_error("ImportSalesForceCompaniesFromLeads", response)
         api_response = JSON.parse(response.response_body)["ImportSalesForceCompaniesFromLeadsResult"]
         if api_response["isCompaniesPersisted"] == true
-          flash[:notice] = "Alerts has been successfully imported."
+          flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
         end
       end
 

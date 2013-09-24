@@ -11,6 +11,12 @@
   <%= stylesheet_link_tag    "responsive", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <script>
+      if (window!= top)
+          top.location.href=location.href
+  </script>
+
 </head>
 <body>
 <div class="wrapper">
@@ -20,6 +26,14 @@
     <div class="header">
       <div class="logo_menu_box">
         <a href="<%= discover_relationships_path %>" id="sitelogo"><img class="logo" src="/assets/logo.jpg" width="238" height="71" alt="OFunnel" title="OFunnel" /></a>
+        <div class="userstatus-box width-auto">
+          <div class="signout-box">
+            <div class="links mrg-T20" style="float: right;">
+              <a href="<%= alerts_path %>">Profile</a>
+              <a href="<%= logout_path %>">Log out</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div><!-- END HEADER -->
   </div><!-- END MAIN DIV-->

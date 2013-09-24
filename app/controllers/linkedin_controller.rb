@@ -7,7 +7,7 @@ class LinkedinController < ApplicationController
 
   def index
     unless current_user.nil?
-      redirect_to requests_path
+      redirect_to discover_relationships_path
     else
       redirect_to Settings.logout_redirect
     end
@@ -523,12 +523,38 @@ class LinkedinController < ApplicationController
       alert_json[:alert] = alert_array
 
       persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
-      response = Typhoeus.post(
+      get_alerts_recipient_api_endpoint = "#{Settings.api_endpoints.GetRecipientsEmailForNetworkAlerts}/#{current_user_id}"
+      persist_company_network_alert_response = nil
+      get_alerts_recipient_response = nil
+
+      hydra = Typhoeus::Hydra.hydra
+      persist_company_network_alert_request = Typhoeus::Request.new(
           persist_company_network_alert_api_endpoint,
+          method: :post,
           body: {
               userId: current_user_id,
               alertJson: alert_json.to_json
           })
+      get_alerts_recipient_request = Typhoeus::Request.new(get_alerts_recipient_api_endpoint)
+
+      hydra.queue persist_company_network_alert_request
+      hydra.queue get_alerts_recipient_request
+
+      persist_company_network_alert_request.on_complete do |response|
+        persist_company_network_alert_response = response
+      end
+
+      get_alerts_recipient_request.on_complete do |response|
+        get_alerts_recipient_response = response
+      end
+
+      hydra.run
+
+      @emails = nil
+      if get_alerts_recipient_response.success? && !api_contains_error("GetRecipientsEmailForNetworkAlerts", get_alerts_recipient_response)
+        api_response = JSON.parse(get_alerts_recipient_response.response_body)["GetRecipientsEmailForNetworkAlertsResult"]
+        @emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
+      end
 
       if mobile_device
         render "responsive_add_relationships", :layout => "responsive_relationships"
@@ -562,7 +588,7 @@ class LinkedinController < ApplicationController
   end
 
   def alerts_import_csv
-    if !params[:csv].nil?
+    unless params[:csv].blank?
       if [
           "text/comma-separated-values",
           "text/csv",
@@ -637,13 +663,12 @@ class LinkedinController < ApplicationController
                       userId: current_user_id,
                       alertJson: alert_json.to_json
                   })
-
             end
 
             if response.success? && !api_contains_error("PersistNetworkAlerts", response)
               api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
               if api_response["isNetworkAlertPersisted"] == true
-                flash[:notice] = "Alerts has been successfully imported."
+                flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
               end
             end
 
@@ -655,6 +680,66 @@ class LinkedinController < ApplicationController
       else
         render :text => "INVALID_FORMAT" and return
       end
+    end
+  end
+
+  def add_recipients
+    recipient_emails = params[:recipientEmails]
+
+    recipient_json = {
+        :recipientEmail => []
+    }
+    recipient_array = []
+    recipient_emails.each do |email|
+      recipient_array.push(
+          {
+              :email => email
+          }
+      )
+    end
+    recipient_json[:recipientEmail] = recipient_array
+
+    api_endpoint = "#{Settings.api_endpoints.SetRecipientEmailForNetworkAlerts}"
+    response = Typhoeus.post(
+        api_endpoint,
+        body: {
+            userId: current_user_id,
+            recipientEmailJson: recipient_json.to_json
+        })
+
+    if response.success? && !api_contains_error("SetRecipientEmailForNetworkAlerts", response)
+      api_response = JSON.parse(response.response_body)["SetRecipientEmailForNetworkAlertsResult"]
+      if api_response["error"] == nil and api_response["isAddedRecipientEmail"] == true
+        @emails = get_recipients
+        respond_to do |format|
+          format.js
+        end
+      else
+        render :text => "ERROR" and return
+      end
+    else
+      render :text => "ERROR" and return
+    end
+  end
+
+  def remove_recipient
+    recipient_id = params[:id]
+
+    api_endpoint = "#{Settings.api_endpoints.DeleteRecipientEmail}/#{current_user_id}/#{recipient_id}"
+    response = Typhoeus.get(api_endpoint)
+
+    if response.success? && !api_contains_error("DeleteRecipientEmail", response)
+      api_response = JSON.parse(response.response_body)["DeleteRecipientEmailResult"]
+      if api_response["error"] == nil and api_response["isRecipientEmailDeleted"] == true
+        @emails = get_recipients
+        respond_to do |format|
+          format.js
+        end
+      else
+        render :text => "ERROR" and return
+      end
+    else
+      render :text => "ERROR" and return
     end
   end
 
@@ -757,10 +842,10 @@ class LinkedinController < ApplicationController
       if check_token_in_session
         if session[:token_user_id].nil?
           mark_token_used(session[:token])
-          redirect_to( back_url.nil? ? requests_path : back_url) and return
+          redirect_to( back_url.nil? ? discover_relationships_path : back_url) and return
         else
           if session[:token_user_id] == current_user_id
-            redirect_to( back_url.nil? ? requests_path : back_url) and return
+            redirect_to( back_url.nil? ? discover_relationships_path : back_url) and return
           else
             reset_session
             redirect_to Settings.wrong_token_redirect and return
@@ -768,7 +853,7 @@ class LinkedinController < ApplicationController
           session[:token] = nil
         end
       else
-        redirect_to( back_url.nil? ? requests_path : back_url) and return
+        redirect_to( back_url.nil? ? discover_relationships_path : back_url) and return
       end
     else
       redirect_to root_path and return
@@ -852,4 +937,22 @@ class LinkedinController < ApplicationController
     end
   end
 
+  def get_recipients
+    get_alerts_recipient_api_endpoint = "#{Settings.api_endpoints.GetRecipientsEmailForNetworkAlerts}/#{current_user_id}"
+    get_alerts_recipient_response = nil
+    hydra = Typhoeus::Hydra.hydra
+    get_alerts_recipient_request = Typhoeus::Request.new(get_alerts_recipient_api_endpoint)
+    hydra.queue get_alerts_recipient_request
+    get_alerts_recipient_request.on_complete do |response|
+      get_alerts_recipient_response = response
+    end
+    hydra.run
+
+    emails = nil
+    if get_alerts_recipient_response.success? && !api_contains_error("GetRecipientsEmailForNetworkAlerts", get_alerts_recipient_response)
+      api_response = JSON.parse(get_alerts_recipient_response.response_body)["GetRecipientsEmailForNetworkAlertsResult"]
+      emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
+    end
+    return emails
+  end
 end

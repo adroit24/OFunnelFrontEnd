@@ -249,6 +249,43 @@
     .col-blue{ font-family:calibrib; font-size:21px; font-weight:bold;}
     .alert-text-box{ width:100%; float:left;}
     .alert-text-box p{ font-size:17px;}
+
+    #input{ padding: 0 14% 0 2% !important; width:84% !important; height:23px !important; font-size:15px !important;  background:#f7f7f7; font-family: calibrib;}
+    .search-panel{ width:218px; float:right; margin-top:6px;}
+    .white-box .USR-info{	float:left; line-height:15px; width:175px; overflow:hidden; text-overflow: ellipsis; font-size:13px; }
+    #alerthistory{ font-size:27px; font-weight:bold; float:left;}
+    .td-heading{ font-size:14px !important;}
+    .td-heading-2{ font-size:15px !important;}
+    .profile-details-box .info{
+        float: left;
+        font-size: 14px;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 70%;
+    }
+    .profile-details-box .photo{
+        width:90px;
+        height:90px;
+        float:left;
+        margin-right:10px;
+        border:1px solid #cfcfcf;
+    }
+    .USR-phto-box .userpic{
+        border:1px solid #d1d1d1;
+        float:left;
+        margin-right:7px;
+    }
+    .input-box .searchicon{ right:2px !important; }
+
+    .add-email-box{
+        width:93% !important;
+    }
+    .add-email-box .input-field{
+        height: 30px !important;
+        width: 94% !important;
+    }
 }
 
 
@@ -329,4 +366,41 @@
 
     .select-box select.select { width:110px !important;}
     .select-box span.select { background:url(../assets/select-bg-small.jpg) no-repeat !important; white-space: nowrap; overflow: hidden;}
+
+    #input{ padding: 0 20% 0 2% !important; width:76% !important; height:23px !important; font-size:15px !important; background:#f7f7f7; font-family: calibrib;}
+    .search-panel{ width:140px; float:right;}
+    .white-box .USR-info{	float:left; line-height:11px; width:100px; overflow:hidden; text-overflow: ellipsis; font-size:9px; }
+    #alerthistory{ font-size:18px; font-weight:bold; float:left;}
+    .td-heading{ font-size:10px !important;}
+    .td-heading-2{ font-size:10px !important;}
+    .profile-details-box .info{
+        float: left;
+        font-size: 10px;
+        line-height: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 70%;
+    }
+    .profile-details-box .photo{
+        width:60px;
+        height:60px;
+        float:left;
+        margin-right:10px;
+        border:1px solid #cfcfcf;
+    }
+    .USR-phto-box .userpic{
+        border:1px solid #d1d1d1;
+        float:left;
+        margin-right:7px;
+    }
+    .input-box .searchicon{ right:2px !important; }
+
+    .add-email-box{
+        width:88% !important;
+    }
+    .add-email-box .input-field{
+        height: 30px !important;
+        width: 91% !important;
+    }
 }

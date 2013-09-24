@@ -1,0 +1,119 @@
+<% results_flag = (@alerts_for_company.nil? and @alerts_for_person.nil? and @alerts_for_position.nil? and @alerts_for_role.nil?) %>
+<div class="right-panel" style="width:94%; padding:3%;">
+  <div class="userprofile-box">
+    <div class="profile-title"><%= profile_user_name %></div>
+    <div class="profile-details-box">
+      <img class="photo" src="<%= profile_user_profile_pic_url %>" alt="" title="" />
+      <div class="info">
+        <strong>Company: </strong>  <span><%= profile_user_company %></span>
+        <br />
+        <strong>Email:</strong>  <a href="mailto:<%= profile_user_email %>"><%= profile_user_email %></a>
+        <br />
+        <strong>Location: </strong>  <span><%= profile_user_location %></span>
+      </div>
+
+      <div class="info float-R">
+        <div class="social-integration">
+          <strong>Logged in with:</strong>
+          <a href="<%= authorize_with_likedin_path %>">
+            <img src="/assets/linkedin_32.png" class="enabled" />
+          </a>
+          <!--<a href="<%#= authorize_with_google_path %>">-->
+            <!--<img src="/assets/gmail.png" class="<%#= check_google_session ? "enabled" : "disabled" %>" />-->
+          <!--</a>-->
+          <!--<a href="<%#= authorize_with_facebook_path %>">-->
+            <!--<img src="/assets/facebook_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
+          <!--</a>-->
+          <!--<a href="<%#= '#' %>">-->
+            <!--<img src="/assets/twitter_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
+          <!--</a>-->
+        </div>
+      </div>
+    </div>
+    <div class="all-box">
+      <span class=" float-L font-22 bold">Alert history</span>
+
+      <div style="width:455px;" class="float-R">
+        <div class="search-panel">
+          <div class="input-box">
+            <input type="text" name="search-alerts" placeholder="Search alerts" class="input" style="height:30px; padding: 0 7% 0 2%; width:91%;">
+            <input type="submit" value="" class="searchicon" style="top:5px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sent_received_section">
+    <div class="white-box score-history mrg-T10">
+      <table width="100%" align="left" cellpadding="6" cellspacing="0" id="dataTable-search">
+        <thead>
+        <tr class="alerts-header" style="display:none;">
+          <th>friend</th>
+          <th>f_connected</th>
+          <th>crm</th>
+        </tr>
+        </thead>
+        <tbody class="alerts-list">
+        <tr>
+          <td width="40%"  class="border-B col-orange bold font-14">Your current connection: </td>
+          <td width="40%"  class="border-B col-orange bold font-14">Is now connected to:</td>
+          <td width="14%"  class="border-B col-orange bold font-14 txt-C"><img src="/assets/salesforce.jpg" width="109" height="26"> </td>
+        </tr>
+        <% unless results_flag %>
+            <%= render :partial => "company_alerts" %>
+            <%= render :partial => "person_alerts" %>
+            <%= render :partial => "position_alerts" %>
+            <%= render :partial => "role_alerts" %>
+        <% else %>
+        <tr>
+          <td colspan="3">
+            <p class="font-14">
+              <i>No history found.</i>
+            </p>
+          </td>
+          <td class="display-none"></td>
+          <td class="display-none"></td>
+        </tr>
+        <% end %>
+        </tbody>
+        <tfoot>
+        <tr style="display:none;">
+          <th>friend</th>
+          <th>f_connected</th>
+          <th>crm</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div><!-- End sent_received_section -->
+</div><!-- End Right Panel -->
+<% unless results_flag %>
+    <style type="text/css">
+        div#dataTable-search_filter {
+            display: none;
+        }
+        div#dataTable-search_wrapper {
+            float: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            gCompanyFilter = $('#dataTable-search').dataTable({
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sSearch": ""
+                }
+            }).columnFilter({ aoColumns:
+                            [
+                                { type: "text", bRegex: true },
+                                { type: "text", bRegex: true }
+                            ]
+                    });
+        });
+    </script>
+<% end %>

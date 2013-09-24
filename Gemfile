@@ -13,7 +13,9 @@ gem 'typhoeus'
 gem 'json'
 gem 'facebox-rails'
 gem 'exception_notification'
-gem 'roo'
+gem 'roo', '1.11.2'
+gem 'rubyzip', '0.9.9'
+gem 'passenger'
 
 # Gems used only for assets and not required
 # in production environments by default.

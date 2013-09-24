@@ -66,4 +66,38 @@ module UsersHelper
     return ((offset + 1) == tags.length || (offset + 1) == tags.length) ? false : true
   end
 
+  # Alerts helper
+
+  def friend_profile_pic_url(user)
+    profile_pic = user["yourConnectionProfilePicUrl"]
+    return profile_pic.blank? ? "/assets/user_photo.jpg" : "#{profile_pic}"
+  end
+
+  def f_connected_profile_pic_url(user)
+    profile_pic = user["connectedToProfilePicUrl"]
+    return profile_pic.blank? ? "/assets/user_photo.jpg" : "#{profile_pic}"
+  end
+
+  def friend_name(user)
+    return "#{user['yourConnectionFirstName']} #{user['yourConnectionLastName']}"
+
+  end
+
+  def f_connected_name(user)
+    return "#{user['connectedToFirstName']} #{user['connectedToLastName']}"
+  end
+
+  def friend_headline(user)
+    return user['yourConnectionHeadline']
+
+  end
+
+  def f_connected_headline(user)
+    return user['connectedToHeadline']
+  end
+
+  def f_connected_to_salesforce(user)
+    return user['isConnectionAddedInSalesForce']
+  end
+
 end

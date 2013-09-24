@@ -1,0 +1,58 @@
+<div class="right-panel" style="width:94%; padding:3%;">
+  <a class=" float-L col-orange calibrib mrg-B20 font-18" href="<%= alerts_path %>"> <span class="font-24"> « </span> Click here to return to profile page</a>
+  <div class="all-box">
+    <span class=" float-L font-22 bold">Alert history</span>
+  </div>
+  <div class="sent_received_section">
+    <div class="white-box score-history mrg-T10">
+      <table width="100%" align="left" cellpadding="6" cellspacing="0">
+        <tbody>
+        <tr>
+          <td width="40%"  class="border-B col-orange bold font-14">Your current connection: </td>
+          <td width="40%"  class="border-B col-orange bold font-14">Is now connected to:</td>
+          <td width="14%"  class="border-B col-orange bold font-14 txt-C"><img src="/assets/salesforce.jpg" width="109" height="26"> </td>
+        </tr>
+        <% unless @alerts.nil? %>
+            <tr><td colspan="3" class="font-15 bold bg-gray-2">Target Company: <%= @type %></td></tr>
+            <% total_alerts = @alerts["networkAlert"].length %>
+            <% unless total_alerts < 1 %>
+                <% a_alert = @alerts["networkAlert"] %>
+                <% (0..(total_alerts - 1)).each do |i| %>
+                    <% friend = a_alert[i]["yourConnection"] %>
+                    <% f_connected = a_alert[i]["connectedTo"] %>
+                    <% is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i]) %>
+                    <tr>
+                      <td class="pad-T15">
+                        <span class="USR-phto-box"><img class="userpic" src="<%= friend_profile_pic_url(friend) %>" width="40" height="40"> </span>
+                        <div class="USR-info line-hit-16" style="width: 315px;">
+                          <span class="col-blue bold calibrib font-16"><%= friend_name(friend) %> </span>
+                          <br>
+                          <span class="multiline-ellipsis"><%= friend_headline(friend) %></span>
+                        </div>
+                      </td>
+                      <% unless f_connected.nil? %>
+                          <td class="pad-T15">
+                            <span class="USR-phto-box"><img class="userpic" src="<%= f_connected_profile_pic_url(f_connected) %>" width="40" height="40"> </span>
+                            <div class="USR-info line-hit-16" style="width: 315px;">
+                              <span class="col-blue bold calibrib font-16"><%= f_connected_name(f_connected) %></span>
+                              <br>
+                              <span class="multiline-ellipsis"><%= f_connected_headline(f_connected) %></span>
+                            </div>
+                          </td>
+                      <% end %>
+                      <% if is_connected_to_salesforce %>
+                          <td class="txt-C pad-T15 col-gray"> Added </td>
+                      <% else %>
+                          <td class="txt-C pad-T15 col-gray">
+                            <a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= f_connected['connectedToFirstName'] %>" lastName="<%= f_connected['connectedToLastName'] %>" title="<%= f_connected['connectedToHeadline'] %>" company="<%= f_connected['connectedToCompany'] %>">Add</a>
+                          </td>
+                      <% end %>
+                    </tr>
+                <% end %>
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- End sent_received_section -->
+</div><!-- End Right Panel -->

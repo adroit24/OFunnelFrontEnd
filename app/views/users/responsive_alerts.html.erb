@@ -1,0 +1,102 @@
+<% results_flag = (@alerts_for_company.nil? and @alerts_for_person.nil? and @alerts_for_position.nil? and @alerts_for_role.nil?) %>
+<!--start mobile container white-->
+<div class="mobile-container-white" style="border-top: 2px solid #CCC;">
+  <!--start mobile-container-Box-->
+  <div class="mobile-container-box">
+    <div class="container mrg-T5">
+      <div class="userprofile-box">
+        <div class="profile-title"><%= profile_user_name %></div>
+        <div class="profile-details-box mrg-B30">
+          <img class="photo" src="<%= profile_user_profile_pic_url %>" alt="" title="" />
+          <div class="info">
+            <strong>Company: </strong>  <span><%= profile_user_company %></span>
+            <br />
+            <strong>Email:</strong>  <a href="mailto:<%= profile_user_email %>"><%= profile_user_email %></a>
+            <br />
+            <strong>Location: </strong>  <span><%= profile_user_location %></span>
+          </div>
+        </div>
+        <div class="all-box">
+          <span id="alerthistory">Alert history</span>
+          <div class="search-panel">
+            <div class="input-box">
+              <input type="text" name="search-alerts" placeholder="Search alerts" class="input" id="input">
+              <input type="submit" value="" class="searchicon">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sent_received_section">
+        <div class="white-box score-history">
+          <table width="100%" style="width:100%; float:left" align="left" cellpadding="1" cellspacing="0" id="dataTable-search">
+            <thead>
+            <tr class="alerts-header" style="display:none;">
+              <th>friend</th>
+              <th>f_connected</th>
+            </tr>
+            </thead>
+            <tbody class="alerts-list">
+            <tr class="td-heading">
+              <td width="40%" class="border-B col-orange bold pad-T5 pad-B5">Your current connection: </td>
+              <td width="40%"  class="border-B col-orange bold pad-T5 pad-B5">Is now connected to:</td>
+            </tr>
+            <% unless results_flag %>
+                <%= render :partial => "responsive_company_alerts" %>
+                <%= render :partial => "responsive_person_alerts" %>
+                <%= render :partial => "responsive_position_alerts" %>
+                <%= render :partial => "responsive_role_alerts" %>
+            <% else %>
+                <tr>
+                  <td colspan="2">
+                    <p class="font-14">
+                      <i>No history found.</i>
+                    </p>
+                  </td>
+                  <td class="display-none"></td>
+                </tr>
+            <% end %>
+            </tbody>
+            <tfoot>
+            <tr style="display:none;">
+              <th>friend</th>
+              <th>f_connected</th>
+            </tr>
+            </tfoot>
+            </tbody>
+          </table>
+        </div>
+      </div><!-- End sent_received_section -->
+    </div>
+  </div><!--end mobile-container-Box-->
+</div>
+<!--end mobile container white-->
+<% unless results_flag %>
+    <style type="text/css">
+        div#dataTable-search_filter {
+            display: none;
+        }
+        div#dataTable-search_wrapper {
+            float: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function() {
+            gCompanyFilter = $('#dataTable-search').dataTable({
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bSort": false,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sSearch": ""
+                }
+            }).columnFilter({ aoColumns:
+                            [
+                                { type: "text", bRegex: true },
+                                { type: "text", bRegex: true }
+                            ]
+                    });
+        });
+    </script>
+<% end %>

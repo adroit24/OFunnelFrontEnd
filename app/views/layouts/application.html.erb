@@ -23,6 +23,12 @@
       // Commented due to bug#324
       //var showOfunnelHelp = <%#= show_ofunnel_help %>
   </script>
+
+  <script>
+      if (window!= top)
+          top.location.href=location.href
+  </script>
+
 </head>
 <body>
 <div class="wrapper">

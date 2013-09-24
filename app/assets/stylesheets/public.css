@@ -437,3 +437,78 @@ p{ margin:5px 0 15px;}
 }
 
 .select-box select.select option{ border-bottom:1px solid #ccc; padding:8px; }
+
+=================================================================
+
+.score-history table tr td{ border-bottom:1px solid #d7d7d7 !important; }
+/*----*/
+.search-panel .input-box{
+    width:100%;
+    float:left;
+    position:relative;
+}
+input[placeholder], [placeholder], *[placeholder] { color:#838181; }
+.input-box .searchicon{
+    background: url("../assets/search-icon-small.jpg") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    height: 23px;
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 23px;
+    padding:0;
+}
+/*----*/
+.sent_received_section{
+    width:100%;
+    float:left;
+    position:relative;
+}
+.sent_received_section .white-box{
+    background:#fff;
+    width:100%;
+    float:left;
+    font-size:13px;
+}
+.userprofile-box{
+    width:100%;
+    float:left;
+}
+.userprofile-box .profile-details-box{
+    width:100%;
+    float:left;
+    margin-bottom:15px;
+}
+
+/*-------------------------*/
+.add-email-box{
+    background:#efefef;
+    width:65%;
+    float:left;
+    padding:15px;
+    margin:10px 0 ;
+}
+.add-email-box label{ display:block; font-size:15px; font-weight:bold;}
+.add-email-box .input-field{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D4D4D4;
+    color: #000000;
+    float: left;
+    font-size: 14px;
+    height: 32px;
+    /*margin-top: 15px;*/
+    padding: 0 10px;
+    width: 85%;
+}
+.input-field:focus{ border: 1px solid #999; }
+.add-email-box .save-btn{
+    background:#0068a3;
+    border:1px  solid #cfcece;
+    min-width:125px;
+    height:30px;
+    float:left;
+    font:bold 13px/25px Arial, Helvetica, sans-serif;
+    color:#fff;
+    text-align:center;
+    margin-top:15px;
+}

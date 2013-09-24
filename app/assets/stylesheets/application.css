@@ -1131,6 +1131,20 @@ ul.red-radio-box  li{
     width: 30px;
 }
 
+.input-relative2{
+    position:relative;
+    float:left;
+}
+
+.input-relative2 .downarrow{
+    background: url("../assets/down-arrow-3.png") no-repeat scroll center center #FFFFFF;
+    height: 25px;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    width: 30px;
+}
+
 
 /*------- AutoComplete Dropdown --------*/
 .autocomplete-box{
@@ -1819,6 +1833,14 @@ input.upload-logo {
     margin: 7px 9px 0 0;
 }
 
+.delete-icon2{
+    background: url("../assets/cancel-icon-small.png") center right no-repeat ;
+    height:16px;
+    width:16px;
+    float:right;
+    margin: 7px 9px 0 0;
+}
+
 .alert-text-box{
     width:42%;
     float:right;
@@ -1905,3 +1927,36 @@ input.upload-logo {
 .alert-pagination .pl-active3{color: #9D9D9D !important;cursor:pointer !important;}
 .alert-pagination .pl-active3:hover{font-weight : bold ;}
 .alert-pagination .pl-inactive3{color: #000 !important; pointer-events: none !important;}
+
+/*-------------------------*/
+.add-email-box{
+    background:#efefef;
+    width:65%;
+    float:left;
+    padding:15px;
+    margin:10px 0 ;
+}
+.add-email-box label{ display:block; font-size:15px; font-weight:bold;}
+.add-email-box .input-field{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D4D4D4;
+    color: #000000;
+    float: left;
+    font-size: 14px;
+    height: 32px;
+    /*margin-top: 15px;*/
+    padding: 0 10px;
+    width: 85%;
+}
+.input-field:focus{ border: 1px solid #999; }
+.add-email-box .save-btn{
+    background:#0068a3;
+    border:1px  solid #cfcece;
+    min-width:125px;
+    height:30px;
+    float:left;
+    font:bold 13px/25px Arial, Helvetica, sans-serif;
+    color:#fff;
+    text-align:center;
+    margin-top:15px;
+}

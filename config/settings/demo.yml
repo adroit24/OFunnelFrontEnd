@@ -111,6 +111,14 @@ api_endpoints:
   AcceptRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/AcceptRequest"
   IgnoreRequest: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/RequestService.svc/IgnoreRequest"
 
+  #Alerts API Endpoint
+  GetNetworkAlertsForUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getNetworkAlertsForUserId"
+  GetAllNetworkAlertsForTargetAccount: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getAllNetworkAlertsForTargetAccount"
+  GetRecipientsEmailForNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getRecipientsEmailForNetworkAlerts"
+  SetRecipientEmailForNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/setRecipientEmailForNetworkAlerts"
+  DeleteRecipientEmail: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/deleteRecipientEmail"
+  AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
+
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"
 
