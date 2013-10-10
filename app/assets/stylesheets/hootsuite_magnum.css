@@ -1,0 +1,70 @@
+/*------------------- theme classic -----------------*/
+@charset "utf-8";
+/* CSS Document */
+
+*{ margin:0px; padding:0px;}
+
+.fl{ float:left;}
+.fr{ float:right;}
+
+body{ margin:0px; padding:0px;}
+
+
+.maincontainer{ width:100%; margin:0 auto;}
+.maincontainer_section{ width:100%;}
+
+.theme_magnum{ background-color:#424242; background-image: none;}
+.theme_magnum .thumbtop_section{ overflow: hidden;}
+.theme_magnum .thimg{ position:relative; clear:both;}
+.theme_magnum .thumb_img{height: 30px; left:5px; top: 5px; width: 30px;  border-radius:1px; -moz-border-radius:1px; -webkit-border-radius:1px; overflow:hidden; position:absolute;}
+.theme_magnum .thumb_img:hover{ text-decoration:none;}
+.theme_magnum .thumbuser_details{ overflow: hidden; padding: 4px 6px 5px 42px; position: relative; word-wrap: break-word;}
+.theme_magnum .thumb_username{ font:12px Arial, Helvetica, sans-serif; font-weight:bold; color: #D0D0D0; float:left; margin:0px; padding:0px; line-height:10px; clear: left;}
+.theme_magnum .thumb_username a{ text-decoration:none; color:#d0d0d0; }
+.theme_magnum .thumb_username a:hover{ text-decoration:underline; color:#d0d0d0; }
+.theme_magnum .thumb_date{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 11px; color:#cdcdcd; margin-top:1px; margin-bottom: 6px; vertical-align: middle; clear: left; white-space: nowrap;}
+.theme_magnum .text{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 12px; margin-bottom:6px; vertical-align: middle; clear: left; border-bottom: 1px solid #676767; padding-bottom:6px; word-wrap: break-word; width:100%; color:#fff;}
+.theme_magnum .text a{ color:#cdcdcd; text-decoration:none;}
+.theme_magnum .text a:hover{ color:#cdcdcd; text-decoration:underline;}
+.theme_magnum .bigimg_details{ position:relative; width:88%; padding-left:42px;}
+.theme_magnum .large_img{float:left;width:100%; max-width: 130px; width: 28%; margin-right:5px; overflow:hidden; text-decoration:none; border:1px solid; display:block; background-color: #FFFFFF; border-color: #FFFFFF; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3); padding:1px;}
+/*.theme_magnum .large_img:hover{ text-decoration:none; border-color: #4E763E;}*/
+.theme_magnum .bigbuser_details{ float:left; width: 65%;}
+.theme_magnum .bigbuser_username{ font:12px Arial, Helvetica, sans-serif; font-weight:bold; color: #d0d0d0; float:left; margin:0px; padding:0px; line-height:10px; clear: left; width:100%;}
+.theme_magnum .bigbuser_username a{ text-decoration:none; color:#d0d0d0;}
+.theme_magnum .bigbuser_username a:hover{ text-decoration:underline; color:#d0d0d0;}
+.theme_magnum .biguser_designation{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 12px; color:#cdcdcd; margin-top:4px; margin-bottom: 6px; vertical-align: middle; clear: left; width:100%;}
+.theme_magnum .large_img img{ display: block; max-height: 200px; min-height: 40px; min-width: 50px; width: 100%;}
+
+
+/*======================== 10/10/13 theme classic css ============================*/
+
+.theme_magnum_topsec{ background:#333333;
+border-bottom:1px solid #1a1a1a;
+box-shadow: 0 2px 6px 3px #1a1a1a;
+-moz-box-shadow: 0 2px 6px 3px #1a1a1a;
+-webkit-box-shadow: 0 2px 6px 3px #1a1a1a;
+width:100%;
+position:relative;
+}
+
+.theme_magnum_topsec .topsec_box{ position:relative; width:100%; background:url(../assets/repeat_line.png) left bottom repeat-x; height:33px;}
+.theme_magnum_topsec .topsec_dropdown_holder{/* border-left:1px solid #252525;*/ right:0; position:absolute; width:29px; height:33px;
+
+ }
+.theme_magnum_topsec .topsec_dropdown{background:url(../assets/dropdown_magnum.png) center center no-repeat; position:absolute; width:29px; height:33px; }
+.theme_magnum_topsec .topsec_dropdown:hover .top_links{ display:block;}
+
+.theme_magnum_topsec .top_links{ width:99%; margin:auto; }
+.theme_magnum_topsec .top_links ul{ list-style:none; margin:0px; padding:0px;}
+.theme_magnum_topsec .top_links ul li{ font-family: Arial, Helvetica, sans-serif; font-size:13px; text-align:right; color:#d0d0d0; border-bottom:1px solid #696969; padding:7px 0px;}
+.theme_magnum_topsec .top_links ul li a{ text-decoration:none; color:#d0d0d0;}
+.theme_magnum_topsec .top_links ul li a:hover{ text-decoration:none; color:#d0d0d0;}
+.theme_magnum_topsec .top_links ul li:last-child{ border-bottom:none;}
+
+.height10{ clear:both; height:10px; width:100%;}
+.height1{ clear:both; height:1px; width:100%;}
+.theme_magnum .target_block{ width:99%; margin:10px 0px; background:#333; position:relative; clear:both; padding:5px; font:12px Arial, Helvetica, sans-serif; color:#d0d0d0; font-weight:bold; border-top:1px solid #333;}
+.theme_magnum .target_block a{ text-decoration:none;color:#d0d0d0; }
+.theme_magnum .target_block a:hover{ text-decoration:none;color:#d0d0d0; }
+

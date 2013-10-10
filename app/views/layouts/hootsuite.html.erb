@@ -17,12 +17,23 @@
   </script>
 </head>
 <body style="background: #FFF !important;">
-<div class="tabs_new">
-  <ul class="nav">
-    <li class=""><a href="<%= hootsuite_stream_path %>"<%= ' class=current' if session[:hootsuite][:tab] == "ALERTS" %>><b>Alerts</b></a></li>
-    <li class=""><a href="#"<%= ' class="current"' if session[:hootsuite][:tab] == "TARGETS" %> onclick="window.open('<%= discover_relationships_path %>', '', 'width=700,height=800');return false;">Target Accounts</a></li>
-  </ul>
+<div class="maincontainer">
+  <div class="maincontainer_section">
+    <div class="theme_<%= session[:hootsuite][:theme] %>_topsec">
+      <div class="topsec_box">
+        <div class="topsec_dropdown_holder">
+          <span class="topsec_dropdown"><a href="#"></a></span>
+        </div>
+      </div>
+      <div class="top_links" style="display: none;">
+        <ul>
+          <!--<li><a href="#">Alerts</a></li>-->
+          <li><a href="#" onclick="window.open('<%= discover_relationships_path %>', '', 'width=700,height=800');return false;">Target Accounts</a></li>
+        </ul>
+      </div>
+    </div>
+    <%= yield %>
+  </div>
 </div>
-<%= yield %>
 </body>
 </html>

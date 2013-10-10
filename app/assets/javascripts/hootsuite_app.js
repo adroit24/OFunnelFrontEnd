@@ -32,10 +32,13 @@ $( document ).ready(function() {
 
         $(window).scroll(bindScroll);
     }
+
+    $('span.topsec_dropdown').click(function() {
+        $('div.top_links').toggle();
+    });
 });
 
-function loadMore()
-{
+function loadMore() {
     console.log("More loaded");
     $.ajax({
         type: "POST",
@@ -48,38 +51,49 @@ function loadMore()
         url: hootsuiteStreamPath,
         success: function(data) {
             $.each( data, function( index, value ){
-                target = value.yourConnectionProfileUrl == "" ? '' : ' target="_blank"'
-                fTarget = value.connectedToProfileUrl == "" ? '' : ' target="_blank"'
-                profilePic = value.yourConnectionProfilePicUrl == "" ? "https://secure.ofunnel.com/assets/user_photo.jpg" : value.yourConnectionProfilePicUrl
-                fProfilePic = value.connectedToProfilePicUrl == "" ? "https://secure.ofunnel.com/assets/user_photo.jpg" : value.connectedToProfilePicUrl
-                eventTime = new Date(value.updatedAt).strftime("%b %e, %I:%M%P")
-                $("div.maincontainer").last().append(
-                    '<div class="maincontainer">' +
-                        '<div class="maincontainer_section">' +
-                        '<div class="'+ hootsuiteTheme +'">' +
+                alertType = value.alertType;
+                networkAlert = value.targetName;
+                target = value.yourConnectionProfileUrl == "" ? '' : ' target="_blank"';
+                fTarget = value.connectedToProfileUrl == "" ? '' : ' target="_blank"';
+                profilePic = value.yourConnectionProfilePicUrl == "" ? "https://secure.ofunnel.com/assets/user_photo.jpg" : value.yourConnectionProfilePicUrl;
+                fProfilePic = value.connectedToProfilePicUrl == "" ? "https://secure.ofunnel.com/assets/user_photo.jpg" : value.connectedToProfilePicUrl;
+                eventTime = new Date(value.updatedAt).strftime("%b %e, %I:%M%P");
+                $("div.alert-wrapper").last().append(
+                    '<div class="alert-wrapper">' +
+                        '<div class="' + hootsuiteTheme + '">' +
                         '<div class="thumbtop_section">' +
-                        '<div class="thimg">' +
-                        '<div class="thumb_img">' +
-                        '<a href="#"><img src="' + profilePic + '" style="height: 100%;" alt="img"></a>' +
-                        '</div></div>' +
+                        '<div class="height10"></div>' +
+                        '<div class="target_block">Target ' + capitaliseFirstLetter(alertType) + ': ' + networkAlert + '</div>' +
+                        '<div class="thimg"><div class="thumb_img"><a href="#"><img src="' + profilePic + '"  alt="img" style="height: 30px;width: 30px;"></a></div></div>' +
                         '<div class="thumbuser_details">' +
                         '<p class="thumb_username"><a href="' + value.yourConnectionProfileUrl + '"' + target + '>' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a></p>' +
                         '<div class="thumb_date">' + eventTime + '</div>' +
-                        '<p class="text"><a href="' + value.yourConnectionProfileUrl + '"' + target + '>' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a>' +
-                        ' is now connected to ' +
-                        '<a href="' + value.connectedToProfileUrl + '"' + value.fTarget + '>' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
-                        '<div class="bigimg_details"><div class="large_img">' +
-                        '<a href="#"><img src="' + fProfilePic + '" style="height: 100%;" alt="img"></a>' +
+                        '<p class="text"><a href="' + value.yourConnectionProfileUrl + '"' + target + '>' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a> is now connected to <a href="' + value.connectedToProfileUrl + '"' + fTarget + '>' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
                         '</div>' +
-                        '<div class="bigbuser_details"><p class="bigbuser_username">' +
-                        '<a href="' + value.connectedToProfileUrl + '"' + value.fTarget + '>' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a>' +
-                        '</p>' +
-                        '<div class="biguser_designation">' + value.connectedToHeadline + '</div></div></div></div></div></div></div></div>'
+                        '<div class="bigimg_details">' +
+                        '<div class="large_img"><a href="#"><img src="' + fProfilePic + '" alt="img"></a></div>' +
+                        '<div class="bigbuser_details">' +
+                        '<p class="bigbuser_username"><a href="' + value.connectedToProfileUrl + '"' + fTarget + '>' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
+                        '<div class="biguser_designation">' +
+                        '<p>' + value.connectedToHeadline + '</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="height1"></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
                 );
             });
             $(window).bind('scroll', bindScroll);
         }
     });
+}
+
+function capitaliseFirstLetter(string)
+{
+    downString = string.toLowerCase();
+    return downString.charAt(0).toUpperCase() + downString.slice(1);
 }
 
 function bindScroll(){

@@ -13,62 +13,71 @@ body{ margin:0px; padding:0px;}
 .maincontainer{ width:100%; margin:0 auto;}
 .maincontainer_section{ width:100%;}
 
-.theme_classic{ background-color: #F3F3F3; background-image: none; border-bottom:1px solid #AEAEAE; color:#4E763E;}
-.theme_classic .thumbtop_section{ overflow: hidden;padding: 4px 6px 10px 5px;}
-.theme_classic .thimg{ position:relative;}
-.theme_classic .thumb_img{height: 30px; left:5px; top: 5px; width: 30px;  border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; overflow:hidden; position:absolute;}
+.theme_classic{ background-color: #f4f4f4; background-image: none;}
+.theme_classic .thumbtop_section{ overflow: hidden;}
+.theme_classic .thimg{ position:relative; clear:both;}
+.theme_classic .thumb_img{height: 30px; left:5px; top: 5px; width: 30px;  border-radius:1px; -moz-border-radius:1px; -webkit-border-radius:1px; overflow:hidden; position:absolute;}
 .theme_classic .thumb_img:hover{ text-decoration:none;}
 .theme_classic .thumbuser_details{ overflow: hidden; padding: 4px 6px 5px 42px; position: relative; word-wrap: break-word;}
-.theme_classic .thumb_username{ font:12px Verdana, Geneva, sans-serif; font-weight:bold; color: #D0D0D0; float:left; margin:0px; padding:0px; line-height:10px; clear: left;}
+.theme_classic .thumb_username{ font:12px Arial, Helvetica, sans-serif; font-weight:bold; color: #D0D0D0; float:left; margin:0px; padding:0px; line-height:10px; clear: left;}
 .theme_classic .thumb_username a{ text-decoration:none; color:#4E763E; }
 .theme_classic .thumb_username a:hover{ text-decoration:underline; color:#4E763E; }
 .theme_classic .thumb_date{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 11px; color:#817f7f; margin-top:1px; margin-bottom: 6px; vertical-align: middle; clear: left; white-space: nowrap;}
 .theme_classic .text{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 12px; margin-bottom:6px; vertical-align: middle; clear: left; border-bottom: 1px solid #AEAEAE; padding-bottom:6px; word-wrap: break-word; width:100%; color:#32363F;}
 .theme_classic .text a{ color:#239CB9; text-decoration:none;}
 .theme_classic .text a:hover{ color:#239CB9; text-decoration:underline;}
-.theme_classic .bigimg_details{ float:left;width:97%; padding-left:0%;}
+.theme_classic .bigimg_details{ position:relative; width:88%; padding-left:42px;}
 .theme_classic .large_img{float:left;width:100%; max-width: 130px; width: 28%; margin-right:5px; overflow:hidden; text-decoration:none; border:1px solid; display:block; background-color: #FFFFFF; border-color: #FFFFFF; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3); padding:1px;}
-.theme_classic .large_img:hover{ text-decoration:none; border-color: #4E763E;}
+/*.theme_classic .large_img:hover{ text-decoration:none; border-color: #4E763E;}*/
 .theme_classic .bigbuser_details{ float:left; width: 65%;}
 .theme_classic .bigbuser_username{ font:12px Arial, Helvetica, sans-serif; font-weight:bold; color: #239CB9; float:left; margin:0px; padding:0px; line-height:10px; clear: left; width:100%;}
 .theme_classic .bigbuser_username a{ text-decoration:none; color:#239CB9;}
 .theme_classic .bigbuser_username a:hover{ text-decoration:underline; color:#239CB9;}
-.theme_classic .biguser_designation{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 11px; color:#808080; margin-top:4px; margin-bottom: 6px; vertical-align: middle; clear: left; width:100%;}
+.theme_classic .biguser_designation{font-family:Arial, Helvetica, sans-serif; float: left; font-size: 12px; color:#808080; margin-top:4px; margin-bottom: 6px; vertical-align: middle; clear: left; width:100%;}
 .theme_classic .large_img img{ display: block; max-height: 200px; min-height: 40px; min-width: 50px; width: 100%;}
+ 
+ 
+/*======================== 10/10/13 theme classic css ============================*/
 
-/*=======================discover btn ========================================*/
-.disc-intro-box{
-    width:220px;
-    float:left;
-    color:#fff;
-    text-align:center;
-    margin-right:10px;
-}
-.disc-intro-box .in-btn{
-    background: url("../assets/in-btn.png") no-repeat scroll 17px center #FF5D00;
-    box-shadow: 0 0 5px #333333;
-    color: #FFFFFF;
-    float: left;
-    font-size: 17px;
-    font-weight: bold;
-    height: 65px;
-    text-align: left;
-    width: 268px;
-    margin:0 5px;
-}
-.in-btn span{
-    border-left: 1px solid #FFFFFF;
-    float: left;
-    height: 70%;
-    margin: 6px 10px 0 60px;
-    padding: 6px 0 0 13px;
+.theme_classic_topsec{ background:background: #f7f7f7; /* Old browsers */
+background: -moz-linear-gradient(top,  #f7f7f7 0%, #e6e6e6 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7f7f7), color-stop(100%,#e6e6e6)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f7f7f7 0%,#e6e6e6 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f7f7f7 0%,#e6e6e6 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f7f7f7 0%,#e6e6e6 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f7f7f7 0%,#e6e6e6 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
+border-bottom:1px solid #9d9d9d;
+box-shadow: 0 2px 6px 3px #CCCCCC;
+-moz-box-shadow: 0 2px 6px 3px #CCCCCC;
+-webkit-box-shadow: 0 2px 6px 3px #CCCCCC;
+width:100%;
+position:relative;
 }
 
-.tabs_new { height:27px;padding: 0px; margin: 0 0 0 0; }
-.tabs_new .nav { height: 100%;overflow: hidden; background: #f2f2f2; list-style:none}
-.tabs_new .nav li { width: 50%; float: left; margin: 0; font-family:Arial, Helvetica, sans-serif; }
-.tabs_new .nav li.last { margin-right: 0; }
-.tabs_new .nav li a { display: block; padding: 5px; background: #fff; color:#239CB9; font-size: 12px; text-align: center;  border:none; border-right: 1px solid #E1E1E1; text-decoration:none; }
-.tabs_new li a.current { background: #f2f2f2 !important; color:#239CB9;  }
-.tabs_new li a.current:hover { background: #f6f6f6 !important; color:#239CB9 !important;  }
-.tabs_new .nav li a:hover, .tabs_new .nav li a:focus { background: #f2f2f2; color: #239CB9; font-weight: bolder; }
+.topsec_box{ position:relative; width:100%; border-bottom:1px solid #bebebe; height:33px;}
+.topsec_dropdown_holder{ border-left:1px solid #c7c7c7; right:0; position:absolute; width:29px; height:33px;
+background: #c4c4c4; /* Old browsers */
+background: -moz-linear-gradient(top,  #c4c4c4 0%, #e7e7e7 29%, #ffffff 81%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c4c4c4), color-stop(29%,#e7e7e7), color-stop(81%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* IE10+ */
+background: linear-gradient(to bottom,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c4c4', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+ }
+.topsec_dropdown{background:url(../assets/drop_down.png) center center no-repeat; position:absolute; width:29px; height:33px; }
+.topsec_dropdown:hover .top_links{ display:block;}
+
+.top_links{ width:99%; margin:auto; }
+.top_links ul{ list-style:none; margin:0px; padding:0px;}
+.top_links ul li{ font-family: Arial, Helvetica, sans-serif; font-size:13px; text-align:right; color:#239cb9; border-bottom:1px solid #77bc66; padding:7px 0px;}
+.top_links ul li a{ text-decoration:none; color:#239cb9;}
+.top_links ul li a:hover{ text-decoration:none; color:#239cb9;}
+.top_links ul li:last-child{ border-bottom:none;}
+
+.height10{ clear:both; height:10px; width:100%;}
+.height1{ clear:both; height:1px; width:100%;}
+.target_block{ width:99%; margin:10px 0px; background:#dee0e3; position:relative; clear:both; padding:5px; font:12px Arial, Helvetica, sans-serif; color:#239cb9; font-weight:bold; border-top:1px solid #cccccc;}
+.target_block a{ text-decoration:none;color:#239cb9; }
+.target_block a:hover{ text-decoration:none;color:#239cb9; }

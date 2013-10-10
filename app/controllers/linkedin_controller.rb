@@ -7,9 +7,9 @@ class LinkedinController < ApplicationController
 
   def index
     unless current_user.nil?
-      redirect_to discover_relationships_path
+      redirect_to discover_relationships_path and return
     else
-      redirect_to Settings.logout_redirect
+      redirect_to Settings.logout_redirect and return
     end
   end
 
@@ -503,7 +503,7 @@ class LinkedinController < ApplicationController
   end
 
   def add_relationships
-    unless params[:alertJson].nil?
+    unless params[:alertJson].blank?
       target_accounts = JSON.parse(params[:alertJson])
       alert_json = {
           :alert => []
@@ -626,12 +626,13 @@ class LinkedinController < ApplicationController
           while (total_companies > parsed_companies) do
             (offset...(offset + limit)).each do |i|
               row = Hash[[header, spreadsheet.row(i)].transpose]
-              original_keys = row.keys
+              row_arr = row.keys.reject { |key| key.blank? }
+              original_keys = row_arr
               unless original_keys.nil?
-                keys = row.keys.map(&:downcase)
+                keys = row_arr.map(&:downcase)
                 key = keys & keywords_array
+                index = keys.index(key[0])
                 unless index.nil?
-                  index = keys.index(key[0])
                   original_key = original_keys[index]
                   company = row[original_key]
                   if company =~ /\S/
