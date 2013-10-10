@@ -627,13 +627,17 @@ class LinkedinController < ApplicationController
             (offset...(offset + limit)).each do |i|
               row = Hash[[header, spreadsheet.row(i)].transpose]
               original_keys = row.keys
-              keys = row.keys.map(&:downcase)
-              key = keys & keywords_array
-              index = keys.index(key[0])
-              original_key = original_keys[index]
-              company = row[original_key]
-              if company =~ /\S/
-                @company_array << company
+              unless original_keys.nil?
+                keys = row.keys.map(&:downcase)
+                key = keys & keywords_array
+                unless index.nil?
+                  index = keys.index(key[0])
+                  original_key = original_keys[index]
+                  company = row[original_key]
+                  if company =~ /\S/
+                    @company_array << company
+                  end
+                end
               end
               parsed_companies += 1
             end
@@ -684,35 +688,39 @@ class LinkedinController < ApplicationController
   end
 
   def add_recipients
-    recipient_emails = params[:recipientEmails]
+    unless params[:recipientEmails].blank?
+      recipient_emails = params[:recipientEmails]
 
-    recipient_json = {
-        :recipientEmail => []
-    }
-    recipient_array = []
-    recipient_emails.each do |email|
-      recipient_array.push(
-          {
-              :email => email
-          }
-      )
-    end
-    recipient_json[:recipientEmail] = recipient_array
+      recipient_json = {
+          :recipientEmail => []
+      }
+      recipient_array = []
+      recipient_emails.each do |email|
+        recipient_array.push(
+            {
+                :email => email
+            }
+        )
+      end
+      recipient_json[:recipientEmail] = recipient_array
 
-    api_endpoint = "#{Settings.api_endpoints.SetRecipientEmailForNetworkAlerts}"
-    response = Typhoeus.post(
-        api_endpoint,
-        body: {
-            userId: current_user_id,
-            recipientEmailJson: recipient_json.to_json
-        })
+      api_endpoint = "#{Settings.api_endpoints.SetRecipientEmailForNetworkAlerts}"
+      response = Typhoeus.post(
+          api_endpoint,
+          body: {
+              userId: current_user_id,
+              recipientEmailJson: recipient_json.to_json
+          })
 
-    if response.success? && !api_contains_error("SetRecipientEmailForNetworkAlerts", response)
-      api_response = JSON.parse(response.response_body)["SetRecipientEmailForNetworkAlertsResult"]
-      if api_response["error"] == nil and api_response["isAddedRecipientEmail"] == true
-        @emails = get_recipients
-        respond_to do |format|
-          format.js
+      if response.success? && !api_contains_error("SetRecipientEmailForNetworkAlerts", response)
+        api_response = JSON.parse(response.response_body)["SetRecipientEmailForNetworkAlertsResult"]
+        if api_response["error"] == nil and api_response["isAddedRecipientEmail"] == true
+          @emails = get_recipients
+          respond_to do |format|
+            format.js
+          end
+        else
+          render :text => "ERROR" and return
         end
       else
         render :text => "ERROR" and return

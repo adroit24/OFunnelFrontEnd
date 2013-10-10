@@ -2,27 +2,31 @@
     <% @alerts_for_position.each_with_index do |c_alert,index| %>
         <% unless index == 0 %>
             <tr>
-              <td colspan="3"><br/></td>
+              <td colspan="2"><br/></td>
               <td class="display-none"></td>
-              <td class="display-none"></td>
+              <!--<td class="display-none"></td>-->
             </tr>
         <% end %>
         <tr>
-          <td colspan="3" class="font-15 bold bg-gray-2">Target Position: <%= c_alert["targetName"] %></td>
+          <td colspan="2" class="font-15 bold bg-gray-2">Target Position: <%= c_alert["targetName"] %></td>
           <td class="bg-gray-2 display-none"></td>
-          <td class="bg-gray-2 display-none"></td>
+          <!--<td class="bg-gray-2 display-none"></td>-->
         </tr>
         <% total_alerts = c_alert["networkAlert"].length %>
         <% unless total_alerts < 1 %>
             <% a_alert = c_alert["networkAlert"] %>
             <% (0..(total_alerts - 1)).each do |i| %>
-                <% friend = a_alert[i]["yourConnection"] %>
-                <% is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i]) %>
+                <%
+                   friend = a_alert[i]["yourConnection"]
+                   is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i])
+                   friend_profile = friend_profile_url(friend)
+                   friend_target = friend_profile == "#" ? '' : ' target="_blank"'
+                %>
                 <tr>
-                  <td class="pad-T15">
+                  <td class="pad-T15" colspan="2">
                     <span class="USR-phto-box"><img class="userpic" src="<%= friend_profile_pic_url(friend) %>" width="40" height="40"> </span>
-                    <div class="USR-info line-hit-16" style="width: 315px;">
-                      <span class="col-blue bold calibrib font-16"><%= friend_name(friend) %> </span>
+                    <div class="USR-info line-hit-16" style="width: 94%;">
+                      <a class="col-blue bold calibrib font-16" href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(friend) %> </a>
                       <br>
                       <span class="multiline-ellipsis"><%= friend_headline(friend) %></span>
                     </div>
@@ -30,17 +34,17 @@
                   <td class="pad-T15">
                   </td>
                   <% if is_connected_to_salesforce %>
-                      <td class="txt-C pad-T15 col-gray"> Added </td>
+                      <!--<td class="txt-C pad-T15 col-gray"> Added </td>-->
                   <% else %>
-                      <td class="txt-C pad-T15 col-gray">
-                        <a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= friend['connectedToFirstName'] %>" lastName="<%= friend['connectedToLastName'] %>" title="<%= friend['connectedToHeadline'] %>" company="<%= friend['connectedToCompany'] %>">Add</a>
-                      </td>
+                      <!--<td class="txt-C pad-T15 col-gray">-->
+                      <!--<a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= friend['yourConnectionFirstName'] %>" lastName="<%= friend['yourConnectionLastName'] %>" title="<%= friend['yourConnectionHeadline'] %>" company="<%= friend['yourConnectionCompany'] %>">Add</a>-->
+                      <!--</td>-->
                   <% end %>
                 </tr>
             <% end %>
             <% if c_alert["totalCompanyAlerts"].to_i > 5 %>
                 <tr>
-                  <td colspan="3" class="bg-blue mrg-T10"><a href="<%= all_alerts_path(c_alert["targetAccountId"],"Position") %>" class="font-14 bold col-white">See all alerts for "Target Position: <%= c_alert["targetName"] %>" <span class="font-10">►</span></a></td>
+                  <td colspan="2" class="bg-blue mrg-T10"><a href="<%= all_alerts_path(c_alert["targetAccountId"],"Position") %>" class="font-14 bold col-white">See all alerts for "Target Position: <%= c_alert["targetName"] %>" <span class="font-10">►</span></a></td>
                 </tr>
             <% end %>
         <% end %>

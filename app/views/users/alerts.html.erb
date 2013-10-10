@@ -50,14 +50,14 @@
         <tr class="alerts-header" style="display:none;">
           <th>friend</th>
           <th>f_connected</th>
-          <th>crm</th>
+          <!--<th>crm</th>-->
         </tr>
         </thead>
         <tbody class="alerts-list">
         <tr>
-          <td width="40%"  class="border-B col-orange bold font-14">Your current connection: </td>
-          <td width="40%"  class="border-B col-orange bold font-14">Is now connected to:</td>
-          <td width="14%"  class="border-B col-orange bold font-14 txt-C"><img src="/assets/salesforce.jpg" width="109" height="26"> </td>
+          <td width="50%"  class="border-B col-orange bold font-14">Your current connection: </td>
+          <td width="50%"  class="border-B col-orange bold font-14">Is now connected to:</td>
+          <!--<td width="14%"  class="border-B col-orange bold font-14 txt-C"><img src="/assets/salesforce.jpg" width="109" height="26"> </td>-->
         </tr>
         <% unless results_flag %>
             <%= render :partial => "company_alerts" %>
@@ -66,13 +66,13 @@
             <%= render :partial => "role_alerts" %>
         <% else %>
         <tr>
-          <td colspan="3">
+          <td colspan="2">
             <p class="font-14">
               <i>No history found.</i>
             </p>
           </td>
           <td class="display-none"></td>
-          <td class="display-none"></td>
+          <!--<td class="display-none"></td>-->
         </tr>
         <% end %>
         </tbody>
@@ -80,7 +80,7 @@
         <tr style="display:none;">
           <th>friend</th>
           <th>f_connected</th>
-          <th>crm</th>
+          <!--<th>crm</th>-->
         </tr>
         </tfoot>
       </table>

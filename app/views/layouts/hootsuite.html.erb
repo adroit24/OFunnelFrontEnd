@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>OFunnel</title>
+  <%= stylesheet_link_tag    "hootsuite_#{session[:hootsuite][:theme]}", :media => "all" %>
+  <%= javascript_include_tag "https://hootsuite.s3.amazonaws.com/jsapi/0-5/hsp.js" %>
+  <%= javascript_include_tag "strftime-min" %>
+  <%= javascript_include_tag "hootsuite_app" %>
+  <%= csrf_meta_tags %>
+
+  <script type="text/javascript">
+      var hootSuiteEnabled = true;
+      var hootsuiteStreamPath = "<%= hootsuite_stream_path %>";
+      var hootsuiteRecieverPath = "<%= Settings.hootsuite_reciever_path %>";
+      var hootsuiteTheme = "theme_<%= session[:hootsuite][:theme] %>";
+      var hootsuiteUserName = "<%= session[:hootsuite][:userName] %>";
+  </script>
+</head>
+<body style="background: #FFF !important;">
+<div class="tabs_new">
+  <ul class="nav">
+    <li class=""><a href="<%= hootsuite_stream_path %>"<%= ' class=current' if session[:hootsuite][:tab] == "ALERTS" %>><b>Alerts</b></a></li>
+    <li class=""><a href="#"<%= ' class="current"' if session[:hootsuite][:tab] == "TARGETS" %> onclick="window.open('<%= discover_relationships_path %>', '', 'width=700,height=800');return false;">Target Accounts</a></li>
+  </ul>
+</div>
+<%= yield %>
+</body>
+</html>

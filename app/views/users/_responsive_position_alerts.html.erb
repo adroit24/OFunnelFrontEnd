@@ -8,13 +8,18 @@
         <% unless total_alerts < 1 %>
             <% a_alert = c_alert["networkAlert"] %>
             <% (0..(total_alerts - 1)).each do |i| %>
-                <% friend = a_alert[i]["yourConnection"] %>
-                <% f_connected = a_alert[i]["connectedTo"] %>
+                <%
+                   friend = a_alert[i]["yourConnection"]
+                   f_connected = a_alert[i]["connectedTo"]
+                   is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i])
+                   friend_profile = friend_profile_url(friend)
+                   friend_target = friend_profile == "#" ? '' : ' target="_blank"'
+                %>
                 <tr>
                   <td class="pad-T10 pad-B10">
                     <span class="USR-phto-box"><img class="userpic" src="<%= friend_profile_pic_url(friend) %>" width="25" height="25"> </span>
                     <div class="USR-info">
-                      <span class="col-blue bold calibrib td-heading-2"><%= friend_name(friend) %> </span>
+                      <a class="col-blue bold calibrib td-heading-2" href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(friend) %> </a>
                       <br>
                       <span class="multiline-ellipsis"><%= friend_headline(friend) %></span>
                     </div>

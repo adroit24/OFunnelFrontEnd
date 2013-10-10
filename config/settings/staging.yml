@@ -63,7 +63,8 @@ api_endpoints:
   GetSalesForceConnections: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/getSalesForceConnections"
   AddSalesForceConnection: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addSalesForceConnection"
   MarkedContactConnected: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/markedContactConnected"
-  ImportSalesForceCompaniesFromLeads: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/importSalesForceCompaniesFromLeads"
+  CheckHootSuiteUserExist: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/checkHootSuiteUserExist"
+  SetHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount "
 
   #Groups API Endpoints
   AddTag: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/addTag"
@@ -90,9 +91,6 @@ api_endpoints:
   AddInvitedMemberToGroup: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/addInvitedMemberToGroup"
   AddMemberToExistingGroupOrCreateGroup: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/addMemberToExistingGroupOrCreateGroup"
   DeleteTargetAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/deleteTargetAccount"
-  PersistNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/persistNetworkAlerts"
-  GetNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/getNetworkAlerts"
-  RemoveNetworkAlert: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/removeNetworkAlert"
 
   #Request API Endpoints
   AddRequest: "http://ofunnelqa.cloudapp.net/OFunnelService/RequestService.svc/addRequest"
@@ -113,11 +111,16 @@ api_endpoints:
 
   #Alerts API Endpoint
   GetNetworkAlertsForUserId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlertsForUserId"
-  GetAllNetworkAlertsForTargetAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService/UserService.svc/getAllNetworkAlertsForTargetAccount"
+  GetAllNetworkAlertsForTargetAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllNetworkAlertsForTargetAccount"
   GetRecipientsEmailForNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getRecipientsEmailForNetworkAlerts"
   SetRecipientEmailForNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/setRecipientEmailForNetworkAlerts"
-  DeleteRecipientEmail: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/AlertService.svc/deleteRecipientEmail"
-  AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
+  DeleteRecipientEmail: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/deleteRecipientEmail"
+  AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
+  ImportSalesForceCompaniesFromLeads: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/importSalesForceCompaniesFromLeads"
+  PersistNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/persistNetworkAlerts"
+  GetNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlerts"
+  RemoveNetworkAlert: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/removeNetworkAlert"
+  GetAllNetworkAlertsForUserId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllNetworkAlertsForUserId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"
@@ -129,3 +132,4 @@ linkedin_auth_url: "http://ofunnelfrontqa.cloudapp.net:4321/linkedin/authorize_w
 google_auth_url: "http://ofunnelfrontqa.cloudapp.net:4321/google/authorize_with_google"
 facebook_auth_url: "http://ofunnelfrontqa.cloudapp.net:4321/facebook/authorize_with_facebook"
 salesforce_auth_url: "http://ofunnelfrontqa.cloudapp.net:4321/salesforce/authorize_with_salesforce"
+hootsuite_reciever_path: "https://ofunnelfrontqa.cloudapp.net/ofunnel_receiver.html"

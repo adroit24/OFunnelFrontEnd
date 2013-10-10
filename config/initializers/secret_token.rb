@@ -5,3 +5,5 @@
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
 OFunnel::Application.config.secret_token = '2759ed9d1b25c7dabcb8fa9828a9cb44917399dfe0c947693104e821fedf0f8684b4973c8dccd771273a2e9ea012b30a7729de4e55be6dd5a5e15ac076523c42'
+OFunnel::Application.config.key = OpenSSL::Cipher::AES.new(128, :CBC).random_key
+OFunnel::Application.config.iv = OpenSSL::Cipher::AES.new(128, :CBC).random_iv

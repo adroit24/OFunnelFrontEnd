@@ -1,5 +1,9 @@
 OFunnel::Application.routes.draw do
 
+  get "hootsuite/index"
+
+  get "hootshuite/index"
+
   resources :users
   resources :requests
   resources :groups
@@ -18,7 +22,7 @@ OFunnel::Application.routes.draw do
   match 'get_people_for_query' => "linkedin#get_people_for_query", :as => :get_people_for_query
   match 'multiple_company_search' => "linkedin#multiple_company_search", :as => :multiple_company_search
   match 'multiple_company_search_results' => "linkedin#multiple_company_search_results", :as => :multiple_company_search_results
-  match 'remove_company/:company/:tag_id' => "linkedin#remove_company", :as => :remove_company
+  match 'remove_company' => "linkedin#remove_company", :as => :remove_company
   match 'discover_relationships' => "linkedin#discover_relationships", :as => :discover_relationships
   match 'add_relationships' => "linkedin#add_relationships", :as => :add_relationships
   match 'remove_relationship' => "linkedin#remove_relationship", :as => :remove_relationship
@@ -39,6 +43,12 @@ OFunnel::Application.routes.draw do
   match '/salesforce/add_salesforce_connection' => "salesforce#add_salesforce_connection", :as => :add_salesforce_connection
   match '/salesforce/mark_connected' => "salesforce#mark_connected", :as => :salesforce_mark_connected
   match '/salesforce/import_salesforce' => "salesforce#import_salesforce", :as => :import_salesforce
+
+  match '/hootsuite' => "hootsuite#index", :as => :hootsuite
+  match '/hootsuite/session_init' => "hootsuite#session_init", :as => :hootsuite_session_init
+  match '/hootsuite/authorize' => "hootsuite#authorize", :as => :hootsuite_authorize
+  match '/hootsuite/authorize_callback' => "hootsuite#authorize_callback", :as => :hootsuite_authorize_callback
+  match '/hootsuite/stream' => "hootsuite#stream", :as => :hootsuite_stream
 
   get "/twitter/authorize_with_twitter" => "twitter#authorize_with_twitter"
   get "/twitter/twitter_authorization_callback" => "twitter#twitter_authorization_callback"

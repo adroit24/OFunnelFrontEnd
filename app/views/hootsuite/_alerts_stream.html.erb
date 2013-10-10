@@ -1,0 +1,37 @@
+<% unless @alerts.blank? %>
+    <% @alerts.each do |alert| %>
+        <%
+           alert_type = alert["alertType"]
+           network_alert = alert["networkAlert"]
+           friend_profile = friend_profile_url(alert)
+           friend_target = friend_profile == "#" ? '' : ' target="_blank"'
+           f_connected_profile = f_connected_profile_url(alert)
+           f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
+           event_time = DateTime.strptime(alert["updatedAt"],'%m/%d/%Y %l:%M:%S %p').strftime("%b %e, %I:%M%P")
+        %>
+        <div class="maincontainer">
+          <div class="maincontainer_section">
+            <!---- theme black ------>
+            <div class="theme_<%= session[:hootsuite][:theme] %>">
+              <div class="thumbtop_section">
+                <div class="thimg"><div class="thumb_img"><a href="#"><img src="<%= friend_profile_pic_url(alert) %>" style="height: 100%;" alt="img"></a></div></div>
+                <div class="thumbuser_details">
+                  <p class="thumb_username"><a href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(alert) %></a></p>
+                  <div class="thumb_date"><%= event_time %></div>
+                  <p class="text">
+                    <a href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(alert) %></a> is now connected to <a href="<%= f_connected_profile %>"<%= f_connected_target %>><%= f_connected_name(alert) %></a>
+                  </p>
+                  <div class="bigimg_details">
+                    <div class="large_img"><a href="#"><img src="<%= f_connected_profile_pic_url(alert) %>" alt="img"></a></div>
+                    <div class="bigbuser_details">
+                      <p class="bigbuser_username"><a href="<%= f_connected_profile %>"<%= f_connected_target %>><%= f_connected_name(alert) %></a></p>
+                      <div class="biguser_designation"><%= f_connected_headline(alert) %></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% end %>

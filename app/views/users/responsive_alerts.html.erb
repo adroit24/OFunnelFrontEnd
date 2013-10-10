@@ -14,6 +14,21 @@
             <strong>Email:</strong>  <a href="mailto:<%= profile_user_email %>"><%= profile_user_email %></a>
             <br />
             <strong>Location: </strong>  <span><%= profile_user_location %></span>
+            <div class="social-integration">
+              <strong>Logged in with:</strong>
+              <a href="<%= authorize_with_likedin_path %>">
+                <img src="/assets/linkedin_32.png" class="enabled" />
+              </a>
+              <!--<a href="<%#= authorize_with_google_path %>">-->
+              <!--<img src="/assets/gmail.png" class="<%#= check_google_session ? "enabled" : "disabled" %>" />-->
+              <!--</a>-->
+              <!--<a href="<%#= authorize_with_facebook_path %>">-->
+              <!--<img src="/assets/facebook_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
+              <!--</a>-->
+              <!--<a href="<%#= '#' %>">-->
+              <!--<img src="/assets/twitter_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
+              <!--</a>-->
+            </div>
           </div>
         </div>
         <div class="all-box">

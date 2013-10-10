@@ -12,7 +12,7 @@
            unless @selected_accounts.nil?
              @selected_accounts.each do |account|
         %>
-                <li><span><%= account %></span><a href="<%= remove_company_path({:company => account,:tag_id => @tag_id}) %>" class="remove-company"></a></li>
+                <li><span><%= account %></span><a href="<%= remove_company_path %>" class="remove-company"></a></li>
             <%
                end
                end
@@ -69,6 +69,7 @@
 <script type="text/javascript">
     var gRemoveCompanyPath = '<%= remove_company_path({:company => "dummy",:tag_id => @tag_id}) %>'
     var companyName = "<%= @company %>"
+    var gTagId = "<%= @tag_id %>"
     $(function() {
         $('a#add-connection-link').focus();
     });

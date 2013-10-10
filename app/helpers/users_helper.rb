@@ -78,6 +78,16 @@ module UsersHelper
     return profile_pic.blank? ? "/assets/user_photo.jpg" : "#{profile_pic}"
   end
 
+  def friend_profile_url(user)
+    profile_pic = user["yourConnectionProfileUrl"]
+    return profile_pic.blank? ? "#" : "#{profile_pic}"
+  end
+
+  def f_connected_profile_url(user)
+    profile_pic = user["connectedToProfileUrl"]
+    return profile_pic.blank? ? "#" : "#{profile_pic}"
+  end
+
   def friend_name(user)
     return "#{user['yourConnectionFirstName']} #{user['yourConnectionLastName']}"
 

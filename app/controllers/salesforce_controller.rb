@@ -24,7 +24,12 @@ class SalesforceController < ApplicationController
       #Get token object, passing in the authorization code from the previous step
       logger.fatal "Redirect to salesforce for getting token: #{code}  ,  #{Settings.salesforce.REDIRECT_URI}"
       token = salesforce_client.auth_code.get_token(code, {:redirect_uri => Settings.salesforce.REDIRECT_URI})
-
+      logger.fatal "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      logger.fatal "User Id ==> #{current_user_id}"
+      logger.fatal "Refresh Token ==>> #{token.refresh_token}"
+      logger.fatal "OAuth Token ==>> #{token.token}"
+      logger.fatal "Instance URL ==>> #{token.params['instance_url']}"
+      logger.fatal "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       api_endpoint = "#{Settings.api_endpoints.LoginOnSalesForce}"
       response = Typhoeus.post(api_endpoint, body: {
           userId: current_user_id,

@@ -274,6 +274,8 @@ $(function() {
     {
         if(e.target != "a.verification")
             $('div.tooltip').hide();
+        if(e.target != "a.autocomplete-box" && e.target.offsetParent.className != "input-relative2")
+            $('div.autocomplete-box:visible').hide();
     });
 
     $('img.profile-settings , div.setting-icon').click(function(e) {
@@ -351,13 +353,18 @@ $(function() {
     });
 
     $(document).on('click','a.remove-company', function(){
-        companyName = $('a.remove-company').prev().text();
-        removePath = $('a.remove-company').attr('href');
-        removePath = removePath.replace("dummy",companyName);
         liToRemove = $(this);
-        $.get(removePath, function(data) {
-            if(data.error == null && typeof data.error != "undefined") {
-                liToRemove.parents('li').first().remove();
+        companyName = liToRemove.prev().text();
+        removePath = liToRemove.attr('href');
+        removePath = removePath.replace("dummy",companyName);
+        $.ajax({
+            type: "POST",
+            url: removePath,
+            data: {company:companyName,tag_id:gTagId},
+            success: function(data) {
+                if(data.error == null && typeof data.error != "undefined") {
+                    liToRemove.parents('li').first().remove();
+                }
             }
         });
         return false;
@@ -1171,10 +1178,10 @@ $(function() {
     $(document).on('click','a.alert-remove-target',function(){
         removePath = $(this).attr('href');
         type = $(this).prevAll('div').find('select.alert-type').val();
-        name = $(this).prevAll('input[name=query]').val();
+        name = $(this).prevAll('div.input-relative2').find("input.name-select:visible").val();
         alertId = $(this).prevAll('input[name=alertId]').val();
         elementToRemove = $(this).parents('div.ofunnel-alerts');
-        if(name === "") {
+        if(alertId === "" || name == "") {
             elementToRemove.remove();
         }
         else {
@@ -1229,35 +1236,25 @@ $(function() {
     });
 
     $(document).on('click','a#alert-add-recipient',function() {
-        if($('div.recipient-box input').last().val().match(/\S/))
-            $(this).parent().before('<div class="recipient-box all-box-3 mrg-T15"><input class="input-field" type="text" name="email" value="" placeholder="johnathanjones@companyxyz.com"><a href="#" class="delete-icon2 alert-remove-recipient"></a></div>');
+        text = $('div.recipient-box input').last().val();
+        if(typeof text == "undefined" || text.match(/\S/))
+            $(this).parent().before('<div class="recipient-box all-box-3 mrg-T15"><input class="input-field" type="text" name="email" value="" placeholder="johnathanjones@companyxyz.com"><a href="#" class="delete-icon2 alert-remove-recipient2"></a></div>');
         return false;
     });
 
     $(document).on('click','a.alert-remove-recipient',function() {
         url = $(this).attr("href");
-        elementToRemove = $(this);
-        if($(this).attr("href") == "#"){
-            if($('div.recipient-box').length > 1)
-                elementToRemove.parent().remove();
-        }
-        else {
-            $.ajax({
-                type : 'POST',
-                url : url,
-                data : {},
-                success : function(data) {
-//                    if(data == "SUCCESS") {
-//                        if($('div.recipient-box').length > 1)
-//                            elementToRemove.parent().remove();
-//                        else {
-//                            elementToRemove.prev().val("");
-//                            elementToRemove.attr("href","#");
-//                        }
-//                    }
-                }
-            });
-        }
+        $.ajax({
+            type : 'POST',
+            url : url,
+            data : {},
+            success : function(data) { }
+        });
+        return false;
+    });
+
+    $(document).on('click','a.alert-remove-recipient2',function() {
+        $(this).parent().remove();
         return false;
     });
 
@@ -1275,17 +1272,18 @@ $(function() {
             $.each($(this).find('input.input-field'),function(index, value) {
                 recipientArray.push($(value).val());
             });
-            $.ajax({
-                type : 'POST',
-                url : $(this).attr('action'),
-                data : {recipientEmails:recipientArray},
-                success : function(data) {
+            if(recipientArray.length > 0)
+                $.ajax({
+                    type : 'POST',
+                    url : $(this).attr('action'),
+                    data : {recipientEmails:recipientArray},
+                    success : function(data) {
 //                    if(data == "SUCCESS") {
 //                        $('.add-recipient-confirmation').show();
 //                        $('.add-recipient-confirmation').delay(5000).fadeOut();
 //                    }
-                }
-            });
+                    }
+                });
         }
         return false;
     });
@@ -1305,16 +1303,20 @@ $(function() {
         lastName = elementToChange.attr("lastName");
         title = elementToChange.attr("title");
         company = elementToChange.attr("company");
-            $.ajax({
-                type : 'POST',
-                url : url,
-                data : {firstName:firstName,lastName:lastName,title:title,company:company},
-                success : function(data) {
-                    if(data == "SUCCESS") {
-                        elementToChange.parent().html("Added");
-                    }
+        $.ajax({
+            type : 'POST',
+            url : url,
+            data : {firstName:firstName,lastName:lastName,title:title,company:company},
+            success : function(data) {
+                if(data == "SUCCESS") {
+                    elementToChange.parent().html("Added");
                 }
-            });
+                else if(data != "ERROR") {
+                    window.location.href = data;
+
+                }
+            }
+        });
         return false;
     });
 
@@ -1468,7 +1470,7 @@ function searchPeopleForQuery() {
                             else if((name + headline).length > 51) {
                                 headline = headline.substring(0,(51 - name.length - 2)) + "..."
                             }
-                            $('.autocomplete-box table tbody:visible').last().append('<tr><td width="6%" ><img class="photo" src="' + pictureUrl + '" alt="" title="" /></td><td><span class="col-blue font-16 calibrib">' + name + '</span><span> ' + headline + '</span><p class="display-none">' + linkedinId + '</p><p class="display-none">' + firstName + '</p><p class="display-none">' + lastName + '</p></td></tr>')
+                            $('.autocomplete-box table tbody:visible').last().append('<tr><td width="6%" ><img class="photo" style="width: 25px;height: 25px;" src="' + pictureUrl + '" alt="" title="" /></td><td><span class="col-blue font-16 calibrib">' + name + '</span><span> ' + headline + '</span><p class="display-none">' + linkedinId + '</p><p class="display-none">' + firstName + '</p><p class="display-none">' + lastName + '</p></td></tr>')
                         };
                         $('div.search-connection-loader').hide();
                     }

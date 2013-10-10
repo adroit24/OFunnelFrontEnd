@@ -63,7 +63,8 @@ api_endpoints:
   GetSalesForceConnections: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/getSalesForceConnections"
   AddSalesForceConnection: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/addSalesForceConnection"
   MarkedContactConnected: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/markedContactConnected"
-  ImportSalesForceCompaniesFromLeads: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/importSalesForceCompaniesFromLeads"
+  CheckHootSuiteUserExist: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/checkHootSuiteUserExist"
+  SetHootSuiteAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount "
 
   #Groups API Endpoints
   AddTag: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/addTag"
@@ -90,9 +91,6 @@ api_endpoints:
   AddInvitedMemberToGroup: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/addInvitedMemberToGroup"
   AddMemberToExistingGroupOrCreateGroup: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/addMemberToExistingGroupOrCreateGroup"
   DeleteTargetAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/deleteTargetAccount"
-  PersistNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/persistNetworkAlerts"
-  GetNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/getNetworkAlerts"
-  RemoveNetworkAlert: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/removeNetworkAlert"
 
   #Request API Endpoints
   AddRequest: "http://ofunnelservice.cloudapp.net/OFunnelService/RequestService.svc/addRequest"
@@ -113,11 +111,16 @@ api_endpoints:
 
   #Alerts API Endpoint
   GetNetworkAlertsForUserId: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlertsForUserId"
-  GetAllNetworkAlertsForTargetAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService/UserService.svc/getAllNetworkAlertsForTargetAccount"
+  GetAllNetworkAlertsForTargetAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getAllNetworkAlertsForTargetAccount"
   GetRecipientsEmailForNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getRecipientsEmailForNetworkAlerts"
   SetRecipientEmailForNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/setRecipientEmailForNetworkAlerts"
   DeleteRecipientEmail: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/deleteRecipientEmail"
   AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
+  ImportSalesForceCompaniesFromLeads: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/importSalesForceCompaniesFromLeads"
+  PersistNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/persistNetworkAlerts"
+  GetNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlerts"
+  RemoveNetworkAlert: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/removeNetworkAlert"
+  GetAllNetworkAlertsForUserId: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getAllNetworkAlertsForUserId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/addLogs"
@@ -129,3 +132,4 @@ linkedin_auth_url: "http://beta.ofunnel.com/linkedin/authorize_with_likedin"
 google_auth_url: "http://beta.ofunnel.com/google/authorize_with_google"
 facebook_auth_url: "http://beta.ofunnel.com/facebook/authorize_with_facebook"
 salesforce_auth_url: "http://beta.ofunnel.com/salesforce/authorize_with_salesforce"
+hootsuite_reciever_path: "https://secure.ofunnel.com/ofunnel_receiver.html"

@@ -9,21 +9,27 @@
         <div class="contoso-page">
           <p class="font-17 mrg-T20" style="margin:0;"> <strong class="col-blue"> Thank you.</strong> We have registered your target accounts. We will notify you when you have new connections here.</p>
           <a href="#" id="add-recipient" class="bold font-15 float-L mrg-T35">If you want to add more recipients to recieve these alerts, click here <span class="font-11">▼</span></a>
-          <form action="<%= add_recipients_path %>" id="add-recipient-form" method="post" class="add-email-box">
-            <label for="">Add email address of alert recipient:</label>
-            <div class="add-recipient-error display-none col-red font-18">&nbsp;*</div>
-            <div class="recipient-box all-box-3 mrg-T15">
-              <input class="input-field" type="text" name="email" value="" placeholder="johnathanjones@companyxyz.com">
-              <a href="<%= remove_recipient_path({:id => email["recipientId"]}) %>" class="delete-icon2 alert-remove-recipient"></a>
-            </div>
-            <div class="all-box-3 mrg-T15">
-              <a href="#" class="font-11 bold float-L mrg-T20" id="alert-add-recipient"> (Add more) </a>
-            </div>
-            <div class="all-box-3 mrg-T15">
-              <span class="add-recipient-confirmation display-none col-red font-18">Recipients have been added.</span>
-            </div>
-            <input class="save-btn" type="submit" name="" value="Save Changes">
-          </form>
+          <div id="recipient-form-container">
+            <form action="<%= add_recipients_path %>" id="add-recipient-form" method="post" class="add-email-box">
+              <label for="">Add email address of alert recipient:</label>
+              <div class="add-recipient-error display-none col-red font-18">&nbsp;*</div>
+              <% unless @emails.nil? %>
+                  <% @emails.each do |email| %>
+                      <div class="recipient-box all-box-3 mrg-T15">
+                        <input class="input-field" type="text" name="email" value="<%= email["email"] %>" placeholder="johnathanjones@companyxyz.com" style="width: 88%;">
+                        <a href="<%= remove_recipient_path({:id => email["recipientId"]}) %>" class="delete-icon2 alert-remove-recipient"></a>
+                      </div>
+                  <% end %>
+              <% end %>
+              <div class="all-box-3 mrg-T15">
+                <a href="#" class="font-11 bold float-L mrg-T20" id="alert-add-recipient"> (Add more) </a>
+              </div>
+              <div class="all-box-3 mrg-T15">
+                <span class="add-recipient-confirmation display-none col-red font-18">Recipients have been added.</span>
+              </div>
+              <input class="save-btn" type="submit" name="" value="Save Changes">
+            </form>
+          </div>
           <p class="all-box font-17 mrg-T25">Want to add more accounts to receive alerts?</p>
           <div class="send-box txt-L mrg-B35"><a href="<%= discover_relationships_path %>" class="send-btn  pad-T15 pad-B15 float-L txt-C">Add more Target Accounts</a></div>
           <p class="all-box font-17">Also try out our solution for introductions!</p>

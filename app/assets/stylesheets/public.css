@@ -398,6 +398,14 @@ p{ margin:5px 0 15px;}
     margin: 8px 6px 0 0;
 }
 
+.delete-icon2{
+    background: url("../assets/cancel-icon-small.png") center right no-repeat ;
+    height:16px;
+    width:16px;
+    float:right;
+    margin: 7px 0px 0 0;
+}
+
 .alert-text-box{
     width:42%;
     float:right;
@@ -511,4 +519,19 @@ input[placeholder], [placeholder], *[placeholder] { color:#838181; }
     color:#fff;
     text-align:center;
     margin-top:15px;
+}
+
+.social-integration a img {
+    height: 20px;
+    width:  20px;
+    margin-left: 2px;
+}
+
+.social-integration a img.enabled {
+    pointer-events: none;
+}
+
+.social-integration a img.disabled {
+    opacity: 0.3;
+    filter: alpha(opacity = 30);
 }

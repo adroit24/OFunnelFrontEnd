@@ -284,13 +284,13 @@
     }
     .add-email-box .input-field{
         height: 30px !important;
-        width: 94% !important;
+        width: 88% !important;
     }
 }
 
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (min-width: 320px) and (max-width: 479px) {
+@media only screen and (min-width: 300px) and (max-width: 479px) {
     body{ background:url(../assets/body-bg-2.jpg) repeat-x #fff !important; }
     .main{ width:280px !important;}
     .footer { margin-top:10px !important;}
@@ -401,6 +401,6 @@
     }
     .add-email-box .input-field{
         height: 30px !important;
-        width: 91% !important;
+        width: 81% !important;
     }
 }

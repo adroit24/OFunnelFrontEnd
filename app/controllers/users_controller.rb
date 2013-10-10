@@ -125,8 +125,12 @@ class UsersController < ApplicationController
         end
       end
     end
-    if (mobile_device and params[:view] != "desktop")
+    if mobile_device
       render "responsive_alerts", :layout => "responsive_relationships"
+    elsif params[:view] == "hootsuite"
+      render "responsive_alerts", :layout => "hootsuite"
+    elsif params[:view] == "desktop"
+      render "alerts", :layout => "relationships"
     else
       render "alerts", :layout => "relationships"
     end
@@ -151,8 +155,19 @@ class UsersController < ApplicationController
     if response.success? && !api_contains_error("AddSalesForceConnectionFromNetworkAlerts", response)
       response = JSON.parse(response.response_body)["AddSalesForceConnectionFromNetworkAlertsResult"]
       status = "SUCCESS"
+      render :text => status and return false
+    else
+      response = JSON.parse(response.response_body)["AddSalesForceConnectionFromNetworkAlertsResult"]
+      code = nil
+      code = response["error"]["errorCode"].to_i unless response["error"].nil?
+      if code == 401 or code == 1003
+        session[:salesforce_token] = nil
+        session[:return_to] = alerts_url
+        render :text => Settings.salesforce_auth_url and return
+      else
+        render :text => status and return false
+      end
     end
-    render :text => status and return false
   end
 
   def all_alerts
