@@ -1,4 +1,5 @@
 <% unless @alerts.blank? %>
+    <% @theme = session[:hootsuite].blank? ? "classic" : session[:hootsuite][:theme] %>
     <% @alerts.each do |alert| %>
         <%
            alert_type = alert["alertType"]
@@ -10,9 +11,9 @@
            event_time = DateTime.strptime(alert["updatedAt"],'%m/%d/%Y %l:%M:%S %p').strftime("%b %e, %I:%M%P")
         %>
         <div class="alert-wrapper">
-          <div class="theme_<%= session[:hootsuite][:theme] %>">
+          <div class="theme_<%= @theme %>">
+            <div class="height1"></div>
             <div class="thumbtop_section">
-              <div class="height10"></div>
               <div class="target_block">Target <%= alert_type.downcase.capitalize %>: <%= network_alert %></div>
               <div class="thimg"><div class="thumb_img"><a href="#"><img src="<%= friend_profile_pic_url(alert) %>"  alt="img" style="height: 30px;width: 30px;"></a></div></div>
               <div class="thumbuser_details">
@@ -29,7 +30,7 @@
                   </div>
                 </div>
               </div>
-              <div class="height1"></div>
+              <div class="height10"></div>
             </div>
           </div>
         </div>

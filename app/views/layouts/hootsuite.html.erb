@@ -2,36 +2,73 @@
 <html>
 <head>
   <title>OFunnel</title>
-  <%= stylesheet_link_tag    "hootsuite_#{session[:hootsuite][:theme]}", :media => "all" %>
+  <%
+     @theme = session[:hootsuite].blank? ? "classic" : session[:hootsuite][:theme]
+     @user_name = session[:hootsuite].blank? ? "OFunnel" : session[:hootsuite][:userName]
+  %>
+  <%= stylesheet_link_tag    "application.html5", :media => "all" %>
+  <%= stylesheet_link_tag    "public", :media => "all" %>
+  <%= stylesheet_link_tag    "hootsuite", :media => "all" %>
+  <%= stylesheet_link_tag    "hootsuite_#{@theme}", :media => "all" %>
   <%= javascript_include_tag "https://hootsuite.s3.amazonaws.com/jsapi/0-5/hsp.js" %>
   <%= javascript_include_tag "strftime-min" %>
   <%= javascript_include_tag "hootsuite_app" %>
+  <%= javascript_include_tag "jquery-ui-1.10.3.custom.min" %>
   <%= csrf_meta_tags %>
 
   <script type="text/javascript">
       var hootSuiteEnabled = true;
       var hootsuiteStreamPath = "<%= hootsuite_stream_path %>";
+      var hootsuiteTargetPath = "<%= hootsuite_targets_path %>";
+      var hootsuiteRemoveRelationship = "<%= remove_relationship_path %>";
       var hootsuiteRecieverPath = "<%= Settings.hootsuite_reciever_path %>";
-      var hootsuiteTheme = "theme_<%= session[:hootsuite][:theme] %>";
-      var hootsuiteUserName = "<%= session[:hootsuite][:userName] %>";
+      var hootsuiteTheme = "theme_<%= @theme %>";
+      var hootsuiteUserName = "<%= @user_name %>";
+      var hootsuiteAppInit = <%= params[:app_init].blank? ? true : false %>
+      var getPersonsForQueryUrl = '<%= get_people_for_query_path %>';
+      var activeTab = "<%= params[:action] %>";
   </script>
 </head>
-<body style="background: #FFF !important;">
+<body class="bg-none">
 <div class="maincontainer">
   <div class="maincontainer_section">
-    <div class="theme_<%= session[:hootsuite][:theme] %>_topsec">
+    <div class="theme_<%= @theme %>_topsec">
       <div class="topsec_box">
         <div class="topsec_dropdown_holder">
           <span class="topsec_dropdown"><a href="#"></a></span>
+          <span class="topsec_settings"><a href="#"></a></span>
         </div>
       </div>
       <div class="top_links" style="display: none;">
         <ul>
-          <!--<li><a href="#">Alerts</a></li>-->
-          <li><a href="#" onclick="window.open('<%= discover_relationships_path %>', '', 'width=700,height=800');return false;">Target Accounts</a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">Developer:OFunnel</a></li>
         </ul>
       </div>
+      <div class="settings_links display-none">
+        <% unless current_user_id.blank? %>
+            <ul>
+              <li>
+                <b>Connected account</b>: <%= @user_name %>
+                <a href="<%= hootsuite_disconnect_path %>" class="hs_btn-cmt mrg-L10">Disconnect</a>
+              </li>
+            </ul>
+        <% end %>
+      </div>
     </div>
+    <% unless current_user_id.blank? %>
+        <div class="theme_<%= @theme %>_topsec">
+          <div class="topsec_box">
+            <div class="alerts-tab <%= params[:action] == "stream" ? "active" : "inactive" %>">
+              <a href="<%= "#{hootsuite_stream_path}?#{session[:hootsuite][:query]}" %>">Alerts</a>
+            </div>
+            <div class="targets-tab <%= params[:action] == "targets" ? "active" : "inactive" %>">
+              <a href="<%= "#{hootsuite_targets_path}?#{session[:hootsuite][:query]}" %>">Target Accounts</a>
+            </div>
+          </div>
+        </div>
+    <% end %>
     <%= yield %>
   </div>
 </div>

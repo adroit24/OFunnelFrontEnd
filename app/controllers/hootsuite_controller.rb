@@ -9,7 +9,9 @@ class HootsuiteController < ApplicationController
         :theme => params[:theme].blank? ? "blue_steel" : params[:theme],
         :userName => "",
         :query => request.query_string,
-        :tab => "TARGETS"
+        :tab => "TARGETS",
+        :offset => 0,
+        :target_offset => 0
     }
     if hootsuite_session?
       session[:hootsuite][:authenticated] = true
@@ -17,7 +19,7 @@ class HootsuiteController < ApplicationController
     end
 
     unless check_hootsuite_user_exists? session[:hootsuite][:user_id]
-      redirect_to hootsuite_path
+      redirect_to hootsuite_path({:app_init => false})
     else
       redirect_to "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}"
     end
@@ -78,11 +80,9 @@ class HootsuiteController < ApplicationController
   def stream
     @offset = 0
     if params[:dataType] == "json"
-      unless session[:hootsuite].nil? or session[:hootsuite][:offset].nil?
+      unless session[:hootsuite].nil?
         @offset = session[:hootsuite][:offset]
         session[:hootsuite][:offset] = @offset + 25
-      else
-        session[:hootsuite][:offset] = 25
       end
     else
       session[:hootsuite][:offset] = 25 unless session[:hootsuite].nil?
@@ -102,6 +102,57 @@ class HootsuiteController < ApplicationController
         render :json => response["allNetworkAlerts"], :callback => params[:callback]
       end
     end
+  end
+
+  def targets
+    @offset = 0
+    if params[:dataType] == "json"
+      unless session[:hootsuite].nil?
+        @offset = session[:hootsuite][:target_offset]
+        session[:hootsuite][:target_offset] = @offset + 25
+      end
+    else
+      session[:hootsuite][:target_offset] = 25 unless session[:hootsuite].nil?
+    end
+    @count = 25
+    get_company_network_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlerts}/#{current_user_id}/#{@offset}/#{@count}")
+    response = Typhoeus.get(get_company_network_alert_api_endpoint)
+
+    @alerts = nil
+    if response.success? && !api_contains_error("GetNetworkAlerts", response)
+      get_company_network_alert_response = JSON.parse(response.response_body)["GetNetworkAlertsResult"]
+      @alerts = get_company_network_alert_response["alert"]
+      @total_alerts = get_company_network_alert_response["totalNumberOfAlerts"]
+      @total_pages = ((@total_alerts % @count) == 0) ?
+          (@total_alerts / @count) :
+          ((@total_alerts / @count) + 1)
+    end
+
+    @current_page = (@offset < @count) ? 1 : ((@offset / @count) + 1)
+    @page_remaining = @total_pages.nil? ?
+        0 :
+        (@total_pages > 0 and @total_pages > @current_page) ?
+            (@total_pages - @current_page) : 0
+
+    unless params[:dataType] == "json"
+      render "hootsuite/targets"
+    else
+      render :json => JSON.parse(response.response_body)["GetNetworkAlertsResult"], :callback => params[:callback]
+    end
+  end
+
+  def disconnect
+    delete_hootsuite_user_api_endpoint = "#{Settings.api_endpoints.DeleteHootSuiteAccount}/#{current_user_id}"
+    response = Typhoeus.get(delete_hootsuite_user_api_endpoint)
+    query = session[:hootsuite][:query]
+
+    if response.success? && !api_contains_error("DeleteHootSuiteAccount", response)
+      response = JSON.parse(response.response_body)["DeleteHootSuiteAccountResult"]
+      if response["isHootSuiteIdDeleted"] == true
+        reset_session
+      end
+    end
+    redirect_to hootsuite_session_init_path and return
   end
 
   protected

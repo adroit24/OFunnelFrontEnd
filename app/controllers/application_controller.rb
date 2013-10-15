@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_current_user
-    if session[:linkedin_id] == nil
+    if (session[:linkedin_id].nil? and current_user_id.nil?)
       session[:return_to] = current_url
       redirect_to Settings.linkedin_auth_url, :protocol => 'http' and return
     end

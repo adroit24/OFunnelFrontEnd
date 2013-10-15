@@ -1,0 +1,675 @@
+/******************* MOBILE STYLE *********************************/
+.mobile-main{
+    width:100%;
+    display:none;
+}
+.mobile-container-gray{
+    background:#f3f3f3;
+    width:100%;
+    float:left;
+    /*padding-top:10px;*/
+}
+.mobile-container-white{
+    background:#fff;
+    width:100%;
+    min-height:600px;
+    float:left;
+    padding-top:20px;
+}
+.mobile-container-box{
+    width:435px;
+    margin:auto;
+}
+#mobile-footer-menu{ display:none;}
+
+/*----------MOBILE TOP MENU-----------*/
+.mobile-top-menu{
+    height: 100px;
+    position: absolute;
+    right: 0px;
+    top: -18px;
+    width: 100px;
+    border-left: 1px solid #dbdbdb;
+    display:none;
+}
+
+.mobile-top-normal {
+    background: url("../assets/mobile-menu-arrow.png") no-repeat scroll 0 0 transparent;
+}
+.mobile-top-hover {
+    background: url("../assets/mobile-menu-arrow.png") no-repeat 0 -105px #d3d3d3;
+}
+
+.mobile-top-menu .menu-list-box{
+    background:#d3d3d3;
+    width:318px;
+    border:1px solid #ababab;
+    position:absolute;
+    right:0;
+    top:100px;
+    margin:0;
+    padding:0;
+    display:none;
+    z-index:2;
+}
+.mobile-top-menu .menu-list-box li{
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:block;
+}
+.mobile-top-menu .menu-list-box li a{
+    border-bottom:1px solid #ababab;
+    width:90%;
+    float:left;
+    padding:0 5%;
+    margin:0;
+    font-size:36px;
+    font-family: 'Museo-500';
+    color:#242424;
+    line-height:60px;
+}
+.mobile-top-menu .menu-list-box li a:hover{ background:#ff5d00; color:#fff; }
+
+/*--------------------------------*/
+.discover-box {
+    float: left;
+    padding: 1% 7%;
+    width: 86%;
+}
+.userprofile-box {
+    float: left;
+    width: 100%;
+}
+
+.userprofile-box .profile-title {
+    float: left;
+    font-family: calibrib;
+    font-size: 40px;
+    margin: 10px 0 15px;
+    width: 100%;
+}
+.contoso-page {
+    float: left;
+    width: 100%;
+}
+.discover-box .dis-gray {
+    background: none repeat scroll 0 0 #F3F3F3;
+    float: left;
+    margin-top: 10px;
+    padding: 20px;
+    width: 65%;
+}
+.discover-box .dis-white {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    border: medium none;
+    float: left;
+    width: 96% !important;
+}
+.contoso-page .target-company-box {
+    background: none repeat scroll 0 0 #EDEDED;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    float: left;
+    padding: 10px;
+    width: 310px;
+}
+.target-company-box ul {
+    float: left;
+    height: 135px;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+    width: 100%;
+}
+.target-company-box ul li {
+    border-bottom: 1px solid #999999;
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 15px 0 10px;
+    position: relative;
+    width: 100%;
+}
+.dis-white li {
+    border-color: #E7E7E7 !important;
+    font-size: 15px;
+    padding: 10px 0 !important;
+}
+
+.dis-white li span a {
+    background: url("../assets/cancel-icon-small.png") no-repeat scroll right center transparent;
+    float: right !important;
+    height: 16px;
+    margin-right: 10px !important;
+    width: 16px !important;
+}
+.target-company-box ul li a {
+    float: left;
+    font-size: 14px;
+    font-style: italic;
+    text-decoration: underline;
+    width: 100%;
+}
+.send-box {
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+.send-btn {
+    background: none repeat scroll 0 0 #FF5D00;
+    border: 1px solid #D8D8D8;
+    color: #FFFFFF;
+    font-family: calibrib;
+    font-size: 20px;
+    padding: 4px 15px 6px;
+}
+
+.alert-details {
+    border-top: 1px solid #d2d2d2;
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 949px) {
+    .banner-box{ background-position:-140px bottom;}
+    .main{ width:720px !important;}
+    .footer { margin-top:10px !important;}
+    .footer .footer_box{
+        width:720px !important;
+        font-size:17px !important;
+    }
+    .icon-section .icon-boxes{  width: 205px !important; }
+
+    .banner-box-small { background: url("../assets/banner-img-small.png") no-repeat scroll 322px -52px transparent; }
+
+    .page-text { width:63% !important;}
+
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+
+    body{ background:url(../assets/body-bg-2.jpg) repeat-x #fff !important; }
+    .main{ width:435px !important;}
+    .footer { margin-top:10px !important;}
+    .footer .footer_box{
+        width:435px !important;
+        font-size:17px !important;
+    }
+    .footer_box .menu { width:40% !important;}
+
+    .signup-box .personal-intro{ font-size:23px !important; line-height:30px !important; font-family: 'Museo-700'!important; font-weight:500 !important; text-shadow: 0 2px 1px #000000 !important;}
+    .input-box .posted-btn { padding:6px 14px;}
+
+    .banner-box{
+        width:100% !important;
+        background: url(../assets/banner-img-mobile.png) no-repeat scroll 42px -52px transparent !important;
+        height: 110px !important;
+    }
+    .banner-box-small{
+        background: url(../assets/banner-img-mobile.png) no-repeat scroll 42px -52px transparent !important;
+        height: 110px !important;
+    }
+    .logo_menu_box ul.topmenu, .logo_menu_box .logout, #web-signup{ display:none;}
+
+    .input-box .input{ width:98% !important; font-size:18px !important; height:33px !important;}
+    #web-content{ display:none; }
+    .icon-section .icon-boxes{ margin: auto !important; float:none !important ; width:305px !important; text-align:center !important;}
+    .icon-boxes .content .heading { font-size:22px !important;}
+    .icon-boxes .content .text { font-size:19px !important;}
+    .icon-boxes .content { margin-bottom:50px !important;}
+    .container .icon-section { margin-bottom:0 !important;}
+
+    .mobile-main{ display:block;}
+    .mobile-container-gray .signup-box{ padding:0; margin-top:0; }
+
+    .mobile-container-white .container { margin-top:0; }
+    .container { margin-top:25px;  margin-bottom:100px;}
+
+    #mobile-footer-menu, .mobile-top-menu { display: block; }
+    #web-container{ display:none;}
+
+    .page-text { width:100% !important;}
+    .page-text .title{ text-align:left; font-size:30px; }
+
+
+    .signup-box{ padding-top:10px;}
+    .disc-intro-box{ width:100% !important; margin-bottom: 20px;}
+    .disc-intro-box .in-btn{ width: 98% !important; }
+    .in-btn span { padding-top:5px; height:72% !important;}
+
+    .disc-intro-box p.all-box{ font-size:22px; color:#333;}
+
+    .discover-box .dis-gray{ width:100%; padding:0;}
+    .contoso-page .target-company-box{ width:100%;}
+    .discover-box .dis-white{ width:95% !important;}
+
+    a.send-btn{ font-size:24px; width:70%; margin-left:50px;}
+    .contoso-page{ margin-bottom:50px;}
+
+    .ofunnelalert-box, .alert-gray{ width:100%; padding:0;}
+    .addmore-box .name-select{ width:188px; }
+    .col-blue{ font-family:calibrib; font-size:21px; font-weight:bold;}
+    .alert-text-box{ width:100%; float:left;}
+    .alert-text-box p{ font-size:17px;}
+
+    #input{ padding: 0 14% 0 2% !important; width:84% !important; height:23px !important; font-size:15px !important;  background:#f7f7f7; font-family: calibrib;}
+    .search-panel{ width:218px; float:right; margin-top:6px;}
+    .white-box .USR-info{	float:left; line-height:15px; width:175px; overflow:hidden; text-overflow: ellipsis; font-size:13px; }
+    #alerthistory{ font-size:27px; font-weight:bold; float:left;}
+    .td-heading{ font-size:14px !important;}
+    .td-heading-2{ font-size:15px !important;}
+    .profile-details-box .info{
+        float: left;
+        font-size: 14px;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 70%;
+    }
+    .profile-details-box .photo{
+        width:90px;
+        height:90px;
+        float:left;
+        margin-right:10px;
+        border:1px solid #cfcfcf;
+    }
+    .USR-phto-box .userpic{
+        border:1px solid #d1d1d1;
+        float:left;
+        margin-right:7px;
+    }
+    .input-box .searchicon{ right:2px !important; }
+
+    .add-email-box{
+        width:93% !important;
+    }
+    .add-email-box .input-field{
+        height: 30px !important;
+        width: 88% !important;
+    }
+
+    .top-links-wrapper div.add-new-alert {
+        float: right;
+        margin-right: 10px !important;
+        padding-top: 10px !important;
+    }
+
+    .top-links-wrapper div.submit-alerts {
+        float: right !important;
+        width: auto !important;
+    }
+}
+
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (min-width: 300px) and (max-width: 479px) {
+    body{ background:url(../assets/body-bg-2.jpg) repeat-x #fff !important; }
+    .main{ width:280px !important;}
+    .footer { margin-top:10px !important;}
+    .footer .footer_box{
+        width:280px !important;
+        font-size:17px !important;
+    }
+    .footer_box .menu { width:40% !important;}
+
+    .signup-box .personal-intro{ font-size:19px !important; line-height:20px !important; font-family: 'Museo-700'!important; font-weight:500 !important; text-shadow: 0 2px 1px #000000 !important; margin-top:15px !important;}
+    .input-box .posted-btn { padding:6px 14px;}
+
+    .banner-box{
+        width:100% !important;
+        background: none !important;
+        height: 110px !important;
+    }
+    .banner-box-small{
+        background: none !important;
+        height: 110px !important;
+    }
+    .logo_menu_box ul.topmenu, .logo_menu_box .logout, #web-signup{ display:none;}
+
+    .input-box .input{ width:98% !important; font-size:18px !important; height:33px !important;}
+    #web-content{ display:none; }
+    .icon-section .icon-boxes{ margin: auto !important; float:none !important ; width:100% !important; text-align:center !important; }
+    .icon-boxes .content .heading { font-size:22px !important;}
+    .icon-boxes .content .text { font-size:17px !important;}
+    .icon-boxes .content { margin-bottom:50px !important;}
+    .container .icon-section { margin-bottom:0 !important;}
+
+    .mobile-main{ display:block;}
+    .mobile-container-gray .signup-box{ padding:0; margin-top:0; }
+
+    .mobile-container-white .container { margin-top:0; }
+    .container { margin-top:25px;  }
+
+    #mobile-footer-menu, .mobile-top-menu { display: block; }
+    #mobile-footer-menu span { width:100%; text-align:center; float:left;}
+    #web-container{ display:none;}
+    .footer_box .social-icon-box { margin-top:10px !important ; margin-right:85px;}
+
+    #sitelogo img{ width:150px; height:auto; margin-top: 12px; }
+
+    .mobile-container-box{ width:280px; }
+    .page-text { width:100% !important;}
+    .page-text .title{ text-align:left;  font-size:30px;}
+
+    .mobile-top-menu .menu-list-box { width:250px;}
+    .mobile-top-menu .menu-list-box li a { line-height: 50px; font-size: 30px;}
+
+    .signup-box{ padding-top:10px;}
+    .disc-intro-box{ width:100% !important; margin-bottom: 20px;}
+    .disc-intro-box .in-btn{ width: 97% !important;}
+    .in-btn span { padding-top:7px; height:70% !important;}
+
+    .disc-intro-box p.all-box{ font-size:15px; color:#333;}
+
+    .discover-box .dis-gray{ width:100%; padding:0;}
+    .contoso-page .target-company-box{ width:100%;}
+    .discover-box .dis-white{ width:92% !important;}
+
+    a.send-btn{ font-size:20px; width:88%;}
+    .contoso-page{ margin-bottom:50px;}
+
+    .ofunnelalert-box, .alert-gray{ width:100%; padding:0;}
+    .addmore-box .comp-select{  width:110px; }
+    .comp-select .downarrow{ right:-7px;}
+    .addmore-box .name-select{ width:106px;}
+    .col-blue{ font-family:calibrib; font-size:21px; font-weight:bold;}
+    .alert-text-box{ width:100%; float:left;}
+    .alert-text-box p{ font-size:17px;}
+
+    .select-box select.select { width:110px !important;}
+    .select-box span.select { background:url(../assets/select-bg-small.jpg) no-repeat !important; white-space: nowrap; overflow: hidden;}
+
+    #input{ padding: 0 20% 0 2% !important; width:76% !important; height:23px !important; font-size:15px !important; background:#f7f7f7; font-family: calibrib;}
+    .search-panel{ width:140px; float:right;}
+    .white-box .USR-info{	float:left; line-height:11px; width:100px; overflow:hidden; text-overflow: ellipsis; font-size:9px; }
+    #alerthistory{ font-size:18px; font-weight:bold; float:left;}
+    .td-heading{ font-size:10px !important;}
+    .td-heading-2{ font-size:10px !important;}
+    .profile-details-box .info{
+        float: left;
+        font-size: 10px;
+        line-height: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 70%;
+    }
+    .profile-details-box .photo{
+        width:60px;
+        height:60px;
+        float:left;
+        margin-right:10px;
+        border:1px solid #cfcfcf;
+    }
+    .USR-phto-box .userpic{
+        border:1px solid #d1d1d1;
+        float:left;
+        margin-right:7px;
+    }
+    .input-box .searchicon{ right:2px !important; }
+
+    .add-email-box{
+        width:88% !important;
+    }
+    .add-email-box .input-field{
+        height: 30px !important;
+        width: 81% !important;
+    }
+
+    .top-links-wrapper div.add-new-alert {
+        float: right;
+        margin-right: 10px !important;
+        padding-top: 10px !important;
+    }
+
+    .top-links-wrapper div.submit-alerts {
+        float: right !important;
+        width: auto !important;
+    }
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (min-width: 250px) and (max-width: 299px) {
+    body{ background:url(../assets/body-bg-2.jpg) repeat-x #fff !important; }
+    .main{ width:280px !important;}
+    .footer { margin-top:10px !important;}
+    .footer .footer_box{
+        width:280px !important;
+        font-size:17px !important;
+    }
+    .footer_box .menu { width:40% !important;}
+
+    .signup-box .personal-intro{ font-size:19px !important; line-height:20px !important; font-family: 'Museo-700'!important; font-weight:500 !important; text-shadow: 0 2px 1px #000000 !important; margin-top:15px !important;}
+    .input-box .posted-btn { padding:6px 14px;}
+
+    .banner-box{
+        width:100% !important;
+        background: none !important;
+        height: 110px !important;
+    }
+    .banner-box-small{
+        background: none !important;
+        height: 110px !important;
+    }
+    .logo_menu_box ul.topmenu, .logo_menu_box .logout, #web-signup{ display:none;}
+
+    .input-box .input{ width:98% !important; font-size:18px !important; height:33px !important;}
+    #web-content{ display:none; }
+    .icon-section .icon-boxes{ margin: auto !important; float:none !important ; width:100% !important; text-align:center !important; }
+    .icon-boxes .content .heading { font-size:22px !important;}
+    .icon-boxes .content .text { font-size:17px !important;}
+    .icon-boxes .content { margin-bottom:50px !important;}
+    .container .icon-section { margin-bottom:0 !important;}
+
+    .mobile-main{ display:block;}
+    .mobile-container-gray .signup-box{ padding:0; margin-top:0; }
+
+    .mobile-container-white .container { margin-top:0; }
+    .container { margin-top:25px;  }
+
+    #mobile-footer-menu, .mobile-top-menu { display: block; }
+    #mobile-footer-menu span { width:100%; text-align:center; float:left;}
+    #web-container{ display:none;}
+    .footer_box .social-icon-box { margin-top:10px !important ; margin-right:85px;}
+
+    #sitelogo img{ width:150px; height:auto; margin-top: 12px; }
+
+    .mobile-container-box{ width:280px; }
+    .page-text { width:100% !important;}
+    .page-text .title{ text-align:left;  font-size:30px;}
+
+    .mobile-top-menu .menu-list-box { width:250px;}
+    .mobile-top-menu .menu-list-box li a { line-height: 50px; font-size: 30px;}
+
+    .signup-box{ padding-top:10px;}
+    .disc-intro-box{ width:100% !important; margin-bottom: 20px;}
+    .disc-intro-box .in-btn{ width: 97% !important;}
+    .in-btn span { padding-top:17px; height:55% !important;}
+
+    .disc-intro-box p.all-box{ font-size:15px; color:#333;}
+
+    .discover-box .dis-gray{ width:100%; padding:0;}
+    .contoso-page .target-company-box{ width:100%;}
+    .discover-box .dis-white{ width:92% !important;}
+
+    a.send-btn{ font-size:20px; width:88%;}
+    .contoso-page{ margin-bottom:50px;}
+
+    .ofunnelalert-box, .alert-gray{ width:100%; padding:0;}
+    .addmore-box .comp-select{  width:110px; }
+    .comp-select .downarrow{ right:-7px;}
+    .addmore-box .name-select{ width:106px;}
+    .col-blue{ font-family:calibrib; font-size:21px; font-weight:bold;}
+    .alert-text-box{ width:100%; float:left;}
+    .alert-text-box p{ font-size:17px;}
+
+    .select-box select.select { width:110px !important;}
+    .select-box span.select { background:url(../assets/select-bg-small.jpg) no-repeat !important; white-space: nowrap; overflow: hidden;}
+
+    #input{ padding: 0 20% 0 2% !important; width:76% !important; height:23px !important; font-size:15px !important; background:#f7f7f7; font-family: calibrib;}
+    .search-panel{ width:140px; float:right;}
+    .white-box .USR-info{	float:left; line-height:11px; width:100px; overflow:hidden; text-overflow: ellipsis; font-size:9px; }
+    #alerthistory{ font-size:18px; font-weight:bold; float:left;}
+    .td-heading{ font-size:10px !important;}
+    .td-heading-2{ font-size:10px !important;}
+    .profile-details-box .info{
+        float: left;
+        font-size: 10px;
+        line-height: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 70%;
+    }
+    .profile-details-box .photo{
+        width:60px;
+        height:60px;
+        float:left;
+        margin-right:10px;
+        border:1px solid #cfcfcf;
+    }
+    .USR-phto-box .userpic{
+        border:1px solid #d1d1d1;
+        float:left;
+        margin-right:7px;
+    }
+    .input-box .searchicon{ right:2px !important; }
+
+    .add-email-box{
+        width:88% !important;
+    }
+    .add-email-box .input-field{
+        height: 30px !important;
+        width: 81% !important;
+    }
+
+    .top-links-wrapper div.add-new-alert {
+        float: right;
+        margin-right: 10px !important;
+        padding-top: 10px !important;
+    }
+
+    .top-links-wrapper div.submit-alerts {
+        float: right !important;
+        width: auto !important;
+    }
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 768px) {
+
+    body{ background:url(../assets/body-bg-2.jpg) repeat-x #fff !important; }
+    .main{ width:435px !important;}
+    .footer { margin-top:10px !important;}
+    .footer .footer_box{
+        width:435px !important;
+        font-size:17px !important;
+    }
+    .footer_box .menu { width:40% !important;}
+
+    .signup-box .personal-intro{ font-size:23px !important; line-height:30px !important; font-family: 'Museo-700'!important; font-weight:500 !important; text-shadow: 0 2px 1px #000000 !important;}
+    .input-box .posted-btn { padding:6px 14px;}
+
+    .banner-box{
+        width:100% !important;
+        background: url(../assets/banner-img-mobile.png) no-repeat scroll 42px -52px transparent !important;
+        height: 110px !important;
+    }
+    .banner-box-small{
+        background: url(../assets/banner-img-mobile.png) no-repeat scroll 42px -52px transparent !important;
+        height: 110px !important;
+    }
+    .logo_menu_box ul.topmenu, .logo_menu_box .logout, #web-signup{ display:none;}
+
+    .input-box .input{ width:98% !important; font-size:18px !important; height:33px !important;}
+    #web-content{ display:none; }
+    .icon-section .icon-boxes{ margin: auto !important; float:none !important ; width:305px !important; text-align:center !important;}
+    .icon-boxes .content .heading { font-size:22px !important;}
+    .icon-boxes .content .text { font-size:19px !important;}
+    .icon-boxes .content { margin-bottom:50px !important;}
+    .container .icon-section { margin-bottom:0 !important;}
+
+    .mobile-main{ display:block;}
+    .mobile-container-gray .signup-box{ padding:0; margin-top:0; }
+
+    .mobile-container-white .container { margin-top:0; }
+    .container { margin-top:25px;  margin-bottom:100px;}
+
+    #mobile-footer-menu, .mobile-top-menu { display: block; }
+    #web-container{ display:none;}
+
+    .page-text { width:100% !important;}
+    .page-text .title{ text-align:left; font-size:30px; }
+
+
+    .signup-box{ padding-top:10px;}
+    .disc-intro-box{ width:100% !important; margin-bottom: 20px;}
+    .disc-intro-box .in-btn{ width: 98% !important; }
+    .in-btn span { padding-top:6px; height:72% !important;}
+
+    .disc-intro-box p.all-box{ font-size:22px; color:#333;}
+
+    .discover-box .dis-gray{ width:100%; padding:0;}
+    .contoso-page .target-company-box{ width:100%;}
+    .discover-box .dis-white{ width:95% !important;}
+
+    a.send-btn{ font-size:24px; width:70%; margin-left:50px;}
+    .contoso-page{ margin-bottom:50px;}
+
+    .ofunnelalert-box, .alert-gray{ width:100%; padding:0;}
+    .addmore-box .name-select{ width:188px; }
+    .col-blue{ font-family:calibrib; font-size:21px; font-weight:bold;}
+    .alert-text-box{ width:100%; float:left;}
+    .alert-text-box p{ font-size:17px;}
+
+    #input{ padding: 0 14% 0 2% !important; width:84% !important; height:23px !important; font-size:15px !important;  background:#f7f7f7; font-family: calibrib;}
+    .search-panel{ width:218px; float:right; margin-top:6px;}
+    .white-box .USR-info{	float:left; line-height:15px; width:175px; overflow:hidden; text-overflow: ellipsis; font-size:13px; }
+    #alerthistory{ font-size:27px; font-weight:bold; float:left;}
+    .td-heading{ font-size:14px !important;}
+    .td-heading-2{ font-size:15px !important;}
+    .profile-details-box .info{
+        float: left;
+        font-size: 14px;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 70%;
+    }
+    .profile-details-box .photo{
+        width:90px;
+        height:90px;
+        float:left;
+        margin-right:10px;
+        border:1px solid #cfcfcf;
+    }
+    .USR-phto-box .userpic{
+        border:1px solid #d1d1d1;
+        float:left;
+        margin-right:7px;
+    }
+    .input-box .searchicon{ right:2px !important; }
+
+    .add-email-box{
+        width:93% !important;
+    }
+    .add-email-box .input-field{
+        height: 30px !important;
+        width: 88% !important;
+    }
+
+    .top-links-wrapper div.add-new-alert {
+        float: right;
+        margin-right: 10px !important;
+        padding-top: 10px !important;
+    }
+
+    .top-links-wrapper div.submit-alerts {
+        float: right !important;
+        width: auto !important;
+    }
+}

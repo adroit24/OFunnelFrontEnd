@@ -40,18 +40,18 @@ body{ margin:0px; padding:0px;}
 /*======================== 10/10/13 theme classic css ============================*/
 
 .theme_magnum_topsec{ background:#333333;
-border-bottom:1px solid #1a1a1a;
-box-shadow: 0 2px 6px 3px #1a1a1a;
--moz-box-shadow: 0 2px 6px 3px #1a1a1a;
--webkit-box-shadow: 0 2px 6px 3px #1a1a1a;
-width:100%;
-position:relative;
+    border-bottom:1px solid #1a1a1a;
+    box-shadow: 0 2px 6px 3px #1a1a1a;
+    -moz-box-shadow: 0 2px 6px 3px #1a1a1a;
+    -webkit-box-shadow: 0 2px 6px 3px #1a1a1a;
+    width:100%;
+    position:relative;
 }
 
 .theme_magnum_topsec .topsec_box{ position:relative; width:100%; background:url(../assets/repeat_line.png) left bottom repeat-x; height:33px;}
-.theme_magnum_topsec .topsec_dropdown_holder{/* border-left:1px solid #252525;*/ right:0; position:absolute; width:29px; height:33px;
+.theme_magnum_topsec .topsec_dropdown_holder{ border-left:1px solid #252525; right:0; position:absolute; width:60px; height:33px;
 
- }
+}
 .theme_magnum_topsec .topsec_dropdown{background:url(../assets/dropdown_magnum.png) center center no-repeat; position:absolute; width:29px; height:33px; }
 .theme_magnum_topsec .topsec_dropdown:hover .top_links{ display:block;}
 
@@ -68,3 +68,75 @@ position:relative;
 .theme_magnum .target_block a{ text-decoration:none;color:#d0d0d0; }
 .theme_magnum .target_block a:hover{ text-decoration:none;color:#d0d0d0; }
 
+div.alerts-tab {
+    float: left;
+    width: 50%;
+    height:72%;
+    padding-top: 8px;
+    text-align: center;
+}
+
+div.alerts-tab a {
+    color:#d0d0d0 !important;
+    text-decoration:none !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+}
+
+div.targets-tab {
+    float: right;
+    width: 50%;
+    height: 72%;
+    padding-top: 8px;
+    color:#d0d0d0;
+    text-decoration:none;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+div.targets-tab a {
+    color:#d0d0d0 !important;
+    text-decoration:none !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+}
+
+div.active { }
+
+div.inactive {
+    background: #424242;
+}
+
+.theme_magnum_topsec .topsec_settings{background:url(../assets/settings.png) center center no-repeat; float: right; width:29px; height:33px; }
+
+.theme_magnum_topsec .settings_links{ width:99%; margin:auto; }
+.theme_magnum_topsec .settings_links ul{ list-style:none; margin:0px; padding:0px;}
+.theme_magnum_topsec .settings_links ul li{ font-family: Arial, Helvetica, sans-serif; font-size:13px; text-align:right; color:#d0d0d0; border-bottom:1px solid #696969; padding:7px 0px;}
+.theme_magnum_topsec .settings_links ul li a{ text-decoration:none; color:#d0d0d0;}
+.theme_magnum_topsec .settings_links ul li a:hover{ text-decoration:none; color:#d0d0d0;}
+.theme_magnum_topsec .settings_links ul li:last-child{ border-bottom:none;}
+
+.mobile-container-gray {
+    background: #424242 !important;
+}
+
+select {
+    background-color: #d0d0d0 !important;
+    -webkit-box-shadow: none !important;
+    -webkit-border-radius: none !important;
+    -moz-box-shadow: none !important;
+    -moz-border-radius: none !important;
+}
+
+.addmore-box .name-select {
+    background-color: #d0d0d0 !important;
+    -webkit-box-shadow: none !important;
+    -webkit-border-radius: none !important;
+    -moz-box-shadow: none !important;
+    -moz-border-radius: none !important;
+}
+
+.hs_btn-cmt:hover {
+    color: #111111 !important;
+}

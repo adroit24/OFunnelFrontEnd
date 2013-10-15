@@ -64,7 +64,8 @@ api_endpoints:
   AddSalesForceConnection: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addSalesForceConnection"
   MarkedContactConnected: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/markedContactConnected"
   CheckHootSuiteUserExist: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/checkHootSuiteUserExist"
-  SetHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount "
+  SetHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount"
+  DeleteHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/deleteHootSuiteAccount"
 
   #Groups API Endpoints
   AddTag: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/addTag"

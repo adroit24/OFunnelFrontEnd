@@ -45,7 +45,7 @@ api_endpoints:
   SendWelcomeMail: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/sendWelcomeMail"
   UpdateUser: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/updateUser"
   IsValidSignUpToken: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/isValidSignUpToken"
-  DeleteSignUpUserToken: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/deleteSignUpUserToken"
+  DeleteSignUpUsDeleteHootSuiteAccounterToken: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/deleteSignUpUserToken"
   MarkTokenAsUsedRequest: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/MarkTokenAsUsed"
   GetPersonsInCompany: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/getPersonsInCompany"
   GetPersonsForQuery: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/getPersonsForQuery"
@@ -64,7 +64,8 @@ api_endpoints:
   AddSalesForceConnection: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addSalesForceConnection"
   MarkedContactConnected: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/markedContactConnected"
   CheckHootSuiteUserExist: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/checkHootSuiteUserExist"
-  SetHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount "
+  SetHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount"
+  DeleteHootSuiteAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/deleteHootSuiteAccount"
 
   #Groups API Endpoints
   AddTag: "http://ofunnelqa.cloudapp.net/OFunnelService/GroupService.svc/addTag"

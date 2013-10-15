@@ -556,13 +556,23 @@ class LinkedinController < ApplicationController
         @emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
       end
 
-      if mobile_device
-        render "responsive_add_relationships", :layout => "responsive_relationships"
+      unless params[:dataType] == "json"
+        if mobile_device
+          render "responsive_add_relationships", :layout => "responsive_relationships"
+        else
+          render "add_relationships", :layout => "relationships"
+        end
       else
-        render "add_relationships", :layout => "relationships"
+        flash[:notice] = "Target accounts has been added."
+        redirect_to "#{hootsuite_targets_path}?#{session[:hootsuite][:query]}" and return
       end
     else
-      redirect_to discover_relationships_path
+      unless params[:dataType] == "json"
+        redirect_to discover_relationships_path and return
+      else
+        flash[:notice] = "Error occurred, please try again"
+        redirect_to "#{hootsuite_targets_path}?#{session[:hootsuite][:query]}" and return
+      end
     end
   end
 
@@ -584,7 +594,11 @@ class LinkedinController < ApplicationController
     else
       api_response = {"error" => nil}
     end
-    render :json => api_response.to_json
+    unless params[:dataType] == "json"
+      render :json => api_response.to_json
+    else
+      render :json => api_response.to_json, :callback => params[:callback]
+    end
   end
 
   def alerts_import_csv
