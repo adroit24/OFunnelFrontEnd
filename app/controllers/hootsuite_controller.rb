@@ -1,80 +1,40 @@
 class HootsuiteController < ApplicationController
   layout "hootsuite"
 
-  def session_init
+  def index
     session[:hootsuite] = {
-        :user_id => nil,
-        :authenticated => false,
-        :connected => false,
-        :theme => params[:theme].blank? ? "blue_steel" : params[:theme],
-        :userName => "",
-        :query => request.query_string,
-        :tab => "TARGETS",
-        :offset => 0,
-        :target_offset => 0
+        user_id: nil,
+        authenticated: false,
+        connected: false,
+        theme: params[:theme].blank? ? "blue_steel" : params[:theme],
+        userName: "OFunnel",
+        query: request.query_string,
+        tab: "TARGETS",
+        offset: 0,
+        target_offset: 0
     }
     if hootsuite_session?
       session[:hootsuite][:authenticated] = true
       session[:hootsuite][:user_id] = params[:uid]
+      if check_hootsuite_user_exists? session[:hootsuite][:user_id]
+        redirect_to "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}" and return
+      end
     end
-
-    unless check_hootsuite_user_exists? session[:hootsuite][:user_id]
-      redirect_to hootsuite_path({:app_init => false})
-    else
-      redirect_to "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}"
-    end
-  end
-
-  def index
-    #session_id = request.session_options[:id]
-    #iv =  OFunnel::Application.config.iv
-    #key = OFunnel::Application.config.key
-    #
-    #cipher = OpenSSL::Cipher::AES.new(128, :CBC)
-    #cipher.encrypt
-    #cipher.key = key
-    #cipher.iv = iv
-    #
-    #encrypted = cipher.update(session_id)
-    #encrypted << cipher.final
-    #
-    #@e_session = Base64.encode64(encrypted).encode('utf-8')
   end
 
   def authorize
-    #unless params[:token].blank?
-    #token = params[:token]
-    #iv =  OFunnel::Application.config.iv
-    #key = OFunnel::Application.config.key
-    #
-    #decipher = OpenSSL::Cipher::AES.new(128, :CBC)
-    #decipher.decrypt
-    #decipher.key = key
-    #decipher.iv = iv
-    #
-    #d_token = Base64.decode64(token).encode('ascii-8bit')
-    #session_id = decipher.update(d_token)
-    #session_id << decipher.final
-
-    #session[:ref_session] = session_id
     session[:return_to] = hootsuite_authorize_callback_url
     redirect_to Settings.linkedin_auth_url, :protocol => 'http' and return
-    #end
   end
 
   def authorize_callback
-
-    set_hootsuite_account(current_user_id,session[:hootsuite][:user_id])
-
-    #unless session[:ref_session] == request.session_options[:id]
-    #  old_s = Sessions.find_by_session_id session[:ref_session]
-    #  new_s = Sessions.find_by_session_id request.session_options[:id]
-    #  old_s.update_attributes!({
-    #                               :data => new_s.data
-    #                           })
-    #end
-    #session[:ref_session] = nil
-    session[:return_to] = nil
+    if set_hootsuite_account(current_user_id,session[:hootsuite][:user_id])
+      if check_hootsuite_user_exists? session[:hootsuite][:user_id]
+        session[:return_to] = nil
+        render "hootsuite/authorize_callback", :layout => false and return
+      end
+    end
+    redirect_to "#{hootsuite_url}?#{session[:hootsuite][:query]}" and return
   end
 
   def stream
@@ -144,7 +104,7 @@ class HootsuiteController < ApplicationController
   def disconnect
     delete_hootsuite_user_api_endpoint = "#{Settings.api_endpoints.DeleteHootSuiteAccount}/#{current_user_id}"
     response = Typhoeus.get(delete_hootsuite_user_api_endpoint)
-    query = session[:hootsuite][:query]
+    query = session[:hootsuite][:query] unless session[:hootsuite].nil?
 
     if response.success? && !api_contains_error("DeleteHootSuiteAccount", response)
       response = JSON.parse(response.response_body)["DeleteHootSuiteAccountResult"]
@@ -152,7 +112,7 @@ class HootsuiteController < ApplicationController
         reset_session
       end
     end
-    redirect_to hootsuite_session_init_path and return
+    redirect_to "#{hootsuite_path}#{('?' + query) unless query.nil?}" and return
   end
 
   protected
@@ -188,8 +148,13 @@ class HootsuiteController < ApplicationController
             hootSuiteId: h_user_id
         })
 
+    status = false
     if response.success? && !api_contains_error("SetHootSuiteAccount", response)
       api_response = JSON.parse(response.response_body)["SetHootSuiteAccountResult"]
+      if api_response["isHootSuiteIdSet"] == true
+        status = true
+      end
     end
+    return status
   end
 end

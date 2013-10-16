@@ -120,6 +120,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_hootsuite_session
+    unless session[:hootsuite].nil?
+      session[:return_to] = current_url
+      redirect_to hootsuite_session_init_url
+    else
+      return true
+    end
+  end
+
   def initialize_ofunnel
     session[:selected_connections] = session[:selected_connections].nil? ? {} : session[:selected_connections]
   end

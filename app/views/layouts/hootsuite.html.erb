@@ -4,7 +4,7 @@
   <title>OFunnel</title>
   <%
      @theme = session[:hootsuite].blank? ? "classic" : session[:hootsuite][:theme]
-     @user_name = session[:hootsuite].blank? ? "OFunnel" : session[:hootsuite][:userName]
+     @user_name = session[:hootsuite][:userName]  unless session[:hootsuite][:userName].blank?
   %>
   <%= stylesheet_link_tag    "application.html5", :media => "all" %>
   <%= stylesheet_link_tag    "public", :media => "all" %>
@@ -17,17 +17,26 @@
   <%= csrf_meta_tags %>
 
   <script type="text/javascript">
-      var hootSuiteEnabled = true;
+      var hootsuiteEnabled = true;
+      var hootsuiteAppKey = "<%= Settings.hootsuite.APP_KEY %>"
+      var hootsuiteRecieverPath = "<%= Settings.hootsuite.RECIEVER_PATH %>";
+      var hootsuiteRemoveRelationship = "<%= remove_relationship_path %>";
       var hootsuiteStreamPath = "<%= hootsuite_stream_path %>";
       var hootsuiteTargetPath = "<%= hootsuite_targets_path %>";
-      var hootsuiteRemoveRelationship = "<%= remove_relationship_path %>";
-      var hootsuiteRecieverPath = "<%= Settings.hootsuite_reciever_path %>";
       var hootsuiteTheme = "theme_<%= @theme %>";
       var hootsuiteUserName = "<%= @user_name %>";
       var hootsuiteAppInit = <%= params[:app_init].blank? ? true : false %>
       var getPersonsForQueryUrl = '<%= get_people_for_query_path %>';
-      var activeTab = "<%= params[:action] %>";
+      var activeTab = '<%= params[:action] %>';
   </script>
+
+  <% if params[:action] == "index" and @theme != "magnum" %>
+      <style>
+          html {
+              background-color: #fff !important;
+          }
+      </style>
+  <% end %>
 </head>
 <body class="bg-none">
 <div class="maincontainer">
@@ -36,7 +45,9 @@
       <div class="topsec_box">
         <div class="topsec_dropdown_holder">
           <span class="topsec_dropdown"><a href="#"></a></span>
-          <span class="topsec_settings"><a href="#"></a></span>
+          <% unless current_user_id.blank? %>
+              <span class="topsec_settings"><a href="#"></a></span>
+          <% end %>
         </div>
       </div>
       <div class="top_links" style="display: none;">

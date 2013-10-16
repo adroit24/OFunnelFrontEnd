@@ -1,6 +1,10 @@
-/*------------------- theme classic -----------------*/
+/*------------------- theme blue steel -----------------*/
 @charset "utf-8";
 /* CSS Document */
+
+html {
+    background-color: #dfe1e4;
+}
 
 *{ margin:0px; padding:0px;}
 
@@ -56,17 +60,8 @@ position:relative;
 }
 
 .theme_blue_steel_topsec .topsec_box{ position:relative; width:100%; border-bottom:1px solid #bebebe; height:33px;}
-.theme_blue_steel_topsec .topsec_dropdown_holder{ border-left:1px solid #c7c7c7; right:0; position:absolute; width:60px; height:33px;
-background: #c4c4c4; /* Old browsers */
-background: -moz-linear-gradient(top,  #c4c4c4 0%, #e7e7e7 29%, #ffffff 81%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c4c4c4), color-stop(29%,#e7e7e7), color-stop(81%,#ffffff)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* IE10+ */
-background: linear-gradient(to bottom,  #c4c4c4 0%,#e7e7e7 29%,#ffffff 81%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4c4c4', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
- }
-.theme_blue_steel_topsec .topsec_dropdown{background:url(../assets/drop_down.png) center center no-repeat; position:absolute; width:29px; height:33px; }
+.theme_blue_steel_topsec .topsec_dropdown_holder{ right:0; position:absolute; width:60px; height:33px; }
+.theme_blue_steel_topsec .topsec_dropdown{background:url(../assets/drop_down.png) center center no-repeat; position:relative; float: right;width:29px; height:33px; }
 .theme_blue_steel_topsec .topsec_dropdown:hover .top_links{ display:block;}
 
 .theme_blue_steel_topsec .top_links{ width:99%; margin:auto; }
@@ -132,11 +127,24 @@ div.inactive {
 }
 
 select {
+    border: 1px solid #c5c6c8 !important;
     background-color: #f4f4f4 !important;
     -webkit-box-shadow: none !important;
     -webkit-border-radius: none !important;
     -moz-box-shadow: none !important;
     -moz-border-radius: none !important;
+}
+
+select:focus {
+    border: 1px solid #c5c6c8 !important;
+}
+
+input {
+    border: 1px solid #c5c6c8 !important;
+}
+
+input:focus {
+    border: 1px solid #c5c6c8 !important;
 }
 
 .addmore-box .name-select {
@@ -153,4 +161,11 @@ select {
 
 .hs_btn-cmt:hover {
     color: #fff !important;
+}
+
+.separator {
+    width: 95%;
+    border-top: 1px solid #babdc0;
+    margin: 15px auto;
+    margin-top: 133px !important;
 }

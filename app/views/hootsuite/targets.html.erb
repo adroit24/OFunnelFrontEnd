@@ -1,8 +1,8 @@
 <!--start mobile container white-->
 <div class="mobile-container-gray">
   <!--start mobile-container-Box-->
-  <div class="mobile-container-box">
-    <div class="container mrg-T5" style="margin-bottom: 5px;">
+  <div class="mobile-container-box" style="margin: 0">
+    <div class="container mrg-T5 mrg-L10" style="margin-bottom: 5px;">
       <div id="alert-target-account-error" class="display-none" style="padding-left: 2%;padding-top: 2%;">
         <span class="col-red font-18"> * </span>
       </div>
@@ -18,11 +18,11 @@
         <div class="all-box">
           <%= form_tag(add_relationships_path, :id => "add_relationships_form", :class => "alert-gray") do %>
               <div class="top-links-wrapper">
-                <div class="submit-alerts send-box txt-L mrg-T15 mrg-B10">
-                  <input type="submit" name="" value="Submit" class="send-btn pad-L40 pad-R40 pad-T5 pad-B5 font-24">
-                </div>
                 <div class="add-new-alert txt-L mrg-T15 mrg-B10">
-                  <a id="alert-add-target-account" class="bold" href="#">Add new alert</a>
+                  <a id="alert-add-target-account" class="font-15 bold" href="#">Add new alert</a>
+                </div>
+                <div class="submit-alerts send-box txt-L mrg-T15 mrg-B10">
+                  <input type="submit" name="" value="Submit" class="send-btn pad-L25 pad-R25 pad-B5">
                 </div>
               </div>
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />

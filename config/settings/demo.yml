@@ -26,6 +26,10 @@ twitter:
   CONSUMER_SECRET: 'agvQflS7UDJPuxXcivdvwgmJd8W88YSRT5GRr0ogo'
   REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/twitter/twitter_authorization_callback'
 
+hootsuite:
+  APP_KEY: '19g7d90mb0m8kccw800wg048c3iaa9afcom'
+  RECIEVER_PATH: "https://ofunnel.cloudapp.net/ofunnel_receiver.html"
+
 api_endpoints:
   #LinkedIn API Endpoints
   GetConnectionsInCompany: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getConnectionsInCompany"
@@ -133,4 +137,3 @@ linkedin_auth_url: "http://ofunnel.cloudapp.net:4444/linkedin/authorize_with_lik
 google_auth_url: "http://ofunnel.cloudapp.net:4444/google/authorize_with_google"
 facebook_auth_url: "http://ofunnel.cloudapp.net:4444/facebook/authorize_with_facebook"
 salesforce_auth_url: "http://ofunnel.cloudapp.net:4444/salesforce/authorize_with_salesforce"
-hootsuite_reciever_path: "https://ofunnel.cloudapp.net/ofunnel_receiver.html"

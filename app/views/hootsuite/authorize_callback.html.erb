@@ -1,4 +1,6 @@
 <script type="text/javascript">
-    opener.location.href = '<%= "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}" %>';
+    <% unless session[:hootsuite].nil? %>
+        opener.location.href = '<%= "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}" %>';
+    <% end %>
     self.close();
 </script>

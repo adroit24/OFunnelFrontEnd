@@ -11,12 +11,12 @@
 // end
 
 $( document ).ready(function() {
-    if(typeof hootSuiteEnabled != "undefined" && hootSuiteEnabled) {
+    if(typeof hootsuiteEnabled != "undefined" && hootsuiteEnabled) {
         if(hootsuiteAppInit) {
             console.log("Initializing HootSuite SDK");
             hsp.init(
                 {
-                    apiKey: '0u1agem6ryyowc8wccs8o8wc43iaa9afcml',
+                    apiKey: hootsuiteAppKey,
                     receiverPath: hootsuiteRecieverPath,
                     useTheme: true,
                     subtitle: '(' + hootsuiteUserName + ')',
@@ -79,7 +79,6 @@ $( document ).ready(function() {
     $(document).on('click','a#alert-add-target-account',function(){
         if($('input[name=name]:visible').first().val() != "") {
             $('div.alert-details').prepend($('div.extra-alert-container').html());
-            initialiseSelectBox();
         }
         $('input.name-select:visible').first().focus();
         return false;
@@ -235,28 +234,5 @@ function bindScroll(){
         $(window).unbind('scroll');
         loadMore();
     }
-}
-
-function initialiseSelectBox() {
-    $('select.select:visible').each(function(){
-        var title = $(this).attr('title');
-        if($('option:selected', this).val() != '')
-            title = $('option:selected',this).val();
-        if($(this).next('span').length == 0)
-            $(this)
-                .css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
-                .after('<span class="select">' + title + '</span>')
-                .change(function(){
-                    val = $('option:selected',this).val();
-                    $(this).next().text(val);
-                });
-        else
-            $(this)
-                .css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
-                .change(function(){
-                    val = $('option:selected',this).val();
-                    $(this).next().text(val);
-                });
-    });
 }
 
