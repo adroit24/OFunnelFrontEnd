@@ -37,14 +37,22 @@ $( document ).ready(function() {
         }
     }
 
-    $('span.topsec_dropdown').click(function() {
-        $('div.settings_links').hide();
-        $('div.top_links').toggle();
-    });
+    $('.hs_topBar .hs_controls a').click(function(e) {
+        var $control = $(this),
+            $dropdown = $('.hs_topBar .hs_dropdown');
+        $dropdown.children().hide();
+        if ($control.attr('dropdown').length) {
+            $dropdown.children('.' + $control.attr('dropdown')).show();
+        }
+        if($dropdown.is(':visible') && $control.hasClass('active')) {
+            $dropdown.hide();
+        } else {
+            $dropdown.show();
+        }
+        $control.siblings('.active').removeClass('active');
+        $control.toggleClass('active');
 
-    $('span.topsec_settings').click(function() {
-        $('div.top_links').hide();
-        $('div.settings_links').toggle();
+        e.preventDefault();
     });
 
     $(document).on('click','a.alert-remove-target',function(){
@@ -73,6 +81,43 @@ $( document ).ready(function() {
                 }
             });
         }
+        return false;
+    });
+
+    $(document).on('click','a.hs-open-user-info-popup',function(){
+        linkedInID = $(this).attr("rel");
+        $.ajax({
+            type : 'POST',
+            url : getLinkedInProfileUrl,
+            data : {linkedin_id:linkedInID,dataType : "json"},
+            dataType: 'jsonp',
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success : function(data) {
+                if(typeof data.error == "undefined") {
+                    fullName = data.firstName + ' ' + data.lastName;
+                    profileUrl = data.publicProfileUrl;
+                    profilePicUrl = data.pictureUrl;
+                    headline = data.headline;
+                    userLocation = data.location.name;
+                    industry = data.positions.values[0].company.industry;
+                    hsp.customUserInfo({
+                        "fullName": fullName,
+                        "avatar": profilePicUrl,
+                        "extra": [
+                            { "label": "Headline", "value": headline },
+                            { "label": "Location", "value": userLocation },
+                            { "label": "Industry", "value": industry }
+                        ],
+                        "links": [
+                            { "label": "Profile", "url": profileUrl }
+                        ]
+                    });
+                }
+            }
+        });
         return false;
     });
 
@@ -138,7 +183,7 @@ $( document ).ready(function() {
  *************************************************/
 
 function loadMore() {
-    if(activeTab == "stream") {
+    if(activeTab == "ALERTS") {
         console.log("Loading more alerts");
         $.ajax({
             type: "POST",
@@ -157,6 +202,8 @@ function loadMore() {
                     fTarget = value.connectedToProfileUrl == "" ? '' : ' target="_blank"';
                     profilePic = value.yourConnectionProfilePicUrl == "" ? "https://secure.ofunnel.com/assets/user_photo.jpg" : value.yourConnectionProfilePicUrl;
                     fProfilePic = value.connectedToProfilePicUrl == "" ? "https://secure.ofunnel.com/assets/user_photo.jpg" : value.connectedToProfilePicUrl;
+                    linkedInId = value.yourConnectionLinkedInId;
+                    fLinkedInId = value.connectedToLinkedInId;
                     eventTime = new Date(value.updatedAt).strftime("%b %e, %I:%M%P");
                     $("div.alert-wrapper").last().append(
                         '<div class="alert-wrapper">' +
@@ -164,16 +211,16 @@ function loadMore() {
                             '<div class="thumbtop_section">' +
                             '<div class="height10"></div>' +
                             '<div class="target_block">Target ' + capitaliseFirstLetter(alertType) + ': ' + networkAlert + '</div>' +
-                            '<div class="thimg"><div class="thumb_img"><a href="#"><img src="' + profilePic + '"  alt="img" style="height: 30px;width: 30px;"></a></div></div>' +
+                            '<div class="thimg"><div class="thumb_img"><a class="hs-open-user-info-popup" href="#" rel="' + linkedInId + '"><img src="' + profilePic + '"  alt="img" style="height: 30px;width: 30px;"></a></div></div>' +
                             '<div class="thumbuser_details">' +
-                            '<p class="thumb_username"><a href="' + value.yourConnectionProfileUrl + '"' + target + '>' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a></p>' +
+                            '<p class="thumb_username"><a class="hs-open-user-info-popup" href="#" rel="' + linkedInId + '">' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a></p>' +
                             '<div class="thumb_date">' + eventTime + '</div>' +
-                            '<p class="text"><a href="' + value.yourConnectionProfileUrl + '"' + target + '>' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a> is now connected to <a href="' + value.connectedToProfileUrl + '"' + fTarget + '>' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
+                            '<p class="text"><a class="hs-open-user-info-popup" href="#" rel="' + linkedInId + '">' + value.yourConnectionFirstName + " " + value.yourConnectionLastName + '</a> is now connected to <a class="hs-open-user-info-popup" href="#" rel="' + fLinkedInId + '">' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
                             '</div>' +
                             '<div class="bigimg_details">' +
-                            '<div class="large_img"><a href="#"><img src="' + fProfilePic + '" alt="img"></a></div>' +
+                            '<div class="large_img"><a class="hs-open-user-info-popup" href="#" rel="' + fLinkedInId + '"><img src="' + fProfilePic + '" alt="img"></a></div>' +
                             '<div class="bigbuser_details">' +
-                            '<p class="bigbuser_username"><a href="' + value.connectedToProfileUrl + '"' + fTarget + '>' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
+                            '<p class="bigbuser_username"><a class="hs-open-user-info-popup" href="#" rel="' + fLinkedInId + '">' + value.connectedToFirstName + ' ' + value.connectedToLastName + '</a></p>' +
                             '<div class="biguser_designation">' +
                             '<p>' + value.connectedToHeadline + '</p>' +
                             '</div>' +

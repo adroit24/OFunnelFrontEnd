@@ -2,53 +2,52 @@ class HootsuiteController < ApplicationController
   layout "hootsuite"
 
   def index
-    session[:hootsuite] = {
-        user_id: nil,
-        authenticated: false,
-        connected: false,
-        theme: params[:theme].blank? ? "blue_steel" : params[:theme],
-        userName: "OFunnel",
-        query: request.query_string,
-        tab: "TARGETS",
-        offset: 0,
-        target_offset: 0
-    }
+    create_default_hootsuite_session
     if hootsuite_session?
-      session[:hootsuite][:authenticated] = true
-      session[:hootsuite][:user_id] = params[:uid]
-      if check_hootsuite_user_exists? session[:hootsuite][:user_id]
-        redirect_to "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}" and return
+      cookies.permanent.signed[:authenticated] = true
+      cookies.permanent.signed[:h_user_id] = params[:uid]
+      cookies.permanent.signed[:hootsuite_user_id] = params[:uid]
+      cookies.permanent.signed[:hootsuite_query] = request.query_string
+      if check_hootsuite_user_exists? cookies.signed[:h_user_id]
+        if cookies.signed[:tab] ==  "ALERTS"
+          redirect_to "#{hootsuite_stream_url}?#{cookies.signed[:query]}" and return
+        else
+          redirect_to "#{hootsuite_targets_url}?#{cookies.signed[:query]}" and return
+        end
       end
     end
   end
 
   def authorize
-    session[:return_to] = hootsuite_authorize_callback_url
-    redirect_to Settings.linkedin_auth_url, :protocol => 'http' and return
+    redirect_to "#{Settings.secure_linkedin_auth_url}?back_url=#{hootsuite_authorize_callback_url}", :protocol => 'http' and return
   end
 
   def authorize_callback
-    if set_hootsuite_account(current_user_id,session[:hootsuite][:user_id])
-      if check_hootsuite_user_exists? session[:hootsuite][:user_id]
-        session[:return_to] = nil
-        render "hootsuite/authorize_callback", :layout => false and return
-      end
+    logger.fatal cookies.signed[:user_id]
+    logger.fatal cookies.signed[:h_user_id]
+    logger.fatal cookies.signed[:query]
+    user_id = cookies.signed[:user_id]
+    h_user_id = cookies.signed[:h_user_id]
+    @query = cookies.signed[:query]
+
+    if set_hootsuite_account(user_id,h_user_id)
+      check_hootsuite_user_exists? h_user_id
+      #cookies.permanent.signed[:return_to] = nil
     end
-    redirect_to "#{hootsuite_url}?#{session[:hootsuite][:query]}" and return
+    render "hootsuite/authorize_callback", :layout => false and return
   end
 
   def stream
     @offset = 0
+    cookies.permanent.signed[:tab] = "ALERTS"
     if params[:dataType] == "json"
-      unless session[:hootsuite].nil?
-        @offset = session[:hootsuite][:offset]
-        session[:hootsuite][:offset] = @offset + 25
-      end
+      @offset = cookies.signed[:offset]
+      cookies.permanent.signed[:offset] = @offset + 25
     else
-      session[:hootsuite][:offset] = 25 unless session[:hootsuite].nil?
+      cookies.permanent.signed[:offset] = 25
     end
     @count = 25
-    get_all_network_alert_api_endpoint = "#{Settings.api_endpoints.GetAllNetworkAlertsForUserId}/#{current_user_id}/#{@offset}/#{@count}"
+    get_all_network_alert_api_endpoint = "#{Settings.api_endpoints.GetAllNetworkAlertsForUserId}/#{current_user_id_from_cookies}/#{@offset}/#{@count}"
     response = Typhoeus.get(get_all_network_alert_api_endpoint)
 
     @alerts = nil
@@ -66,16 +65,15 @@ class HootsuiteController < ApplicationController
 
   def targets
     @offset = 0
+    cookies.permanent.signed[:tab] = "TARGETS"
     if params[:dataType] == "json"
-      unless session[:hootsuite].nil?
-        @offset = session[:hootsuite][:target_offset]
-        session[:hootsuite][:target_offset] = @offset + 25
-      end
+      @offset = cookies.signed[:target_offset]
+      cookies.permanent.signed[:target_offset] = @offset + 25
     else
-      session[:hootsuite][:target_offset] = 25 unless session[:hootsuite].nil?
+      cookies.permanent.signed[:target_offset] = 25
     end
     @count = 25
-    get_company_network_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlerts}/#{current_user_id}/#{@offset}/#{@count}")
+    get_company_network_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlerts}/#{current_user_id_from_cookies}/#{@offset}/#{@count}")
     response = Typhoeus.get(get_company_network_alert_api_endpoint)
 
     @alerts = nil
@@ -101,18 +99,30 @@ class HootsuiteController < ApplicationController
     end
   end
 
+  def get_linkedin_profile
+    api_endpoint = "#{Settings.api_endpoints.GetPersonProfile}/#{cookies.signed[:user_id]}/#{params[:linkedin_id]}"
+    response = Typhoeus.get(api_endpoint)
+    content = { "error" => nil }
+
+    if response.success? && !api_contains_error("GetPersonProfile", response)
+      response = JSON.parse(response.response_body)["GetPersonProfileResult"]
+      content = response["personProfile"]
+    end
+    render :json => content.to_json, :callback => params[:callback]
+  end
+
   def disconnect
-    delete_hootsuite_user_api_endpoint = "#{Settings.api_endpoints.DeleteHootSuiteAccount}/#{current_user_id}"
+    delete_hootsuite_user_api_endpoint = "#{Settings.api_endpoints.DeleteHootSuiteAccount}/#{current_user_id_from_cookies}"
     response = Typhoeus.get(delete_hootsuite_user_api_endpoint)
-    query = session[:hootsuite][:query] unless session[:hootsuite].nil?
+    query = cookies.signed[:query]
 
     if response.success? && !api_contains_error("DeleteHootSuiteAccount", response)
       response = JSON.parse(response.response_body)["DeleteHootSuiteAccountResult"]
       if response["isHootSuiteIdDeleted"] == true
-        reset_session
+        create_default_hootsuite_session
       end
     end
-    redirect_to "#{hootsuite_path}#{('?' + query) unless query.nil?}" and return
+    redirect_to "#{hootsuite_path}?#{query}" and return
   end
 
   protected
@@ -129,10 +139,9 @@ class HootsuiteController < ApplicationController
     if response.success? && !api_contains_error("CheckHootSuiteUserExist", response)
       response = JSON.parse(response.response_body)["CheckHootSuiteUserExistResult"]
       if response["isHootSuiteUserExist"] == true
-        session[:hootsuite][:tab] = "ALERTS"
-        session[:hootsuite][:connected] = true
-        session[:hootsuite][:userName] = response["ofunnelUserName"]
-        set_current_user_id response["ofunnelUserId"]
+        cookies.permanent.signed[:connected] = true
+        cookies.permanent.signed[:userName] = response["ofunnelUserName"]
+        cookies.permanent.signed[:user_id] = response["ofunnelUserId"]
         status = true
       end
     end
@@ -157,4 +166,18 @@ class HootsuiteController < ApplicationController
     end
     return status
   end
+
+  def create_default_hootsuite_session
+    cookies.permanent.signed[:user_id] = nil
+    cookies.permanent.signed[:h_user_id] = nil
+    cookies.permanent.signed[:authenticated] = false
+    cookies.permanent.signed[:connected] = false
+    cookies.permanent.signed[:theme]= params[:theme].blank? ? "blue_steel" : params[:theme]
+    cookies.permanent.signed[:userName] = "OFunnel"
+    cookies.permanent.signed[:query] = request.query_string
+    cookies.permanent.signed[:tab] = "TARGETS" if cookies.signed[:tab].nil?
+    cookies.permanent.signed[:offset] = 0
+    cookies.permanent.signed[:target_offset] = 0
+  end
+
 end

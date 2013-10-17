@@ -22,13 +22,18 @@ class LinkedinController < ApplicationController
       session[:return_to] = nil
     end
 
+    unless params[:back_url].blank?
+      session[:return_to] = params[:back_url]
+    end
+
+    ofunnel_callback = params[:back_url].blank? ? Settings.linkedin.REDIRECT_URI : Settings.linkedin.SECURE_REDIRECT_URI
     #Redirect your user in order to authenticate
     redirect_url = linkedin_client.auth_code.authorize_url(
         :scope => 'r_fullprofile r_emailaddress rw_nus r_network',
         :state => Settings.linkedin.STATE,
-        :redirect_uri => Settings.linkedin.REDIRECT_URI
+        :redirect_uri => ofunnel_callback
     )
-    logger.fatal "Redirect to linkedin for first time: #{redirect_url}"
+    logger.fatal "Redirect to linkedin for first time: #{ofunnel_callback}"
     redirect_to redirect_url
   end
 
@@ -42,9 +47,11 @@ class LinkedinController < ApplicationController
       if !state.eql?(Settings.linkedin.STATE)
         #Reject the request as it may be a result of CSRF
       else
+        logger.fatal request.protocol
+        ofunnel_callback = request.protocol == "https://" ? Settings.linkedin.SECURE_REDIRECT_URI : Settings.linkedin.REDIRECT_URI
         #Get token object, passing in the authorization code from the previous step
-        logger.fatal "Redirect to linkedin for getting token: #{code}  ,  #{Settings.linkedin.REDIRECT_URI}"
-        token = linkedin_client.auth_code.get_token(code, :redirect_uri => Settings.linkedin.REDIRECT_URI)
+        logger.fatal "Redirect to linkedin for getting token: #{code}  ,  #{ofunnel_callback}"
+        token = linkedin_client.auth_code.get_token(code, :redirect_uri => ofunnel_callback)
 
         #Use token object to create access token for user
         #(this is required so that you provide the correct param name for the access token)

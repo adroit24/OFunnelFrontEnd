@@ -170,6 +170,22 @@
     border-top: 1px solid #d2d2d2;
 }
 
+.bg-none{background: none !important;}
+.display-none {display: none;}
+.mrg-T5{margin-top:5px !important;}
+.mrg-T15{margin-top:15px !important;}
+.mrg-L10{margin-left:10px !important;}
+.mrg-B10{margin-bottom:10px !important;}
+.pad-L25{padding-left:25px !important;}
+.pad-R25{padding-right:25px !important;}
+.pad-B5{padding-bottom:5px !important;}
+.col-red{color:#d91c1c !important;}
+.font-15{font-size:15px !important;}
+.font-18{font-size:18px !important;}
+.all-box{width:100%;float:left;margin-bottom:10px;}
+.txt-L{text-align:left !important;}
+.bold{ font-weight: bold !important;}
+
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 949px) {
     .banner-box{ background-position:-140px bottom;}

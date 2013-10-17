@@ -70,6 +70,7 @@ api_endpoints:
   CheckHootSuiteUserExist: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/checkHootSuiteUserExist"
   SetHootSuiteAccount: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/setHootSuiteAccount"
   DeleteHootSuiteAccount: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/deleteHootSuiteAccount"
+  GetPersonProfile: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getPersonProfile"
 
   #Groups API Endpoints
   AddTag: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/GroupService.svc/addTag"

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :user_tags, :initialize_ofunnel
-  helper_method :current_user, :current_user_id, :current_user_profile, :current_user_score, :show_ofunnel_help, :check_google_session, :check_facebook_session
+  helper_method :current_user, :current_user_id, :current_user_id_from_cookies, :current_user_profile, :current_user_score, :show_ofunnel_help, :check_google_session, :check_facebook_session
   rescue_from Exception, :with => :server_error if Rails.env.production?
 
   def server_error(exception)
@@ -21,8 +21,13 @@ class ApplicationController < ActionController::Base
     return session[:user_id]
   end
 
+  def current_user_id_from_cookies
+    return cookies.signed[:user_id]
+  end
+
   def set_current_user_id(user_id)
     session[:user_id] = user_id
+    cookies.permanent.signed[:user_id] = user_id
   end
 
   def current_user_profile

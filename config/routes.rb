@@ -49,6 +49,7 @@ OFunnel::Application.routes.draw do
   match '/hootsuite/authorize' => "hootsuite#authorize", :as => :hootsuite_authorize
   match '/hootsuite/authorize_callback' => "hootsuite#authorize_callback", :as => :hootsuite_authorize_callback
   match '/hootsuite/stream' => "hootsuite#stream", :as => :hootsuite_stream
+  match '/hootsuite/get_linkedin_profile' => "hootsuite#get_linkedin_profile", :as => :get_linkedin_profile
   match '/hootsuite/targets' => "hootsuite#targets", :as => :hootsuite_targets
   match '/hootsuite/show_all_target_accounts' => "hootsuite#show_all_target_accounts", :as => :hootsuite_show_all_target_accounts
   match '/hootsuite/add_target_accounts' => "hootsuite#add_target_accounts", :as => :hootsuite_add_target_accounts

@@ -167,5 +167,12 @@ input:focus {
     width: 95%;
     border-top: 1px solid #babdc0;
     margin: 15px auto;
-    margin-top: 133px !important;
+    margin-top: 130px !important;
+}
+
+.right-border {
+    margin-right: 15px;
+    padding-right: 15px;
+    margin-left: 15px;
+    border-right: 2px solid #d6d8d9;
 }

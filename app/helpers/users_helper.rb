@@ -110,4 +110,12 @@ module UsersHelper
     return user['isConnectionAddedInSalesForce']
   end
 
+  def friend_linkedin_id(user)
+    return user['yourConnectionLinkedInId']
+  end
+
+  def f_connected_linkedin_id(user)
+    return user['connectedToLinkedInId']
+  end
+
 end

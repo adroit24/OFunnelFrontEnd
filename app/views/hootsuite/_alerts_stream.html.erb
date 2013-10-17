@@ -1,13 +1,15 @@
 <% unless @alerts.blank? %>
-    <% @theme = session[:hootsuite].blank? ? "classic" : session[:hootsuite][:theme] %>
+    <% @theme = cookies.signed[:theme] %>
     <% @alerts.each do |alert| %>
         <%
            alert_type = alert["alertType"]
            network_alert = alert["targetName"]
            friend_profile = friend_profile_url(alert)
            friend_target = friend_profile == "#" ? '' : ' target="_blank"'
+           friend_linkedin_id = friend_linkedin_id(alert)
            f_connected_profile = f_connected_profile_url(alert)
            f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
+           f_connected_linkedin_id = f_connected_linkedin_id(alert)
            event_time = DateTime.strptime(alert["updatedAt"],'%m/%d/%Y %l:%M:%S %p').strftime("%b %e, %I:%M%P")
         %>
         <div class="alert-wrapper">
@@ -15,16 +17,16 @@
             <div class="height1"></div>
             <div class="thumbtop_section">
               <div class="target_block">Target <%= alert_type.downcase.capitalize %>: <%= network_alert %></div>
-              <div class="thimg"><div class="thumb_img"><a href="#"><img src="<%= friend_profile_pic_url(alert) %>"  alt="img" style="height: 30px;width: 30px;"></a></div></div>
+              <div class="thimg"><div class="thumb_img"><a class="hs-open-user-info-popup" href="#" rel="<%= friend_linkedin_id %>"><img src="<%= friend_profile_pic_url(alert) %>"  alt="img" style="height: 30px;width: 30px;"></a></div></div>
               <div class="thumbuser_details">
-                <p class="thumb_username"><a href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(alert) %></a></p>
+                <p class="thumb_username"><a class="hs-open-user-info-popup" href="#" rel="<%=friend_linkedin_id  %>"><%= friend_name(alert) %></a></p>
                 <div class="thumb_date"><%= event_time %></div>
-                <p class="text"><a href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(alert) %></a> is now connected to <a href="<%= f_connected_profile %>"<%= f_connected_target %>><%= f_connected_name(alert) %></a></p>
+                <p class="text"><a class="hs-open-user-info-popup" href="#" rel="<%= friend_linkedin_id %>"><%= friend_name(alert) %></a> is now connected to <a class="hs-open-user-info-popup" href="#" rel="<%= f_connected_linkedin_id %>"><%= f_connected_name(alert) %></a></p>
               </div>
               <div class="bigimg_details">
-                <div class="large_img"><a href="#"><img src="<%= f_connected_profile_pic_url(alert) %>" alt="img"></a></div>
+                <div class="large_img"><a class="hs-open-user-info-popup" href="#" rel="<%= f_connected_linkedin_id %>"><img src="<%= f_connected_profile_pic_url(alert) %>" alt="img"></a></div>
                 <div class="bigbuser_details">
-                  <p class="bigbuser_username"><a href="<%= f_connected_profile %>"<%= f_connected_target %>><%= f_connected_name(alert) %></a></p>
+                  <p class="bigbuser_username"><a class="hs-open-user-info-popup" href="#" rel="<%= f_connected_linkedin_id %>"></a></p>
                   <div class="biguser_designation">
                     <p><%= f_connected_headline(alert) %></p>
                   </div>

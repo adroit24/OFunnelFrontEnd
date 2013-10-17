@@ -2,6 +2,7 @@ linkedin:
   API_KEY: 'dr57ldqujcak'
   API_SECRET: 'pMZTMTxzE8Ujbhem'
   REDIRECT_URI: 'http://beta.ofunnel.com/linkedin/linkedin_authorization_callback'
+  SECURE_REDIRECT_URI: 'https://secure.ofunnel.com/linkedin/linkedin_authorization_callback'
   STATE: SecureRandom.hex(15)
 
 google:
@@ -70,6 +71,7 @@ api_endpoints:
   CheckHootSuiteUserExist: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/checkHootSuiteUserExist"
   SetHootSuiteAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/setHootSuiteAccount"
   DeleteHootSuiteAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/deleteHootSuiteAccount"
+  GetPersonProfile: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/getPersonProfile"
 
   #Groups API Endpoints
   AddTag: "http://ofunnelservice.cloudapp.net/OFunnelService/GroupService.svc/addTag"
@@ -134,6 +136,7 @@ http_url: "http://beta.ofunnel.com"
 logout_redirect: "http://ofunnel.com"
 wrong_token_redirect: "http://ofunnel.com?signup-error"
 linkedin_auth_url: "http://beta.ofunnel.com/linkedin/authorize_with_likedin"
+secure_linkedin_auth_url: "https://secure.ofunnel.com/linkedin/authorize_with_likedin"
 google_auth_url: "http://beta.ofunnel.com/google/authorize_with_google"
 facebook_auth_url: "http://beta.ofunnel.com/facebook/authorize_with_facebook"
 salesforce_auth_url: "http://beta.ofunnel.com/salesforce/authorize_with_salesforce"

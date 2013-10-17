@@ -3,10 +3,11 @@
 <head>
   <title>OFunnel</title>
   <%
-     @theme = session[:hootsuite].blank? ? "classic" : session[:hootsuite][:theme]
-     @user_name = session[:hootsuite][:userName]  unless session[:hootsuite][:userName].blank?
+     @active_tab = cookies.signed[:tab]
+     @theme = cookies.signed[:theme]
+     @user_name = cookies.signed[:userName]
+     @query = cookies.signed[:query]
   %>
-  <%= stylesheet_link_tag    "application.html5", :media => "all" %>
   <%= stylesheet_link_tag    "public", :media => "all" %>
   <%= stylesheet_link_tag    "hootsuite", :media => "all" %>
   <%= stylesheet_link_tag    "hootsuite_#{@theme}", :media => "all" %>
@@ -27,7 +28,8 @@
       var hootsuiteUserName = "<%= @user_name %>";
       var hootsuiteAppInit = <%= params[:app_init].blank? ? true : false %>
       var getPersonsForQueryUrl = '<%= get_people_for_query_path %>';
-      var activeTab = '<%= params[:action] %>';
+      var getLinkedInProfileUrl = '<%= get_linkedin_profile_url %>'
+      var activeTab = '<%= @active_tab %>';
   </script>
 
   <% if params[:action] == "index" and @theme != "magnum" %>
@@ -40,46 +42,41 @@
 </head>
 <body class="bg-none">
 <div class="maincontainer">
-  <div class="maincontainer_section">
-    <div class="theme_<%= @theme %>_topsec">
-      <div class="topsec_box">
-        <div class="topsec_dropdown_holder">
-          <span class="topsec_dropdown"><a href="#"></a></span>
-          <% unless current_user_id.blank? %>
-              <span class="topsec_settings"><a href="#"></a></span>
+  <div class="hs_stream">
+    <div class="hs_topBar">
+      <div class="hs_content">
+        <div class="hs_controls">
+          <% unless current_user_id_from_cookies.blank? %>
+              <a href="#" dropdown="_settings" title="Settings">
+                <span class="icon-19 settings"></span>
+              </a>
           <% end %>
+          <a href="#" dropdown="_menuList" title="More">
+            <span class="icon-19 dropdown"></span>
+          </a>
         </div>
-      </div>
-      <div class="top_links" style="display: none;">
-        <ul>
-          <li><a href="#">Help</a></li>
-          <li><a href="#">Feedback</a></li>
-          <li><a href="#">Developer:OFunnel</a></li>
-        </ul>
-      </div>
-      <div class="settings_links display-none">
-        <% unless current_user_id.blank? %>
-            <ul>
-              <li>
-                <b>Connected account</b>: <%= @user_name %>
-                <a href="<%= hootsuite_disconnect_path %>" class="hs_btn-cmt mrg-L10">Disconnect</a>
-              </li>
-            </ul>
+        <% unless current_user_id_from_cookies.blank? %>
+            <a href="<%= "#{hootsuite_stream_path}?#{@query}" %>" class="right-border"<%= ' style=font-weight:bold' if @active_tab == "ALERTS" %>>Alerts</a>
+            <a href="<%= "#{hootsuite_targets_path}?#{@query}" %>"<%= ' style=font-weight:bold' if @active_tab == "TARGETS" %>>Target Accounts</a>
         <% end %>
       </div>
-    </div>
-    <% unless current_user_id.blank? %>
-        <div class="theme_<%= @theme %>_topsec">
-          <div class="topsec_box">
-            <div class="alerts-tab <%= params[:action] == "stream" ? "active" : "inactive" %>">
-              <a href="<%= "#{hootsuite_stream_path}?#{session[:hootsuite][:query]}" %>">Alerts</a>
+      <div class="hs_dropdown" style="display: none;">
+        <% unless current_user_id_from_cookies.blank? %>
+            <div class="_settings hs_btns-right" style="display: none;">
+              <a><b>Connected account:</b> <%= @user_name %></a>
+              <a href="<%= hootsuite_disconnect_path %>" class="hs_btn-cmt mrg-L10">Disconnect</a>
             </div>
-            <div class="targets-tab <%= params[:action] == "targets" ? "active" : "inactive" %>">
-              <a href="<%= "#{hootsuite_targets_path}?#{session[:hootsuite][:query]}" %>">Target Accounts</a>
-            </div>
-          </div>
+        <% end %>
+        <div class="_menuList hs_btns-right" style="display: none;">
+          <a href="#">Help</a>
+          <hr style="margin: 5px 0 5px 0;">
+          <a href="#">Feedback</a>
+          <hr style="margin: 5px 0 5px 0;">
+          <a href="#">Developer: OFunnel</a>
         </div>
-    <% end %>
+      </div>
+    </div>
+    <div class="hs_topBarSpace"></div>
     <%= yield %>
   </div>
 </div>

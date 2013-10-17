@@ -1,6 +1,8 @@
 <script type="text/javascript">
-    <% unless session[:hootsuite].nil? %>
-        opener.location.href = '<%= "#{hootsuite_stream_url}?#{session[:hootsuite][:query]}" %>';
+    <% if cookies.signed[:tab] ==  "ALERTS" %>
+    opener.location.href = '<%= "#{hootsuite_stream_url}?#{@query}" %>';
+    <% elsif cookies.signed[:tab] ==  "TARGETS" %>
+    opener.location.href = '<%= "#{hootsuite_targets_url}?#{@query}" %>';
     <% end %>
     self.close();
 </script>
