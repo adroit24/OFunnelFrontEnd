@@ -73,7 +73,7 @@ position:relative;
 
 .height10{ clear:both; height:10px; width:100%;}
 .height1{ clear:both; height:1px; width:100%;}
-.target_block{ width:99%; margin:10px 0px; background:#dee0e3; position:relative; clear:both; padding:5px; font:12px Arial, Helvetica, sans-serif; color:#239cb9; font-weight:bold; border-top:1px solid #cccccc;}
+.target_block{ width:99%; margin:10px 0px; background:#808080; position:relative; clear:both; padding:5px; font:12px Arial, Helvetica, sans-serif; color:#ffffff; font-weight:bold; border-top:1px solid #cccccc;}
 .target_block a{ text-decoration:none;color:#239cb9; }
 .target_block a:hover{ text-decoration:none;color:#239cb9; }
 

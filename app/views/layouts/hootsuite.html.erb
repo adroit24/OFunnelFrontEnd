@@ -21,7 +21,7 @@
       var hootsuiteEnabled = true;
       var hootsuiteAppKey = "<%= Settings.hootsuite.APP_KEY %>"
       var hootsuiteRecieverPath = "<%= Settings.hootsuite.RECIEVER_PATH %>";
-      var hootsuiteRemoveRelationship = "<%= remove_relationship_path %>";
+      var hootsuiteRemoveRelationship = "<%= hootsuite_remove_relationship_path %>";
       var hootsuiteStreamPath = "<%= hootsuite_stream_path %>";
       var hootsuiteTargetPath = "<%= hootsuite_targets_path %>";
       var hootsuiteTheme = "theme_<%= @theme %>";
@@ -30,6 +30,8 @@
       var getPersonsForQueryUrl = '<%= get_people_for_query_path %>';
       var getLinkedInProfileUrl = '<%= get_linkedin_profile_url %>'
       var activeTab = '<%= @active_tab %>';
+      var query = document.location.search;
+      var csrfToken = '<%= form_authenticity_token %>';
   </script>
 
   <% if params[:action] == "index" and @theme != "magnum" %>

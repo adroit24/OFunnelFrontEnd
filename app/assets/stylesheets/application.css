@@ -81,6 +81,7 @@ html, body {
     float:left;
     margin:18px 0 0 0;
     position:relative;
+    padding-left: 2%;
 }
 .logo_menu_box .logo{ float:left;}
 

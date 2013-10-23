@@ -266,11 +266,11 @@ class SalesforceController < ApplicationController
     type = params[:type].nil? ? session[:sf_import_type] : params[:type]
     session[:sf_import_type] = nil
     unless session[:salesforce_token].nil?
-      api_endpoint = "#{Settings.api_endpoints.ImportSalesForceCompaniesFromLeads}/#{current_user_id}/#{type}"
+      api_endpoint = "#{Settings.api_endpoints.ImportSalesForceCompaniesFromLeadOrAccount}/#{current_user_id}/#{type}"
       response = Typhoeus.get(api_endpoint)
 
-      if response.success? && !api_contains_error("ImportSalesForceCompaniesFromLeads", response)
-        api_response = JSON.parse(response.response_body)["ImportSalesForceCompaniesFromLeadsResult"]
+      if response.success? && !api_contains_error("ImportSalesForceCompaniesFromLeadOrAccount", response)
+        api_response = JSON.parse(response.response_body)["ImportSalesForceCompaniesFromLeadOrAccountResult"]
         if api_response["isCompaniesPersisted"] == true
           flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
         end

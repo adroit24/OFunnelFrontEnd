@@ -73,7 +73,7 @@ position:relative;
 
 .height10{ clear:both; height:10px; width:100%;}
 .height1{ clear:both; height:1px; width:100%;}
-.theme_blue_steel .target_block{ width:99%; margin:10px 0px; background:#dee0e3; position:relative; clear:both; padding:5px; font:12px Arial, Helvetica, sans-serif; color:#376299; font-weight:bold; border-top:1px solid #cccccc;}
+.theme_blue_steel .target_block{ width:99%; margin:10px 0px; background:#808080; position:relative; clear:both; padding:5px; font:12px Arial, Helvetica, sans-serif; color:#ffffff; font-weight:bold; border-top:1px solid #cccccc;}
 .theme_blue_steel .target_block a{ text-decoration:none;color:#376299; }
 .theme_blue_steel .target_block a:hover{ text-decoration:none;color:#376299; }
 

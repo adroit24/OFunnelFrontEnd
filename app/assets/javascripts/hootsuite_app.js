@@ -21,159 +21,175 @@ $( document ).ready(function() {
                     useTheme: true,
                     subtitle: '(' + hootsuiteUserName + ')',
                     callBack: function( message ){
-                        console.log('Error: ' + message);
+                        console.log('OFunnel: ' + message);
                     }
                 }
             );
 
             console.log("Binding hsp refresh");
             hsp.bind('refresh', function() {
-                if($(window).scrollTop() < 150) {
+                hsReload = true;
+                hsScrollTop = $(window).scrollTop();
+                if(hsScrollTop > 150) {
+                    hsReload = false;
+                }
+                else if($("input:focus").length > 1) {
+                    hsReload = false;
+                }
+
+                if(hsReload) {
                     window.location.reload();
+                }
+                else {
+                    console.log("Suppressing hsp refresh");
                 }
             });
 
             $(window).scroll(bindScroll);
         }
-    }
 
-    $('.hs_topBar .hs_controls a').click(function(e) {
-        var $control = $(this),
-            $dropdown = $('.hs_topBar .hs_dropdown');
-        $dropdown.children().hide();
-        if ($control.attr('dropdown').length) {
-            $dropdown.children('.' + $control.attr('dropdown')).show();
-        }
-        if($dropdown.is(':visible') && $control.hasClass('active')) {
-            $dropdown.hide();
-        } else {
-            $dropdown.show();
-        }
-        $control.siblings('.active').removeClass('active');
-        $control.toggleClass('active');
+        $('.hs_topBar .hs_controls a').click(function(e) {
+            var $control = $(this),
+                $dropdown = $('.hs_topBar .hs_dropdown');
+            $dropdown.children().hide();
+            if ($control.attr('dropdown').length) {
+                $dropdown.children('.' + $control.attr('dropdown')).show();
+            }
+            if($dropdown.is(':visible') && $control.hasClass('active')) {
+                $dropdown.hide();
+            } else {
+                $dropdown.show();
+            }
+            $control.siblings('.active').removeClass('active');
+            $control.toggleClass('active');
 
-        e.preventDefault();
-    });
+            e.preventDefault();
+        });
 
-    $(document).on('click','a.alert-remove-target',function(){
-        removePath = $(this).attr('href');
-        type = $(this).prevAll('div').find('select.alert-type').val();
-        name = $(this).prevAll('div.input-relative2').find("input.name-select:visible").val();
-        alertId = $(this).prevAll('input[name=alertId]').val();
-        elementToRemove = $(this).parents('div.ofunnel-alerts');
-        if(alertId === "" || name == "") {
-            elementToRemove.remove();
-        }
-        else {
+        $(document).on('click','a.alert-remove-target',function(){
+            removePath = $(this).attr('href');
+            type = $(this).prevAll('div').find('select.alert-type').val();
+            alertName = $(this).prevAll("input.name-select:visible").val();
+            alertId = $(this).prevAll('input[name=alertId]').val();
+            elementToRemove = $(this).parents('div.ofunnel-alerts');
+            if(alertId === "" || name == "") {
+                elementToRemove.remove();
+            }
+            else {
+                $.ajax({
+                    type : 'POST',
+                    url : removePath,
+                    data : {type:"type",name:alertName,alertId:alertId,dataType : "json"},
+                    dataType: 'jsonp',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success : function(data) {
+                        if(data.error == null && typeof data.error != "undefined") {
+                            elementToRemove.remove();
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
+        $(document).on('click','a.hs-open-user-info-popup',function(){
+            linkedInID = $(this).attr("rel");
             $.ajax({
                 type : 'POST',
-                url : removePath,
-                data : {type:type,name:name,alertId:alertId,dataType : "json"},
+                url : getLinkedInProfileUrl,
+                data : {linkedin_id:linkedInID,dataType : "json"},
                 dataType: 'jsonp',
                 xhrFields: {
                     withCredentials: true
                 },
                 crossDomain: true,
                 success : function(data) {
-                    if(data.error == null && typeof data.error != "undefined") {
-                        elementToRemove.remove();
+                    if(typeof data.error == "undefined") {
+                        fullName = data.firstName + ' ' + data.lastName;
+                        profileUrl = data.publicProfileUrl;
+                        profilePicUrl = data.pictureUrl;
+                        headline = data.headline;
+                        userLocation = data.location.name;
+                        industry = data.positions.values[0].company.industry;
+                        hsp.customUserInfo({
+                            "fullName": fullName,
+                            "avatar": profilePicUrl,
+                            "extra": [
+                                { "label": "Headline", "value": headline },
+                                { "label": "Location", "value": userLocation },
+                                { "label": "Industry", "value": industry }
+                            ],
+                            "links": [
+                                { "label": "Profile", "url": profileUrl }
+                            ]
+                        });
                     }
                 }
             });
-        }
-        return false;
-    });
-
-    $(document).on('click','a.hs-open-user-info-popup',function(){
-        linkedInID = $(this).attr("rel");
-        $.ajax({
-            type : 'POST',
-            url : getLinkedInProfileUrl,
-            data : {linkedin_id:linkedInID,dataType : "json"},
-            dataType: 'jsonp',
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true,
-            success : function(data) {
-                if(typeof data.error == "undefined") {
-                    fullName = data.firstName + ' ' + data.lastName;
-                    profileUrl = data.publicProfileUrl;
-                    profilePicUrl = data.pictureUrl;
-                    headline = data.headline;
-                    userLocation = data.location.name;
-                    industry = data.positions.values[0].company.industry;
-                    hsp.customUserInfo({
-                        "fullName": fullName,
-                        "avatar": profilePicUrl,
-                        "extra": [
-                            { "label": "Headline", "value": headline },
-                            { "label": "Location", "value": userLocation },
-                            { "label": "Industry", "value": industry }
-                        ],
-                        "links": [
-                            { "label": "Profile", "url": profileUrl }
-                        ]
-                    });
-                }
-            }
-        });
-        return false;
-    });
-
-    $(document).on('click','a#alert-add-target-account',function(){
-        if($('input[name=name]:visible').first().val() != "") {
-            $('div.alert-details').prepend($('div.extra-alert-container').html());
-        }
-        $('input.name-select:visible').first().focus();
-        return false;
-    });
-
-    $(document).on('submit','form#add_relationships_form',function(){
-        targetAlerts = $('div.ofunnel-alerts:visible');
-        i = 0;
-        targetAlerts.each(function() {
-            if($(this).find('input.name-select:visible').val() != "")
-                i++;
-        });
-        if(i < 1) {
-            $('div#alert-target-account-error').show();
             return false;
-        }
-        else {
-            alertJson = [];
+        });
+
+        $(document).on('click','a#alert-add-target-account',function(){
+            if($('input[name=name]:visible').first().val() != "") {
+                $('div.alert-details').prepend($('div.extra-alert-container').html());
+            }
+            $('input.name-select:visible').first().focus();
+            return false;
+        });
+
+        $(document).on('submit','form#add_relationships_form',function(){
+            targetAlerts = $('div.ofunnel-alerts:visible');
+            i = 0;
             targetAlerts.each(function() {
-                type = $(this).find('select.alert-type').val();
-                name = $(this).find('input.name-select:visible').val();
-                alertId = $(this).find('input[name=alertId]').val();
-                if(type != "" && name != "")
-                    alertJson.push({
-                        "type" : type,
-                        "name" : name,
-                        "alertId" : alertId
-                    });
+                if($(this).find('input.name-select:visible').val() != "")
+                    i++;
             });
-//            $.ajax({
-//                type : 'POST',
-//                url : $(this).attr('action'),
-//                data : $(this).serialize(),
-//                dataType: 'jsonp',
-//                contentType: 'application/json',
-//                processData: false,
-//                xhrFields: {
-//                    withCredentials: true
-//                },
-//                crossDomain: true,
-//                success : function(data) {
-//                    if(data.error == null && typeof data.error != "undefined") {
-//                        $('div#alert-target-account-added').show();
-//                    }
-//                }
-//            });
-            $('input[name=alertJson]').val(JSON.stringify(alertJson));
-            $('div#alert-target-account-error').hide();
-        }
-    });
+            if(i < 1) {
+                $('div#alert-target-account-error').show();
+                return false;
+            }
+            else {
+                alertJson = [];
+                targetAlerts.each(function() {
+                    type = $(this).find('select.alert-type').val();
+                    alertName = $(this).find('input.name-select:visible').val();
+                    alertId = $(this).find('input[name=alertId]').val();
+                    if(type != "" && name != "")
+                        alertJson.push({
+                            "type" : type,
+                            "name" : alertName,
+                            "alertId" : alertId
+                        });
+                });
+                $.ajax({
+                    type : 'POST',
+                    url : $(this).attr('action'),
+                    data : {alertJson:JSON.stringify(alertJson)},
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success : function(data) {
+                        if(data.error == null && typeof data.error != "undefined") {
+                            $('div#alert-target-account-added span').text("Target accounts has been added");
+                            $('div#alert-target-account-added').fadeIn();
+                        }
+                        else {
+                            $('div#alert-target-account-added span').text("Error occurred, please try again");
+                            $('div#alert-target-account-added span').fadeIn();
+                        }
+                        $('#alert-target-account-added').delay('3000').fadeOut();
+                    }
+                });
+                $('div#alert-target-account-error').hide();
+            }
+            return false;
+        });
+    }
 });
 
 /*************************************************

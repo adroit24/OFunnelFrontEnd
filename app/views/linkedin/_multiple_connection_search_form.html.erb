@@ -9,10 +9,10 @@
       <h2>Target Accounts <span class="col-red font-18" id="target-account-error" style="display: none;"> * </span></h2>
       <ul>
         <%
-           unless @selected_accounts.nil?
-             @selected_accounts.each do |account|
+           unless @companies.nil?
+             @companies.each do |company|
         %>
-                <li><span><%= account %></span><a href="<%= remove_company_path %>" class="remove-company"></a></li>
+                <li><span><%= company["name"] %></span><a href="<%= remove_company_path({:target_account_id => company["targetAccountId"]}) %>" class="remove-company"></a></li>
             <%
                end
                end
@@ -67,7 +67,7 @@
     <input type="hidden" name="companies" value="" id="multi-companies-input">
 <% end %>
 <script type="text/javascript">
-    var gRemoveCompanyPath = '<%= remove_company_path({:company => "dummy",:tag_id => @tag_id}) %>'
+    var gRemoveCompanyPath = '<%= remove_company_path({:target_account_id => "dummy"}) %>'
     var companyName = "<%= @company %>"
     var gTagId = "<%= @tag_id %>"
     $(function() {

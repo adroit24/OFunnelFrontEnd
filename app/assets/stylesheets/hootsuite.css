@@ -175,6 +175,7 @@
 .mrg-T5{margin-top:5px !important;}
 .mrg-T15{margin-top:15px !important;}
 .mrg-L10{margin-left:10px !important;}
+.mrg-B5{margin-bottom:5px !important;}
 .mrg-B10{margin-bottom:10px !important;}
 .pad-L25{padding-left:25px !important;}
 .pad-R25{padding-right:25px !important;}
@@ -185,6 +186,8 @@
 .all-box{width:100%;float:left;margin-bottom:10px;}
 .txt-L{text-align:left !important;}
 .bold{ font-weight: bold !important;}
+.float-L{float:left !important;}
+.float-R{float:right !important;}
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 949px) {
@@ -310,7 +313,7 @@
     .top-links-wrapper div.add-new-alert {
         float: left;
         /*margin-right: 10px !important;*/
-        padding-top: 10px !important;
+        padding-top: 5px !important;
     }
 
     .top-links-wrapper div.submit-alerts {
@@ -438,7 +441,7 @@
     .top-links-wrapper div.add-new-alert {
         float: left;
         /*margin-right: 10px !important;*/
-        padding-top: 10px !important;
+        padding-top: 5px !important;
     }
 
     .top-links-wrapper div.submit-alerts {
@@ -565,7 +568,7 @@
     .top-links-wrapper div.add-new-alert {
         float: left;
         /*margin-right: 10px !important;*/
-        padding-top: 10px !important;
+        padding-top: 5px !important;
     }
 
     .top-links-wrapper div.submit-alerts {
@@ -681,7 +684,7 @@
     .top-links-wrapper div.add-new-alert {
         float: left;
         /*margin-right: 10px !important;*/
-        padding-top: 10px !important;
+        padding-top: 5px !important;
     }
 
     .top-links-wrapper div.submit-alerts {

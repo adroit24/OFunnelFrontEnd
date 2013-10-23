@@ -76,7 +76,7 @@ class UsersController < ApplicationController
     redirect_to connections_strength_path({:user_name => user_name,:offset => offset})
   end
 
-  def alerts
+  def notifications
     alert_count = 5
     get_user_profile_api_endpoint = "#{Settings.api_endpoints.GetUserProfileFromUserId}/#{current_user_id}"
     get_network_alert_api_endpoint = "#{Settings.api_endpoints.GetNetworkAlertsForUserId}/#{current_user_id}/#{alert_count}"

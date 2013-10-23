@@ -4,10 +4,8 @@ class HootsuiteController < ApplicationController
   def index
     create_default_hootsuite_session
     if hootsuite_session?
-      cookies.permanent.signed[:authenticated] = true
-      cookies.permanent.signed[:h_user_id] = params[:uid]
-      cookies.permanent.signed[:hootsuite_user_id] = params[:uid]
-      cookies.permanent.signed[:hootsuite_query] = request.query_string
+      cookies.permanent.signed[:authenticated] = {:value => true, :domain => :all}
+      cookies.permanent.signed[:h_user_id] = {:value => params[:uid], :domain => :all}
       if check_hootsuite_user_exists? cookies.signed[:h_user_id]
         if cookies.signed[:tab] ==  "ALERTS"
           redirect_to "#{hootsuite_stream_url}?#{cookies.signed[:query]}" and return
@@ -19,7 +17,8 @@ class HootsuiteController < ApplicationController
   end
 
   def authorize
-    redirect_to "#{Settings.secure_linkedin_auth_url}?back_url=#{hootsuite_authorize_callback_url}", :protocol => 'http' and return
+    cookies.permanent.signed[:return_to] = {:value => hootsuite_authorize_callback_url, :domain => :all}
+    redirect_to "#{Settings.linkedin_auth_url}?back_url=#{hootsuite_authorize_callback_url}", :protocol => 'http' and return
   end
 
   def authorize_callback
@@ -32,19 +31,19 @@ class HootsuiteController < ApplicationController
 
     if set_hootsuite_account(user_id,h_user_id)
       check_hootsuite_user_exists? h_user_id
-      #cookies.permanent.signed[:return_to] = nil
+      cookies.permanent.signed[:return_to] = {:value => nil, :domain => :all}
     end
     render "hootsuite/authorize_callback", :layout => false and return
   end
 
   def stream
     @offset = 0
-    cookies.permanent.signed[:tab] = "ALERTS"
+    cookies.permanent.signed[:tab] = {:value => "ALERTS", :domain => :all}
     if params[:dataType] == "json"
       @offset = cookies.signed[:offset]
-      cookies.permanent.signed[:offset] = @offset + 25
+      cookies.permanent.signed[:offset] = {:value => @offset + 25, :domain => :all}
     else
-      cookies.permanent.signed[:offset] = 25
+      cookies.permanent.signed[:offset] = {:value => 25, :domain => :all}
     end
     @count = 25
     get_all_network_alert_api_endpoint = "#{Settings.api_endpoints.GetAllNetworkAlertsForUserId}/#{current_user_id_from_cookies}/#{@offset}/#{@count}"
@@ -65,12 +64,12 @@ class HootsuiteController < ApplicationController
 
   def targets
     @offset = 0
-    cookies.permanent.signed[:tab] = "TARGETS"
+    cookies.permanent.signed[:tab] = {:value => "TARGETS", :domain => :all}
     if params[:dataType] == "json"
       @offset = cookies.signed[:target_offset]
-      cookies.permanent.signed[:target_offset] = @offset + 25
+      cookies.permanent.signed[:target_offset] = {:value => @offset + 25, :domain => :all}
     else
-      cookies.permanent.signed[:target_offset] = 25
+      cookies.permanent.signed[:target_offset] = {:value => 25, :domain => :all}
     end
     @count = 25
     get_company_network_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlerts}/#{current_user_id_from_cookies}/#{@offset}/#{@count}")
@@ -125,6 +124,77 @@ class HootsuiteController < ApplicationController
     redirect_to "#{hootsuite_path}?#{query}" and return
   end
 
+  def add_relationships
+    unless params[:alertJson].blank?
+      target_accounts = JSON.parse(params[:alertJson])
+      alert_json = {
+          :alert => []
+      }
+
+      alert_array = []
+      target_accounts.each do |target|
+        alert_array.push(
+            {
+                :type => target["type"],
+                :name => target["name"],
+                :alertId => target["alertId"]
+            }
+        )
+      end
+
+      alert_json[:alert] = alert_array
+
+      persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
+      persist_company_network_alert_response = nil
+
+      hydra = Typhoeus::Hydra.hydra
+      persist_company_network_alert_request = Typhoeus::Request.new(
+          persist_company_network_alert_api_endpoint,
+          method: :post,
+          body: {
+              userId: current_user_id,
+              alertJson: alert_json.to_json
+          })
+
+      hydra.queue persist_company_network_alert_request
+
+      persist_company_network_alert_request.on_complete do |response|
+        persist_company_network_alert_response = response
+      end
+
+      hydra.run
+      status = true
+      if persist_company_network_alert_response.success? && !api_contains_error("PersistNetworkAlerts", persist_company_network_alert_response)
+        api_response = JSON.parse(persist_company_network_alert_response.response_body)["PersistNetworkAlertsResult"]
+        status = api_response["isNetworkAlertPersisted"] == true ? nil : true
+      end
+      render :json => {"error" => status} and return
+    else
+      render :json => {"error" => true} and return
+    end
+  end
+
+  def remove_relationship
+    type = params[:type]
+    name = params[:name]
+    alert_id = params[:alertId]
+
+    remove_company_network_alert_api_endpoint = "#{Settings.api_endpoints.RemoveNetworkAlert}"
+    response = Typhoeus.post(
+        remove_company_network_alert_api_endpoint,
+        body: {
+            userId: current_user_id,
+            alertId: alert_id
+        })
+
+    if response.success? && !api_contains_error("RemoveNetworkAlert", response)
+      api_response = JSON.parse(response.response_body)["RemoveNetworkAlertResult"]
+    else
+      api_response = {"error" => nil}
+    end
+    render :json => api_response.to_json, :callback => params[:callback]
+  end
+
   protected
 
   def hootsuite_session?
@@ -139,9 +209,10 @@ class HootsuiteController < ApplicationController
     if response.success? && !api_contains_error("CheckHootSuiteUserExist", response)
       response = JSON.parse(response.response_body)["CheckHootSuiteUserExistResult"]
       if response["isHootSuiteUserExist"] == true
-        cookies.permanent.signed[:connected] = true
-        cookies.permanent.signed[:userName] = response["ofunnelUserName"]
-        cookies.permanent.signed[:user_id] = response["ofunnelUserId"]
+        cookies.permanent.signed[:connected] = {:value => true, :domain => :all}
+        cookies.permanent.signed[:userName] = {:value => response["ofunnelUserName"], :domain => :all}
+        cookies.permanent.signed[:user_id] = {:value => response["ofunnelUserId"], :domain => :all}
+        set_current_user_id response["ofunnelUserId"]
         status = true
       end
     end
@@ -168,16 +239,18 @@ class HootsuiteController < ApplicationController
   end
 
   def create_default_hootsuite_session
-    cookies.permanent.signed[:user_id] = nil
-    cookies.permanent.signed[:h_user_id] = nil
-    cookies.permanent.signed[:authenticated] = false
-    cookies.permanent.signed[:connected] = false
-    cookies.permanent.signed[:theme]= params[:theme].blank? ? "blue_steel" : params[:theme]
-    cookies.permanent.signed[:userName] = "OFunnel"
-    cookies.permanent.signed[:query] = request.query_string
-    cookies.permanent.signed[:tab] = "TARGETS" if cookies.signed[:tab].nil?
-    cookies.permanent.signed[:offset] = 0
-    cookies.permanent.signed[:target_offset] = 0
+    theme = params[:theme].blank? ? "blue_steel" : params[:theme]
+    tab = cookies.signed[:tab].nil? ? "TARGETS" : cookies.signed[:tab]
+    cookies.permanent.signed[:user_id] = {:value => nil, :domain => :all}
+    cookies.permanent.signed[:h_user_id] = {:value => nil, :domain => :all}
+    cookies.permanent.signed[:authenticated] = {:value => false, :domain => :all}
+    cookies.permanent.signed[:connected] = {:value => false, :domain => :all}
+    cookies.permanent.signed[:theme]= {:value => theme, :domain => :all}
+    cookies.permanent.signed[:userName] = {:value => "OFunnel", :domain => :all}
+    cookies.permanent.signed[:query] = {:value => request.query_string, :domain => :all}
+    cookies.permanent.signed[:tab] = {:value => tab, :domain => :all}
+    cookies.permanent.signed[:offset] = {:value => 0, :domain => :all}
+    cookies.permanent.signed[:target_offset] = {:value => 0, :domain => :all}
   end
 
 end

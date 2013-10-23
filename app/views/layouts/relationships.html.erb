@@ -3,6 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>OFunnel</title>
+  <%= stylesheet_link_tag "alerts", :media => "all" %>
   <%= stylesheet_link_tag "application.html5", :media => "all" %>
   <%= stylesheet_link_tag "colorbox", :media => "all" %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -35,11 +36,11 @@
     <!-- START HEADER -->
     <div class="header">
       <div class="logo_menu_box">
-        <a href="<%= discover_relationships_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
+        <a href="<%= alerts_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
         <div class="userstatus-box width-auto">
               <div class="signout-box">
                 <div class="links">
-                  <a href="<%= alerts_path %>">Profile</a>
+                  <a href="<%= notifications_path %>">Profile</a>
                   <a href="<%= logout_path %>">Log out</a>
                 </div>
               </div>

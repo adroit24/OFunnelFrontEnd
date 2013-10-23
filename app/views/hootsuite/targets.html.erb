@@ -3,26 +3,24 @@
   <!--start mobile-container-Box-->
   <div class="mobile-container-box" style="margin: 0">
     <div class="container mrg-T5 mrg-L10" style="margin-bottom: 5px;">
-      <div id="alert-target-account-error" class="display-none" style="padding-left: 2%;padding-top: 2%;">
+      <div id="alert-target-account-error" class="display-none">
         <span class="col-red font-18"> * </span>
       </div>
-      <% if flash[:notice] %>
-          <div id="alert-target-account-added" style="padding-left: 2%;padding-top: 2%;">
-            <span class="col-red font-15"><%= flash[:notice] %></span>
-          </div>
-          <script type="text/javascript">
-              $('#alert-target-account-added').delay('3000').fadeOut();
-          </script>
-      <% end %>
+      <div id="alert-target-account-added" style="padding-bottom: 5px;">
+        <span class="col-red font-15"></span>
+      </div>
       <div class="ofunnelalert-box">
         <div class="all-box">
-          <%= form_tag(add_relationships_path, :id => "add_relationships_form", :class => "alert-gray") do %>
+          <%= form_tag(hootsuite_add_relationships_path, :id => "add_relationships_form", :class => "alert-gray") do %>
               <div class="top-links-wrapper">
-                <div class="add-new-alert txt-L mrg-T15 mrg-B10">
+                <div class="add-new-alert txt-L mrg-B5">
                   <a id="alert-add-target-account" class="font-15 bold" href="#">Add new alert</a>
                 </div>
-                <div class="submit-alerts send-box txt-L mrg-T15 mrg-B10">
-                  <input type="submit" name="" value="Submit" class="send-btn pad-L25 pad-R25 pad-B5">
+                <div class="txt-L float-R mrg-B5">
+                  <a class="hs_btn-cmt pad-L25 pad-R25 pad-B5" href="#" onclick="return $('form#add_relationships_form').submit();">Submit</a>
+                </div>
+                <div class="submit-alerts txt-L mrg-T15 mrg-B10 display-none">
+                  <input type="submit" name="" value="Submit" class="hs_btn-cmt pad-L25 pad-R25 pad-B5">
                 </div>
               </div>
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
@@ -41,7 +39,7 @@
                           </div>
                           <input type="text" name="name" class="name-select" value="<%= alert["name"] %>" Placeholder="Nike" />
                           <input type="hidden" name="alertId" value="<%= alert["alertId"] %>" />
-                          <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
+                          <a href="<%= hootsuite_remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
                         </div>
                     <% end %>
                 <% else %>
@@ -57,13 +55,12 @@
                       </div>
                       <input type="text" name="name" class="name-select" value="" Placeholder="Nike" />
                       <input type="hidden" name="alertId" value="" />
-                      <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
+                      <a href="<%= hootsuite_remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
                     </div>
                 <% end %>
               </div><!-- End Alert Details -->
               <br>
               <input type="hidden" name="alertJson" value="" />
-              <input type="hidden" name="dataType" value="json" />
           <% end %>
         </div><!-- End All Box -->
       </div><!-- End Ofunnelalert Box -->
@@ -84,7 +81,7 @@
     </div>
     <input type="text" name="name" class="name-select" value="" Placeholder="Nike" />
     <input type="hidden" name="alertId" value="" />
-    <a href="<%= remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
+    <a href="<%= hootsuite_remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
   </div>
 </div>
 

@@ -1,0 +1,188 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* ofenel alert css start*/
+.userprofile-box .topheadingwrapper{float: left;
+    padding: 0px 0px;
+    width: 56%;}
+.userprofile-box .headings1{
+    width:auto;
+    float:left;
+    font-size:40px;
+    font-family:calibrib;
+    margin: 10px 0px 0px;
+}
+
+
+.userprofile-box .addnewalerts
+{
+    float:right;
+    font:17px Arial, Helvetica, sans-serif;
+    color:#0068a4;
+    font-weight:400;
+    text-decoration:none;
+    margin: 30px 0px 0px;
+    width: auto;
+}
+
+.userprofile-box .addnewalerts:hover{ text-decoration:none;  color:#0068a4;}
+
+
+.alerts_details{
+    width:100%;
+    float:left;
+    padding:10px 0;
+}
+
+
+.alerts_details table{ border:none; border-collapse:collapse; margin:0px; padding:0px; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
+.alerts_details table tr{border-bottom:1px solid #d2d2d2; border-collapse:collapse;}
+.alerts_details table th{ background:#f3f3f3; border-collapse:collapse; font:17px Arial, Helvetica, sans-serif; color:#212121; font-weight:bold; text-align:left;}
+.alerts_details table td{border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
+
+.color_c{ color:#2c2c2c !important;}
+
+.alert-gray_new {
+    background: none repeat scroll 0 0 #F3F3F3;
+    float: left;
+    padding: 0px 0px 10px;
+    width: 56%;
+}
+
+
+/* tool tips */
+
+.arrow_box { position: relative; background: #fff; border: 1px solid #c4c4c4; width:300px; box-shadow:0px 2px 2px #aeaeae;left: -142px; position: absolute;bottom: 30px;}
+.arrow_box:after, .arrow_box:before { top: 100%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; } .arrow_box:after { border-color: rgba(174, 174, 174, 0); border-top-color: #fff; border-width: 12px; left: 50%; margin-left: -12px; }
+.arrow_box:before { border-color: rgba(204, 204, 204, 0); border-top-color: #aeaeae; border-width: 14px; left: 50%; margin-left: -13px; }
+
+.arrow_box h3{ background:#f4f4f4; font:15px Arial, Helvetica, sans-serif; font-weight:bold; color:#ff5d00; margin:0px; margin-bottom:10px; padding:10px; border-bottom:1px solid #c4c4c4;}
+.arrow_box p{ font:14px Arial, Helvetica, sans-serif; color:#2c2c2c; padding:0px 10px 10px 10px; margin:0px;}
+.arrow_box p  a{ font:14px Arial, Helvetica, sans-serif; color:#0068a4; margin:0px; text-decoration:none;}
+.arrow_box p i{ font-style:normal; font-weight:bold;}
+.arrow_box p  a:hover{ text-decoration:none; color:#0068a4;}
+
+
+/* end */
+
+
+/* member profile css start*/
+.linlkedin_link
+{ font:14px Arial, Helvetica, sans-serif; float:left; width:20%;}
+.alert_recipients{ float:left; width:50%;}
+.alert_recipients h2{ font:26px Arial, Helvetica, sans-serif; color:#212121; font-weight:bold; margin:0px; padding:0px; padding-bottom:6px;}
+.alert_recipients p{ font:14px Arial, Helvetica, sans-serif;color:#212121; margin:0px; padding:0px; padding-bottom:20px;}
+.alert_recipients ul{ list-style:none; margin:0px; padding:0px; width:100%; float:left;}
+.alert_recipients ul li{ float:left; width:100%; border-top:1px solid #c4c4c4; padding:10px;}
+.alert_recipients ul li span{ float:right; margin-top:3px;}
+.disable_text{ font:15px Arial, Helvetica, sans-serif; color:#212121 !important; border:none !important; width:90%; padding:5px; background:none; cursor:text;}
+.enable_text{ font:14px Arial, Helvetica, sans-serif; color:#aeaeae !important; border:1px solid #bbbbbb; !important; width:90%; padding:5px; background:#fff;}
+.save_change_btn{ background: none repeat scroll 0 0 #FF5D00;
+    border: 1px solid #D8D8D8;
+    color: #FFFFFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    padding: 4px 15px 6px;
+    font-weight:600;
+}
+
+.addmores{ font-family:Arial, Helvetica, sans-serif; font-weight:bold; color: #0068a4; text-decoration:none; font-size:14px;}
+.addmores:hover{ color: #0068a4; text-decoration:none;}
+.div_holder{ width:100%; float:left;}
+.f_style{ font-family:Arial, Helvetica, sans-serif !important; font-size:15px !important; font-style:italic !important;}
+
+/* end */
+
+
+
+/* EDIT ALERTS CSS */
+
+.alert_edit_sec{float: left;
+    padding: 0px 0px;
+    width: 56%;}
+
+
+.alert_edit_sec table{ border:none; border-collapse:collapse; margin:0px; padding:0px; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
+.alert_edit_sec table tr{border:1px solid #dbdbdb; border-collapse:collapse; border-left:none; border-right:none;}
+.alert_edit_sec table th{ background:#f3f3f3; border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#2a2a2a; font-weight:bold; text-align:left;}
+.alert_edit_sec table td{border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
+
+
+
+.blue-radio-box{
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+ul.blue-radio-box  li{
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.blue-radio-box span{
+    position: absolute;
+    left: 0;
+    top:-1px;
+    width: 8px;
+    height: 8px;
+    line-height: 25px;
+    padding: 3px;
+    color: #FFF;
+    text-align: center;
+    background: #e7e7e7;
+    border-radius:100px;
+    border:1px solid #b4b4b4;
+
+}
+
+.blue-radio-box input{
+    position: absolute;
+    left: 0;
+    top:2px;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    /*hide the radio button*/
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.blue-radio-box input[type="radio"] + span{ /*the span element that immediately follow the radio button */
+    visibility: hidden; /*temporarily hide the "YES" label*/
+    background: #0068a4;
+    margin: 1px;
+    padding: 2px;
+}
+.blue-radio-box input[type="radio"]:checked + span{
+    visibility: visible; /*show the "YES" label only if the radio button is checked*/
+}
+
+.font_arial{ font-family:Arial, Helvetica, sans-serif; color:#2a2a2a;}
+
+
+.width_116 {
+    width: 117px !important;
+}
+
+.marg_t23{ margin-top:23px;}
+.marg_t10{ margin-top:10px;}
+.input_block{ width:100%;  border:1px solid #cccaca; float:left; position:relative;}
+.inputbox{ width:90%; padding:2px; font:16px Arial, Helvetica, sans-serif; color:#212121; border:none;}
+.edit_icn{ position:absolute; right:8px;}
+
+.lightgray{ background:#f3f3f3; font:16px Arial, Helvetica, sans-serif;color:#8e8e8e; border-radius:3px; padding:5px 10px;  float:left;}
+.darkgray{ background:#dcdcdc; font:16px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:5px 10px; float:left;}
+.lightgray_txtdark{ background:#f3f3f3; font:16px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:3px 10px; float:left;}
+
+.listboxs{ border:1px solid #cbcbcb; padding:5px; background:#fff; width:240px; float:left; box-shadow:0px 0px 2px 0px #ccc; position:absolute; top:64px;}
+.listboxs ul{ margin:0px; padding:0px; list-style:none;}
+.listboxs ul li{ font:14px Arial, Helvetica, sans-serif; color:#606060; border-bottom:1px solid #e4e4e4; padding:10px;}
+.listboxs ul li:last-child{ border-bottom:none;}
+
+.inputbox_2{ width:100px; padding:2px; font:16px Arial, Helvetica, sans-serif; color:#212121; border:none; background:none;}

@@ -7,7 +7,7 @@ class LinkedinController < ApplicationController
 
   def index
     unless current_user.nil?
-      redirect_to discover_relationships_path and return
+      redirect_to alerts_path and return
     else
       redirect_to Settings.logout_redirect and return
     end
@@ -22,11 +22,7 @@ class LinkedinController < ApplicationController
       session[:return_to] = nil
     end
 
-    unless params[:back_url].blank?
-      session[:return_to] = params[:back_url]
-    end
-
-    ofunnel_callback = params[:back_url].blank? ? Settings.linkedin.REDIRECT_URI : Settings.linkedin.SECURE_REDIRECT_URI
+    ofunnel_callback = Settings.linkedin.REDIRECT_URI
     #Redirect your user in order to authenticate
     redirect_url = linkedin_client.auth_code.authorize_url(
         :scope => 'r_fullprofile r_emailaddress rw_nus r_network',
@@ -48,7 +44,7 @@ class LinkedinController < ApplicationController
         #Reject the request as it may be a result of CSRF
       else
         logger.fatal request.protocol
-        ofunnel_callback = request.protocol == "https://" ? Settings.linkedin.SECURE_REDIRECT_URI : Settings.linkedin.REDIRECT_URI
+        ofunnel_callback = Settings.linkedin.REDIRECT_URI
         #Get token object, passing in the authorization code from the previous step
         logger.fatal "Redirect to linkedin for getting token: #{code}  ,  #{ofunnel_callback}"
         token = linkedin_client.auth_code.get_token(code, :redirect_uri => ofunnel_callback)
@@ -331,14 +327,10 @@ class LinkedinController < ApplicationController
       response = Typhoeus.get(get_company_network_group_connections_api_endpoint)
       if response.success? && !api_contains_error("GetCompanyNetworkGroupConnections", response)
         get_company_network_group_connections_response = JSON.parse(response.response_body)["GetCompanyNetworkGroupConnectionsResult"]
-        companies = get_company_network_group_connections_response["companyNames"]
+        @companies = get_company_network_group_connections_response["companyNames"]
         @connections = get_company_network_group_connections_response["connections"]
-        @selected_accounts = []
-        companies.each do |company|
-          @selected_accounts.push(company["name"])
-        end
       else
-        @selected_accounts, @connections = nil
+        @companies, @connections = nil
       end
     else
       redirect_to root_path
@@ -464,13 +456,11 @@ class LinkedinController < ApplicationController
   end
 
   def remove_company
-    tag_id = params[:tag_id]
-    company = params[:company]
+    target_account_id = params[:target_account_id]
     api_endpoint = "#{Settings.api_endpoints.DeleteTargetAccount}"
     response = Typhoeus.post(api_endpoint, body: {
         userId: current_user_id,
-        tagId: tag_id,
-        companyName: company
+        targetAccountId: target_account_id
     })
 
     api_response = {"error" => true}
@@ -563,23 +553,14 @@ class LinkedinController < ApplicationController
         @emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
       end
 
-      unless params[:dataType] == "json"
-        if mobile_device
-          render "responsive_add_relationships", :layout => "responsive_relationships"
-        else
-          render "add_relationships", :layout => "relationships"
-        end
+      if mobile_device
+        render "responsive_add_relationships", :layout => "responsive_relationships"
       else
-        flash[:notice] = "Target accounts has been added."
-        redirect_to "#{hootsuite_targets_path}?#{session[:hootsuite][:query]}" and return
+        render "add_relationships", :layout => "relationships"
       end
+
     else
-      unless params[:dataType] == "json"
-        redirect_to discover_relationships_path and return
-      else
-        flash[:notice] = "Error occurred, please try again"
-        redirect_to "#{hootsuite_targets_path}?#{session[:hootsuite][:query]}" and return
-      end
+      redirect_to discover_relationships_path and return
     end
   end
 
@@ -601,11 +582,7 @@ class LinkedinController < ApplicationController
     else
       api_response = {"error" => nil}
     end
-    unless params[:dataType] == "json"
-      render :json => api_response.to_json
-    else
-      render :json => api_response.to_json, :callback => params[:callback]
-    end
+    render :json => api_response.to_json
   end
 
   def alerts_import_csv
@@ -810,13 +787,13 @@ class LinkedinController < ApplicationController
 
   def ofunnel_login(access_token)
     session[:linkedin_token] = access_token.token
-    back_url = session[:return_to]
+    back_url = session[:return_to] || cookies.signed[:return_to]
     session[:return_to] = nil
     #Use the access token to make an authenticated API call
     response = access_token.get('https://www.linkedin.com/v1/people/~:(id,first-name,last-name,public-profile-url,picture-url,email-address,educations,positions,headline,location:(name),skills)?format=json')
     profile = JSON.parse(response.body)
     unless back_url.nil?
-      discover_welcome_email_flag = back_url.match(/discover_relationships/) ? true : false
+      discover_welcome_email_flag = back_url.match(/alerts/) ? true : false
     else
       discover_welcome_email_flag = false
     end
@@ -872,10 +849,10 @@ class LinkedinController < ApplicationController
       if check_token_in_session
         if session[:token_user_id].nil?
           mark_token_used(session[:token])
-          redirect_to( back_url.nil? ? discover_relationships_path : back_url) and return
+          redirect_to( back_url.nil? ? alerts_path : back_url) and return
         else
           if session[:token_user_id] == current_user_id
-            redirect_to( back_url.nil? ? discover_relationships_path : back_url) and return
+            redirect_to( back_url.nil? ? alerts_path : back_url) and return
           else
             reset_session
             redirect_to Settings.wrong_token_redirect and return
@@ -883,7 +860,7 @@ class LinkedinController < ApplicationController
           session[:token] = nil
         end
       else
-        redirect_to( back_url.nil? ? discover_relationships_path : back_url) and return
+        redirect_to( back_url.nil? ? alerts_path : back_url) and return
       end
     else
       redirect_to root_path and return

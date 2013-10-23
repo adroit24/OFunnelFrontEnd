@@ -428,6 +428,11 @@ td { vertical-align: top; }
     display: none;
 }
 
+.outline-none {
+    outline: none !important;
+    border: none !important;
+}
+
 .nowrap-ellipsis {
     white-space: nowrap;
     text-overflow: ellipsis;

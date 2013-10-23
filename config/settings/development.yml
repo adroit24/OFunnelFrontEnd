@@ -27,7 +27,7 @@ twitter:
   REDIRECT_URI: 'http://localhost:3000/twitter/twitter_authorization_callback'
 
 hootsuite:
-  APP_KEY: '0u1agem6ryyowc8wccs8o8wc43iaa9afcml'
+  APP_KEY: '19g7d90mb0m8kccw800wg048c3iaa9afcom'
   RECIEVER_PATH: "https://localhost:9292/ofunnel_receiver.html"
 
 api_endpoints:
@@ -122,11 +122,14 @@ api_endpoints:
   SetRecipientEmailForNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/setRecipientEmailForNetworkAlerts"
   DeleteRecipientEmail: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/deleteRecipientEmail"
   AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
-  ImportSalesForceCompaniesFromLeads: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/importSalesForceCompaniesFromLeads"
+  ImportSalesForceCompaniesFromLeadOrAccount: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/importSalesForceCompaniesFromLeadOrAccount"
   PersistNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/persistNetworkAlerts"
   GetNetworkAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlerts"
   RemoveNetworkAlert: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/removeNetworkAlert"
   GetAllNetworkAlertsForUserId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllNetworkAlertsForUserId"
+  GetIndustryList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getIndustryList"
+  GetLocationList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getLocationList"
+  GetNetworkAlertWithTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlertWithTargetAccountId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"

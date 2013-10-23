@@ -122,11 +122,14 @@ api_endpoints:
   SetRecipientEmailForNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/setRecipientEmailForNetworkAlerts"
   DeleteRecipientEmail: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/deleteRecipientEmail"
   AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
-  ImportSalesForceCompaniesFromLeads: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/importSalesForceCompaniesFromLeads"
+  ImportSalesForceCompaniesFromLeadOrAccount: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/importSalesForceCompaniesFromLeadOrAccount"
   PersistNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/persistNetworkAlerts"
   GetNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getNetworkAlerts"
   RemoveNetworkAlert: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/removeNetworkAlert"
   GetAllNetworkAlertsForUserId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getAllNetworkAlertsForUserId"
+  GetIndustryList: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getIndustryList"
+  GetLocationList: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getLocationList"
+  GetNetworkAlertWithTargetAccountId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getNetworkAlertWithTargetAccountId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"

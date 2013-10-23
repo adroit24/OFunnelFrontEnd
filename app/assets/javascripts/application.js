@@ -354,19 +354,22 @@ $(function() {
 
     $(document).on('click','a.remove-company', function(){
         liToRemove = $(this);
-        companyName = liToRemove.prev().text();
         removePath = liToRemove.attr('href');
-        removePath = removePath.replace("dummy",companyName);
-        $.ajax({
-            type: "POST",
-            url: removePath,
-            data: {company:companyName,tag_id:gTagId},
-            success: function(data) {
-                if(data.error == null && typeof data.error != "undefined") {
-                    liToRemove.parents('li').first().remove();
+        if(removePath.match('/dummy')){
+            liToRemove.parents('li').first().remove();
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: removePath,
+                data: {},
+                success: function(data) {
+                    if(data.error == null && typeof data.error != "undefined") {
+                        liToRemove.parents('li').first().remove();
+                    }
                 }
-            }
-        });
+            });
+        }
         return false;
     });
 
@@ -1177,18 +1180,37 @@ $(function() {
 
     $(document).on('click','a.alert-remove-target',function(){
         removePath = $(this).attr('href');
-        type = $(this).prevAll('div').find('select.alert-type').val();
-        name = $(this).prevAll('div.input-relative2').find("input.name-select:visible").val();
-        alertId = $(this).prevAll('input[name=alertId]').val();
         elementToRemove = $(this).parents('div.ofunnel-alerts');
-        if(alertId === "" || name == "") {
+        if(removePath.match('/dummy')){
             elementToRemove.remove();
         }
         else {
             $.ajax({
                 type : 'POST',
                 url : removePath,
-                data : {type:type,name:name,alertId:alertId},
+                data : {},
+                dataType : 'json',
+                success : function(data) {
+                    if(data.error == null && typeof data.error != "undefined") {
+                        elementToRemove.remove();
+                    }
+                }
+            });
+        }
+        return false;
+    });
+
+    $(document).on('click','a.delete-target-account',function(){
+        removePath = $(this).attr('href');
+        elementToRemove = $(this).parents('tr');
+        if(removePath.match('/dummy')){
+            elementToRemove.remove();
+        }
+        else {
+            $.ajax({
+                type : 'POST',
+                url : removePath,
+                data : {},
                 dataType : 'json',
                 success : function(data) {
                     if(data.error == null && typeof data.error != "undefined") {
@@ -1320,6 +1342,15 @@ $(function() {
         return false;
     });
 
+    $(document).on('change','input[name=filter-type]',function(){
+        $('tr[id$="-filter"]').hide();
+        $('tr#' + $(this).val() + '-filter').show();
+    });
+
+    $(document).on('click','.filter-tooltip-link',function(){
+        $('div.arrow_box').not($(this).prevAll('div.arrow_box')).fadeOut();
+        $(this).prevAll('div.arrow_box').fadeToggle();
+    });
 
     // select element styling
     initialiseSelectBox();

@@ -1,12 +1,9 @@
 OFunnel::Application.routes.draw do
 
-  get "hootsuite/index"
-
-  get "hootshuite/index"
-
   resources :users
   resources :requests
   resources :groups
+  resources :alerts
   namespace :admin do
     resources :groups
     match 'import_companies' => "groups#import_companies", :as => :import_companies
@@ -22,7 +19,7 @@ OFunnel::Application.routes.draw do
   match 'get_people_for_query' => "linkedin#get_people_for_query", :as => :get_people_for_query
   match 'multiple_company_search' => "linkedin#multiple_company_search", :as => :multiple_company_search
   match 'multiple_company_search_results' => "linkedin#multiple_company_search_results", :as => :multiple_company_search_results
-  match 'remove_company' => "linkedin#remove_company", :as => :remove_company
+  match 'remove_company/:target_account_id' => "linkedin#remove_company", :as => :remove_company
   match 'discover_relationships' => "linkedin#discover_relationships", :as => :discover_relationships
   match 'add_relationships' => "linkedin#add_relationships", :as => :add_relationships
   match 'remove_relationship' => "linkedin#remove_relationship", :as => :remove_relationship
@@ -51,6 +48,8 @@ OFunnel::Application.routes.draw do
   match '/hootsuite/stream' => "hootsuite#stream", :as => :hootsuite_stream
   match '/hootsuite/get_linkedin_profile' => "hootsuite#get_linkedin_profile", :as => :get_linkedin_profile
   match '/hootsuite/targets' => "hootsuite#targets", :as => :hootsuite_targets
+  match '/hootsuite/add_relationships' => "hootsuite#add_relationships", :as => :hootsuite_add_relationships
+  match '/hootsuite/remove_relationship' => "hootsuite#remove_relationship", :as => :hootsuite_remove_relationship
   match '/hootsuite/show_all_target_accounts' => "hootsuite#show_all_target_accounts", :as => :hootsuite_show_all_target_accounts
   match '/hootsuite/add_target_accounts' => "hootsuite#add_target_accounts", :as => :hootsuite_add_target_accounts
   match '/hootsuite/delete_target_accounts' => "hootsuite#delete_target_accounts", :as => :hootsuite_delete_target_accounts
@@ -67,10 +66,15 @@ OFunnel::Application.routes.draw do
   match 'ignore' => "requests#ignore", :as => :ignore
   match 'update_request_info' => "requests#update_request_info", :as => :update_request_info
 
+  #match 'alerts' => "alerts#index", :as => :alerts
+  #match 'alerts/new' => "alerts#new", :as => :alerts
+  #match 'alerts/edit/:id' => "alerts#edit", :as => :alerts
+  match 'alerts/:id/delete' => "alerts#delete", :as => :alert_delete
+
   match '/logout' => "users#logout", :as => :logout
   match '/connections_strength/:user_name' => "users#connections_strength", :as => :connections_strength
   match '/update_connections_strength' => "users#update_connections_strength", :as => :update_connections_strength
-  match '/alerts' => "users#alerts", :as => :alerts
+  match '/notifications' => "users#notifications", :as => :notifications
   match '/add_to_salesforce' => "users#add_to_salesforce", :as => :add_to_salesforce
   match '/all_alerts/:id/:type' => "users#all_alerts", :as => :all_alerts
 

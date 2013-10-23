@@ -2,7 +2,6 @@ linkedin:
   API_KEY: 'dr57ldqujcak'
   API_SECRET: 'pMZTMTxzE8Ujbhem'
   REDIRECT_URI: 'http://beta.ofunnel.com/linkedin/linkedin_authorization_callback'
-  SECURE_REDIRECT_URI: 'https://secure.ofunnel.com/linkedin/linkedin_authorization_callback'
   STATE: SecureRandom.hex(15)
 
 google:
@@ -123,11 +122,14 @@ api_endpoints:
   SetRecipientEmailForNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/setRecipientEmailForNetworkAlerts"
   DeleteRecipientEmail: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/deleteRecipientEmail"
   AddSalesForceConnectionFromNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/addSalesForceConnectionFromNetworkAlerts"
-  ImportSalesForceCompaniesFromLeads: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/importSalesForceCompaniesFromLeads"
+  ImportSalesForceCompaniesFromLeadOrAccount: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/importSalesForceCompaniesFromLeadOrAccount"
   PersistNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/persistNetworkAlerts"
   GetNetworkAlerts: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlerts"
   RemoveNetworkAlert: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/removeNetworkAlert"
   GetAllNetworkAlertsForUserId: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getAllNetworkAlertsForUserId"
+  GetIndustryList: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getIndustryList"
+  GetLocationList: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getLocationList"
+  GetNetworkAlertWithTargetAccountId: "http://ofunnelservice.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlertWithTargetAccountId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/addLogs"
@@ -136,7 +138,6 @@ http_url: "http://beta.ofunnel.com"
 logout_redirect: "http://ofunnel.com"
 wrong_token_redirect: "http://ofunnel.com?signup-error"
 linkedin_auth_url: "http://beta.ofunnel.com/linkedin/authorize_with_likedin"
-secure_linkedin_auth_url: "https://secure.ofunnel.com/linkedin/authorize_with_likedin"
 google_auth_url: "http://beta.ofunnel.com/google/authorize_with_google"
 facebook_auth_url: "http://beta.ofunnel.com/facebook/authorize_with_facebook"
 salesforce_auth_url: "http://beta.ofunnel.com/salesforce/authorize_with_salesforce"

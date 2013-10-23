@@ -58,9 +58,9 @@
         <br>
         <a href="#" class="font-11 bold float-L mrg-T20" id="alert-add-target-account"> (Add more) </a>
         <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-add-target-account-list"> (import target account list) </a>
-        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-import-salesforce"> (import from salesforce) </a>
+        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-import-salesforce"> (import from Salesforce) </a>
         <input type="hidden" name="alertJson" value="" />
-        <% if @total_pages > 0 %>
+        <% if @total_pages > 1 %>
             <div class="alert-pagination">
               <% if @current_page != 1 %>
                   <a href="<%= discover_relationships_path({:offset => @offset - @count}) %>" class="last-text pl-active"><span class="font-12">◄</span> Last 25</a>
@@ -82,11 +82,12 @@
     <div class="alert-text-box">
       <span class="col-blue calibrib font-18">Monitor LinkedIn as your Network Expands</span>
       <p>OFunnel Alerts are email updates of your expanding network.</p>
-      <p>Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role. Some handy uses of OFunnel Alerts include:</p>
+      <p>How does it work? Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role. We will let you know when someone in your network meets the criteria.  Some handy uses of OFunnel Alerts for</p>
       <ul class="font-14">
-        <li class="mrg-B15">You are in Sales and trying to get into Nike as an     account. OFunnel will notify you when someone in your     network connects to someone at Nike</li>
-        <li class="mrg-B15">You are connected to one of your competitors on     LinkedIn. Select that person and OFunnel will notify you     every time that person makes a new   connection.</li>
-        <li class="mrg-B15">You are looking for a database administrator. OFunnel     will notify you when anyone in your network connects     with someone with that job title or headline.</li>
+        <li class="mrg-B15"><b>SALES:</b>  Enter the accounts you are targeting.</li>
+        <li class="mrg-B15"><b>RECRUITING:</b>  Enter the job role you are hiring for.</li>
+        <li class="mrg-B15"><b>COMPETITIVE INTELLIGENCE:</b> Enter the name of the person or company name of your competitor.</li>
+        <li class="mrg-B15"><b>JOB SEARCH:</b> Enter the name of the company you would like to work for.</li>
       </ul>
     </div>
   </div> <!-- End Contoso Page -->
@@ -135,7 +136,7 @@
 <div id="alert-salesforce-popup" class="display-none" style="width: 400px;">
   <!-- START Import from CSV LIGHT BOX -->
   <div class="lightbox">
-    <h2 class="col-blue">Import Leads/Accounts from salesforce</h2>
+    <h2 class="col-blue">Import Leads/Accounts from Salesforce</h2>
     <a href="#" class="cancel-icon"></a>
     <div class="import-alert-salesforce-box">
       <%= form_tag(import_salesforce_path, :id=> "alert-salesforce-form") do %>

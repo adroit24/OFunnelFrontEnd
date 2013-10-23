@@ -1,0 +1,79 @@
+<div class="ofunnelalert-box">
+  <div class="userprofile-box">
+    <div class="topheadingwrapper">
+      <div class="headings1">Alerts</div> <a href="<%= new_alert_path %>" class="addnewalerts">Add new alert</a>
+    </div>
+  </div>
+  <div class="contoso-page">
+    <div class="alert-gray_new" style="background:none;">
+      <div class="alerts_details">
+        <table width="100%" border="0" cellspacing="0" cellpadding="10">
+          <tr>
+            <th width="22%">Filter type</th>
+            <th width="48%">Target</th>
+            <th width="10%">&nbsp;</th>
+            <th width="10%">&nbsp;</th>
+            <th width="10%">&nbsp;</th>
+          </tr>
+          <% unless @alerts.nil? or @alerts.empty? %>
+              <% @alerts.each do |alert| %>
+                  <tr>
+                    <td><%= to_dc alert["filterType"] %></td>
+                    <td><%= to_dc alert["targetName"] %></td>
+                    <td>
+                      <% unless alert["secondLevelFilterDetails"].blank? %>
+                          <div style="position:relative">
+                            <div class="arrow_box display-none">
+                              <h3><%= to_dc alert["filterType"] %>: <%= to_dc alert["targetName"] %></h3>
+                              <% alert["secondLevelFilterDetails"].each_with_index do |filter,i| %>
+                                  <p><i><%= to_dc filter["subFilterType"] %>:</i> <%= filter["filterTextDetails"].map{|filter_text| to_dc filter_text["filterText"] }.join(', ')  %></p>
+                                  <% break if i == 1 %>
+                              <% end %>
+                              <p><a href="<%= edit_alert_path(alert["targetAccountId"]) %>">more</a></p>
+                            </div>
+                            <a class="filter-tooltip-link" href="#"><img src="/assets/mobile_menu.png" width="20" height="14"></a>
+                          </div>
+                      <% end %>
+                    </td>
+                    <td>
+                      <a href="<%= edit_alert_path(alert["targetAccountId"]) %>"><img src="/assets/edit_icon.png" width="20" height="19" alt="edit"></a>
+                    </td>
+                    <td>
+                      <a class="delete-target-account" href="<%= alert_delete_path(alert["targetAccountId"]) %>"><img src="/assets/delete_icon.png" width="20" height="19" alt="delete"></a>
+                    </td>
+                  </tr>
+              <% end %>
+          <% end %>
+        </table>
+      </div>
+      <% if @total_pages > 1 %>
+          <div class="alert-pagination">
+            <% if @current_page != 1 %>
+                <a href="<%= alerts_path({:offset => @offset - @count}) %>" class="last-text pl-active"><span class="font-12">◄</span> Last 25</a>
+            <% elsif @total_pages > 1 %>
+                <a href="#" class="last-text pl-inactive"><span class="font-12">◄</span> Last <%= @count %></a>
+            <% end %>
+            <%= render "ds_pagination_links" %>
+            <% if @page_remaining != 0 %>
+                <a href="<%= alerts_path({:offset => @offset + @count}) %>" class="next-text pl-active">Next 25 <span class="font-12">►</span></a>
+            <% elsif @total_pages > 1 %>
+                <a href="#" class="next-text pl-inactive">Next <%= @count %> <span class="font-12">►</span></a>
+            <% end %>
+          </div>
+      <% end %>
+      <!--<div class="send-box txt-L mrg-T15 mrg-B10"><input class="send-btn pad-L40 pad-R40 pad-T10 pad-B10 font-24" type="submit" value="Submit" name="" /></div>-->
+    </div>
+    <div class="alert-text-box">
+      <span class="col-blue calibrib font-18">Monitor LinkedIn as your Network Expands</span>
+      <p>OFunnel Alerts are email updates of your expanding network.</p>
+      <p>How does it work? Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role. We will let you know when someone in your network meets the criteria.  Some handy uses of OFunnel Alerts for</p>
+      <ul class="font-14">
+        <li class="mrg-B15"><b>SALES:</b>  Enter the accounts you are targeting.</li>
+        <li class="mrg-B15"><b>RECRUITING:</b>  Enter the job role you are hiring for.</li>
+        <li class="mrg-B15"><b>COMPETITIVE INTELLIGENCE:</b> Enter the name of the person or company name of your competitor.</li>
+        <li class="mrg-B15"><b>JOB SEARCH:</b> Enter the name of the company you would like to work for.</li>
+      </ul>
+    </div>
+  </div> <!-- End Contoso Page -->
+</div><!-- End Ofunnel Alert-box -->
+                        
