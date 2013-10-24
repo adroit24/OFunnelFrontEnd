@@ -442,3 +442,11 @@ td { vertical-align: top; }
 .no-click {
     pointer-events: none;
 }
+
+.pos-Rel {
+    position: relative !important;
+}
+
+.pos-Abs {
+    position: absolute !important;
+}

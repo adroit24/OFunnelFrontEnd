@@ -274,8 +274,10 @@ $(function() {
     {
         if(e.target != "a.verification")
             $('div.tooltip').hide();
-        if(e.target != "a.autocomplete-box" && e.target.offsetParent.className != "input-relative2")
+        if(e.target != "a.autocomplete-box" && e.target.offsetParent && e.target.offsetParent.className != "input-relative2")
             $('div.autocomplete-box:visible').hide();
+        if(e.target != "ul.list-container" && e.target.offsetParent && !e.target.offsetParent.className.match("listboxs"))
+            $('div.listboxs:visible').hide();
     });
 
     $('img.profile-settings , div.setting-icon').click(function(e) {
@@ -811,6 +813,44 @@ $(function() {
             $('.search-connection-no-result').hide();
             $('.search-connection-loader').show();
             $('.admin-autocomplete-box').show();
+        }
+        $.colorbox.resize();
+    });
+
+    $(document).on('keyup','input[name=person-name]',function(){
+        if($(this).val().length < 4) {
+            $(this).parent('div').find('.person-autocomplete-box').fadeOut();
+        }
+        else if($(this).val().length > 3) {
+            $(this).parent('div').find('.person-autocomplete-box table tbody').html("");
+            $(this).parent('div').find('.search-connection-no-result').hide();
+            $(this).parent('div').find('.search-connection-loader').show();
+            $(this).parent('div').find('.person-autocomplete-box').fadeIn();
+        }
+    });
+
+    $(document).on('keyup','input[name=industries]',function(){
+        var inputElement = $('input[name="industries"]');
+        if(inputElement.val().length < 4) {
+            $('.listboxs').hide();
+        }
+        else if(inputElement.val().length > 3) {
+            $('.search-connection-no-result').hide();
+            $('.search-connection-loader').show();
+            inputElement.parent('span').next('div.listboxs').show();
+        }
+        $.colorbox.resize();
+    });
+
+    $(document).on('keyup','input[name=locations]',function(){
+        var inputElement = $('input[name="locations"]');
+        if(inputElement.val().length < 4) {
+            $('.listboxs').hide();
+        }
+        else if(inputElement.val().length > 3) {
+            $('.search-connection-no-result').hide();
+            $('.search-connection-loader').show();
+            inputElement.parent('span').next('div.listboxs').show();
         }
         $.colorbox.resize();
     });
@@ -1352,6 +1392,49 @@ $(function() {
         $(this).prevAll('div.arrow_box').fadeToggle();
     });
 
+    $(document).on('click','.remove-darkgray',function(){
+        $(this).parent('span.darkgray').remove();
+        return false;
+    });
+
+    $(document).on('click','.add-alert-industry',function(){
+        $(this).parents('div.pos-Rel').before('<span class="darkgray mrg-L5 mrg-T5">' +
+            $(this).html() + ' <a class="remove-darkgray" href="#">' +
+            '<img src="/assets/close.png" width="10" height="9" alt="close">' +
+            '</a></span>');
+        var inputElement = $('input[name="industries"]');
+        var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
+        var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
+        var listContainerParent = inputElement.parent('span').next('div.listboxs');
+        var loader = $('div.search-connection-loader');
+        inputElement.val("");
+        listContainer.html("");
+        listContainer.hide();
+        noResultElement.hide();
+        loader.show();
+        listContainerParent.hide();
+        return false;
+    });
+
+    $(document).on('click','.add-alert-location',function(){
+        $(this).parents('div.pos-Rel').before('<span class="darkgray mrg-L5 mrg-T5">' +
+            $(this).html() + ' <a class="remove-darkgray" href="#">' +
+            '<img src="/assets/close.png" width="10" height="9" alt="close">' +
+            '</a></span>');
+        var inputElement = $('input[name="locations"]');
+        var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
+        var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
+        var listContainerParent = inputElement.parent('span').next('div.listboxs');
+        var loader = $('div.search-connection-loader');
+        inputElement.val("");
+        listContainer.html("");
+        listContainer.hide();
+        noResultElement.hide();
+        loader.show();
+        listContainerParent.hide();
+        return false;
+    });
+
     // select element styling
     initialiseSelectBox();
 
@@ -1502,7 +1585,7 @@ function searchPeopleForQuery() {
                                 headline = headline.substring(0,(51 - name.length - 2)) + "..."
                             }
                             $('.autocomplete-box table tbody:visible').last().append('<tr><td width="6%" ><img class="photo" style="width: 25px;height: 25px;" src="' + pictureUrl + '" alt="" title="" /></td><td><span class="col-blue font-16 calibrib">' + name + '</span><span> ' + headline + '</span><p class="display-none">' + linkedinId + '</p><p class="display-none">' + firstName + '</p><p class="display-none">' + lastName + '</p></td></tr>')
-                        };
+                        }
                         $('div.search-connection-loader').hide();
                     }
                     else {
@@ -1620,6 +1703,162 @@ function searchGroupMembers() {
         },
         change: function( event, ui ) {
         }
+    });
+}
+
+function getPeopleList() {
+    console.log("Initializing person autocomplete");
+    $('input[name="person-name"]').autocomplete({
+        source: function( request, response ) {
+            query = $('input[name="person-name"]').val();
+            $.ajax({
+                url: getPersonsForQueryUrl,
+                data: {
+                    query: query
+                },
+                success: function( data ) {
+                    if(data.error == null && typeof data.error != "undefined" && data.person != null) {
+                        $('div.search-connection-no-result').hide();
+                        $('.person-autocomplete-box table tbody').html("");
+                        persons = data.person;
+                        if(persons) {
+                            for (var i=0;i<persons.length;i++) {
+                                pictureUrl = persons[i]["picture-url"];
+                                headline = persons[i]["headline"];
+                                linkedinId = persons[i]["id"];
+                                firstName = "";
+                                lastName = "";
+                                name = "";
+                                if(!pictureUrl)
+                                    pictureUrl = "/assets/user_photo.jpg";
+                                if(persons[i]["first-name"]) {
+                                    name = persons[i]["first-name"];
+                                    firstName = persons[i]["first-name"];
+                                }
+                                if(persons[i]["last-name"]){
+                                    name = name + " " + persons[i]["last-name"];
+                                    lastName = persons[i]["last-name"];
+                                }
+                                else if((name + headline).length > 51) {
+                                    headline = headline.substring(0,(51 - name.length - 2)) + "..."
+                                }
+                                $('.person-autocomplete-box table tbody').append('<tr><td width="6%" ><img class="photo" style="width: 25px;height: 25px;" src="' + pictureUrl + '" alt="" title="" /></td><td><span class="col-blue font-16 calibrib">' + name + '</span><span> ' + headline + '</span><p class="display-none">' + linkedinId + '</p><p class="display-none">' + firstName + '</p><p class="display-none">' + lastName + '</p></td></tr>')
+                            }
+                            $('div.search-connection-loader').hide();
+                        }
+                        else {
+                            $('div.search-connection-no-result').show();
+                            $('.search-connection-loader').hide();
+                        }
+                    }
+                    else {
+                    }
+                }
+            })
+        },
+        minLength: 2,
+        delay: 2000,
+        autoFocus: true,
+        search: function( event, ui ) {},
+        change: function( event, ui ) {}
+    });
+}
+
+function getIndustryList() {
+    console.log("Initializing industry autocomplete");
+    $('input[name="industries"]').autocomplete({
+        source: function( request, response ) {
+            var data = null;
+            var inputElement = $('input[name="industries"]');
+            var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
+            var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
+            var listContainerParent = inputElement.parent('span').next('div.listboxs');
+            var loader = $('div.search-connection-loader');
+            listContainer.html("");
+            listContainer.hide();
+            noResultElement.hide();
+            loader.show();
+            data = {
+                query: inputElement.val()
+            }
+            $.ajax({
+                url: searchIndustriesUrl,
+                data: data,
+                success: function( data ) {
+                    if(data.error == null && typeof data.error != "undefined") {
+                        industries = data.industry;
+                        if(industries) {
+                            for (var i=0;i<industries.length;i++) {
+                                listContainer.append('<li class="add-alert-industry" style="cursor: pointer;">' + industries[i].industryType + '</li>')
+                            }
+                            listContainer.show();
+                        }
+                        else {
+                            noResultElement.show();
+                        }
+                    }
+                    else {
+                        noResultElement.show();
+                    }
+                    loader.hide();
+                    listContainerParent.show();
+                }
+            })
+        },
+        minLength: 4,
+        delay: 2000,
+        autoFocus: true,
+        search: function( event, ui ) { },
+        change: function( event, ui ) { }
+    });
+}
+
+function getLocationList() {
+    console.log("Initializing location autocomplete");
+    $('input[name="locations"]').autocomplete({
+        source: function( request, response ) {
+            var url,data = null;
+            var inputElement = $('input[name="locations"]');
+            var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
+            var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
+            var listContainerParent = inputElement.parent('span').next('div.listboxs');
+            var loader = $('div.search-connection-loader');
+            listContainer.html("");
+            listContainer.hide();
+            noResultElement.hide();
+            loader.show();
+            data = {
+                query: inputElement.val()
+            }
+            $.ajax({
+                url: searchLocationsUrl,
+                data: data,
+                success: function( data ) {
+                    if(data.error == null && typeof data.error != "undefined") {
+                        locations = data.locations;
+                        if(locations) {
+                            for (var i=0;i<locations.length;i++) {
+                                listContainer.append('<li class="add-alert-location" style="cursor: pointer;">' + locations[i].state + '</li>')
+                            }
+                            listContainer.show();
+                        }
+                        else {
+                            noResultElement.show();
+                        }
+                    }
+                    else {
+                        noResultElement.show();
+                    }
+                    loader.hide();
+                    listContainerParent.show();
+                }
+            })
+        },
+        minLength: 4,
+        delay: 2000,
+        autoFocus: true,
+        search: function( event, ui ) { },
+        change: function( event, ui ) { }
     });
 }
 

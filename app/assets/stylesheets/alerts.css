@@ -180,9 +180,36 @@ ul.blue-radio-box  li{
 .darkgray{ background:#dcdcdc; font:16px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:5px 10px; float:left;}
 .lightgray_txtdark{ background:#f3f3f3; font:16px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:3px 10px; float:left;}
 
-.listboxs{ border:1px solid #cbcbcb; padding:5px; background:#fff; width:240px; float:left; box-shadow:0px 0px 2px 0px #ccc; position:absolute; top:64px;}
+.listboxs{ border:1px solid #cbcbcb; padding:5px; background:#fff; width:240px; float:left; box-shadow:0px 0px 2px 0px #ccc; position:absolute; top: 64px;z-index: 9; top: 35px; left: 5px;}
 .listboxs ul{ margin:0px; padding:0px; list-style:none;}
 .listboxs ul li{ font:14px Arial, Helvetica, sans-serif; color:#606060; border-bottom:1px solid #e4e4e4; padding:10px;}
 .listboxs ul li:last-child{ border-bottom:none;}
 
 .inputbox_2{ width:100px; padding:2px; font:16px Arial, Helvetica, sans-serif; color:#212121; border:none; background:none;}
+
+.list-container {
+    height: 180px;
+    overflow: auto;
+}
+
+.person-autocomplete-box{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D8D8D8;
+    float: left;
+    font-size: 14px;
+    min-height: 140px;
+    padding: 1%;
+    position: absolute;
+    right: 0;
+    top: 41px;
+    left: 0;
+    width: 97.5%;
+    overflow: auto;
+}
+.person-autocomplete-box .photo{
+    width:18px;
+    height:18px;
+    border:1px solid #D8D8D8;
+}
+.person-autocomplete-box td{ vertical-align: middle; }
+.person-autocomplete-box tr:hover { background:#ffebe0; cursor:default; }

@@ -1,6 +1,8 @@
 <%
    alert_id, alert_type, alert_name, filters = nil
-   size_filters,industry_filters,location_filters = []
+   size_filters = []
+   industry_filters = []
+   location_filters = []
    company_size_range = [
            '11-50','1-10','Any',
            '501-1000','201-500','51-200',
@@ -95,6 +97,14 @@
           <input type="text" class="inputbox outline-none" name="person-name" value="<%= alert_name %>">
       <% else %>
           <input type="text" class="inputbox outline-none" name="person-name" value="">
+          <div class="person-autocomplete-box display-none" style="z-index: 99;top: 24px;">
+            <div class="search-connection-loader"></div>
+            <div class="search-connection-no-result">No connection found</div>
+            <table width="100%" align="center" cellpadding="6" cellspacing="0">
+              <tbody>
+              </tbody>
+            </table>
+          </div>
       <% end %>
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
     </div>
@@ -135,17 +145,24 @@
     <% unless filters.nil? and industry_filters.blank? %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <% industry_filters.each_with_index do |industry,i| %>
-              <span class="darkgray mrg-L5 mrg-T5"><%= industry %> <a href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
+              <span class="darkgray mrg-L5 mrg-T5"><%= industry %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
           <% end %>
-          <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-            <input type="text" class="inputbox_2 outline-none" placeholder="Industry">
-          </span>
+          <div class="pos-Rel float-L">
+            <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="Industry">
+            </span>
+            <div class="listboxs display-none" style="height: 180px;">
+              <div class="search-connection-loader"></div>
+              <div class="search-connection-no-result display-none" style="height: 120px;">No industry found</div>
+              <ul class="list-container display-none"></ul>
+            </div>
+          </div>
           <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
         </div>
     <% else %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
-            <span class="lightgray_txtdark  mrg-L5 mrg-T5" style="position:relative;">
-              <input type="text" class="inputbox_2 outline-none" placeholder="All industries">
+            <span class="lightgray_txtdark  mrg-L5 mrg-T5 float-L" style="position:relative;">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="All industries">
             </span>
           <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
         </div>
@@ -158,19 +175,16 @@
     <% unless filters.nil? and location_filters.blank? %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <% location_filters.each_with_index do |location,i| %>
-              <span class="darkgray mrg-L5 mrg-T5"><%= location %> <a href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
+              <span class="darkgray mrg-L5 mrg-T5"><%= location %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
           <% end %>
-          <div style="position:relative;">
-                <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-                  <input type="text" class="inputbox_2 outline-none" placeholder="Location">
-                </span>
-            <div class="listboxs display-none">
-              <ul>
-                <li>Redmond</li>
-                <li>Redding</li>
-                <li>Red Rover</li>
-                <li>Red Herring</li>
-              </ul>
+          <div class="pos-Rel float-L">
+            <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Location">
+            </span>
+            <div class="listboxs display-none" style="height: 180px;">
+              <div class="search-connection-loader"></div>
+              <div class="search-connection-no-result display-none" style="height: 120px;">No location found</div>
+              <ul class="list-container display-none"></ul>
             </div>
           </div>
           <a href="#" class="float-R edit_icn" ><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
@@ -179,7 +193,7 @@
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <div style="position:relative;">
                 <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-                  <input type="text" class="inputbox_2 outline-none" placeholder="All locations">
+                  <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="All locations">
                 </span>
             <div class="listboxs display-none">
               <ul>
@@ -227,9 +241,9 @@
 <!--<th valign="middle">Location</th>-->
 <!--<td valign="middle">-->
 <!--<div class="input_block mrg-T10 mrg-B10">-->
-<!--<span class="darkgray">Seattle <a href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
-<!--<span class="darkgray mrg-L5">South America <a href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
-<!--<span class="darkgray mrg-L5">Chicago <a href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
+<!--<span class="darkgray">Seattle <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
+<!--<span class="darkgray mrg-L5">South America <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
+<!--<span class="darkgray mrg-L5">Chicago <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
 <!--<div style="position:relative;">-->
 <!--<span class="lightgray_txtdark mrg-T5" style="position:relative;">-->
 <!--<input type="text" class="inputbox_2 outline-none" placeholder="Redmo">-->
@@ -250,3 +264,9 @@
 <div class="mrg-T20 mrg-L10"><input type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30" value="Save changes"></div>
 </form>
 </div> <!-- End Contoso Page -->
+
+<script type="text/javascript">
+    getPeopleList();
+    getIndustryList();
+    getLocationList();
+</script>

@@ -16,6 +16,8 @@
       var getPersonsForQueryUrl = '<%= get_people_for_query_path %>'
       var searchGroupForQueryUrl = '<%= search_group_path %>'
       var searchMemberInGroupUrl = '<%= search_member_in_group_path %>'
+      var searchIndustriesUrl = '<%= alert_industries_path %>'
+      var searchLocationsUrl = '<%= alert_locations_path %>'
       <% unless current_user.nil? %>
       var userProfilePath = '<%= "#{user_path(current_user_id)}#user-tags-focus" %>'
       <% end %>

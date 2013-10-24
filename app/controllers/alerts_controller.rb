@@ -131,4 +131,28 @@ class AlertsController < ApplicationController
     render :json => api_response.to_json
   end
 
+  def industries
+    industries =  { "error" => true }
+    unless params[:query].blank?
+      api_endpoint = "#{Settings.api_endpoints.GetIndustryList}/#{current_user_id}/#{params[:query]}"
+      response = Typhoeus.get(api_endpoint)
+      if response.success? && !api_contains_error("GetIndustryList", response)
+        industries = JSON.parse(response.response_body)["GetIndustryListResult"]
+      end
+    end
+    render :json => industries.to_json and return
+  end
+
+  def locations
+    locations= { "error" => true }
+    unless params[:query].blank?
+      api_endpoint = "#{Settings.api_endpoints.GetLocationList}/#{current_user_id}/#{params[:query]}"
+      response = Typhoeus.get(api_endpoint)
+      if response.success? && !api_contains_error("GetLocationList", response)
+        locations = JSON.parse(response.response_body)["GetLocationListResult"]
+      end
+    end
+    render :json => locations.to_json and return
+  end
+
 end
