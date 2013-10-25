@@ -835,6 +835,7 @@ $(function() {
             $('.listboxs').hide();
         }
         else if(inputElement.val().length > 3) {
+            $('ul.list-container').html("");
             $('.search-connection-no-result').hide();
             $('.search-connection-loader').show();
             inputElement.parent('span').next('div.listboxs').show();
@@ -848,6 +849,7 @@ $(function() {
             $('.listboxs').hide();
         }
         else if(inputElement.val().length > 3) {
+            $('ul.list-container').html("");
             $('.search-connection-no-result').hide();
             $('.search-connection-loader').show();
             inputElement.parent('span').next('div.listboxs').show();
@@ -1350,6 +1352,65 @@ $(function() {
         return false;
     });
 
+    $(document).on('click','a.delete-alert-recipient',function() {
+        url = $(this).attr("href");
+        elementToRemove = $(this).parents('li');
+        $.ajax({
+            type : 'POST',
+            url : url,
+            data : {},
+            success : function(data) {
+                elementToRemove.remove();
+            }
+        });
+        return false;
+    });
+
+    $(document).on('click','a.delete-alert-recipient2',function() {
+        if($('input[name=recipient-email]').length > 1)
+            $(this).parents('li').remove();
+        return false;
+    });
+
+    $(document).on('click','a.add-alert-recipient',function() {
+        if($('input[name=recipient-email]').last().val().match(/\S/))
+            $('div.alert_recipients ul').append('<li><input type="text" name="recipient-email" placeholder="abc@xyz.com" class="enable_text"><span><a class="delete-alert-recipient2" href="#"><img src="assets/delete_icon.png" width="20" height="19" alt="delete"></a></span></li>');
+        return false;
+    });
+
+    $(document).on('submit','form#alert-recipient-form',function() {
+        submitForm = true;
+        $.each($(this).find('input[name=recipient-email]'),function(index, value) {
+            if($(value).val().match(/\S/) && !($(value).val().match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/))) {
+                $('span.add-recipient-error').show();
+                submitForm = false;
+                return false;
+            }
+        });
+        if(submitForm) {
+            $('span.add-recipient-error').hide();
+            recipientArray = [];
+            $.each($('div.alert_recipients ul li label'),function(index, value) {
+                if($(value).text().match(/\S/))
+                    recipientArray.push($(value).text());
+            });
+            $.each($(this).find('input[name=recipient-email]'),function(index, value) {
+                if($(value).val().match(/\S/))
+                    recipientArray.push($(value).val());
+            });
+            if(recipientArray.length > 0)
+                $.ajax({
+                    type : 'POST',
+                    url : $(this).attr('action'),
+                    data : {recipientEmails:recipientArray},
+                    success : function(data) {
+                    if(data == "SUCCESS") { }
+                    }
+                });
+        }
+        return false;
+    });
+
     $('input.name-select').click(function(){
         initializeRecipientAutoComplete(this);
     });
@@ -1390,48 +1451,111 @@ $(function() {
     $(document).on('click','.filter-tooltip-link',function(){
         $('div.arrow_box').not($(this).prevAll('div.arrow_box')).fadeOut();
         $(this).prevAll('div.arrow_box').fadeToggle();
+        return false;
     });
 
-    $(document).on('click','.remove-darkgray',function(){
+    $(document).on('click','.remove-darkgray',function(e){
         $(this).parent('span.darkgray').remove();
         return false;
     });
 
+    $(document).on('click','div.person-autocomplete-box table tbody tr',function() {
+        $('input[name=person-name]').val($(this).find('td span').first().html());
+        $(this).parents('div').first().hide();
+        return false;
+    });
+
     $(document).on('click','.add-alert-industry',function(){
-        $(this).parents('div.pos-Rel').before('<span class="darkgray mrg-L5 mrg-T5">' +
+        $(this).parents('div.pos-Rel').before('<span class="industry darkgray mrg-L5 mrg-T5">' +
             $(this).html() + ' <a class="remove-darkgray" href="#">' +
             '<img src="/assets/close.png" width="10" height="9" alt="close">' +
             '</a></span>');
-        var inputElement = $('input[name="industries"]');
-        var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
-        var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
-        var listContainerParent = inputElement.parent('span').next('div.listboxs');
-        var loader = $('div.search-connection-loader');
-        inputElement.val("");
-        listContainer.html("");
-        listContainer.hide();
-        noResultElement.hide();
-        loader.show();
-        listContainerParent.hide();
+        resetAutocomplete($('input[name="industries"]'));
         return false;
     });
 
     $(document).on('click','.add-alert-location',function(){
-        $(this).parents('div.pos-Rel').before('<span class="darkgray mrg-L5 mrg-T5">' +
+        $(this).parents('div.pos-Rel').before('<span class="location darkgray mrg-L5 mrg-T5">' +
             $(this).html() + ' <a class="remove-darkgray" href="#">' +
             '<img src="/assets/close.png" width="10" height="9" alt="close">' +
             '</a></span>');
-        var inputElement = $('input[name="locations"]');
-        var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
-        var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
-        var listContainerParent = inputElement.parent('span').next('div.listboxs');
-        var loader = $('div.search-connection-loader');
-        inputElement.val("");
-        listContainer.html("");
-        listContainer.hide();
-        noResultElement.hide();
-        loader.show();
-        listContainerParent.hide();
+        resetAutocomplete($('input[name="locations"]'));
+        return false;
+    });
+
+    $(document).on('submit','form.save-alert-changes',function() {
+        // Get first level filter details
+        filterType = $('input[name=filter-type]:checked').val();
+        targetName = $('input[name$=-name]:visible').val();
+        targetAccountId = $('input[name=alertId]').val();
+        companySizeFilter = [];
+        industryFilter = [];
+        locationFilter = [];
+        secondLevelFilterDetails = [];
+
+        // Get second level filter details
+        $.each($('input[name=size-filter]:checked'), function( index, value ) {
+            companySizeFilter.push({
+                filterText : $(value).val()
+            })
+        });
+
+        $.each($('span.industry'), function( index, value ) {
+            industryFilter.push({
+                filterText : $.trim($(value).text())
+            })
+        });
+
+        $.each($('span.location'), function( index, value ) {
+            locationFilter.push({
+                filterText : $.trim($(value).text())
+            })
+        });
+
+        //Fill second level filter details in JSON
+        if(companySizeFilter.length > 0) {
+            secondLevelFilterDetails.push(
+                {
+                    subFilterType : "SIZE",
+                    filterTextDetails : companySizeFilter
+                }
+            );
+        }
+
+        if(industryFilter.length > 0) {
+            secondLevelFilterDetails.push(
+                {
+                    subFilterType : "INDUSTRY",
+                    filterTextDetails : industryFilter
+                }
+            );
+        }
+
+        if(locationFilter.length > 0) {
+            secondLevelFilterDetails.push(
+                {
+                    subFilterType : "LOCATION",
+                    filterTextDetails : locationFilter
+                }
+            );
+        }
+
+        targetAccountJson = [
+            {
+                filterType : filterType,
+                targetName : targetName,
+                targetAccountId : targetAccountId,
+                secondLevelFilterDetails : secondLevelFilterDetails
+            }
+        ]
+        $.ajax({
+            type : 'POST',
+            url : $(this).attr('action'),
+            data : {targetAccount : JSON.stringify(targetAccountJson)},
+            success : function(data) {
+                window.location.href = alertsPagePath;
+            }
+        });
         return false;
     });
 
@@ -1710,11 +1834,10 @@ function getPeopleList() {
     console.log("Initializing person autocomplete");
     $('input[name="person-name"]').autocomplete({
         source: function( request, response ) {
-            query = $('input[name="person-name"]').val();
             $.ajax({
                 url: getPersonsForQueryUrl,
                 data: {
-                    query: query
+                    query: request.term
                 },
                 success: function( data ) {
                     if(data.error == null && typeof data.error != "undefined" && data.person != null) {
@@ -1756,7 +1879,7 @@ function getPeopleList() {
                 }
             })
         },
-        minLength: 2,
+        minLength: 4,
         delay: 2000,
         autoFocus: true,
         search: function( event, ui ) {},
@@ -1768,7 +1891,6 @@ function getIndustryList() {
     console.log("Initializing industry autocomplete");
     $('input[name="industries"]').autocomplete({
         source: function( request, response ) {
-            var data = null;
             var inputElement = $('input[name="industries"]');
             var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
             var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
@@ -1778,12 +1900,11 @@ function getIndustryList() {
             listContainer.hide();
             noResultElement.hide();
             loader.show();
-            data = {
-                query: inputElement.val()
-            }
             $.ajax({
                 url: searchIndustriesUrl,
-                data: data,
+                data: {
+                    query: request.term
+                },
                 success: function( data ) {
                     if(data.error == null && typeof data.error != "undefined") {
                         industries = data.industry;
@@ -1817,7 +1938,6 @@ function getLocationList() {
     console.log("Initializing location autocomplete");
     $('input[name="locations"]').autocomplete({
         source: function( request, response ) {
-            var url,data = null;
             var inputElement = $('input[name="locations"]');
             var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
             var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
@@ -1827,12 +1947,11 @@ function getLocationList() {
             listContainer.hide();
             noResultElement.hide();
             loader.show();
-            data = {
-                query: inputElement.val()
-            }
             $.ajax({
                 url: searchLocationsUrl,
-                data: data,
+                data: {
+                    query: request.term
+                },
                 success: function( data ) {
                     if(data.error == null && typeof data.error != "undefined") {
                         locations = data.locations;
@@ -2001,6 +2120,19 @@ function initializeRecipientAutoComplete(refObject) {
         $(refObject).parents('.ofunnel-alerts').find('input.person').hide();
         $(refObject).parents('.ofunnel-alerts').find('a.person-downarrow:visible').hide();
     }
+}
+
+function resetAutocomplete(inputElement) {
+    var noResultElement = inputElement.parent('span').next('div.listboxs').find('div.search-connection-no-result').show();
+    var listContainer = inputElement.parent('span').next('div.listboxs').find('ul');
+    var listContainerParent = inputElement.parent('span').next('div.listboxs');
+    var loader = $('div.search-connection-loader');
+    inputElement.val("");
+    listContainer.html("");
+    listContainer.hide();
+    noResultElement.hide();
+    loader.show();
+    listContainerParent.hide();
 }
 
 jQuery.fn.exists = function(){

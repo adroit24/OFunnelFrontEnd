@@ -70,8 +70,9 @@ OFunnel::Application.routes.draw do
   #match 'alerts/new' => "alerts#new", :as => :alerts
   #match 'alerts/edit/:id' => "alerts#edit", :as => :alerts
   match 'alerts/:id/delete' => "alerts#delete", :as => :alert_delete
-  match 'alerts/industries' => "alerts#industries", :as => :alert_industries
-  match 'alerts/locations' => "alerts#locations", :as => :alert_locations
+  match 'industries' => "alerts#industries", :as => :alert_industries
+  match 'locations' => "alerts#locations", :as => :alert_locations
+  match 'save_alert_changes' => "alerts#save_alert_changes", :as => :save_alert_changes
 
   match '/logout' => "users#logout", :as => :logout
   match '/connections_strength/:user_name' => "users#connections_strength", :as => :connections_strength

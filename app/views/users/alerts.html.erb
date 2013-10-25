@@ -19,17 +19,47 @@
             <img src="/assets/linkedin_32.png" class="enabled" />
           </a>
           <!--<a href="<%#= authorize_with_google_path %>">-->
-            <!--<img src="/assets/gmail.png" class="<%#= check_google_session ? "enabled" : "disabled" %>" />-->
+          <!--<img src="/assets/gmail.png" class="<%#= check_google_session ? "enabled" : "disabled" %>" />-->
           <!--</a>-->
           <!--<a href="<%#= authorize_with_facebook_path %>">-->
-            <!--<img src="/assets/facebook_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
+          <!--<img src="/assets/facebook_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
           <!--</a>-->
           <!--<a href="<%#= '#' %>">-->
-            <!--<img src="/assets/twitter_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
+          <!--<img src="/assets/twitter_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
           <!--</a>-->
         </div>
       </div>
     </div>
+
+    <div class="profile-details-box mrg-B30 border-B pad-B30">
+      <form action="<%= add_recipients_path %>" id="alert-recipient-form" method="post">
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+        <div class="alert_recipients">
+          <h2>Alert Recipients<span class="add-recipient-error display-none col-red font-18">&nbsp;*</span></h2>
+          <p>If you want to add more recipients to alerts, add them here.</p>
+          <ul>
+            <% unless @emails.blank? %>
+                <% @emails.each do |email| %>
+                    <li>
+                      <label class="disable_text"><%= email["email"] %></label>
+                      <span><a class="delete-alert-recipient"  href="<%= remove_recipient_path({:id => email["recipientId"]}) %>"><img src="assets/delete_icon.png" width="20" height="19" alt="delete"></a></span>
+                    </li>
+                <% end %>
+            <% end %>
+            <li>
+              <input type="text" name="recipient-email" placeholder="abc@xyz.com" class="enable_text">
+              <span><a class="delete-alert-recipient2" href="#"><img src="assets/delete_icon.png" width="20" height="19" alt="delete"></a></span>
+            </li>
+          </ul>
+          <div class="div_holder pad-L15 pad-B10"><a href="#" class="addmores add-alert-recipient">(Add more)</a></div>
+          <div class="all-box-3 pad-L15 pad-B10">
+            <span class="add-recipient-confirmation display-none col-red font-11">Recipients have been added.</span>
+          </div>
+          <div class="div_holder pad-L10 pad-B10"><input type="submit" name="" value="Save changes" class="save_change_btn"></div>
+        </div>
+      </form>
+    </div>
+
     <div class="all-box">
       <span class=" float-L font-22 bold">Alert history</span>
 
@@ -65,15 +95,15 @@
             <%= render :partial => "position_alerts" %>
             <%= render :partial => "role_alerts" %>
         <% else %>
-        <tr>
-          <td colspan="2">
-            <p class="font-14">
-              <i>No history found.</i>
-            </p>
-          </td>
-          <td class="display-none"></td>
-          <!--<td class="display-none"></td>-->
-        </tr>
+            <tr>
+              <td colspan="2">
+                <p class="font-14">
+                  <i>No history found.</i>
+                </p>
+              </td>
+              <td class="display-none"></td>
+              <!--<td class="display-none"></td>-->
+            </tr>
         <% end %>
         </tbody>
         <tfoot>

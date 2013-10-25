@@ -80,19 +80,27 @@ class UsersController < ApplicationController
     alert_count = 5
     get_user_profile_api_endpoint = "#{Settings.api_endpoints.GetUserProfileFromUserId}/#{current_user_id}"
     get_network_alert_api_endpoint = "#{Settings.api_endpoints.GetNetworkAlertsForUserId}/#{current_user_id}/#{alert_count}"
+    get_alerts_recipient_api_endpoint = "#{Settings.api_endpoints.GetRecipientsEmailForNetworkAlerts}/#{current_user_id}"
     get_user_profile_api_response = nil
     get_network_alert_api_response = nil
+    get_alerts_recipient_response = nil
 
     hydra = Typhoeus::Hydra.hydra
     get_user_profile_api_request = Typhoeus::Request.new(get_user_profile_api_endpoint)
     get_network_alert_api_request = Typhoeus::Request.new(get_network_alert_api_endpoint)
+    get_alerts_recipient_request = Typhoeus::Request.new(get_alerts_recipient_api_endpoint)
+
     hydra.queue get_user_profile_api_request
     hydra.queue get_network_alert_api_request
+    hydra.queue get_alerts_recipient_request
     get_user_profile_api_request.on_complete do |response|
       get_user_profile_api_response = response
     end
     get_network_alert_api_request.on_complete do |response|
       get_network_alert_api_response = response
+    end
+    get_alerts_recipient_request.on_complete do |response|
+      get_alerts_recipient_response = response
     end
     hydra.run
 
@@ -125,6 +133,13 @@ class UsersController < ApplicationController
         end
       end
     end
+
+    @emails = nil
+    if get_alerts_recipient_response.success? && !api_contains_error("GetRecipientsEmailForNetworkAlerts", get_alerts_recipient_response)
+      api_response = JSON.parse(get_alerts_recipient_response.response_body)["GetRecipientsEmailForNetworkAlertsResult"]
+      @emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
+    end
+
     if mobile_device
       render "responsive_alerts", :layout => "responsive_relationships"
     elsif params[:view] == "hootsuite"

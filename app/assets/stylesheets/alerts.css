@@ -76,7 +76,7 @@
 .alert_recipients ul li{ float:left; width:100%; border-top:1px solid #c4c4c4; padding:10px;}
 .alert_recipients ul li span{ float:right; margin-top:3px;}
 .disable_text{ font:15px Arial, Helvetica, sans-serif; color:#212121 !important; border:none !important; width:90%; padding:5px; background:none; cursor:text;}
-.enable_text{ font:14px Arial, Helvetica, sans-serif; color:#aeaeae !important; border:1px solid #bbbbbb; !important; width:90%; padding:5px; background:#fff;}
+.enable_text{ font:14px Arial, Helvetica, sans-serif; border:1px solid #bbbbbb; !important; width:90%; padding:5px; background:#fff;}
 .save_change_btn{ background: none repeat scroll 0 0 #FF5D00;
     border: 1px solid #D8D8D8;
     color: #FFFFFF;

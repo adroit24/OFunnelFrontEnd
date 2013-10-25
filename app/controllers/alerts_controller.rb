@@ -155,4 +155,30 @@ class AlertsController < ApplicationController
     render :json => locations.to_json and return
   end
 
+  def save_alert_changes
+    status = {"ERROR" => true}
+    unless params["targetAccount"].blank?
+      persist_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
+      response = Typhoeus.post(
+          persist_network_alert_api_endpoint,
+          body: {
+              userId: current_user_id,
+              alertJson: {
+                  "targetAccount" => JSON.parse(params["targetAccount"])
+              }.to_json
+          })
+
+      if response.success? && !api_contains_error("PersistNetworkAlerts", response)
+        api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
+        if api_response["isNetworkAlertPersisted"].eql? true
+          flash[:notice] = "Changes saved"
+        else
+          flash[:notice] = "Error occurred, please try again"
+        end
+        status = {"ERROR" => false}
+      end
+    end
+    render :json => status.to_json and return
+  end
+
 end

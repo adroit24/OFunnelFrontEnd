@@ -20,17 +20,17 @@
          case filter_type
            when "SIZE"
              size_filters = filter_texts
-           when "LOCATION"
-             location_filters = filter_texts
            when "INDUSTRY"
              industry_filters = filter_texts
+           when "LOCATION"
+             location_filters = filter_texts
          end
        end
      end
    end
 %>
 <div class="alert_edit_sec">
-<form action="#" class=" " style="background:none;">
+<form action="<%= save_alert_changes_path %>" class="save-alert-changes" style="background:none;">
 <input type="hidden" name="alertId" value="<%= alert_id %>">
 <table width="100%" border="0" cellspacing="0" cellpadding="14">
 <tr>
@@ -97,7 +97,7 @@
           <input type="text" class="inputbox outline-none" name="person-name" value="<%= alert_name %>">
       <% else %>
           <input type="text" class="inputbox outline-none" name="person-name" value="">
-          <div class="person-autocomplete-box display-none" style="z-index: 99;top: 24px;">
+          <div class="person-autocomplete-box display-none" style="height: 180px;z-index: 99;top: 24px;">
             <div class="search-connection-loader"></div>
             <div class="search-connection-no-result">No connection found</div>
             <table width="100%" align="center" cellpadding="6" cellspacing="0">
@@ -110,7 +110,6 @@
     </div>
   </td>
 </tr>
-<!--<%# unless filters.nil? %>-->
 <tr>
   <th valign="middle">Company size</th>
   <td valign="middle">
@@ -119,7 +118,7 @@
           <% company_size_range.each_with_index do |range,i| %>
               <li class="width_116 float-R mrg-T5 col-black-2">
                 <div class="checkboxFour">
-                  <input type="checkbox" value="" id="checkboxFourInput<%= i %>" <%= 'checked=true' if size_filters.include? range %> name="tag-filter" />
+                  <input type="checkbox" value="<%= range %>" id="checkboxFourInput<%= i %>" <%= 'checked=true' if size_filters.include? range %> name="size-filter" />
                   <label for="checkboxFourInput<%= i %>"></label>
                 </div>
                 <div class="mrg-L25"><%= range %></div>
@@ -129,7 +128,7 @@
           <% company_size_range.each_with_index do |range,i| %>
               <li class="width_116 float-R mrg-T5 col-black-2">
                 <div class="checkboxFour">
-                  <input type="checkbox" value="" id="checkboxFourInput<%= i %>" <%= 'checked=true' if range.eql? "Any" %> name="tag-filter" />
+                  <input type="checkbox" value="<%= range %>" id="checkboxFourInput<%= i %>" <%= 'checked=true' if range.eql? "Any" %> name="size-filter" />
                   <label for="checkboxFourInput<%= i %>"></label>
                 </div>
                 <div class="mrg-L25"><%= range %></div>
@@ -145,7 +144,7 @@
     <% unless filters.nil? and industry_filters.blank? %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <% industry_filters.each_with_index do |industry,i| %>
-              <span class="darkgray mrg-L5 mrg-T5"><%= industry %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
+              <span class="industry darkgray mrg-L5 mrg-T5"><%= industry %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
@@ -161,9 +160,16 @@
         </div>
     <% else %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
-            <span class="lightgray_txtdark  mrg-L5 mrg-T5 float-L" style="position:relative;">
-              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="All industries">
+          <div class="pos-Rel float-L">
+            <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="Industry">
             </span>
+            <div class="listboxs display-none" style="height: 180px;">
+              <div class="search-connection-loader"></div>
+              <div class="search-connection-no-result display-none" style="height: 120px;">No industry found</div>
+              <ul class="list-container display-none"></ul>
+            </div>
+          </div>
           <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
         </div>
     <% end %>
@@ -175,7 +181,7 @@
     <% unless filters.nil? and location_filters.blank? %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <% location_filters.each_with_index do |location,i| %>
-              <span class="darkgray mrg-L5 mrg-T5"><%= location %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
+              <span class="location darkgray mrg-L5 mrg-T5"><%= location %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
@@ -191,17 +197,14 @@
         </div>
     <% else %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
-          <div style="position:relative;">
-                <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-                  <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="All locations">
-                </span>
-            <div class="listboxs display-none">
-              <ul>
-                <li>Redmond</li>
-                <li>Redding</li>
-                <li>Red Rover</li>
-                <li>Red Herring</li>
-              </ul>
+          <div class="pos-Rel float-L">
+            <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Location">
+            </span>
+            <div class="listboxs display-none" style="height: 180px;">
+              <div class="search-connection-loader"></div>
+              <div class="search-connection-no-result display-none" style="height: 120px;">No location found</div>
+              <ul class="list-container display-none"></ul>
             </div>
           </div>
           <a href="#" class="float-R edit_icn" ><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
@@ -209,59 +212,8 @@
     <% end %>
   </td>
 </tr>
-<!--<%# else %>-->
-<!--<tr>-->
-<!--<th valign="middle">Company size</th>-->
-<!--<td valign="middle">-->
-<!--<ul class="blue-radio-box mrg-T10 mrg-B10">-->
-<!--<%# company_size_range.each_with_index do |range,i| %>-->
-<!--<li class="width_116 float-R mrg-T5 col-black-2">-->
-<!--<div class="checkboxFour">-->
-<!--<input type="checkbox" value="" id="checkboxFourInput<%#= i %>" name="tag-filter" />-->
-<!--<label for="checkboxFourInput<%#= i %>"></label>-->
-<!--</div>-->
-<!--<div class="mrg-L25"><%#= range %></div>-->
-<!--</li>-->
-<!--<%# end %>-->
-<!--</ul>-->
-<!--</td>-->
-<!--</tr>-->
-<!--<tr>-->
-<!--<th valign="middle">Industry</th>-->
-<!--<td valign="middle">-->
-<!--<div class="input_block mrg-T10 mrg-B10">-->
-<!--<span class="lightgray_txtdark" style="position:relative;">-->
-<!--<input type="text" class="inputbox_2 outline-none" placeholder="All industries">-->
-<!--</span>-->
-<!--<a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>-->
-<!--</div>-->
-<!--</td>-->
-<!--</tr>-->
-<!--<tr>-->
-<!--<th valign="middle">Location</th>-->
-<!--<td valign="middle">-->
-<!--<div class="input_block mrg-T10 mrg-B10">-->
-<!--<span class="darkgray">Seattle <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
-<!--<span class="darkgray mrg-L5">South America <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
-<!--<span class="darkgray mrg-L5">Chicago <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>-->
-<!--<div style="position:relative;">-->
-<!--<span class="lightgray_txtdark mrg-T5" style="position:relative;">-->
-<!--<input type="text" class="inputbox_2 outline-none" placeholder="Redmo">-->
-<!--</span>-->
-<!--<div class="listboxs display-none">-->
-<!--<ul>-->
-<!--<li>Redmond</li>-->
-<!--<li>Redding</li>-->
-<!--<li>Red Rover</li>-->
-<!--<li>Red Herring</li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
-<!--<a href="#" class="float-R edit_icn" ><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a></div></td>-->
-<!--</tr>-->
-<!--<%# end %>-->
 </table>
-<div class="mrg-T20 mrg-L10"><input type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30" value="Save changes"></div>
+<div class="mrg-T20 mrg-L10"><input id="save-alert-form" type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30" value="Save changes"></div>
 </form>
 </div> <!-- End Contoso Page -->
 

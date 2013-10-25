@@ -5,6 +5,12 @@
     </div>
   </div>
   <div class="contoso-page">
+    <% if flash[:notice] %>
+        <div class="alert-notice col-red font-18"><%= flash[:notice] %></div>
+        <script type="text/javascript">
+            $('div.alert-notice').delay(3000).fadeOut();
+        </script>
+    <% end %>
     <div class="alert-gray_new" style="background:none;">
       <div class="alerts_details">
         <table width="100%" border="0" cellspacing="0" cellpadding="10">
