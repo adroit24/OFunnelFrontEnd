@@ -1,4 +1,7 @@
 class AlertsController < ApplicationController
+  require 'mime/types' #mime-types gem
+  require 'roo'
+
   layout "relationships"
   before_filter :check_current_user
 
@@ -9,6 +12,7 @@ class AlertsController < ApplicationController
     @count = 25
     #end
     @offset = params[:offset].nil? ? 0 : params[:offset].to_i
+    @total_pages = 0
     get_company_network_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlerts}/#{current_user_id}/#{@offset}/#{@count}")
     response = Typhoeus.get(get_company_network_alert_api_endpoint)
 
@@ -132,31 +136,66 @@ class AlertsController < ApplicationController
   end
 
   def industries
-    industries =  { "error" => true }
+    error = 500
+    industry_array = nil
+    status = false
     unless params[:query].blank?
-      api_endpoint = "#{Settings.api_endpoints.GetIndustryList}/#{current_user_id}/#{params[:query]}"
-      response = Typhoeus.get(api_endpoint)
-      if response.success? && !api_contains_error("GetIndustryList", response)
-        industries = JSON.parse(response.response_body)["GetIndustryListResult"]
+      begin
+        industry_array = []
+        industry_list = Industry.where("name LIKE ?",  "%#{params[:query]}%")
+        unless industry_list.blank?
+          industry_list.each do |industry_detail|
+            industry_array.push({
+                                    "industryId" => industry_detail.id,
+                                    "industryType" => industry_detail.name
+                                })
+          end
+        end
+        error = nil
+        status = true
+      rescue
       end
+      result = {
+          "error" => error,
+          "industry" => industry_array,
+          "status" => status
+      }
     end
-    render :json => industries.to_json and return
+    render :json => result.to_json and return
   end
 
   def locations
-    locations= { "error" => true }
+    error = 500
+    location_array = nil
+    status = false
     unless params[:query].blank?
-      api_endpoint = "#{Settings.api_endpoints.GetLocationList}/#{current_user_id}/#{params[:query]}"
-      response = Typhoeus.get(api_endpoint)
-      if response.success? && !api_contains_error("GetLocationList", response)
-        locations = JSON.parse(response.response_body)["GetLocationListResult"]
+      begin
+        location_array = []
+        location_list = Location.where("name like ?", "%#{params[:query]}%")
+        unless location_list.blank?
+          location_list.each do |location_detail|
+            location_array.push({
+                                    "state" => location_detail.name,
+                                    "stateId" => location_detail.id
+                                })
+          end
+        end
+        error = nil
+        status = true
+      rescue
       end
+      result = {
+          "error" => error,
+          "locations" => location_array,
+          "status" => status
+      }
     end
-    render :json => locations.to_json and return
+    render :json => result.to_json and return
   end
 
   def save_alert_changes
     status = {"ERROR" => true}
+    flash[:notice] = "Error occurred, please try again."
     unless params["targetAccount"].blank?
       persist_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
       response = Typhoeus.post(
@@ -171,14 +210,211 @@ class AlertsController < ApplicationController
       if response.success? && !api_contains_error("PersistNetworkAlerts", response)
         api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
         if api_response["isNetworkAlertPersisted"].eql? true
-          flash[:notice] = "Changes saved"
-        else
-          flash[:notice] = "Error occurred, please try again"
+          flash[:notice] = "Changes saved."
         end
         status = {"ERROR" => false}
       end
     end
     render :json => status.to_json and return
+  end
+
+  def alerts_import_csv
+    unless params[:csv].blank?
+      if [
+          "text/comma-separated-values",
+          "text/csv",
+          "application/csv",
+          "application/excel",
+          "application/vnd.ms-excel",
+          "application/vnd.msexcel",
+          "text/anytext",
+          "application/vnd.ms-excel [official]",
+          "application/msexcel",
+          "application/x-msexcel",
+          "application/x-ms-excel",
+          "application/x-excel",
+          "application/x-dos_ms_excel",
+          "application/xls",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ].include?(params[:csv].content_type)
+        @company_array = []
+        keywords_array = [
+            "Company",
+            "Companies",
+            "Account",
+            "Accounts",
+            "Account Name",
+            "Target Account",
+            "Target Accounts"
+        ].map(&:downcase)
+        offset = 2
+        limit = 500
+        parsed_companies = 0
+        spreadsheet = open_spreadsheet(params[:csv])
+        unless spreadsheet.nil?
+          total_companies = spreadsheet.to_a.length - 2
+          header = spreadsheet.row(1)
+          while (total_companies > parsed_companies) do
+            (offset...(offset + limit)).each do |i|
+              row = Hash[[header, spreadsheet.row(i)].transpose]
+              row_arr = row.keys.reject { |key| key.blank? }
+              original_keys = row_arr
+              unless original_keys.nil?
+                keys = row_arr.map(&:downcase)
+                key = keys & keywords_array
+                index = keys.index(key[0])
+                unless index.nil?
+                  original_key = original_keys[index]
+                  company = row[original_key]
+                  if company =~ /\S/
+                    @company_array << company
+                  end
+                end
+              end
+              parsed_companies += 1
+            end
+            if @company_array.blank?
+              render :text => "NO_COMPANY" and return
+            else
+              alert_json = {
+                  :alert => []
+              }
+
+              alert_array = []
+              @company_array.each do |target|
+                alert_array.push(
+                    {
+                        :type => "COMPANY",
+                        :name => target,
+                        :alertId => nil
+                    }
+                )
+              end
+              alert_json[:alert] = alert_array
+
+              persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
+              response = Typhoeus.post(
+                  persist_company_network_alert_api_endpoint,
+                  body: {
+                      userId: current_user_id,
+                      alertJson: alert_json.to_json
+                  })
+            end
+
+            if response.success? && !api_contains_error("PersistNetworkAlerts", response)
+              api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
+              if api_response["isNetworkAlertPersisted"] == true
+                flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
+              end
+            end
+
+            offset += 100
+            @company_array = []
+          end
+          render :text => "RELOAD" and return
+        end
+      else
+        render :text => "INVALID_FORMAT" and return
+      end
+    end
+  end
+
+  def add_recipients
+    unless params[:recipientEmails].blank?
+      recipient_emails = params[:recipientEmails]
+
+      recipient_json = {
+          :recipientEmail => []
+      }
+      recipient_array = []
+      recipient_emails.each do |email|
+        recipient_array.push(
+            {
+                :email => email
+            }
+        )
+      end
+      recipient_json[:recipientEmail] = recipient_array
+
+      api_endpoint = "#{Settings.api_endpoints.SetRecipientEmailForNetworkAlerts}"
+      response = Typhoeus.post(
+          api_endpoint,
+          body: {
+              userId: current_user_id,
+              recipientEmailJson: recipient_json.to_json
+          })
+
+      if response.success? && !api_contains_error("SetRecipientEmailForNetworkAlerts", response)
+        api_response = JSON.parse(response.response_body)["SetRecipientEmailForNetworkAlertsResult"]
+        if api_response["error"] == nil and api_response["isAddedRecipientEmail"] == true
+          @emails = get_recipients
+          respond_to do |format|
+            format.js
+          end
+        else
+          render :text => "ERROR" and return
+        end
+      else
+        render :text => "ERROR" and return
+      end
+    else
+      render :text => "ERROR" and return
+    end
+  end
+
+  def remove_recipient
+    recipient_id = params[:id]
+
+    api_endpoint = "#{Settings.api_endpoints.DeleteRecipientEmail}/#{current_user_id}/#{recipient_id}"
+    response = Typhoeus.get(api_endpoint)
+
+    if response.success? && !api_contains_error("DeleteRecipientEmail", response)
+      api_response = JSON.parse(response.response_body)["DeleteRecipientEmailResult"]
+      if api_response["error"] == nil and api_response["isRecipientEmailDeleted"] == true
+        @emails = get_recipients
+        respond_to do |format|
+          format.js
+        end
+      else
+        render :text => "ERROR" and return
+      end
+    else
+      render :text => "ERROR" and return
+    end
+  end
+
+  protected
+
+  def open_spreadsheet(file)
+    case File.extname(file.original_filename)
+      when ".csv"
+      then Roo::Csv.new(file.path, nil, :ignore)
+      when ".xls"
+      then Roo::Excel.new(file.path, nil, :ignore)
+      when ".xlsx"
+      then Roo::Excelx.new(file.path, nil, :ignore)
+      else
+        return nil
+    end
+  end
+
+  def get_recipients
+    get_alerts_recipient_api_endpoint = "#{Settings.api_endpoints.GetRecipientsEmailForNetworkAlerts}/#{current_user_id}"
+    get_alerts_recipient_response = nil
+    hydra = Typhoeus::Hydra.hydra
+    get_alerts_recipient_request = Typhoeus::Request.new(get_alerts_recipient_api_endpoint)
+    hydra.queue get_alerts_recipient_request
+    get_alerts_recipient_request.on_complete do |response|
+      get_alerts_recipient_response = response
+    end
+    hydra.run
+
+    emails = nil
+    if get_alerts_recipient_response.success? && !api_contains_error("GetRecipientsEmailForNetworkAlerts", get_alerts_recipient_response)
+      api_response = JSON.parse(get_alerts_recipient_response.response_body)["GetRecipientsEmailForNetworkAlertsResult"]
+      emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
+    end
+    return emails
   end
 
 end

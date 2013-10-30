@@ -20,12 +20,8 @@ OFunnel::Application.routes.draw do
   match 'multiple_company_search' => "linkedin#multiple_company_search", :as => :multiple_company_search
   match 'multiple_company_search_results' => "linkedin#multiple_company_search_results", :as => :multiple_company_search_results
   match 'remove_company/:target_account_id' => "linkedin#remove_company", :as => :remove_company
-  match 'discover_relationships' => "linkedin#discover_relationships", :as => :discover_relationships
   match 'add_relationships' => "linkedin#add_relationships", :as => :add_relationships
   match 'remove_relationship' => "linkedin#remove_relationship", :as => :remove_relationship
-  match 'alerts_import_csv' => "linkedin#alerts_import_csv", :as => :alerts_import_csv
-  match 'add_recipients' => "linkedin#add_recipients", :as => :add_recipients
-  match 'remove_recipient' => "linkedin#remove_recipient", :as => :remove_recipient
 
   get "/google/authorize_with_google" => "google#authorize_with_google", :as => :authorize_with_google
   get "/google/google_authorization_callback" => "google#google_authorization_callback"
@@ -73,6 +69,9 @@ OFunnel::Application.routes.draw do
   match 'industries' => "alerts#industries", :as => :alert_industries
   match 'locations' => "alerts#locations", :as => :alert_locations
   match 'save_alert_changes' => "alerts#save_alert_changes", :as => :save_alert_changes
+  match 'alerts_import_csv' => "alerts#alerts_import_csv", :as => :alerts_import_csv
+  match 'add_recipients' => "alerts#add_recipients", :as => :add_recipients
+  match 'remove_recipient' => "alerts#remove_recipient", :as => :remove_recipient
 
   match '/logout' => "users#logout", :as => :logout
   match '/connections_strength/:user_name' => "users#connections_strength", :as => :connections_strength

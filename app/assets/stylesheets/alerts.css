@@ -4,7 +4,7 @@
 /* ofenel alert css start*/
 .userprofile-box .topheadingwrapper{float: left;
     padding: 0px 0px;
-    width: 56%;}
+    width: 600px;}
 .userprofile-box .headings1{
     width:auto;
     float:left;
@@ -46,13 +46,13 @@
     background: none repeat scroll 0 0 #F3F3F3;
     float: left;
     padding: 0px 0px 10px;
-    width: 56%;
+    width: 600px;
 }
 
 
 /* tool tips */
 
-.arrow_box { position: relative; background: #fff; border: 1px solid #c4c4c4; width:300px; box-shadow:0px 2px 2px #aeaeae;left: -142px; position: absolute;bottom: 30px;}
+.arrow_box { position: relative; background: #fff; border: 1px solid #c4c4c4; width:300px; box-shadow:0px 2px 2px #aeaeae;left: -142px; position: absolute;bottom: 25px;}
 .arrow_box:after, .arrow_box:before { top: 100%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; } .arrow_box:after { border-color: rgba(174, 174, 174, 0); border-top-color: #fff; border-width: 12px; left: 50%; margin-left: -12px; }
 .arrow_box:before { border-color: rgba(204, 204, 204, 0); border-top-color: #aeaeae; border-width: 14px; left: 50%; margin-left: -13px; }
 
@@ -177,8 +177,8 @@ ul.blue-radio-box  li{
 .edit_icn{ position:absolute; right:8px;}
 
 .lightgray{ background:#f3f3f3; font:16px Arial, Helvetica, sans-serif;color:#8e8e8e; border-radius:3px; padding:5px 10px;  float:left;}
-.darkgray{ background:#dcdcdc; font:16px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:5px 10px; float:left;}
-.lightgray_txtdark{ background:#f3f3f3; font:16px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:3px 10px; float:left;}
+.darkgray{ background:#dcdcdc; font:14px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:5px 10px; float:left;}
+.lightgray_txtdark{ background:#f3f3f3; font:14px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:2px 10px; float:left;}
 
 .listboxs{ border:1px solid #cbcbcb; padding:5px; background:#fff; width:240px; float:left; box-shadow:0px 0px 2px 0px #ccc; position:absolute; top: 64px;z-index: 9; top: 35px; left: 5px;}
 .listboxs ul{ margin:0px; padding:0px; list-style:none;}
@@ -213,3 +213,12 @@ ul.blue-radio-box  li{
 }
 .person-autocomplete-box td{ vertical-align: middle; }
 .person-autocomplete-box tr:hover { background:#ffebe0; cursor:default; }
+
+.remove-darkgray {
+    margin-left: 8px;
+    margin-right: 5px;
+}
+
+tr[class$="-slf"] {
+   display: none;
+}

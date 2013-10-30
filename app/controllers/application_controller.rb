@@ -179,7 +179,8 @@ class ApplicationController < ActionController::Base
   end
 
   def to_dc(str)
-    return str.downcase.capitalize
+    return str.downcase.capitalize unless str.blank?
+    return ""
   end
 
 end

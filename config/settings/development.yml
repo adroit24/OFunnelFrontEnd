@@ -130,6 +130,8 @@ api_endpoints:
   GetIndustryList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getIndustryList"
   GetLocationList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getLocationList"
   GetNetworkAlertWithTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlertWithTargetAccountId"
+  GetAllIndustryList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllIndustryList"
+  GetAllLocationList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllLocationList"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"

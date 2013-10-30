@@ -272,11 +272,11 @@ class SalesforceController < ApplicationController
       if response.success? && !api_contains_error("ImportSalesForceCompaniesFromLeadOrAccount", response)
         api_response = JSON.parse(response.response_body)["ImportSalesForceCompaniesFromLeadOrAccountResult"]
         if api_response["isCompaniesPersisted"] == true
-          flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
+          flash[:notice] = "Target Accounts have been imported."
         end
       end
 
-      redirect_to discover_relationships_path
+      redirect_to alerts_path
     else
       session[:return_to] = current_url
       session[:sf_import_type] = type

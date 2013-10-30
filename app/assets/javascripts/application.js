@@ -1404,7 +1404,7 @@ $(function() {
                     url : $(this).attr('action'),
                     data : {recipientEmails:recipientArray},
                     success : function(data) {
-                    if(data == "SUCCESS") { }
+                        if(data == "SUCCESS") { }
                     }
                 });
         }
@@ -1445,12 +1445,19 @@ $(function() {
 
     $(document).on('change','input[name=filter-type]',function(){
         $('tr[id$="-filter"]').hide();
+        $('tr[class$="-slf"]').hide();
         $('tr#' + $(this).val() + '-filter').show();
+        $('tr.' + $(this).val() + '-slf').show();
     });
 
-    $(document).on('click','.filter-tooltip-link',function(){
-        $('div.arrow_box').not($(this).prevAll('div.arrow_box')).fadeOut();
-        $(this).prevAll('div.arrow_box').fadeToggle();
+    $(document).on('mouseenter','td.filter-tooltip-container',function(){
+        $('div.arrow_box').not($(this).find('div.arrow_box')).hide();
+        $(this).find('div.arrow_box').show();
+        return false;
+    });
+
+    $(document).on('mouseleave','td.filter-tooltip-container',function(){
+        $(this).find('div.arrow_box').hide();
         return false;
     });
 
@@ -1465,10 +1472,30 @@ $(function() {
         return false;
     });
 
+    $(document).on('blur','input[name=role2]',function(){
+        value = $(this).val();
+        if(value.match(/\S/))
+            $(this).parents('div.pos-Rel').before('<span class="role darkgray mrg-L5 mrg-T5">' +
+                value + '<a class="remove-darkgray" href="#">' +
+                '<img src="/assets/close.png" width="8" height="8" alt="close">' +
+                '</a></span>');
+        $(this).val("");
+    });
+
+    $(document).on('blur','input[name=company2]',function(){
+        value = $(this).val();
+        if(value.match(/\S/))
+            $(this).parents('div.pos-Rel').before('<span class="company darkgray mrg-L5 mrg-T5">' +
+                value + '<a class="remove-darkgray" href="#">' +
+                '<img src="/assets/close.png" width="8" height="8" alt="close">' +
+                '</a></span>');
+        $(this).val("");
+    });
+
     $(document).on('click','.add-alert-industry',function(){
         $(this).parents('div.pos-Rel').before('<span class="industry darkgray mrg-L5 mrg-T5">' +
-            $(this).html() + ' <a class="remove-darkgray" href="#">' +
-            '<img src="/assets/close.png" width="10" height="9" alt="close">' +
+            $(this).html() + '<a class="remove-darkgray" href="#">' +
+            '<img src="/assets/close.png" width="8" height="8" alt="close">' +
             '</a></span>');
         resetAutocomplete($('input[name="industries"]'));
         return false;
@@ -1476,8 +1503,8 @@ $(function() {
 
     $(document).on('click','.add-alert-location',function(){
         $(this).parents('div.pos-Rel').before('<span class="location darkgray mrg-L5 mrg-T5">' +
-            $(this).html() + ' <a class="remove-darkgray" href="#">' +
-            '<img src="/assets/close.png" width="10" height="9" alt="close">' +
+            $(this).html() + '<a class="remove-darkgray" href="#">' +
+            '<img src="/assets/close.png" width="8" height="8" alt="close">' +
             '</a></span>');
         resetAutocomplete($('input[name="locations"]'));
         return false;
@@ -1491,32 +1518,65 @@ $(function() {
         companySizeFilter = [];
         industryFilter = [];
         locationFilter = [];
+        companyFilter = [];
+        roleFilter = [];
         secondLevelFilterDetails = [];
 
         // Get second level filter details
-        $.each($('input[name=size-filter]:checked'), function( index, value ) {
-            companySizeFilter.push({
-                filterText : $(value).val()
+        $.each($('input[name=size-filter]:checked:visible'), function( index, value ) {
+            if($(value).val() != "Any")
+                companySizeFilter.push({
+                    filterText : $(value).val()
+                })
+        });
+
+        $.each($('span.company:visible'), function( index, value ) {
+            companyFilter.push({
+                filterText : $.trim($(value).text())
             })
         });
 
-        $.each($('span.industry'), function( index, value ) {
+        $.each($('span.role:visible'), function( index, value ) {
+            roleFilter.push({
+                filterText : $.trim($(value).text())
+            })
+        });
+
+        $.each($('span.industry:visible'), function( index, value ) {
             industryFilter.push({
                 filterText : $.trim($(value).text())
             })
         });
 
-        $.each($('span.location'), function( index, value ) {
+        $.each($('span.location:visible'), function( index, value ) {
             locationFilter.push({
                 filterText : $.trim($(value).text())
             })
         });
 
         //Fill second level filter details in JSON
+        if(companyFilter.length > 0) {
+            secondLevelFilterDetails.push(
+                {
+                    subFilterType : "COMPANY",
+                    filterTextDetails : companyFilter
+                }
+            );
+        }
+
+        if(roleFilter.length > 0) {
+            secondLevelFilterDetails.push(
+                {
+                    subFilterType : "ROLE",
+                    filterTextDetails : roleFilter
+                }
+            );
+        }
+
         if(companySizeFilter.length > 0) {
             secondLevelFilterDetails.push(
                 {
-                    subFilterType : "SIZE",
+                    subFilterType : "COMPANYSIZE",
                     filterTextDetails : companySizeFilter
                 }
             );

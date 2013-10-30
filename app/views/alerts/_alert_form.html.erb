@@ -1,5 +1,7 @@
 <%
    alert_id, alert_type, alert_name, filters = nil
+   company_filters = []
+   role_filters = []
    size_filters = []
    industry_filters = []
    location_filters = []
@@ -18,7 +20,11 @@
          filter_type = filter["subFilterType"]
          filter_texts = filter["filterTextDetails"].collect { |filter_details| filter_details["filterText"] }
          case filter_type
-           when "SIZE"
+           when "COMPANY"
+             company_filters = filter_texts
+           when "ROLE"
+             role_filters = filter_texts
+           when "COMPANYSIZE"
              size_filters = filter_texts
            when "INDUSTRY"
              industry_filters = filter_texts
@@ -63,7 +69,7 @@
   </ul>
   </td>
 </tr>
-<tr id="Company-filter">
+<tr id="Company-filter" class="display-none">
   <th valign="middle">Company</th>
   <td valign="middle">
     <div class="input_block mrg-T10 mrg-B10">
@@ -110,11 +116,47 @@
     </div>
   </td>
 </tr>
-<tr>
-  <th valign="middle">Company size</th>
+<tr class="Person-slf">
+  <th valign="middle">Company</th>
+  <td valign="middle">
+    <div class="input_block mrg-T10 mrg-B10 pad-B5">
+      <% unless filters.nil? or company_filters.blank? %>
+          <% company_filters.each_with_index do |company,i| %>
+              <span class="company darkgray mrg-L5 mrg-T5"><%= company %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
+          <% end %>
+      <% end %>
+      <div class="pos-Rel float-L">
+        <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
+          <input type="text" name="company2" class="inputbox_2 outline-none" placeholder="Company" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Company'">
+        </span>
+      </div>
+      <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
+    </div>
+  </td>
+</tr>
+<tr class="Company-slf Person-slf">
+  <th valign="middle">Role</th>
+  <td valign="middle">
+    <div class="input_block mrg-T10 mrg-B10 pad-B5">
+      <% unless filters.nil? or role_filters.blank? %>
+          <% role_filters.each_with_index do |role,i| %>
+              <span class="role darkgray mrg-L5 mrg-T5"><%= role %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
+          <% end %>
+      <% end %>
+      <div class="pos-Rel float-L">
+        <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
+          <input type="text" name="role2" class="inputbox_2 outline-none" placeholder="Role" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Role'">
+        </span>
+      </div>
+      <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
+    </div>
+  </td>
+</tr>
+<tr class="Role-slf">
+  <th valign="middle">Company Size</th>
   <td valign="middle">
     <ul class="blue-radio-box mrg-T10 mrg-B10">
-      <% unless filters.nil? and size_filters.blank? %>
+      <% unless filters.nil? or size_filters.blank? %>
           <% company_size_range.each_with_index do |range,i| %>
               <li class="width_116 float-R mrg-T5 col-black-2">
                 <div class="checkboxFour">
@@ -138,17 +180,17 @@
     </ul>
   </td>
 </tr>
-<tr>
+<tr class="Role-slf">
   <th valign="middle">Industry</th>
   <td valign="middle">
-    <% unless filters.nil? and industry_filters.blank? %>
+    <% unless filters.nil? or industry_filters.blank? %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <% industry_filters.each_with_index do |industry,i| %>
-              <span class="industry darkgray mrg-L5 mrg-T5"><%= industry %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
+              <span class="industry darkgray mrg-L5 mrg-T5"><%= industry %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="Industry">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="All industries" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All industries'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -162,7 +204,7 @@
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="Industry">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="All industries" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All industries'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -175,17 +217,17 @@
     <% end %>
   </td>
 </tr>
-<tr>
+<tr class="Role-slf">
   <th valign="middle">Location</th>
   <td valign="middle">
-    <% unless filters.nil? and location_filters.blank? %>
+    <% unless filters.nil? or location_filters.blank? %>
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <% location_filters.each_with_index do |location,i| %>
-              <span class="location darkgray mrg-L5 mrg-T5"><%= location %> <a class="remove-darkgray" href="#"><img src="/assets/close.png" width="10" height="9" alt="close"></a></span>
+              <span class="location darkgray mrg-L5 mrg-T5"><%= location %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Location">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="All locations" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All locations'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -199,7 +241,7 @@
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Location">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="All locations" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All locations'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -213,12 +255,24 @@
   </td>
 </tr>
 </table>
-<div class="mrg-T20 mrg-L10"><input id="save-alert-form" type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30" value="Save changes"></div>
+<div class="mrg-T20"><input id="save-alert-form" type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30" value="Save changes"></div>
 </form>
 </div> <!-- End Contoso Page -->
-
+<div class="alert-text-box" style="width: 335px;">
+  <span class="col-blue calibrib font-18">Monitor LinkedIn as your Network Expands</span>
+  <p>OFunnel Alerts are email updates of your expanding network.</p>
+  <p>How does it work? Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role. We will let you know when someone in your network meets the criteria.  Some handy uses of OFunnel Alerts for</p>
+  <ul class="font-14">
+    <li class="mrg-B15"><b>SALES:</b>  Enter the accounts you are targeting.</li>
+    <li class="mrg-B15"><b>RECRUITING:</b>  Enter the job role you are hiring for.</li>
+    <li class="mrg-B15"><b>COMPETITIVE INTELLIGENCE:</b> Enter the name of the person or company name of your competitor.</li>
+    <li class="mrg-B15"><b>JOB SEARCH:</b> Enter the name of the company you would like to work for.</li>
+  </ul>
+</div>
 <script type="text/javascript">
     getPeopleList();
     getIndustryList();
     getLocationList();
+    $('tr#' + $('input[name=filter-type]:checked').val() + '-filter').show();
+    $('tr.' + $('input[name=filter-type]:checked').val() + '-slf').show();
 </script>
