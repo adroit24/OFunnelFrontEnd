@@ -1367,14 +1367,24 @@ $(function() {
     });
 
     $(document).on('click','a.delete-alert-recipient2',function() {
-        if($('input[name=recipient-email]').length > 1)
-            $(this).parents('li').remove();
+        $(this).parents('li').remove();
+        return false;
+    });
+
+    $(document).on('blur','input[name=recipient-email]',function() {
+        value = $(this).val();
+        if(value.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/))
+            $(this).parent().parent().replaceWith('<li><label class="disable_text">' +
+                value +
+                '</label><span>' +
+                '<a class="delete-alert-recipient2" href="#"><img src="assets/delete_icon.png" width="20" height="19" alt="delete">' +
+                '</a></span></li>');
         return false;
     });
 
     $(document).on('click','a.add-alert-recipient',function() {
-        if($('input[name=recipient-email]').last().val().match(/\S/))
-            $('div.alert_recipients ul').append('<li><input type="text" name="recipient-email" placeholder="abc@xyz.com" class="enable_text"><span><a class="delete-alert-recipient2" href="#"><img src="assets/delete_icon.png" width="20" height="19" alt="delete"></a></span></li>');
+        if($('input[name=recipient-email]').length == 0)
+            $('div.alert_recipients ul').append('<li><div class="input_block mrg-T10 mrg-B10"><input type="text" class="inputbox outline-none" placeholder="abc@xyz.com" name="recipient-email" value=""><a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a></div></li>');
         return false;
     });
 
@@ -1446,8 +1456,10 @@ $(function() {
     $(document).on('change','input[name=filter-type]',function(){
         $('tr[id$="-filter"]').hide();
         $('tr[class$="-slf"]').hide();
+        $('p.Company-slf').hide()
+        $('p.Person-slf').hide()
         $('tr#' + $(this).val() + '-filter').show();
-        $('tr.' + $(this).val() + '-slf').show();
+        $('.' + $(this).val() + '-slf').show();
     });
 
     $(document).on('mouseenter','td.filter-tooltip-container',function(){
@@ -1462,6 +1474,16 @@ $(function() {
     });
 
     $(document).on('click','.remove-darkgray',function(e){
+        if($(this).parents('div.input_block').find('a.remove-darkgray').length == 1) {
+            if($(this).parent('span').hasClass('industry'))
+                $('input[name="industries"]').attr('placeholder','Any Industry').attr('onblur',"this.placeholder = 'Any Industry'");
+            else if($(this).parent('span').hasClass('location'))
+                $('input[name="locations"]').attr('placeholder','Anywhere').attr('onblur',"this.placeholder = 'Anywhere'");
+            else if($(this).parent('span').hasClass('company'))
+                $('input[name="company2"]').attr('placeholder','Any Company').attr('onblur',"this.placeholder = 'Any Company'");
+            else if($(this).parent('span').hasClass('role'))
+                $('input[name="role2"]').attr('placeholder',' Any Role').attr('onblur',"this.placeholder = ' Any Role'");
+        }
         $(this).parent('span.darkgray').remove();
         return false;
     });
@@ -1474,22 +1496,26 @@ $(function() {
 
     $(document).on('blur','input[name=role2]',function(){
         value = $(this).val();
-        if(value.match(/\S/))
+        if(value.match(/\S/)) {
             $(this).parents('div.pos-Rel').before('<span class="role darkgray mrg-L5 mrg-T5">' +
                 value + '<a class="remove-darkgray" href="#">' +
                 '<img src="/assets/close.png" width="8" height="8" alt="close">' +
                 '</a></span>');
-        $(this).val("");
+            $('input[name="role2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
+            $(this).val("");
+        }
     });
 
     $(document).on('blur','input[name=company2]',function(){
         value = $(this).val();
-        if(value.match(/\S/))
+        if(value.match(/\S/)) {
             $(this).parents('div.pos-Rel').before('<span class="company darkgray mrg-L5 mrg-T5">' +
                 value + '<a class="remove-darkgray" href="#">' +
                 '<img src="/assets/close.png" width="8" height="8" alt="close">' +
                 '</a></span>');
-        $(this).val("");
+            $('input[name="company2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
+            $(this).val("");
+        }
     });
 
     $(document).on('click','.add-alert-industry',function(){
@@ -1497,6 +1523,7 @@ $(function() {
             $(this).html() + '<a class="remove-darkgray" href="#">' +
             '<img src="/assets/close.png" width="8" height="8" alt="close">' +
             '</a></span>');
+        $('input[name="industries"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
         resetAutocomplete($('input[name="industries"]'));
         return false;
     });
@@ -1506,6 +1533,7 @@ $(function() {
             $(this).html() + '<a class="remove-darkgray" href="#">' +
             '<img src="/assets/close.png" width="8" height="8" alt="close">' +
             '</a></span>');
+        $('input[name="locations"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
         resetAutocomplete($('input[name="locations"]'));
         return false;
     });

@@ -40,8 +40,8 @@
 <input type="hidden" name="alertId" value="<%= alert_id %>">
 <table width="100%" border="0" cellspacing="0" cellpadding="14">
 <tr>
-  <th width="26%" height="70" valign="middle">Filter type</th>
-  <td valign="middle"><ul class="blue-radio-box marg_t23">
+  <th width="16%" height="70" valign="middle">Filter type</th>
+  <td width="42%" valign="middle"><ul class="blue-radio-box marg_t23">
     <li class="width_116 float-R mrg-T5 col-black-2">
       <label for="radio1" class="mrg-L20 font-14 font_arial">Person</label>
       <% unless alert_type.nil? %>
@@ -68,6 +68,12 @@
     </li>
   </ul>
   </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <span class="col-orange calibrib font-18">Monitor LinkedIn as your Network Expands</span>
+      <p>Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role.</p>
+    </div>
+  </td>
 </tr>
 <tr id="Company-filter" class="display-none">
   <th valign="middle">Company</th>
@@ -81,6 +87,11 @@
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
     </div>
   </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>Tell us the company where you are looking for connections.</p>
+    </div>
+  </td>
 </tr>
 <tr id="Role-filter" class="display-none">
   <th valign="middle">Role</th>
@@ -92,6 +103,11 @@
           <input type="text" class="inputbox outline-none" name="role-name" value="">
       <% end %>
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
+    </div>
+  </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>Tell us the role or job functions of interest.</p>
     </div>
   </td>
 </tr>
@@ -115,6 +131,11 @@
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
     </div>
   </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>Tell us the person who you are trying to connect with OR whose connections you want to monitor.</p>
+    </div>
+  </td>
 </tr>
 <tr class="Person-slf">
   <th valign="middle">Company</th>
@@ -127,10 +148,15 @@
       <% end %>
       <div class="pos-Rel float-L">
         <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-          <input type="text" name="company2" class="inputbox_2 outline-none" placeholder="Company" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Company'">
+          <input type="text" name="company2" class="inputbox_2 outline-none" placeholder="Any Company" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Any Company'">
         </span>
       </div>
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
+    </div>
+  </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>AND should those connections be from certain companies of interest?</p>
     </div>
   </td>
 </tr>
@@ -145,10 +171,16 @@
       <% end %>
       <div class="pos-Rel float-L">
         <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-          <input type="text" name="role2" class="inputbox_2 outline-none" placeholder="Role" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Role'">
+          <input type="text" name="role2" class="inputbox_2 outline-none" placeholder="Any Role" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Any Role'">
         </span>
       </div>
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
+    </div>
+  </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p class="Company-slf display-none">Are you looking for connections within specific job functions?</p>
+      <p class="Person-slf display-none">AND certain roles or job functions of interest?</p>
     </div>
   </td>
 </tr>
@@ -179,6 +211,11 @@
       <% end %>
     </ul>
   </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>Are you looking for connections within companies of certain size?</p>
+    </div>
+  </td>
 </tr>
 <tr class="Role-slf">
   <th valign="middle">Industry</th>
@@ -190,7 +227,7 @@
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="All industries" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All industries'">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder=" Any Industry" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Any Industry'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -204,7 +241,7 @@
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="All industries" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All industries'">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder=" Any Industry" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Any Industry'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -215,6 +252,11 @@
           <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
         </div>
     <% end %>
+  </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>AND within specific industry?</p>
+    </div>
   </td>
 </tr>
 <tr class="Role-slf">
@@ -227,7 +269,7 @@
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="All locations" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All locations'">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Anywhere" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Anywhere'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -241,7 +283,7 @@
         <div class="input_block mrg-T10 mrg-B10 pad-B5">
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="All locations" onfocus="this.placeholder = ''" onblur="this.placeholder = 'All locations'">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Anywhere" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Anywhere'">
             </span>
             <div class="listboxs display-none" style="height: 180px;">
               <div class="search-connection-loader"></div>
@@ -253,26 +295,23 @@
         </div>
     <% end %>
   </td>
+  <td style="border: none !important;">
+    <div class="alert-text-box" style="width: 335px;">
+      <p>AND at certain locations?</p>
+    </div>
+  </td>
 </tr>
 </table>
-<div class="mrg-T20"><input id="save-alert-form" type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30" value="Save changes"></div>
+<div class="all-box mrg-T30">
+  <div class="send-box txt-L" style="width: auto;"><input id="save-alert-form" type="submit" value="Save changes" class="send-btn calibrib alert-salesforce-submit font-14 bold" style="height: 41px; text-align: center; line-height: 36px;"></div>
+  <div class="send-box mrg-B15 mrg-L10" style="width: auto;"><a href="<%= alerts_path %>" class="send-btn float-L font-14 bold" style="height: 28px; text-align: center; line-height: 36px;">Cancel</a></div>
+</div>
 </form>
 </div> <!-- End Contoso Page -->
-<div class="alert-text-box" style="width: 335px;">
-  <span class="col-blue calibrib font-18">Monitor LinkedIn as your Network Expands</span>
-  <p>OFunnel Alerts are email updates of your expanding network.</p>
-  <p>How does it work? Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role. We will let you know when someone in your network meets the criteria.  Some handy uses of OFunnel Alerts for</p>
-  <ul class="font-14">
-    <li class="mrg-B15"><b>SALES:</b>  Enter the accounts you are targeting.</li>
-    <li class="mrg-B15"><b>RECRUITING:</b>  Enter the job role you are hiring for.</li>
-    <li class="mrg-B15"><b>COMPETITIVE INTELLIGENCE:</b> Enter the name of the person or company name of your competitor.</li>
-    <li class="mrg-B15"><b>JOB SEARCH:</b> Enter the name of the company you would like to work for.</li>
-  </ul>
-</div>
 <script type="text/javascript">
     getPeopleList();
     getIndustryList();
     getLocationList();
     $('tr#' + $('input[name=filter-type]:checked').val() + '-filter').show();
-    $('tr.' + $('input[name=filter-type]:checked').val() + '-slf').show();
+    $('.' + $('input[name=filter-type]:checked').val() + '-slf').show();
 </script>

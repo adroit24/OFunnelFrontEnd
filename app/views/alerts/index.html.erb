@@ -55,8 +55,8 @@
           <% end %>
         </table>
         <a href="<%= new_alert_path %>" class="font-11 bold float-L mrg-T20"> (Add more) </a>
-        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-add-target-account-list"> (import target account list) </a>
-        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-import-salesforce"> (import from Salesforce) </a>
+        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-add-target-account-list"> (Import target account list) </a>
+        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-import-salesforce"> (Salesforce users) </a>
       </div>
       <% if @total_pages > 1 %>
           <div class="alert-pagination">
@@ -100,7 +100,7 @@
 <div id="alert-salesforce-popup" class="display-none" style="width: 400px;">
   <!-- START Import from CSV LIGHT BOX -->
   <div class="lightbox">
-    <h2 class="col-blue">Import Leads/Accounts from Salesforce</h2>
+    <p>We will now import your leads/accounts (based on radio button selected) list from Salesforce. If you are not logged into Salesforce, we will redirect you to Salesforce login. Click Import to Continue</p>
     <a href="#" class="cancel-icon"></a>
     <div class="import-alert-salesforce-box">
       <%= form_tag(import_salesforce_path, :id=> "alert-salesforce-form") do %>
@@ -120,7 +120,10 @@
             </li>
           </ul>
           <div class="alert-salesforce-loader"></div>
-          <div class="send-box txt-L"><input type="submit" value="Import" class="send-btn calibrib alert-salesforce-submit"></div>
+          <div class="all-box">
+            <div class="send-box txt-L" style="width: auto;"><input type="submit" value="Import" class="send-btn calibrib alert-salesforce-submit"></div>
+            <div class="send-box mrg-B15 mrg-L10" style="width: auto;"><a href="#" onclick="$('button#cboxClose').trigger('click'); return false;" class="send-btn float-L font-18" style="height: 28px;">Cancel</a></div>
+          </div>
       <% end %>
     </div>
   </div><!-- START Import from salesforce LIGHT BOX -->

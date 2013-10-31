@@ -73,11 +73,13 @@
 .alert_recipients h2{ font:26px Arial, Helvetica, sans-serif; color:#212121; font-weight:bold; margin:0px; padding:0px; padding-bottom:6px;}
 .alert_recipients p{ font:14px Arial, Helvetica, sans-serif;color:#212121; margin:0px; padding:0px; padding-bottom:20px;}
 .alert_recipients ul{ list-style:none; margin:0px; padding:0px; width:100%; float:left;}
-.alert_recipients ul li{ float:left; width:100%; border-top:1px solid #c4c4c4; padding:10px;}
+.alert_recipients ul li{ float:left; width:100%; border-bottom:1px solid #c4c4c4; padding:10px;}
+.alert_recipients ul li:last-child { border-bottom: none;}
 .alert_recipients ul li span{ float:right; margin-top:3px;}
 .disable_text{ font:15px Arial, Helvetica, sans-serif; color:#212121 !important; border:none !important; width:90%; padding:5px; background:none; cursor:text;}
 .enable_text{ font:14px Arial, Helvetica, sans-serif; border:1px solid #bbbbbb; !important; width:90%; padding:5px; background:#fff;}
-.save_change_btn{ background: none repeat scroll 0 0 #FF5D00;
+.save_change_btn{
+    background: none repeat scroll 0 0 #FF5D00;
     border: 1px solid #D8D8D8;
     color: #FFFFFF;
     font-family:Arial, Helvetica, sans-serif;
@@ -99,13 +101,13 @@
 
 .alert_edit_sec{float: left;
     padding: 0px 0px;
-    width: 56%;}
+    width: 100%;}
 
 
 .alert_edit_sec table{ border:none; border-collapse:collapse; margin:0px; padding:0px; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
-.alert_edit_sec table tr{border:1px solid #dbdbdb; border-collapse:collapse; border-left:none; border-right:none;}
-.alert_edit_sec table th{ background:#f3f3f3; border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#2a2a2a; font-weight:bold; text-align:left;}
-.alert_edit_sec table td{border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
+.alert_edit_sec table tr{border-collapse:collapse; }
+.alert_edit_sec table th{ border:1px solid #dbdbdb; border-left:none; border-right:none; background:#f3f3f3; border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#2a2a2a; font-weight:bold; text-align:left;}
+.alert_edit_sec table td{ border:1px solid #dbdbdb; border-left:none; border-right:none; border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
 
 
 
@@ -173,8 +175,8 @@ ul.blue-radio-box  li{
 .marg_t23{ margin-top:23px;}
 .marg_t10{ margin-top:10px;}
 .input_block{ width:100%;  border:1px solid #cccaca; float:left; position:relative;}
-.inputbox{ width:90%; padding:2px; font:16px Arial, Helvetica, sans-serif; color:#212121; border:none;}
-.edit_icn{ position:absolute; right:8px;}
+.inputbox{ width:90%; padding:2px; font:16px Arial, Helvetica, sans-serif; color:#212121; border:none;height: 32px;}
+.edit_icn{ position:absolute; right:8px;top: 8px;}
 
 .lightgray{ background:#f3f3f3; font:16px Arial, Helvetica, sans-serif;color:#8e8e8e; border-radius:3px; padding:5px 10px;  float:left;}
 .darkgray{ background:#dcdcdc; font:14px Arial, Helvetica, sans-serif;color:#212121; border-radius:3px; padding:5px 10px; float:left;}
