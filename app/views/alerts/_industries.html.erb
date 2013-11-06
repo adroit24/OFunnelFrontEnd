@@ -1,0 +1,37 @@
+<div class="listboxs2 display-none">
+  <div class="listboxs2_catagories_outer">
+    <div class="listboxs2_catagories">
+      <ul>
+        <% unless @industries.blank? %>
+            <% @industries.each_with_index do |industry,index| %>
+                <li class="category" rel="<%= industry %>">
+                  <a href="#" class="<%= ' selected2' if index == 0 %>"><%= industry %></a>
+                </li>
+            <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="listboxs2_sub_catagories">
+      <ul>
+        <% unless @sub_industries.blank? %>
+            <% @sub_industries.each_with_index do |sub_industry,index| %>
+                <div id="<%= @industries[index].gsub(' ','') %>" class="sub-category<%= ' display-none' unless index == 0 %>">
+                  <% sub_industry.each do |industry| %>
+                      <li>
+                        <div class="checkboxBlue">
+                          <input type="checkbox" value="<%= industry["subIndustryType"] %>" id="checkboxFourInput-industry-<%= industry["subIndustryId"] %>" name="size-filter" rel="industry-<%= industry["subIndustryId"] %>">
+                          <label for="checkboxFourInput-industry-<%= industry["subIndustryId"] %>"></label>
+                        </div>
+                        <div class="mrg-L25"><%= industry["subIndustryType"] %></div>
+                      </li>
+                  <% end %>
+                </div>
+            <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="close_btn3">
+    <a href="#" class="close-listbox2">Close</a>
+  </div>
+</div>
