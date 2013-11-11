@@ -132,6 +132,8 @@ api_endpoints:
   GetNetworkAlertWithTargetAccountId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getNetworkAlertWithTargetAccountId"
   GetAllIndustryList: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getAllIndustryList"
   GetAllLocationList: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getAllLocationList"
+  GetEmailFrequencyPreferences: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getEmailFrequencyPreferences"
+  SetEmailFrequencyPreferences: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/setEmailFrequencyPreferences"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"

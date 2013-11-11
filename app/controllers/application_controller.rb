@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_id
-    if params[:action] == "hootsuite"
+    if params[:controller] == "hootsuite"
       return session[:user_id] || current_user_id_from_cookies
     else
       return session[:user_id]
@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_current_user
-    if (session[:linkedin_id].nil? and current_user_id.nil?)
+    if session[:linkedin_id].nil?
       session[:return_to] = current_url
       redirect_to Settings.linkedin_auth_url, :protocol => 'http' and return
     else

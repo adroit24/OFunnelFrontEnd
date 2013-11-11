@@ -32,34 +32,56 @@
     </div>
 
     <div class="profile-details-box mrg-B30 border-B pad-B30 pad-T15">
-      <form action="<%= add_recipients_path %>" id="alert-recipient-form" method="post">
-        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-        <div class="alert_recipients">
-          <h2>Alert Recipients<span class="add-recipient-error display-none col-red font-18">&nbsp;*</span></h2>
-          <p>If you want to add more recipients to alerts, add them here.</p>
-          <ul>
-            <% unless @emails.blank? %>
-                <% @emails.each do |email| %>
-                    <li>
-                      <label class="disable_text"><%= email["email"] %></label>
-                      <span><a class="delete-alert-recipient"  href="<%= remove_recipient_path({:id => email["recipientId"]}) %>"><img src="assets/delete_icon.png" width="20" height="19" alt="delete"></a></span>
-                    </li>
-                <% end %>
-            <% end %>
-            <li>
-              <div class="input_block mrg-T10 mrg-B10">
-                <input type="text" class="inputbox outline-none" placeholder="abc@xyz.com" name="recipient-email" value="">
-                <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
-              </div>
-            </li>
-          </ul>
-          <div class="div_holder pad-L15 pad-B10"><a href="#" class="addmores add-alert-recipient">(Add more)</a></div>
-          <div class="all-box-3 pad-L15 pad-B10">
-            <span class="add-recipient-confirmation display-none col-red font-11">Recipients have been added.</span>
+      <div class="half-box float-L">
+        <form action="<%= add_recipients_path %>" id="alert-recipient-form" method="post">
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+          <div class="alert_recipients">
+            <h2>Alert Recipients<span class="add-recipient-error display-none col-red font-18">&nbsp;*</span></h2>
+            <p>If you want to add more recipients to alerts, add them here.</p>
+            <ul>
+              <% unless @emails.blank? %>
+                  <% @emails.each do |email| %>
+                      <li>
+                        <label class="disable_text"><%= email["email"] %></label>
+                        <span><a class="delete-alert-recipient"  href="<%= remove_recipient_path({:id => email["recipientId"]}) %>"><img src="assets/delete_icon.png" width="20" height="19" alt="delete"></a></span>
+                      </li>
+                  <% end %>
+              <% end %>
+              <li>
+                <div class="input_block mrg-T10 mrg-B10">
+                  <input type="text" class="inputbox outline-none" placeholder="abc@xyz.com" name="recipient-email" value="">
+                  <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
+                </div>
+              </li>
+            </ul>
+            <div class="div_holder pad-L15 pad-B10"><a href="#" class="addmores add-alert-recipient">(Add more)</a></div>
+            <div class="all-box-3 pad-L15 pad-B10">
+              <span class="add-recipient-confirmation display-none col-red font-11">Recipients have been added.</span>
+            </div>
+            <div class="div_holder pad-L10 pad-B10"><input type="submit" name="" value="Save changes" class="save_change_btn"></div>
           </div>
-          <div class="div_holder pad-L10 pad-B10"><input type="submit" name="" value="Save changes" class="save_change_btn"></div>
+        </form>
+      </div>
+      <div class="frequency-box float-R">
+        <div class="alert_recipients">
+          <h2>Notification Frequency</h2>
+          <p>How often do you want to receive alert emails?</p>
         </div>
-      </form>
+        <ul class="blue-radio-box mrg-T10">
+          <li class="width_116 float-R mrg-T5 col-black-2">
+            <label for="radio3" class="mrg-L20 font-14 font_arial">Unsubscribe</label>
+            <span></span><input type="radio" id="radio3" name="notification_frequency" value="UNSUBSCRIBE" <%= 'checked=checked' if @frequency == "UNSUBSCRIBE" %>/><span></span>
+          </li>
+          <li class="width_116 float-R mrg-T5 col-black-2">
+            <label for="radio1" class="mrg-L20 font-14 font_arial">Weekly</label>
+            <span></span><input type="radio" id="radio1" name="notification_frequency" value="WEEKLY" <%= 'checked=checked' if @frequency == "WEEKLY" %>/><span></span>
+          </li>
+          <li class="width_116 float-R mrg-T5 col-black-2">
+            <label for="radio2" class="mrg-L20 font-14 font_arial">Daily</label>
+            <span></span><input type="radio" id="radio2" name="notification_frequency" value="DAILY" <%= 'checked=checked' if @frequency == "DAILY" %>/><span></span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="all-box">

@@ -78,7 +78,7 @@ class HootsuiteController < ApplicationController
     @alerts = nil
     if response.success? && !api_contains_error("GetNetworkAlerts", response)
       get_company_network_alert_response = JSON.parse(response.response_body)["GetNetworkAlertsResult"]
-      @alerts = get_company_network_alert_response["alert"]
+      @alerts = get_company_network_alert_response["targetAccount"]
       @total_alerts = get_company_network_alert_response["totalNumberOfAlerts"]
       @total_pages = ((@total_alerts % @count) == 0) ?
           (@total_alerts / @count) :
@@ -128,21 +128,22 @@ class HootsuiteController < ApplicationController
     unless params[:alertJson].blank?
       target_accounts = JSON.parse(params[:alertJson])
       alert_json = {
-          :alert => []
+          :targetAccount => []
       }
 
       alert_array = []
       target_accounts.each do |target|
         alert_array.push(
             {
-                :type => target["type"],
-                :name => target["name"],
-                :alertId => target["alertId"]
+                :filterType => target["type"],
+                :targetName => target["name"],
+                :targetAccountId => target["alertId"],
+                :secondLevelFilterDetails => nil
             }
         )
       end
 
-      alert_json[:alert] = alert_array
+      alert_json[:targetAccount] = alert_array
 
       persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
       persist_company_network_alert_response = nil

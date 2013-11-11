@@ -57,6 +57,10 @@ html, button, input, select, textarea { font-family: sans-serif; }
     float:left;
     margin:0 5px;
 }
+
+.half-box {
+    width:50%;
+}
 /*.all-box-5{*/
     /*background:#fff;*/
     /*float: left;*/

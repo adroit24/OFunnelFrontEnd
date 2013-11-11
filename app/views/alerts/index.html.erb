@@ -33,9 +33,9 @@
                               <h3><%= to_dc alert["filterType"] %>: <%= alert["targetName"] %></h3>
                               <%
                                  alert["secondLevelFilterDetails"].each_with_index do |filter,i|
-                                 subfilter = (filter["subFilterType"].eql? "COMPANYSIZE") ? "Company Size" : to_dc(filter["subFilterType"])
+                                   subfilter = (filter["subFilterType"].eql? "COMPANYSIZE") ? "Company Size" : to_dc(filter["subFilterType"])
                               %>
-                                  <p><i><%= subfilter %>:</i> <%= filter["filterTextDetails"].map{|filter_text| to_dc filter_text["filterText"] }.join(', ')  %></p>
+                                  <p><i><%= subfilter %>:</i> <%= filter["filterTextDetails"].map{|filter_text| filter_text["filterText"] }.join(', ')  %></p>
                                   <% break if i == 1 %>
                               <% end %>
                               <p><a href="<%= edit_alert_path(alert["targetAccountId"]) %>">more</a></p>
@@ -100,12 +100,12 @@
 <div id="alert-salesforce-popup" class="display-none" style="width: 400px;">
   <!-- START Import from CSV LIGHT BOX -->
   <div class="lightbox">
-    <p>We will now import your leads/accounts (based on radio button selected) list from Salesforce. If you are not logged into Salesforce, we will redirect you to Salesforce login. Click Import to Continue</p>
+    <h2 class="col-blue">Import from Salesforce</h2>
     <a href="#" class="cancel-icon"></a>
     <div class="import-alert-salesforce-box">
       <%= form_tag(import_salesforce_path, :id=> "alert-salesforce-form") do %>
           <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
-          <ul class="red-radio-box" style="width: inherit;">
+          <ul class="red-radio-box" style="width: inherit;margin-bottom: 10px;">
             <li class="float-R mrg-T5 col-black-2">
               <label for="radio3" class="mrg-L30 font-16 calibrib">Accounts </label>
               <span></span>
@@ -119,13 +119,13 @@
               <span></span>
             </li>
           </ul>
+          <p class="float-L" style="margin-top: 0px;">We will now import your leads/accounts (based on radio button selected) list from Salesforce. If you are not logged into Salesforce, we will redirect you to Salesforce login. Click Import to Continue.</p>
           <div class="alert-salesforce-loader"></div>
           <div class="all-box">
             <div class="send-box txt-L" style="width: auto;"><input type="submit" value="Import" class="send-btn calibrib alert-salesforce-submit"></div>
-            <div class="send-box mrg-B15 mrg-L10" style="width: auto;"><a href="#" onclick="$('button#cboxClose').trigger('click'); return false;" class="send-btn float-L font-18" style="height: 28px;">Cancel</a></div>
+            <div class="send-box mrg-L10" style="width: auto;"><a href="#" onclick="$('button#cboxClose').trigger('click'); return false;" class="send-btn float-L" style="line-height: normal;">Cancel</a></div>
           </div>
       <% end %>
     </div>
   </div><!-- START Import from salesforce LIGHT BOX -->
 </div>
-                        

@@ -19,7 +19,7 @@ body{ margin:0px; padding:0px;}
 
 .theme_classic{ background-color: #f4f4f4; background-image: none;}
 .theme_classic .thumbtop_section{ overflow: hidden;}
-.theme_classic .thimg{ position:relative; clear:both;}
+.theme_classic .thimg{ position:relative; clear:both;z-index: 99;}
 .theme_classic .thumb_img{height: 30px; left:5px; top: 5px; width: 30px;  border-radius:1px; -moz-border-radius:1px; -webkit-border-radius:1px; overflow:hidden; position:absolute;}
 .theme_classic .thumb_img:hover{ text-decoration:none;}
 .theme_classic .thumbuser_details{ overflow: hidden; padding: 4px 6px 5px 42px; position: relative; word-wrap: break-word;}

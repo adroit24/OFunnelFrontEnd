@@ -19,6 +19,7 @@
       var searchMemberInGroupUrl = '<%= search_member_in_group_path %>'
       var searchIndustriesUrl = '<%= alert_industries_path %>'
       var searchLocationsUrl = '<%= alert_locations_path %>'
+      var notificationFrequencyUrl = '<%= notification_frequency_path %>'
       <% unless current_user.nil? %>
       var userProfilePath = '<%= "#{user_path(current_user_id)}#user-tags-focus" %>'
       <% end %>
@@ -41,12 +42,12 @@
       <div class="logo_menu_box">
         <a href="<%= alerts_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
         <div class="userstatus-box width-auto">
-              <div class="signout-box">
-                <div class="links">
-                  <a href="<%= notifications_path %>">Profile</a>
-                  <a href="<%= logout_path %>">Log out</a>
-                </div>
-              </div>
+          <div class="signout-box">
+            <div class="links">
+              <a href="<%= notifications_path %>">Profile</a>
+              <a href="<%= logout_path %>">Log out</a>
+            </div>
+          </div>
         </div>
       </div>
     </div><!-- END HEADER -->
@@ -59,6 +60,7 @@
   <div class="footer">
     <div class="footer_box"> &copy; 2013 OFunnel </div>
   </div><!-- START FOOTER -->
+  <%= render "shared/welcome_wizard" %>
 </div>
 </body>
 </html>

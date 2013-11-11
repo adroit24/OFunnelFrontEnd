@@ -79,6 +79,8 @@ OFunnel::Application.routes.draw do
   match '/notifications' => "users#notifications", :as => :notifications
   match '/add_to_salesforce' => "users#add_to_salesforce", :as => :add_to_salesforce
   match '/all_alerts/:id/:type' => "users#all_alerts", :as => :all_alerts
+  match '/notification_frequency' => "users#notification_frequency", :as => :notification_frequency
+  match '/unsubscribe/:id' => "users#unsubscribe", :as => :unsubscribe
 
   match '/group_members/:id' => "groups#members", :as => :group_members
   match '/add_group' => "groups#add", :as => :add_group

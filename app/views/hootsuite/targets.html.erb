@@ -14,7 +14,10 @@
           <%= form_tag(hootsuite_add_relationships_path, :id => "add_relationships_form", :class => "alert-gray") do %>
               <div class="top-links-wrapper">
                 <div class="add-new-alert txt-L mrg-B5">
-                  <a id="alert-add-target-account" class="font-15 bold" href="#">Add new alert</a>
+                  <a id="alert-add-target-account" class="font-15 bold" href="#">
+                    <img class="mrg-B5 mrg-R5" src="/assets/<%= cookies.signed[:theme] %>_add.png" alt="add" style="vertical-align: middle;">
+                    Add new alert
+                  </a>
                 </div>
                 <div class="txt-L float-R mrg-B5">
                   <a class="hs_btn-cmt pad-L25 pad-R25 pad-B5" href="#" onclick="return $('form#add_relationships_form').submit();">Submit</a>
@@ -31,14 +34,14 @@
                           <div class="input-relative comp-select">
                             <div class="select-box">
                               <select class="select alert-type" title="">
-                                <option<%= ' selected="true"' if alert["type"] == "COMPANY" %>>Company</option>
-                                <option<%= ' selected="true"' if alert["type"] == "PERSON" %>>Person</option>
-                                <option<%= ' selected="true"' if alert["type"] == "ROLE" %>>Role</option>
+                                <option<%= ' selected="true"' if alert["filterType"] == "Company" %>>Company</option>
+                                <option<%= ' selected="true"' if alert["filterType"] == "Person" %>>Person</option>
+                                <option<%= ' selected="true"' if alert["filterType"] == "Role" %>>Role</option>
                               </select>
                             </div>
                           </div>
-                          <input type="text" name="name" class="name-select" value="<%= alert["name"] %>" Placeholder="Nike" />
-                          <input type="hidden" name="alertId" value="<%= alert["alertId"] %>" />
+                          <input type="text" name="name" class="name-select" value="<%= alert["targetName"] %>" Placeholder="Nike" />
+                          <input type="hidden" name="alertId" value="<%= alert["targetAccountId"] %>" />
                           <a href="<%= hootsuite_remove_relationship_path %>" class="delete-icon alert-remove-target"></a>
                         </div>
                     <% end %>

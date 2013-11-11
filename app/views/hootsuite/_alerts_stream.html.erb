@@ -10,17 +10,18 @@
            f_connected_profile = f_connected_profile_url(alert)
            f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
            f_connected_linkedin_id = f_connected_linkedin_id(alert)
-           event_time = DateTime.strptime(alert["updatedAt"],'%m/%d/%Y %l:%M:%S %p').strftime("%b %e, %I:%M%P")
+           event_time = DateTime.strptime(alert["updatedAt"],'%m/%d/%Y %l:%M:%S %p').strftime("%Y-%m-%dT%H:%M:%SZ")
         %>
         <div class="alert-wrapper">
           <div class="theme_<%= @theme %>">
             <div class="height1"></div>
             <div class="thumbtop_section">
               <div class="target_block">Target <%= alert_type.downcase.capitalize %>: <%= network_alert %></div>
-              <div class="thimg"><div class="thumb_img"><a class="hs-open-user-info-popup" href="#" rel="<%= friend_linkedin_id %>"><img src="<%= friend_profile_pic_url(alert) %>"  alt="img" style="height: 30px;width: 30px;"></a></div></div>
+              <div class="thimg">
+                <div class="thumb_img"><a class="hs-open-user-info-popup" href="#" rel="<%= friend_linkedin_id %>"><img src="<%= friend_profile_pic_url(alert) %>"  alt="img" style="height: 30px;width: 30px;"></a></div></div>
               <div class="thumbuser_details">
                 <p class="thumb_username"><a class="hs-open-user-info-popup" href="#" rel="<%=friend_linkedin_id  %>"><%= friend_name(alert) %></a></p>
-                <div class="thumb_date"><%= event_time %></div>
+                <span class="thumb_date" data-localtime-format="MMM dd, HH:mmtt"><%= event_time %></span>
                 <p class="text"><a class="hs-open-user-info-popup" href="#" rel="<%= friend_linkedin_id %>"><%= friend_name(alert) %></a> is now connected to <a class="hs-open-user-info-popup" href="#" rel="<%= f_connected_linkedin_id %>"><%= f_connected_name(alert) %></a></p>
               </div>
               <div class="bigimg_details">

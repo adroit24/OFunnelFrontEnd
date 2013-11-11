@@ -749,7 +749,7 @@ ul.topmenu li a#linkedin-login {
     background: #ff5d00;
     border: 1px solid #d8d8d8;
     color: #fff;
-    padding: 4px 15px 6px;
+    padding: 4px 15px 4px;
     font-family: calibrib;
     font-size: 20px;
     cursor: pointer;
@@ -1960,4 +1960,348 @@ input.upload-logo {
     color:#fff;
     text-align:center;
     margin-top:15px;
+}
+
+/* -------------- 08-11-13 new css start ---------------------*/
+
+/* new popup box*/
+.popup_box2 {
+    width:630px;
+    min-height:410px;
+    height:auto;
+    background:#fff;
+    border-radius:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    -o-border-radius:6px;
+    -ms-border-radius:6px;
+    box-shadow: 0 0 5px #999999;
+    -moz-box-shadow: 0 0 5px #999999;
+    -webkit-box-shadow: 0 0 5px #999999;
+    -o-box-shadow: 0 0 5px #999999;
+    -ms-box-shadow: 0 0 5px #999999;
+    margin: auto;
+    padding:30px;
+}
+.close_buttton {
+    position: absolute;
+    right: -18px;
+    top: -14px;
+}
+.popup_box2_in {
+    float:left;
+    width:100%;
+}
+.topsteps {
+    float:left;
+    width:100%;
+}
+/* = STEPS CONTAINER
+----------------------------*/
+
+
+
+.wizard-steps {
+    margin:auto;
+    padding:0px;
+    position: relative;
+    clear:both;
+    font-weight: normal;
+    font-family: 'Museo-700' !important;
+}
+.wizard-steps div {
+    position:relative;
+}
+/* = STEP NUMBERS
+----------------------------*/
+.wizard-steps span {
+    display: block;
+    float: left;
+    font-size: 10px;
+    text-align:center;
+    width:15px;
+    margin: 2px 5px 0px 0px;
+    line-height:15px;
+    color: #fff;
+    background: #FFF;
+    border: 2px solid #fff;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+/* = DEFAULT STEPS
+----------------------------*/
+.wizard-steps a {
+    position:relative;
+    display:block;
+    width:auto;
+    height:36px;
+    margin-right: 20px;
+    padding:0px 16px 0px 16px;
+    float: left;
+    font-size:17px;
+    line-height:36px;
+    color:#fff;
+    background: #F0EEE3;
+    text-decoration:none;
+}
+.wizard-steps a:before {
+    width:0px;
+    height:0px;
+    border-top: 18px solid #F0EEE3;
+    border-bottom: 18px solid #F0EEE3;
+    border-left:18px solid transparent;
+    position: absolute;
+    content: "";
+    top: 0px;
+    left: -17px;
+}
+.wizard-steps a:after {
+    width: 0;
+    height: 0;
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left:18px solid #F0EEE3;
+    position: absolute;
+    content: "";
+    top: 0px;
+    right: -18px;
+}
+/* = COMPLETED STEPS
+----------------------------*/
+
+.wizard-steps .completed-step a {
+    color:#fff;
+    background: #fd630a;
+}
+.wizard-steps .completed-step a:before {
+    border-top: 18px solid #fd630a;
+    border-bottom: 18px solid #fd630a;
+}
+.wizard-steps .completed-step a:after {
+    border-left: 18px solid #fd630a;
+}
+.wizard-steps .completed-step span {
+    border: 2px solid #cdcdcd;
+    color: #fff;
+}
+/* = ACTIVE STEPS
+----------------------------*/
+.wizard-steps .active-step a {
+    color:#fff;
+    background: #cdcdcd;
+}
+.wizard-steps .active-step a:before {
+    border-top: 18px solid #cdcdcd;
+    border-bottom: 18px solid #cdcdcd;
+}
+.wizard-steps .active-step a:after {
+    border-left: 18px solid #cdcdcd;
+}
+.wizard-steps .active-step span {
+    color: #fff;
+    -webkit-box-shadow:0px 0px 2px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow:0px 0px 2px rgba(0, 0, 0, 0.8);
+    box-shadow:0px 0px 2px rgba(0, 0, 0, 0.8);
+    border: 2px solid #fd630a;
+}
+/* = HOVER STATES
+----------------------------*/
+.wizard-steps .completed-step:hover a, .wizard-steps .active-step:hover a {
+    color:#fff;
+    background: #fd630a;
+}
+.wizard-steps .completed-step:hover span, .wizard-steps .active-step:hover span {
+    color:#8F061E;
+}
+.wizard-steps .completed-step:hover a:before, .wizard-steps .active-step:hover a:before {
+    border-top: 18px solid #fd630a;
+    border-bottom: 18px solid #fd630a;
+}
+.wizard-steps .completed-step:hover a:after, .wizard-steps .active-step:hover a:after {
+    border-left: 18px solid #fd630a;
+}
+.wizard-steps a.border_none:first-child:before {
+    border:none !important;
+    border-radius:0px 0px 10px 10px;
+}
+.wizard-steps a.border_none:first-child:before {
+    border:none !important;
+}
+.wizard-steps a.border_none:first-child:after {
+    border-top:18px solid !important;
+    /*border-radius:0px 0px 10px 10px;*/
+}
+.wizard-steps a.border_none:first-child:after {
+    border-bottom:18px solid !important;
+}
+.wizard-steps a.border_none2:last-child:after {
+    border:none !important;
+    border-radius:0px 0px 10px 10px;
+}
+.wizard-steps a.border_none2:last-child:after {
+    border:none !important;
+}
+.margin_R0 {
+    margin-right:0px !important;
+}
+.mid_text_block {
+    float:left;
+    width:100%;
+    margin-top:22px;
+}
+.mid_text_block h1 {
+    font-size:30px;
+    font-weight:normal;
+    color:#0068a4;
+    margin:0px;
+    padding:0px;
+}
+.steptext {
+    float:left;
+    width:232px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#565454;
+    font-size:16px;
+    line-height:24px;
+    padding-top:18px;
+}
+.step1_img {
+    float:right;
+    width:auto;
+}
+.step_bottom_section {
+    float:left;
+    width:100%;
+    margin-top: 18px;
+}
+.step_bullet {
+    margin-left:262px;
+    float:left;
+    padding-top:10px;
+}
+.step_bullet ul {
+    margin:0px;
+    padding:0px;
+    list-style:none;
+}
+.step_bullet ul li {
+    float:left;
+    margin:0px;
+    padding:0px;
+}
+.step_bullet ul li a {
+    text-decoration:none;
+    background:url(../assets/bullets.png) -30px top no-repeat;
+    width:13px;
+    height:13px;
+    margin-right: 13px;
+    display:block;
+}
+.step_bullet ul li a:hover {
+    background:url(../assets/bullets.png) left top no-repeat;
+    width:13px;
+    height:13px;
+    margin-right: 13px;
+}
+.step_bullet ul li a.active {
+    background:url(../assets/bullets.png) left top no-repeat;
+    width:13px;
+    height:13px;
+    margin-right: 13px;
+}
+.next_step {
+    float:right;
+    font-size:22px;
+    color:#0068a4;
+    font-weight:400;
+    text-decoration:none;
+    margin-right:12px;
+}
+.next_step:hover {
+    text-decoration:none;
+    color:#0068a4;
+}
+.step2_img {
+    margin: auto;
+    width:100%;
+    margin-top:-24px;
+    text-align:center;
+    min-height:302px;
+}
+.step3_img {
+    margin: auto;
+    width:100%;
+    margin-top:24px;
+}
+.step3_bottom_text {
+    width:100%;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#0068a4;
+    font-weight:bold;
+    font-size:16px;
+    text-align:center;
+    margin-top:11px;
+}
+.steptext4_block {
+    float:left;
+    width:232px;
+}
+.steptext4 {
+    float:left;
+    width:232px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#565454;
+    font-size:16px;
+    line-height:24px;
+    padding-top:18px;
+    min-height:136px;
+}
+.step4_img {
+    float:right;
+    width:auto;
+}
+.step4btn {
+    float:left;
+    background:#0068a4;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:19px;
+    font-weight:bold;
+    color:#fff;
+    text-align:center;
+    vertical-align:middle;
+    line-height:24px;
+    border:1px solid #d8d8d8;
+    width:185px;
+    height:56px;
+    text-decoration:none;
+    padding-top:7px;
+}
+.step4btn:hover {
+    text-decoration:none;
+    color:#fff;
+}
+.minheight_314 {
+    min-height:314px;
+}
+
+/* -------------- 08-11-13 new css end ---------------------*/
+
+#black_overlay {
+    background-color: #666;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    position: absolute;
+    z-index: 9001;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.popUpDiv {
+    position: absolute;
+    width: auto;
+    height: auto;
+    z-index: 9002;
+
 }

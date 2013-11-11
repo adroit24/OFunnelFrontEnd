@@ -1,0 +1,139 @@
+<%
+   @welcome_wizard = session[:welcome_wizard]
+   unless @welcome_wizard.blank?
+%>
+    <div id="black_overlay" style="display: none;"></div>
+    <div id="welcome-wizard" class="popUpDiv" style="display: none;">
+      <!--<div class="lightbox">-->
+      <!-- popup box  start-->
+      <div style="float:left; position:relative;">
+        <a href="#" class="close_buttton" onclick='popup("welcome-wizard");return false;'><img alt="" src="/assets/close_btn.png" /></a>
+        <div class="ww-step-1 popup_box2">
+          <div class="wizard-steps">
+            <div class="completed-step"><a href="#step-one" class="border_none" onclick="showWWStepOne(); return false;"> What is OFunnel?</a></div>
+            <div class="active-step"><a href="#step-two" onclick="showWWStepTwo(); return false;">Add Alert</a></div>
+            <div class="active-step"><a href="#step-three" onclick="showWWStepThree(); return false;">Setup Alert</a></div>
+            <div class="active-step"><a href="#step-four" class="border_none2 margin_R0" onclick="showWWStepFour(); return false;">What to expect?</a></div>
+          </div>
+          <div class="mid_text_block minheight_314">
+            <h1 class="Museo-700">What is OFunnel?</h1>
+            <div class="steptext"> OFunnel is Google Alerts for professional relationships. Our networks are expanding on a daily basis. OFunnel helps mine for connections of interest. Whether you are in sales, recruiting, or seeking a new job.  It is all about relationships. </div>
+            <div class="step1_img"><img src="/assets/ofunnel_team.png" width="352" height="277" alt="team" /></div>
+          </div>
+          <div class="step_bottom_section">
+            <div class="step_bullet">
+              <ul>
+                <li><a href="#step-one" class="active" onclick="showWWStepOne(); return false;">&nbsp;</a></li>
+                <li><a href="#step-two" onclick="showWWStepTwo(); return false;">&nbsp;</a></li>
+                <li><a href="#step-three" onclick="showWWStepThree(); return false;">&nbsp;</a></li>
+                <li><a href="#step-four" onclick="showWWStepFour(); return false;">&nbsp;</a></li>
+              </ul>
+            </div>
+            <a href="#step-two" class="next_step Museo-700" onclick="showWWStepTwo(); return false;">Next <img src="/assets/next_arrow.png" width="7" height="14" /></a> </div>
+        </div>
+        <div class="ww-step-2 display-none popup_box2">
+          <div class="wizard-steps border_none">
+            <div class="active-step"><a href="#step-one" class="border_none" onclick="showWWStepOne(); return false;"> What is OFunnel?</a></div>
+            <div class="completed-step"><a href="#step-two" onclick="showWWStepTwo(); return false;">Add Alert</a></div>
+            <div class="active-step"><a href="#step-three" onclick="showWWStepThree(); return false;">Setup Alert</a></div>
+            <div class="active-step"><a href="#step-four" class="border_none2 margin_R0" onclick="showWWStepFour(); return false;">What to expect?</a></div>
+          </div>
+          <div class="mid_text_block">
+            <h1 class="Museo-700">Add an Alert</h1>
+            <div class="step2_img"><img src="/assets/step2_image.png" width="510" height="277" /></div>
+          </div>
+          <div class="step_bottom_section">
+            <div class="step_bullet">
+              <ul>
+                <li><a href="#step-one" onclick="showWWStepOne(); return false;">&nbsp;</a></li>
+                <li><a href="#step-two" class="active" onclick="showWWStepTwo(); return false;">&nbsp;</a></li>
+                <li><a href="#step-three" onclick="showWWStepThree(); return false;">&nbsp;</a></li>
+                <li><a href="#step-four" onclick="showWWStepFour(); return false;">&nbsp;</a></li>
+              </ul>
+            </div>
+            <a href="#step-three" class="next_step Museo-700" onclick="showWWStepThree(); return false;">Next <img src="/assets/next_arrow.png" width="7" height="14" /></a>
+          </div>
+        </div>
+        <div class="ww-step-3 display-none popup_box2">
+          <div class="wizard-steps border_none">
+            <div class="active-step"><a href="#step-one" class="border_none" onclick="showWWStepOne(); return false;"> What is OFunnel?</a></div>
+            <div class="active-step"><a href="#step-two" onclick="showWWStepTwo(); return false;">Add Alert</a></div>
+            <div class="completed-step"><a href="#step-three" onclick="showWWStepThree(); return false;">Setup Alert</a></div>
+            <div class="active-step"><a href="#step-four" class="border_none2 margin_R0" onclick="showWWStepFour(); return false;">What to expect?</a></div>
+          </div>
+          <div class="mid_text_block">
+            <h1 class="Museo-700">Setup Alert</h1>
+            <div class="step3_img"><img src="/assets/step3_image.png" /></div>
+            <div class="step3_bottom_text">Further filters are available based on industry and geography</div>
+          </div>
+          <div class="step_bottom_section">
+            <div class="step_bullet">
+              <ul>
+                <li><a href="#step-one" onclick="showWWStepOne(); return false;">&nbsp;</a></li>
+                <li><a href="#step-two" onclick="showWWStepTwo(); return false;">&nbsp;</a></li>
+                <li><a href="#step-three" class="active" onclick="showWWStepThree(); return false;">&nbsp;</a></li>
+                <li><a href="#step-four" onclick="showWWStepFour(); return false;">&nbsp;</a></li>
+              </ul>
+            </div>
+            <a href="#step-four" class="next_step Museo-700" onclick="showWWStepFour(); return false;">Next <img src="/assets/next_arrow.png" width="7" height="14" /></a>
+          </div>
+        </div>
+        <div class="ww-step-4 display-none popup_box2">
+          <div class="wizard-steps border_none">
+            <div class="active-step"><a href="#step-one" class="border_none" onclick="showWWStepOne(); return false;"> What is OFunnel?</a></div>
+            <div class="active-step"><a href="#step-two" onclick="showWWStepTwo(); return false;">Add Alert</a></div>
+            <div class="active-step"><a href="#step-three" onclick="showWWStepThree(); return false;">Setup Alert</a></div>
+            <div class="completed-step"><a href="#step-four" class="border_none2 margin_R0" onclick="showWWStepFour(); return false;">What to expect?</a></div>
+          </div>
+          <div class="mid_text_block minheight_314">
+            <h1 class="Museo-700">What to expect</h1>
+            <div class="steptext4_block">
+              <div class="steptext4"> Every day that we find a connection of interest we will notify you by email. </div>
+              <a href="#" class="step4btn" onclick='popup("welcome-wizard");return false;'>Start using<br />
+                OFunnel now</a> </div>
+            <div class="step4_img"><img src="/assets/step4_image.png"  /></div>
+          </div>
+          <div class="step_bottom_section">
+            <div class="step_bullet">
+              <ul>
+                <li><a href="#step-one" onclick="showWWStepOne(); return false;">&nbsp;</a></li>
+                <li><a href="#step-two" onclick="showWWStepTwo(); return false;">&nbsp;</a></li>
+                <li><a href="#step-three" onclick="showWWStepThree(); return false;">&nbsp;</a></li>
+                <li><a href="#step-four" class="active" onclick="showWWStepFour(); return false;">&nbsp;</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- popup box end-->
+    </div>
+
+    <%= javascript_include_tag "simple-popup" %>
+    <script type="text/javascript">
+        popup("welcome-wizard");
+
+        // Show step 1
+        showWWStepOne = function () {
+            $('div[class^=ww-step]').hide();
+            $('div.ww-step-1').show();
+        }
+        // Show step 2
+        showWWStepTwo = function () {
+            $('div[class^=ww-step]').hide();
+            $('div.ww-step-2').show();
+        }
+        // Show step 3
+        showWWStepThree = function () {
+            $('div[class^=ww-step]').hide();
+            $('div.ww-step-3').show();
+        }
+        // Show step 4
+        showWWStepFour = function () {
+            $('div[class^=ww-step]').hide();
+            $('div.ww-step-4').show();
+        }
+    </script>
+<%
+   end
+   session[:welcome_wizard] = nil
+%>

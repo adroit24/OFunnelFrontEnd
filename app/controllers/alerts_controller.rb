@@ -35,6 +35,8 @@ class AlertsController < ApplicationController
   end
 
   def new
+    get_all_industries
+    get_all_locations
   end
 
   def create
@@ -105,6 +107,8 @@ class AlertsController < ApplicationController
 
   def edit
     @alert = []
+    get_all_industries
+    get_all_locations
     get_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlertWithTargetAccountId}/#{current_user_id}/#{params[:id]}")
     response = Typhoeus.get(get_alert_api_endpoint)
     if response.success? && !api_contains_error("GetNetworkAlertWithTargetAccountId", response)
@@ -415,6 +419,32 @@ class AlertsController < ApplicationController
       emails = api_response["recipientEmailDetails"] if api_response["error"] == nil
     end
     return emails
+  end
+
+  def get_all_industries
+    @industries = []
+    @sub_industries = []
+    get_all_industry_list_api_endpoint = "#{Settings.api_endpoints.GetAllIndustryList}"
+    response = Typhoeus.get(get_all_industry_list_api_endpoint)
+    if response.success? && !api_contains_error("GetAllIndustryList", response)
+      api_response = JSON.parse(response.response_body)["GetAllIndustryListResult"]
+      industries_collection = api_response["industry"]
+      @industries = industries_collection.collect { |industry| industry["industryType"] }
+      @sub_industries = industries_collection.collect { |industry| industry["subIndustry"] }
+    end
+  end
+
+  def get_all_locations
+    @states = []
+    @areas = []
+    get_all_location_list_api_endpoint = "#{Settings.api_endpoints.GetAllLocationList}"
+    response = Typhoeus.get(get_all_location_list_api_endpoint)
+    if response.success? && !api_contains_error("GetAllLocationList", response)
+      api_response = JSON.parse(response.response_body)["GetAllLocationListResult"]
+      location_collection = api_response["locations"]
+      @states = location_collection.collect { |industry| industry["state"] }
+      @areas = location_collection.collect { |industry| industry["area"] }
+    end
   end
 
 end

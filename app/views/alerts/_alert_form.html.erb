@@ -6,9 +6,9 @@
    industry_filters = []
    location_filters = []
    company_size_range = [
-           '11-50','1-10','Any',
-           '501-1000','201-500','51-200',
-           '10000+','5001-10000','1001-5000'
+           'Any','1-10','11-50',
+           '51-200','201-500','501-1000',
+           '1001-5000','5001-10000','10000+'
    ]
    unless @alert.blank?
      alert_id = @alert["targetAccountId"]
@@ -36,42 +36,43 @@
    end
 %>
 <div class="alert_edit_sec">
+<span class="col-orange calibrib font-18 mrg-R25 float-R" style="line-height: 10px;">Monitor LinkedIn as your Network Expands</span>
 <form action="<%= save_alert_changes_path %>" class="save-alert-changes" style="background:none;">
 <input type="hidden" name="alertId" value="<%= alert_id %>">
 <table width="100%" border="0" cellspacing="0" cellpadding="14">
 <tr>
-  <th width="16%" height="70" valign="middle">Filter type</th>
-  <td width="42%" valign="middle"><ul class="blue-radio-box marg_t23">
-    <li class="width_116 float-R mrg-T5 col-black-2">
-      <label for="radio1" class="mrg-L20 font-14 font_arial">Person</label>
-      <% unless alert_type.nil? %>
-          <span></span><input type="radio" id="radio1" name="filter-type" value="Person" <%= 'checked="checked"' if alert_type.eql? "Person" %>/><span></span>
-      <% else %>
-          <span></span><input type="radio" id="radio1" name="filter-type" value="Person" /><span></span>
-      <% end %>
-    </li>
-    <li class="width_116 float-R mrg-T5 col-black-2">
-      <label for="radio2" class="mrg-L20 font-14 font_arial">Role</label>
-      <% unless alert_type.nil? %>
-          <span></span><input type="radio" id="radio2" name="filter-type" value="Role" <%= 'checked="checked"' if alert_type.eql? "Role" %>/><span></span>
-      <% else %>
-          <span></span><input type="radio" id="radio2" name="filter-type" value="Role" /><span></span>
-      <% end %>
-    </li>
-    <li class="width_116 float-R mrg-T5 col-black-2">
-      <label for="radio1" class="mrg-L20 font-14 font_arial">Company</label>
-      <% unless alert_type.nil? %>
-          <span></span><input type="radio" id="radio3" name="filter-type" value="Company" <%= 'checked="checked"' if alert_type.eql? "Company" %>/><span></span>
-      <% else %>
-          <span></span><input type="radio" id="radio3" name="filter-type" value="Company" checked="checked"/><span></span>
-      <% end %>
-    </li>
-  </ul>
+  <th width="16%" height="70" valign="middle">Filter Type</th>
+  <td width="42%" valign="middle">
+    <ul class="blue-radio-box marg_t23">
+      <li class="width_116 float-R mrg-T5 col-black-2">
+        <label for="radio1" class="mrg-L20 font-14 font_arial">Person</label>
+        <% unless alert_type.nil? %>
+            <span></span><input type="radio" id="radio1" name="filter-type" value="Person" <%= 'checked="checked"' if alert_type.eql? "Person" %>/><span></span>
+        <% else %>
+            <span></span><input type="radio" id="radio1" name="filter-type" value="Person" /><span></span>
+        <% end %>
+      </li>
+      <li class="width_116 float-R mrg-T5 col-black-2">
+        <label for="radio2" class="mrg-L20 font-14 font_arial">Role</label>
+        <% unless alert_type.nil? %>
+            <span></span><input type="radio" id="radio2" name="filter-type" value="Role" <%= 'checked="checked"' if alert_type.eql? "Role" %>/><span></span>
+        <% else %>
+            <span></span><input type="radio" id="radio2" name="filter-type" value="Role" /><span></span>
+        <% end %>
+      </li>
+      <li class="width_116 float-R mrg-T5 col-black-2">
+        <label for="radio1" class="mrg-L20 font-14 font_arial">Company</label>
+        <% unless alert_type.nil? %>
+            <span></span><input type="radio" id="radio3" name="filter-type" value="Company" <%= 'checked="checked"' if alert_type.eql? "Company" %>/><span></span>
+        <% else %>
+            <span></span><input type="radio" id="radio3" name="filter-type" value="Company" checked="checked"/><span></span>
+        <% end %>
+      </li>
+    </ul>
   </td>
-  <td style="border: none !important;">
+  <td style="border: none !important;padding-top: 0;">
     <div class="alert-text-box" style="width: 335px;">
-      <span class="col-orange calibrib font-18">Monitor LinkedIn as your Network Expands</span>
-      <p>Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role.</p>
+      <p class="mrg-T35">Enter a search query you wish to monitor and tell us whether it is a company, an individual, or a job role.</p>
     </div>
   </td>
 </tr>
@@ -89,7 +90,7 @@
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>Tell us the company where you are looking for connections.</p>
+      <p class="mrg-T10">Which company would you like to get connected with?</p>
     </div>
   </td>
 </tr>
@@ -107,12 +108,12 @@
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>Tell us the role or job functions of interest.</p>
+      <p class="mrg-T10">What role or job function are you interested in?</p>
     </div>
   </td>
 </tr>
 <tr id="Person-filter" class="display-none">
-  <th valign="middle">Person</th>
+  <th valign="top" style="padding-top: 35px;">Person</th>
   <td valign="middle">
     <div class="input_block mrg-T10 mrg-B10">
       <% if alert_type.eql? "Person" %>
@@ -133,7 +134,11 @@
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>Tell us the person who you are trying to connect with OR whose connections you want to monitor.</p>
+      <div class="mrg-T10">
+        <p class="mrg-0" style="line-height: 18px; padding-bottom: 8px;">Their are 2 different use cases here:</p>
+        <p class="mrg-0" style="line-height: 18px; padding-bottom: 8px;">1. Competitive Intelligence: You can track every time one of your contacts makes a new connection.  Particularly useful if you are connected to a competitor.</p>
+        <p class="mrg-0" style="line-height: 18px; padding-bottom: 8px;">2. You want to ONLY be notified when a connection occurs to a particular person.</p>
+      </div>
     </div>
   </td>
 </tr>
@@ -145,18 +150,24 @@
           <% company_filters.each_with_index do |company,i| %>
               <span class="company darkgray mrg-L5 mrg-T5"><%= company %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
           <% end %>
-      <% end %>
-      <div class="pos-Rel float-L">
+          <div class="pos-Rel float-L">
+        <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
+          <input type="text" name="company2" class="inputbox_2 outline-none" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
+        </span>
+          </div>
+      <% else %>
+          <div class="pos-Rel float-L">
         <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
           <input type="text" name="company2" class="inputbox_2 outline-none" placeholder="Any Company" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Any Company'">
         </span>
-      </div>
+          </div>
+      <% end %>
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
     </div>
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>AND should those connections be from certain companies of interest?</p>
+      <p class="mrg-T10">Do you want to  limits results to connections from certain companies?</p>
     </div>
   </td>
 </tr>
@@ -168,19 +179,25 @@
           <% role_filters.each_with_index do |role,i| %>
               <span class="role darkgray mrg-L5 mrg-T5"><%= role %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
           <% end %>
-      <% end %>
-      <div class="pos-Rel float-L">
+          <div class="pos-Rel float-L">
+        <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
+          <input type="text" name="role2" class="inputbox_2 outline-none" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
+        </span>
+          </div>
+      <% else %>
+          <div class="pos-Rel float-L">
         <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
           <input type="text" name="role2" class="inputbox_2 outline-none" placeholder="Any Role" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Any Role'">
         </span>
-      </div>
+          </div>
+      <% end %>
       <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
     </div>
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p class="Company-slf display-none">Are you looking for connections within specific job functions?</p>
-      <p class="Person-slf display-none">AND certain roles or job functions of interest?</p>
+      <p class="mrg-T10 Company-slf display-none">Are you looking for someone in particular?  Give us a keyword for their role.  This can be particularly useful when you are trying to get into a big company.</p>
+      <p class="mrg-T10 Person-slf display-none">Do you want to limit results to people with certain roles?</p>
     </div>
   </td>
 </tr>
@@ -190,7 +207,7 @@
     <ul class="blue-radio-box mrg-T10 mrg-B10">
       <% unless filters.nil? or size_filters.blank? %>
           <% company_size_range.each_with_index do |range,i| %>
-              <li class="width_116 float-R mrg-T5 col-black-2">
+              <li class="width_116 float-L mrg-T5 col-black-2">
                 <div class="checkboxFour">
                   <input type="checkbox" value="<%= range %>" id="checkboxFourInput<%= i %>" <%= 'checked=true' if size_filters.include? range %> name="size-filter" />
                   <label for="checkboxFourInput<%= i %>"></label>
@@ -200,7 +217,7 @@
           <% end %>
       <% else %>
           <% company_size_range.each_with_index do |range,i| %>
-              <li class="width_116 float-R mrg-T5 col-black-2">
+              <li class="width_116 float-L mrg-T5 col-black-2">
                 <div class="checkboxFour">
                   <input type="checkbox" value="<%= range %>" id="checkboxFourInput<%= i %>" <%= 'checked=true' if range.eql? "Any" %> name="size-filter" />
                   <label for="checkboxFourInput<%= i %>"></label>
@@ -213,105 +230,82 @@
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>Are you looking for connections within companies of certain size?</p>
+      <p class="mrg-T15">Are you looking for connections within companies of a certain size?</p>
     </div>
   </td>
 </tr>
 <tr class="Role-slf">
   <th valign="middle">Industry</th>
   <td valign="middle">
-    <% unless filters.nil? or industry_filters.blank? %>
-        <div class="input_block mrg-T10 mrg-B10 pad-B5">
+    <div class="input_block mrg-T10 mrg-B10 pad-B5">
+      <% unless filters.nil? or industry_filters.blank? %>
           <% industry_filters.each_with_index do |industry,i| %>
               <span class="industry darkgray mrg-L5 mrg-T5"><%= industry %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
-              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder=" Any Industry" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Any Industry'">
+              <input type="text" name="industries" class="inputbox_2 outline-none" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
             </span>
-            <div class="listboxs display-none" style="height: 180px;">
-              <div class="search-connection-loader"></div>
-              <div class="search-connection-no-result display-none" style="height: 120px;">No industry found</div>
-              <ul class="list-container display-none"></ul>
-            </div>
           </div>
           <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
-        </div>
-    <% else %>
-        <div class="input_block mrg-T10 mrg-B10 pad-B5">
+      <% else %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position: relative;">
               <input type="text" name="industries" class="inputbox_2 outline-none" placeholder=" Any Industry" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Any Industry'">
             </span>
-            <div class="listboxs display-none" style="height: 180px;">
-              <div class="search-connection-loader"></div>
-              <div class="search-connection-no-result display-none" style="height: 120px;">No industry found</div>
-              <ul class="list-container display-none"></ul>
-            </div>
           </div>
           <a href="#" class="float-R edit_icn"><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
-        </div>
-    <% end %>
+      <% end %>
+      <%= render "industries" %>
+    </div>
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>AND within specific industry?</p>
+      <p class="mrg-T10">Do you want to limit results to a specific industry?</p>
     </div>
   </td>
 </tr>
 <tr class="Role-slf">
   <th valign="middle">Location</th>
   <td valign="middle">
-    <% unless filters.nil? or location_filters.blank? %>
-        <div class="input_block mrg-T10 mrg-B10 pad-B5">
+    <div class="input_block mrg-T10 mrg-B10 pad-B5">
+      <% unless filters.nil? or location_filters.blank? %>
           <% location_filters.each_with_index do |location,i| %>
               <span class="location darkgray mrg-L5 mrg-T5"><%= location %><a class="remove-darkgray" href="#"><img src="/assets/close.png" width="8" height="8" alt="close"></a></span>
           <% end %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
-              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Anywhere" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Anywhere'">
+              <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="" onfocus="this.placeholder = ''" onblur="this.placeholder = ''">
             </span>
-            <div class="listboxs display-none" style="height: 180px;">
-              <div class="search-connection-loader"></div>
-              <div class="search-connection-no-result display-none" style="height: 120px;">No location found</div>
-              <ul class="list-container display-none"></ul>
-            </div>
           </div>
           <a href="#" class="float-R edit_icn" ><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
-        </div>
-    <% else %>
-        <div class="input_block mrg-T10 mrg-B10 pad-B5">
+      <% else %>
           <div class="pos-Rel float-L">
             <span class="lightgray_txtdark mrg-L5 mrg-T5" style="position:relative;">
               <input type="text" name="locations" class="inputbox_2 outline-none" placeholder="Anywhere" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Anywhere'">
             </span>
-            <div class="listboxs display-none" style="height: 180px;">
-              <div class="search-connection-loader"></div>
-              <div class="search-connection-no-result display-none" style="height: 120px;">No location found</div>
-              <ul class="list-container display-none"></ul>
-            </div>
           </div>
           <a href="#" class="float-R edit_icn" ><img src="/assets/edit_icon2.png" width="11" height="10" alt="edit"></a>
-        </div>
-    <% end %>
+      <% end %>
+      <%= render "locations" %>
+    </div>
   </td>
   <td style="border: none !important;">
     <div class="alert-text-box" style="width: 335px;">
-      <p>AND at certain locations?</p>
+      <p class="mrg-T10">Do you want to limit results to people in certain locations?</p>
     </div>
   </td>
 </tr>
 </table>
 <div class="all-box mrg-T30">
-  <div class="send-box txt-L" style="width: auto;"><input id="save-alert-form" type="submit" value="Save changes" class="send-btn calibrib alert-salesforce-submit font-14 bold" style="height: 41px; text-align: center; line-height: 36px;"></div>
-  <div class="send-box mrg-B15 mrg-L10" style="width: auto;"><a href="<%= alerts_path %>" class="send-btn float-L font-14 bold" style="height: 28px; text-align: center; line-height: 36px;">Cancel</a></div>
+  <div class="send-box txt-L" style="width: auto;"><input id="save-alert-form" type="submit" value="Save changes" class="send-btn font-16 bold alert-salesforce-submit" style="height: 41px; width: 185px; font-family: arial;"></div>
 </div>
 </form>
 </div> <!-- End Contoso Page -->
 <script type="text/javascript">
     getPeopleList();
-    getIndustryList();
-    getLocationList();
+    setIndustryList();
+    setLocationList();
     $('tr#' + $('input[name=filter-type]:checked').val() + '-filter').show();
     $('.' + $('input[name=filter-type]:checked').val() + '-slf').show();
 </script>

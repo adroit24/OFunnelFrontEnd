@@ -27,7 +27,7 @@ twitter:
   REDIRECT_URI: 'http://localhost:3000/twitter/twitter_authorization_callback'
 
 hootsuite:
-  APP_KEY: '19g7d90mb0m8kccw800wg048c3iaa9afcom'
+  APP_KEY: '0u1agem6ryyowc8wccs8o8wc43iaa9afcml'
   RECIEVER_PATH: "https://localhost:9292/ofunnel_receiver.html"
 
 api_endpoints:
@@ -132,6 +132,8 @@ api_endpoints:
   GetNetworkAlertWithTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetworkAlertWithTargetAccountId"
   GetAllIndustryList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllIndustryList"
   GetAllLocationList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllLocationList"
+  GetEmailFrequencyPreferences: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getEmailFrequencyPreferences"
+  SetEmailFrequencyPreferences: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/setEmailFrequencyPreferences"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"

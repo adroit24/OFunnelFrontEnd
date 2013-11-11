@@ -601,26 +601,24 @@ class LinkedinController < ApplicationController
     #Use the access token to make an authenticated API call
     response = access_token.get('https://www.linkedin.com/v1/people/~:(id,first-name,last-name,public-profile-url,picture-url,email-address,educations,positions,headline,location:(name),skills)?format=json')
     profile = JSON.parse(response.body)
+    ofunnel_user_type = "OFUNNEL"
     unless back_url.nil?
-      discover_welcome_email_flag = back_url.match(/alerts/) ? true : false
-    else
-      discover_welcome_email_flag = false
+      if back_url.match(/alerts/)
+        ofunnel_user_type = "ALERT"
+      elsif back_url.match(/hootsuite/)
+        ofunnel_user_type = "HOOTSUITE"
+      end
     end
 
-    #check_ofunnel_user_exists_endpoint = "#{Settings.api_endpoints.CheckOFunnelUserExist}/#{profile["id"]}/#{profile["emailAddress"]}"
-    #check_ofunnel_user_exists_response = Typhoeus.get(check_ofunnel_user_exists_endpoint)
+    check_ofunnel_user_exists_endpoint = "#{Settings.api_endpoints.CheckOFunnelUserExist}/#{profile["id"]}/#{profile["emailAddress"]}"
+    check_ofunnel_user_exists_response = Typhoeus.get(check_ofunnel_user_exists_endpoint)
 
-    #unless check_token_in_session or @allow_login
-    #  if check_ofunnel_user_exists_response.success? && !api_contains_error("CheckOFunnelUserExist", check_ofunnel_user_exists_response)
-    #    check_ofunnel_user_exists_response = JSON.parse(check_ofunnel_user_exists_response.response_body)["CheckOFunnelUserExistResult"]
-    #    unless check_ofunnel_user_exists_response["isOFunnelUser"]
-    #      reset_session
-    #      redirect_to Settings.wrong_token_redirect and return
-    #    end
-    #  else
-    #    redirect_to root_path and return
-    #  end
-    #end
+    if check_ofunnel_user_exists_response.success? && !api_contains_error("CheckOFunnelUserExist", check_ofunnel_user_exists_response)
+      check_ofunnel_user_exists_response = JSON.parse(check_ofunnel_user_exists_response.response_body)["CheckOFunnelUserExistResult"]
+      unless check_ofunnel_user_exists_response["isOFunnelUser"]
+        session[:welcome_wizard] = true
+      end
+    end
 
     user_data = {
         :lnkdnId => profile["id"],
@@ -638,8 +636,7 @@ class LinkedinController < ApplicationController
         }.to_json,
         :headline => profile["headline"],
         :location => profile["location"]["name"],
-        :userType => "OFUNNEL",
-        :isLoginFromDiscoverRelationShip => discover_welcome_email_flag
+        :userType => ofunnel_user_type
     }
 
     api_endpoint = "#{Settings.api_endpoints.AddOFunnelUser}"
