@@ -2305,3 +2305,87 @@ input.upload-logo {
     z-index: 9002;
 
 }
+
+.ofunnel_alert_text{
+    float:left;
+    width:100%;
+    margin:0px;
+    padding:0px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    color:#2c2c2c;
+    line-height:20px;
+    padding-bottom:30px;
+}
+
+.input_block2{
+    width:20%;
+    border:1px solid #cccaca;
+    padding:0px;
+    float:left;
+    position:relative;
+}
+.input_block3{
+    width:40%;
+    border:1px solid #cccaca;
+    padding:0px;
+    float:left;
+    position:relative;
+}
+.atmbox{
+    float: left;
+    margin: 10px 0 0 20px;
+}
+
+.width160{
+    width:160px;
+}
+
+
+/* new popup box*/
+.popup_box5 {
+    width:486px;
+    min-height:210px;
+    height:auto;
+    background:#fff;
+    border-radius:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    -o-border-radius:6px;
+    -ms-border-radius:6px;
+    box-shadow: 0 0 5px #999999;
+    -moz-box-shadow: 0 0 5px #999999;
+    -webkit-box-shadow: 0 0 5px #999999;
+    -o-box-shadow: 0 0 5px #999999;
+    -ms-box-shadow: 0 0 5px #999999;
+    margin: auto;
+    padding:32px;
+}
+.close_buttton5 {
+    position: absolute;
+    right: -18px;
+    top: -14px;
+}
+.popup_box2_in {
+    float:left;
+    width:100%;
+}
+.topsteps {
+    float:left;
+    width:100%;
+}
+.ofunnel_text {
+    float:left;
+    width:100%;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#6a6a6a;
+    font-size:16px;
+    line-height:24px;
+
+    margin-bottom:30px;
+
+}
+
+input.inputbox:focus {
+    outline: none !important;
+}

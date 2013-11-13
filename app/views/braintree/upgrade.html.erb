@@ -1,0 +1,84 @@
+<div class="ofunnelalert-box">
+  <div class="userprofile-box">
+    <div class="topheadingwrapper">
+      <div class="headings1 pad-B20">Account Upgrade</div> <a class="addnewalerts" href="<%= notifications_path %>">Cancel</a>
+      <p class="ofunnel_alert_text">OFunnel Alerts is at $9/month subscription. You get unlimited access to alerts you need for for business groth. Lorem Ipsum is simply dummy text of the printing.</p>
+    </div>
+  </div>
+  <div class="alert_edit_sec" style="width: 65%;">
+    <form action="<%= create_subscription_path %>" method="POST" style="background:none;" id="braintree-payment-form">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
+      <table width="100%" border="0" cellspacing="0" cellpadding="14">
+        <tr>
+          <th valign="middle">Name on card</th>
+          <td valign="middle">
+            <div class="input_block mrg-T10 mrg-B10">
+              <input type="text" class="inputbox">
+              <a href="#" class="float-R edit_icn">
+                <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th width="26%" height="70" valign="middle">Card type</th>
+          <td valign="middle"><ul class="blue-radio-box marg_t23">
+            <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio1" class="mrg-L20 font-14 font_arial">Visa</label><span></span><input type="radio" id="radio1" name="cardTtype" checked="checked" /><span></span></li>
+            <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio2" class="mrg-L20 font-14 font_arial">Mastercard</label><span></span><input type="radio" id="radio2" name="cardTtype" /><span></span></li>
+            <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio3" class="mrg-L20 font-14 font_arial">Am Express</label><span></span><input type="radio" id="radio3" name="cardTtype" /><span></span></li>
+          </ul></td>
+        </tr>
+        <tr>
+          <th valign="middle">Card number</th>
+          <td valign="middle">
+            <div class="input_block mrg-T10 mrg-B10">
+              <input type="text" size="20" autocomplete="off" data-encrypted-name="number" class="inputbox">
+              <a href="#" class="float-R edit_icn">
+                <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
+              </a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th valign="middle">CVV</th>
+          <td valign="middle">
+            <div class="input_block2 mrg-T10 mrg-B10">
+              <input type="text" size="4" autocomplete="off" data-encrypted-name="cvv" class="inputbox">
+              <a href="#" class="float-R edit_icn">
+                <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
+              </a>
+            </div>
+            <span class="atmbox">
+              <img src="/assets/atm_back.png" width="58" height="37" alt="atm">
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th valign="middle">Expiry date</th>
+          <td valign="middle">
+            <div class="input_block2 mrg-T10 mrg-B10">
+              <input type="text" size="2" data-encrypted-name="month" class="inputbox">
+              <a href="#" class="float-R edit_icn">
+                <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
+              </a>
+            </div>
+            <div class="input_block3 mrg-T10 mrg-B10 mrg-L20">
+              <input type="text" size="4" data-encrypted-name="year" class="inputbox">
+              <a href="#" class="float-R edit_icn">
+                <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
+              </a>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="mrg-T20 mrg-L10">
+        <input type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30 width160" value="Save">
+      </div>
+    </form>
+  </div> <!-- End Contoso Page -->
+</div><!-- End Ofunnel Alert-box -->
+<script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+<script>
+    var braintree = Braintree.create("<%= Settings.braintree.ENCRYPTION_KEY %>");
+    braintree.onSubmitEncryptForm('braintree-payment-form');
+</script>

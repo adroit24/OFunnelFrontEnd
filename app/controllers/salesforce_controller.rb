@@ -16,7 +16,7 @@ class SalesforceController < ApplicationController
   # This method will handle the callback once the user authorizes your application
   def salesforce_authorization_callback
     begin
-      back_url = session[:return_to]
+      back_url = session[:return_to].blank? ? salesforce_explore_relationship_path : session[:return_to]
       session[:return_to] = nil
       #Fetch the 'code' query parameter from the callback
       code = params[:code]

@@ -30,6 +30,9 @@ hootsuite:
   APP_KEY: '0u1agem6ryyowc8wccs8o8wc43iaa9afcml'
   RECIEVER_PATH: "https://localhost:9292/ofunnel_receiver.html"
 
+braintree:
+  ENCRYPTION_KEY: "MIIBCgKCAQEAwKkKnyTzHlXy+8tMcmztAnC2XX0x4WC//O/NiHlYXVYaTJsNbGfUAd42Uk3KB9FOiOExOZmrgHb7MgXLyrfZvrzeZ0MVAwkqYzVWz5Sru0Yrly34mcCH8f7yPiAzpTtZ4MQPFYtA72ZgDSin7yiakyKeRsMkCQ9fF93oF/hQ4xpNBHNY+YKKm9gC0EyJk0RyG5vY+1HdX8wfyM3babgoTN3wtTkKbmDOInCLmI3g85VRwxsDrnggRfWS0ZcJUIir8elX7AsgUORJOzn/RxNRYfjzOQ+zX7BQr6mSnI69wPNEJ1gRDuR3IDheGG6r9MEj03Oy4sMVjK89n49VN5fU1QIDAQAB"
+
 api_endpoints:
   #LinkedIn API Endpoints
   GetConnectionsInCompany: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/getConnectionsInCompany"

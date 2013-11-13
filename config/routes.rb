@@ -82,6 +82,10 @@ OFunnel::Application.routes.draw do
   match '/notification_frequency' => "users#notification_frequency", :as => :notification_frequency
   match '/unsubscribe/:id' => "users#unsubscribe", :as => :unsubscribe
 
+  match '/upgrade' => "braintree#upgrade", :as => :upgrade
+  match '/create_subscription' => "braintree#create_subscription", :as => :create_subscription
+  match '/cancel_subscription' => "braintree#cancel_subscription", :as => :cancel_subscription
+
   match '/group_members/:id' => "groups#members", :as => :group_members
   match '/add_group' => "groups#add", :as => :add_group
   match '/delete_group/:id' => "groups#delete", :as => :delete_group

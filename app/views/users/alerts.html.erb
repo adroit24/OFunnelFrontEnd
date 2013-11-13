@@ -10,9 +10,6 @@
         <strong>Email:</strong>  <a href="mailto:<%= profile_user_email %>"><%= profile_user_email %></a>
         <br />
         <strong>Location: </strong>  <span><%= profile_user_location %></span>
-      </div>
-
-      <div class="info float-R">
         <div class="social-integration">
           <strong>Logged in with:</strong>
           <a href="<%= authorize_with_likedin_path %>">
@@ -28,6 +25,20 @@
           <!--<img src="/assets/twitter_32.png" class="<%#= check_facebook_session ? "enabled" : "disabled" %>" />-->
           <!--</a>-->
         </div>
+      </div>
+
+      <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
+        <% if true %>
+            <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
+            <br />
+            <strong>Payment info:</strong> VISA "....1234"<span style="color: #949494;"> | </span><a href="<%= upgrade_path %>">Change</a>
+            <br />
+            <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
+        <% else %>
+            <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold">Trial</span><span> (expires in 14 days)</span></a>
+            <br />
+            <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
+        <% end %>
       </div>
     </div>
 
@@ -140,6 +151,7 @@
     </div>
   </div><!-- End sent_received_section -->
 </div><!-- End Right Panel -->
+
 <% unless results_flag %>
     <style type="text/css">
         div#dataTable-search_filter {

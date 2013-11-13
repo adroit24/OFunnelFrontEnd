@@ -1481,26 +1481,26 @@ $(function() {
     });
 
     $(document).on('blur','input[name=role2]',function(){
-        value = $(this).val();
-        if(value.match(/\S/)) {
-            $(this).parents('div.pos-Rel').before('<span class="role darkgray mrg-L5 mrg-T5">' +
-                value + '<a class="remove-darkgray" href="#">' +
-                '<img src="/assets/close.png" width="8" height="8" alt="close">' +
-                '</a></span>');
-            $('input[name="role2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
-            $(this).val("");
+        addRoleFilter(this);
+        return false;
+    });
+
+    $(document).on('keypress','input[name=role2]',function(event) {
+        if (event.keyCode == 13) {
+            addRoleFilter(this);
+            event.preventDefault();
         }
     });
 
     $(document).on('blur','input[name=company2]',function(){
-        value = $(this).val();
-        if(value.match(/\S/)) {
-            $(this).parents('div.pos-Rel').before('<span class="company darkgray mrg-L5 mrg-T5">' +
-                value + '<a class="remove-darkgray" href="#">' +
-                '<img src="/assets/close.png" width="8" height="8" alt="close">' +
-                '</a></span>');
-            $('input[name="company2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
-            $(this).val("");
+        addCompanyFilter(this);
+        return false
+    });
+
+    $(document).on('keypress','input[name=company2]',function(event) {
+        if (event.keyCode == 13) {
+            addCompanyFilter(this);
+            event.preventDefault();
         }
     });
 
@@ -2285,6 +2285,30 @@ function setLocationList() {
         $(this).find('a').attr('rel',id);
         checkbox.prop('checked',true).parents('li').addClass('selected2');
     });
+}
+
+function addRoleFilter(roleInput) {
+    value = $(roleInput).val();
+    if(value.match(/\S/)) {
+        $(roleInput).parents('div.pos-Rel').before('<span class="role darkgray mrg-L5 mrg-T5">' +
+            value + '<a class="remove-darkgray" href="#">' +
+            '<img src="/assets/close.png" width="8" height="8" alt="close">' +
+            '</a></span>');
+        $('input[name="role2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
+        $(roleInput).val("");
+    }
+}
+
+function addCompanyFilter(companyInput) {
+    value = $(companyInput).val();
+    if(value.match(/\S/)) {
+        $(companyInput).parents('div.pos-Rel').before('<span class="company darkgray mrg-L5 mrg-T5">' +
+            value + '<a class="remove-darkgray" href="#">' +
+            '<img src="/assets/close.png" width="8" height="8" alt="close">' +
+            '</a></span>');
+        $('input[name="company2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
+        $(companyInput).val("");
+    }
 }
 
 
