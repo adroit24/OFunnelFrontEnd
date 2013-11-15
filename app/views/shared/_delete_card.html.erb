@@ -1,0 +1,17 @@
+<% unless @subscription.nil? %>
+    <% if @subscription["subscriptionType"] ==  "PRO" %>
+        <!-- popup box 5  start-->
+        <div id="delete-card" class="popUpDiv" style="display: none; margin:100px 75px;">
+          <div style="float:left; position:relative;"> <a href="#" class="close_buttton" onclick='popup("delete-card");return false;'><img alt="" src="/assets/close_btn.png" /></a>
+            <div class="popup_box5">
+              <div class="mid_text_block minheight_314">
+                <h1 class="Museo-700 margin_hd">Confirm Delete?</h1>
+                <div class="ofunnel_text">You sure you want to delete the card on file? Once deleted, you will have to add another card to continue subscription uninterrupted for next billing cycle. </div>
+                <div class="sub_cancel_btn"><a href="<%= delete_card_path %>" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10">Delete</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- popup box 5 end-->
+    <% end %>
+<% end %>

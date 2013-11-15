@@ -2148,7 +2148,6 @@ input.upload-logo {
 .mid_text_block {
     float:left;
     width:100%;
-    margin-top:22px;
 }
 .mid_text_block h1 {
     font-size:30px;
@@ -2345,7 +2344,7 @@ input.upload-logo {
 /* new popup box*/
 .popup_box5 {
     width:486px;
-    min-height:210px;
+    min-height:170px;
     height:auto;
     background:#fff;
     border-radius:6px;

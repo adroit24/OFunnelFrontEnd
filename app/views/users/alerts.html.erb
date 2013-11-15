@@ -28,17 +28,24 @@
       </div>
 
       <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
-        <% if true %>
-            <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
-            <br />
-            <strong>Payment info:</strong> VISA "....1234"<span style="color: #949494;"> | </span><a href="<%= upgrade_path %>">Change</a>
-            <br />
-            <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
-        <% else %>
-            <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold">Trial</span><span> (expires in 14 days)</span></a>
-            <br />
-            <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
-        <% end %>
+        <% unless @subscription.nil?
+             if @subscription["subscriptionType"] ==  "PRO"
+               card_details = @subscription["creditCardDetails"]
+        %>
+                <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
+                <br />
+                <strong>Payment info:</strong> <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
+                <!--<span style="color: #949494;"> | </span><a href="#" onclick='popup("delete-card");return false;'>Delete</a>-->
+                <br />
+                <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
+            <% else %>
+                <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold"><%= to_dc @subscription["subscriptionType"] %></span><span> (expires in <%= @subscription["trialDaysRemaining"] %> days)</span></a>
+                <br />
+                <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
+            <%
+               end
+               end
+            %>
       </div>
     </div>
 

@@ -84,6 +84,8 @@ OFunnel::Application.routes.draw do
 
   match '/upgrade' => "braintree#upgrade", :as => :upgrade
   match '/create_subscription' => "braintree#create_subscription", :as => :create_subscription
+  match '/delete_card' => "braintree#delete_card", :as => :delete_card
+  match '/update_card_info' => "braintree#update_card_info", :as => :update_card_info
   match '/cancel_subscription' => "braintree#cancel_subscription", :as => :cancel_subscription
 
   match '/group_members/:id' => "groups#members", :as => :group_members

@@ -83,21 +83,25 @@ class UsersController < ApplicationController
     get_network_alert_api_endpoint = "#{Settings.api_endpoints.GetNetworkAlertsForUserId}/#{current_user_id}/#{alert_count}"
     get_alerts_recipient_api_endpoint = "#{Settings.api_endpoints.GetRecipientsEmailForNetworkAlerts}/#{current_user_id}"
     get_email_frequency_api_endpoint = "#{Settings.api_endpoints.GetEmailFrequencyPreferences}/#{current_user_id}/ALERT"
+    get_subscription_info_api_endpoint = "#{Settings.api_endpoints.GetSubscriptionDetails}/#{current_user_id}"
     get_user_profile_api_response = nil
     get_network_alert_api_response = nil
     get_alerts_recipient_response = nil
     get_email_frequency_response = nil
+    get_subscription_info_response = nil
 
     hydra = Typhoeus::Hydra.hydra
     get_user_profile_api_request = Typhoeus::Request.new(get_user_profile_api_endpoint)
     get_network_alert_api_request = Typhoeus::Request.new(get_network_alert_api_endpoint)
     get_alerts_recipient_request = Typhoeus::Request.new(get_alerts_recipient_api_endpoint)
     get_email_frequency_request = Typhoeus::Request.new(get_email_frequency_api_endpoint)
+    get_subscription_info_request = Typhoeus::Request.new(get_subscription_info_api_endpoint)
 
     hydra.queue get_user_profile_api_request
     hydra.queue get_network_alert_api_request
     hydra.queue get_alerts_recipient_request
     hydra.queue get_email_frequency_request
+    hydra.queue get_subscription_info_request
     get_user_profile_api_request.on_complete do |response|
       get_user_profile_api_response = response
     end
@@ -109,6 +113,9 @@ class UsersController < ApplicationController
     end
     get_email_frequency_request.on_complete do |response|
       get_email_frequency_response = response
+    end
+    get_subscription_info_request.on_complete do |response|
+      get_subscription_info_response = response
     end
     hydra.run
 
@@ -152,6 +159,12 @@ class UsersController < ApplicationController
     if get_email_frequency_response.success? && !api_contains_error("GetEmailFrequencyPreferences", get_email_frequency_response)
       api_response = JSON.parse(get_email_frequency_response.response_body)["GetEmailFrequencyPreferencesResult"]
       @frequency = api_response["emailFrequency"]
+    end
+
+    @subscription = nil
+    if get_subscription_info_response.success? && !api_contains_error("GetSubscriptionDetails", get_subscription_info_response)
+      api_response = JSON.parse(get_subscription_info_response.response_body)["GetSubscriptionDetailsResult"]
+      @subscription = api_response
     end
 
     if mobile_device

@@ -138,6 +138,13 @@ api_endpoints:
   GetEmailFrequencyPreferences: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getEmailFrequencyPreferences"
   SetEmailFrequencyPreferences: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/setEmailFrequencyPreferences"
 
+  #Payments API Endpoints
+  GetSubscriptionDetails: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/getSubscriptionDetails"
+  CreateSubscriptionForAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/createSubscriptionForAlerts"
+  ChangeCreditCardForSubscription: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/changeCreditCardForSubscription"
+  CancelSubscriptionForAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/cancelSubscriptionForAlerts"
+  DeleteCreditCard: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/deleteCreditCard"
+
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"
 

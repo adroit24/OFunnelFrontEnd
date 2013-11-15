@@ -1,12 +1,12 @@
 <div class="ofunnelalert-box">
   <div class="userprofile-box">
     <div class="topheadingwrapper">
-      <div class="headings1 pad-B20">Account Upgrade</div> <a class="addnewalerts" href="<%= notifications_path %>">Cancel</a>
+      <div class="headings1 pad-B20">Change card</div> <a class="addnewalerts" href="<%= notifications_path %>">Cancel</a>
       <p class="ofunnel_alert_text">OFunnel Alerts is at $9/month subscription. You get unlimited access to alerts you need for for business groth. Lorem Ipsum is simply dummy text of the printing.</p>
     </div>
   </div>
   <div class="alert_edit_sec" style="width: 65%;">
-    <form action="<%= create_subscription_path %>" method="POST" style="background:none;" id="braintree-payment-form">
+    <form action="<%= update_card_info_path %>" method="POST" style="background:none;" id="braintree-payment-form">
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
       <table width="100%" border="0" cellspacing="0" cellpadding="14">
         <tr>
@@ -71,9 +71,8 @@
           </td>
         </tr>
       </table>
-      <div class="col-red mrg-T20 font-18"><%= flash[:notice] %></div>
-      <div class="mrg-T20">
-        <input type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30 width160" value="Save">
+      <div class="mrg-T20 mrg-L10">
+        <input type="submit" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10 mrg-B30 width160" value="Change">
       </div>
     </form>
   </div> <!-- End Contoso Page -->

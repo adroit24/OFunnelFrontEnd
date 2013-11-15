@@ -30,6 +30,9 @@ hootsuite:
   APP_KEY: '19g7d90mb0m8kccw800wg048c3iaa9afcom'
   RECIEVER_PATH: "https://ofunnel.cloudapp.net/ofunnel_receiver.html"
 
+braintree:
+  ENCRYPTION_KEY: "MIIBCgKCAQEAwKkKnyTzHlXy+8tMcmztAnC2XX0x4WC//O/NiHlYXVYaTJsNbGfUAd42Uk3KB9FOiOExOZmrgHb7MgXLyrfZvrzeZ0MVAwkqYzVWz5Sru0Yrly34mcCH8f7yPiAzpTtZ4MQPFYtA72ZgDSin7yiakyKeRsMkCQ9fF93oF/hQ4xpNBHNY+YKKm9gC0EyJk0RyG5vY+1HdX8wfyM3babgoTN3wtTkKbmDOInCLmI3g85VRwxsDrnggRfWS0ZcJUIir8elX7AsgUORJOzn/RxNRYfjzOQ+zX7BQr6mSnI69wPNEJ1gRDuR3IDheGG6r9MEj03Oy4sMVjK89n49VN5fU1QIDAQAB"
+
 api_endpoints:
   #LinkedIn API Endpoints
   GetConnectionsInCompany: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/getConnectionsInCompany"
@@ -134,6 +137,13 @@ api_endpoints:
   GetAllLocationList: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getAllLocationList"
   GetEmailFrequencyPreferences: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/getEmailFrequencyPreferences"
   SetEmailFrequencyPreferences: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/AlertService.svc/setEmailFrequencyPreferences"
+
+  #Payments API Endpoints
+  GetSubscriptionDetails: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/PaymentService.svc/getSubscriptionDetails"
+  CreateSubscriptionForAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/PaymentService.svc/createSubscriptionForAlerts"
+  ChangeCreditCardForSubscription: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/PaymentService.svc/changeCreditCardForSubscription"
+  CancelSubscriptionForAlerts: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/PaymentService.svc/cancelSubscriptionForAlerts"
+  DeleteCreditCard: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/PaymentService.svc/deleteCreditCard"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"

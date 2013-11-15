@@ -1,16 +1,17 @@
-<% if true %>
-    <div id="black_overlay" style="display: none;"></div>
-    <!-- popup box 5  start-->
-    <div id="cancel-account" class="popUpDiv" style="display: none; margin:150px 75px;">
-      <div style="float:left; position:relative;"> <a href="#" class="close_buttton" onclick='popup("cancel-account");return false;'><img alt="" src="/assets/close_btn.png" /></a>
-        <div class="popup_box5">
-          <div class="mid_text_block minheight_314">
-            <h1 class="Museo-700 margin_hd">We hate to lose you!</h1>
-            <div class="ofunnel_text">OFunnel is a valuable tool to track your network as it expands and is a platform for relationship discovery. OFunnel helps you to ask for and receive high quality introductions from people you know and trust. Are you sure want to leave us? </div>
-            <div class="sub_cancel_btn"><a href="<%= cancel_subscription_path %>" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10">Yes, cancel my subscription</a></div>
+<% unless @subscription.nil? %>
+    <% if @subscription["subscriptionType"] ==  "PRO" %>
+        <!-- popup box 5  start-->
+        <div id="cancel-account" class="popUpDiv" style="display: none; margin:150px 75px;">
+          <div style="float:left; position:relative;"> <a href="#" class="close_buttton" onclick='popup("cancel-account");return false;'><img alt="" src="/assets/close_btn.png" /></a>
+            <div class="popup_box5" style="min-height: 193px;">
+              <div class="mid_text_block minheight_314">
+                <h1 class="Museo-700 margin_hd">We hate to lose you!</h1>
+                <div class="ofunnel_text">OFunnel is a valuable tool to track your network as it expands and is a platform for relationship discovery. OFunnel helps you to ask for and receive high quality introductions from people you know and trust. Are you sure want to leave us? </div>
+                <div class="sub_cancel_btn"><a href="<%= cancel_subscription_path %>" class="save_change_btn pad-L20 pad-R20 pad-T10 pad-B10">Yes, cancel my subscription</a></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- popup box 5 end-->
+        <!-- popup box 5 end-->
+    <% end %>
 <% end %>

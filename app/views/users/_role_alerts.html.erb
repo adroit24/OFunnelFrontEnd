@@ -22,32 +22,36 @@
                    is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i])
                    friend_profile = friend_profile_url(friend)
                    friend_target = friend_profile == "#" ? '' : ' target="_blank"'
-                   f_connected_profile = f_connected_profile_url(f_connected)
-                   f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
+                   unless f_connected.nil?
+                     f_connected_profile = f_connected_profile_url(f_connected)
+                     f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
+                   end
                 %>
                 <tr>
-                  <td class="pad-T15">
+                  <td class="pad-T15" <%= 'colspan=2' if f_connected.nil? %>>
                     <span class="USR-phto-box"><img class="userpic" src="<%= friend_profile_pic_url(friend) %>" width="40" height="40"> </span>
-                    <div class="USR-info line-hit-16" style="width: 315px;">
+                    <div class="USR-info line-hit-16" style="<%= f_connected.nil? ? 'width: 94%' : 'width: 315px' %>;">
                       <a class="col-blue bold calibrib font-16" href="<%= friend_profile %>"<%= friend_target %>><%= friend_name(friend) %> </a>
                       <br>
                       <span class="multiline-ellipsis"><%= friend_headline(friend) %></span>
                     </div>
                   </td>
-                  <td class="pad-T15">
-                    <span class="USR-phto-box"><img class="userpic" src="<%= f_connected_profile_pic_url(f_connected) %>" width="40" height="40"> </span>
-                    <div class="USR-info line-hit-16" style="width: 315px;">
-                      <a class="col-blue bold calibrib font-16" href="<%= f_connected_profile %>"<%= f_connected_target %>><%= f_connected_name(f_connected) %></a>
-                      <br>
-                      <span class="multiline-ellipsis"><%= f_connected_headline(f_connected) %></span>
-                    </div>
-                  </td>
-                  <% if is_connected_to_salesforce %>
-                      <!--<td class="txt-C pad-T15 col-gray"> Added </td>-->
-                  <% else %>
-                      <!--<td class="txt-C pad-T15 col-gray">-->
-                      <!--<a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= f_connected['connectedToFirstName'] %>" lastName="<%= f_connected['connectedToLastName'] %>" title="<%= f_connected['connectedToHeadline'] %>" company="<%= f_connected['connectedToCompany'] %>">Add</a>-->
-                      <!--</td>-->
+                  <% unless f_connected.nil? %>
+                      <td class="pad-T15">
+                        <span class="USR-phto-box"><img class="userpic" src="<%= f_connected_profile_pic_url(f_connected) %>" width="40" height="40"> </span>
+                        <div class="USR-info line-hit-16" style="width: 315px;">
+                          <a class="col-blue bold calibrib font-16" href="<%= f_connected_profile %>"<%= f_connected_target %>><%= f_connected_name(f_connected) %></a>
+                          <br>
+                          <span class="multiline-ellipsis"><%= f_connected_headline(f_connected) %></span>
+                        </div>
+                      </td>
+                      <% if is_connected_to_salesforce %>
+                          <!--<td class="txt-C pad-T15 col-gray"> Added </td>-->
+                      <% else %>
+                          <!--<td class="txt-C pad-T15 col-gray">-->
+                          <!--<a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= f_connected['connectedToFirstName'] %>" lastName="<%= f_connected['connectedToLastName'] %>" title="<%= f_connected['connectedToHeadline'] %>" company="<%= f_connected['connectedToCompany'] %>">Add</a>-->
+                          <!--</td>-->
+                      <% end %>
                   <% end %>
                 </tr>
             <% end %>
