@@ -601,10 +601,10 @@ class LinkedinController < ApplicationController
     #Use the access token to make an authenticated API call
     response = access_token.get('https://www.linkedin.com/v1/people/~:(id,first-name,last-name,public-profile-url,picture-url,email-address,educations,positions,headline,location:(name),skills)?format=json')
     profile = JSON.parse(response.body)
-    ofunnel_user_type = "OFUNNEL"
+    ofunnel_user_type = "ALERT"
     unless back_url.nil?
-      if back_url.match(/alerts/)
-        ofunnel_user_type = "ALERT"
+      if back_url.match(/requests/)
+        ofunnel_user_type = "OFUNNEL"
       elsif back_url.match(/hootsuite/)
         ofunnel_user_type = "HOOTSUITE"
       end

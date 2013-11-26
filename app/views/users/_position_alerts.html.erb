@@ -37,12 +37,12 @@
                       <!--<td class="txt-C pad-T15 col-gray"> Added </td>-->
                   <% else %>
                       <!--<td class="txt-C pad-T15 col-gray">-->
-                      <!--<a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= friend['yourConnectionFirstName'] %>" lastName="<%= friend['yourConnectionLastName'] %>" title="<%= friend['yourConnectionHeadline'] %>" company="<%= friend['yourConnectionCompany'] %>">Add</a>-->
+                      <!--<a class="add-to-salesforce-crm" href="<%#= add_to_salesforce_path %>" firstName="<%#= friend['yourConnectionFirstName'] %>" lastName="<%#= friend['yourConnectionLastName'] %>" title="<%#= friend['yourConnectionHeadline'] %>" company="<%#= friend['yourConnectionCompany'] %>">Add</a>-->
                       <!--</td>-->
                   <% end %>
                 </tr>
             <% end %>
-            <% if c_alert["totalCompanyAlerts"].to_i > 5 %>
+            <% if c_alert["totalPositionAlerts"].to_i > 5 %>
                 <tr>
                   <td colspan="2" class="bg-blue mrg-T10"><a href="<%= all_alerts_path(c_alert["targetAccountId"],"Position") %>" class="font-14 bold col-white">See all alerts for "Target Position: <%= c_alert["targetName"] %>" <span class="font-10">►</span></a></td>
                 </tr>

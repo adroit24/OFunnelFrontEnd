@@ -27,26 +27,28 @@
         </div>
       </div>
 
-      <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
-        <% unless @subscription.nil?
-             if @subscription["subscriptionType"] ==  "PRO"
-               card_details = @subscription["creditCardDetails"]
-        %>
-                <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
-                <br />
-                <strong>Payment info:</strong> <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
-                <!--<span style="color: #949494;"> | </span><a href="#" onclick='popup("delete-card");return false;'>Delete</a>-->
-                <br />
-                <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
-            <% else %>
-                <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold"><%= to_dc @subscription["subscriptionType"] %></span><span> (expires in <%= @subscription["trialDaysRemaining"] %> days)</span></a>
-                <br />
-                <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
-            <%
-               end
-               end
+      <% unless Rails.env.production? %>
+          <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
+            <% unless @subscription.nil?
+                 if @subscription["subscriptionType"] ==  "PRO"
+                   card_details = @subscription["creditCardDetails"]
             %>
-      </div>
+                    <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
+                    <br />
+                    <strong>Payment info:</strong> <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
+                    <!--<span style="color: #949494;"> | </span><a href="#" onclick='popup("delete-card");return false;'>Delete</a>-->
+                    <br />
+                    <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
+                <% else %>
+                    <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold"><%= to_dc @subscription["subscriptionType"] %></span><span> (expires in <%= @subscription["trialDaysRemaining"] %> days)</span></a>
+                    <br />
+                    <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
+                <%
+                   end
+                   end
+                %>
+          </div>
+      <% end %>
     </div>
 
     <div class="profile-details-box mrg-B30 border-B pad-B30 pad-T15">
@@ -125,21 +127,33 @@
         </tr>
         </thead>
         <tbody class="alerts-list">
-        <tr>
-          <td width="50%"  class="border-B col-orange bold font-14">Your current connection: </td>
-          <td width="50%"  class="border-B col-orange bold font-14">Is now connected to:</td>
-          <!--<td width="14%"  class="border-B col-orange bold font-14 txt-C"><img src="/assets/salesforce.jpg" width="109" height="26"> </td>-->
-        </tr>
-        <% unless results_flag %>
-            <%= render :partial => "company_alerts" %>
-            <%= render :partial => "person_alerts" %>
-            <%= render :partial => "position_alerts" %>
-            <%= render :partial => "role_alerts" %>
+        <% unless @is_subscription_expired %>
+            <tr>
+              <td width="50%"  class="border-B col-orange bold font-14">Your current connection: </td>
+              <td width="50%"  class="border-B col-orange bold font-14">Is now connected to:</td>
+              <!--<td width="14%"  class="border-B col-orange bold font-14 txt-C"><img src="/assets/salesforce.jpg" width="109" height="26"> </td>-->
+            </tr>
+            <% unless results_flag %>
+                <%= render :partial => "company_alerts" %>
+                <%= render :partial => "person_alerts" %>
+                <%= render :partial => "position_alerts" %>
+                <%= render :partial => "role_alerts" %>
+            <% else %>
+                <tr>
+                  <td colspan="2">
+                    <p class="font-14">
+                      <i>No history found.</i>
+                    </p>
+                  </td>
+                  <td class="display-none"></td>
+                  <!--<td class="display-none"></td>-->
+                </tr>
+            <% end %>
         <% else %>
             <tr>
               <td colspan="2">
                 <p class="font-14">
-                  <i>No history found.</i>
+                  <i><%= @subscription_message %></i>
                 </p>
               </td>
               <td class="display-none"></td>

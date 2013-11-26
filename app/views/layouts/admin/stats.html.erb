@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OFunnel</title>
+  <%= stylesheet_link_tag "alerts", :media => "all" %>
+  <%= stylesheet_link_tag "application.html5", :media => "all" %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="wrapper">
+  <!-- START MAIN DIV-->
+  <div class="main clearfix">
+    <!-- START HEADER -->
+    <div class="header">
+      <div class="logo_menu_box">
+        <a href="#"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
+      </div>
+    </div><!-- END HEADER -->
+    <!-- START CONTAINER -->
+    <div class="container">
+      <%= yield %>
+    </div><!-- END CONTAINER -->
+  </div><!-- END MAIN DIV-->
+  <!-- START FOOTER -->
+  <div class="footer">
+    <div class="footer_box"> &copy; 2013 OFunnel </div>
+  </div><!-- START FOOTER -->
+</div>
+</body>
+</html>

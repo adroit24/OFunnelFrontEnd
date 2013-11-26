@@ -1,0 +1,49 @@
+<div class="right-panel" style="width:94%; padding:3%;">
+  <!-- user statistics sesction start -->
+  <div class="userstat_wrapper">
+    <div class="headings1 margin_b20">User Statistics</div>
+    <div class="userstat_inner">
+      <div class="userstat_hd margin_b10">User ID</div>
+      <form action="<%= admin_stat_path(0) %>" method="GET">
+        <div class="userstat_text_box_block margin_b20">
+          <div class="input_section mrg-T10 mrg-B10 float-L">
+            <input type="text" name="user_id" class="inputbox1">
+            <a class="float-R edit_icn"><img width="11" height="10" alt="edit" src="/assets/edit_icon2.png"></a>
+          </div>
+          <input type="submit" value="Go" class="gobtn">
+        </div>
+      </form>
+      <% unless @network.blank? %>
+          <div class="netwok_silmilar_section">
+            <div class="network_section">
+              <div class="netsim_hd">Network in last 7 days</div>
+              <ul class="networklist">
+                <% unless @network.blank? %>
+                    <% @network.each do |update| %>
+                        <li><%= update["name"] %> <span><%= update["networkExpandCount"] %></span></li>
+                    <% end %>
+                <% end %>
+              </ul>
+            </div>
+            <div class="similar_section">
+              <div class="netsim_hd margin_b10">Similar Target Accounts</div>
+              <div class="account_section margin_b26">
+                <h2>Microsoft</h2>
+                <p><%= @accounts.collect {|account| account["companyName"] }.join(', ') %></p>
+              </div>
+              <div class="account_section margin_b26">
+                <h2>Nike</h2>
+                <p><%= @accounts.collect {|account| account["companyName"] }.join(', ') %></p>
+              </div>
+              <div class="account_section margin_b26">
+                <h2>Developer</h2>
+                <p><%= @accounts.collect {|account| account["companyName"] }.join(', ') %></p>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <!-- user statistics sesction start -->
+  <!-- End sent_received_section -->
+</div><!-- End Right Panel -->

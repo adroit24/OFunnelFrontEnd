@@ -287,3 +287,178 @@ tr[class$="-slf"] {
 .frequency-box {
     width: 40%;
 }
+
+/*----------- 25/11/2013 --------------*/
+
+.userstat_wrapper {
+    float:left;
+    width:720px;
+    height:auto;
+    margin:0px;
+    padding:0px;
+}
+.userstat_wrapper .headings1 {
+    width:100%;
+    float:left;
+    font-size:40px;
+    font-family:calibrib;
+    margin-bottom:30px;
+    padding:0px;
+}
+.userstat_inner {
+    width:100%;
+    float:left;
+    margin:0px;
+    padding:0px;
+}
+.userstat_hd {
+    background:#f3f3f3;
+    border-bottom:1px solid #aeaeae;
+    float:left;
+    margin:0px;
+    width:696px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#212121;
+    font-weight:bold;
+    font-size:16px;
+    padding:11px 12px;
+}
+.userstat_text_box_block {
+    margin:0px;
+    padding:0px;
+    float:left;
+    width:345px;
+}
+.userstat_text_box_block .input_section {
+    margin:0px;
+    width:248px;
+    border:1px solid #cccaca;
+    padding:5px;
+    float:left;
+    position:relative;
+}
+.userstat_text_box_block .inputbox1 {
+    width:220px;
+    margin:0px;
+    padding:5px 2px 5px 2px;
+    font:16px Arial, Helvetica, sans-serif;
+    color:#212121;
+    border:none;
+}
+.userstat_text_box_block .edit_icn {
+    position:absolute;
+    right:8px;
+    margin:0px;
+    padding:0px;
+    top:9px;
+}
+.userstat_text_box_block .gobtn {
+    float:right;
+    margin:0px;
+    padding:0px;
+    width:75px;
+    height:40px;
+    background: none repeat scroll 0 0 #FF5D00;
+    border: 1px solid #D8D8D8;
+    color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height:40px;
+    margin-top:10px;
+}
+.netwok_silmilar_section {
+    width:100%;
+    float:left;
+    margin:0px;
+    padding:0px;
+}
+.network_section {
+    float:left;
+    margin:0px;
+    padding:0px;
+    width:345px;
+}
+.similar_section {
+    float:right;
+    margin:0px;
+    padding:0px;
+    width:345px;
+}
+.netsim_hd {
+    background:#f3f3f3;
+    border-bottom:1px solid #aeaeae;
+    float:left;
+    margin:0px;
+    width:321px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#212121;
+    font-weight:bold;
+    font-size:16px;
+    padding:11px 12px;
+}
+ul.networklist {
+    list-style:none;
+    margin:0px;
+    padding:0px;
+    width:100%;
+}
+ul.networklist li {
+    float:left;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#212121;
+    font-size:14px;
+    border-bottom:1px solid #c4c4c4;
+    line-height:22px;
+    font-weight:normal;
+    width:325px;
+    padding:10px 10px;
+}
+ul.networklist li span {
+    float:right;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#212121;
+    font-size:14px;
+    text-align:right;
+    padding-left:14px;
+    display:block;
+}
+ul.networklist li:last-child {
+    border-bottom:none;
+}
+.account_section {
+    float:left;
+    width:345px;
+    margin:0px;
+    padding:0px;
+}
+.account_section h2 {
+    margin:0px;
+    padding:0px;
+    float:left;
+    width:100%;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#2a80b3;
+    font-weight:bold;
+    font-size:14px;
+    padding-bottom:3px;
+}
+.account_section p {
+    margin:0px;
+    padding:0px;
+    float:left;
+    width:100%;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#212121;
+    font-size:14px;
+    line-height:18px;
+}
+.margin_b10 {
+    margin-bottom:10px;
+}
+.margin_b20 {
+    margin-bottom:20px;
+}
+.margin_b26 {
+    margin-bottom:26px;
+}

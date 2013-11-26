@@ -264,18 +264,18 @@ function loadMore() {
             crossDomain: true,
             url: hootsuiteTargetPath,
             success: function(data) {
-                $.each( data.alert, function( index, value ){
+                $.each( data.targetAccount, function( index, value ){
                     $("div.alert-details").last().append(
                         '<div class="addmore-box ofunnel-alerts">' +
                             '<div class="input-relative comp-select">' +
                             '<div class="select-box">' +
                             '<select class="select alert-type" title="">' +
-                            '<option' + ((value.type == "COMPANY") ? " selected=true" : "") + '>Company</option>' +
-                            '<option' + ((value.type == "PERSON") ? " selected=true" : "") + '>Person</option>' +
-                            '<option' + ((value.type == "ROLE") ? " selected=true" : "") + '>Role</option>' +
+                            '<option' + ((value.filterType == "COMPANY") ? " selected=true" : "") + '>Company</option>' +
+                            '<option' + ((value.filterType == "PERSON") ? " selected=true" : "") + '>Person</option>' +
+                            '<option' + ((value.filterType == "ROLE") ? " selected=true" : "") + '>Role</option>' +
                             '</select></div></div>' +
-                            '<input type="text" name="name" class="name-select" value="' + value.name + '" Placeholder="Nike" />' +
-                            '<input type="hidden" name="alertId" value="' + value.alertId + '" />' +
+                            '<input type="text" name="name" class="name-select" value="' + value.targetName + '" Placeholder="Nike" />' +
+                            '<input type="hidden" name="alertId" value="' + value.targetAccountId + '" />' +
                             '<a href="' + hootsuiteRemoveRelationship + '" class="delete-icon alert-remove-target">' +
                             '</a></div>'
                     );

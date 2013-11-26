@@ -1,5 +1,9 @@
 OFunnel::Application.routes.draw do
 
+  get "stats/index"
+
+  get "stats/show"
+
   resources :users
   resources :requests
   resources :groups
@@ -8,6 +12,7 @@ OFunnel::Application.routes.draw do
     resources :groups
     match 'import_companies' => "groups#import_companies", :as => :import_companies
     root :to => "groups#admin_index"
+    resources :stats
   end
 
   get "/linkedin/authorize_with_likedin" => "linkedin#authorize_with_likedin", :as => :authorize_with_likedin

@@ -1,8 +1,20 @@
 <div class="ofunnelalert-box">
   <div class="userprofile-box">
     <div class="topheadingwrapper" style="width: 533px;">
-      <div class="headings1 pad-B20">Edit Alert</div> <a href="<%= alerts_path %>" class="addnewalerts">Cancel</a>
+      <div class="headings1 pad-B20">
+        Edit Alert
+      </div>
+      <a href="<%= alerts_path %>" class="addnewalerts">Cancel</a>
     </div>
   </div>
+  <div class="Company-flf-error float-L display-none col-red font-18">
+      Please enter the company you want to get connected with.
+    </div>
+    <div class="Role-flf-error float-L display-none col-red font-18">
+      Please enter the role you are interested in.
+    </div>
+    <div class="Person-flf-error float-L display-none col-red font-18">
+      Please enter the person of interest.
+    </div>
   <%= render "alert_form" %>
 </div>

@@ -26,7 +26,7 @@
                   </td>
                 </tr>
             <% end %>
-            <% if c_alert["totalCompanyAlerts"].to_i > 5 %>
+            <% if c_alert["totalPositionAlerts"].to_i > 5 %>
                 <tr>
                   <td class="bg-blue pad-T5 pad-B5" colspan="2"><a class="bold col-white td-heading" href="<%= all_alerts_path(c_alert["targetAccountId"],"Company") %>">See all alerts for "Target Position: <%= c_alert["targetName"] %>" <span class="font-10">►</span></a></td>
                   <td class="display-none"></td>

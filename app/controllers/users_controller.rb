@@ -114,8 +114,10 @@ class UsersController < ApplicationController
     get_email_frequency_request.on_complete do |response|
       get_email_frequency_response = response
     end
-    get_subscription_info_request.on_complete do |response|
-      get_subscription_info_response = response
+    unless Rails.env.production?
+      get_subscription_info_request.on_complete do |response|
+        get_subscription_info_response = response
+      end
     end
     hydra.run
 
@@ -131,6 +133,8 @@ class UsersController < ApplicationController
     @alerts_for_person = nil
     @alerts_for_position = nil
     @alerts_for_role = nil
+    @is_subscription_expired = false
+    @subscription_message = ""
     if get_network_alert_api_response.success? && !api_contains_error("GetNetworkAlertsForUserId", get_network_alert_api_response)
       result = JSON.parse(get_network_alert_api_response.response_body)["GetNetworkAlertsForUserIdResult"]
       if result["error"] == nil
@@ -146,6 +150,8 @@ class UsersController < ApplicationController
         unless result["networkAlertForRole"].nil?
           @alerts_for_role = result["networkAlertForRole"]["alertsForRole"]
         end
+        @is_subscription_expired = result["isExpired"]
+        @subscription_message = result["subscriptionMessage"]
       end
     end
 
@@ -161,10 +167,12 @@ class UsersController < ApplicationController
       @frequency = api_response["emailFrequency"]
     end
 
-    @subscription = nil
-    if get_subscription_info_response.success? && !api_contains_error("GetSubscriptionDetails", get_subscription_info_response)
-      api_response = JSON.parse(get_subscription_info_response.response_body)["GetSubscriptionDetailsResult"]
-      @subscription = api_response
+    unless Rails.env.production?
+      @subscription = nil
+      if get_subscription_info_response.success? && !api_contains_error("GetSubscriptionDetails", get_subscription_info_response)
+        api_response = JSON.parse(get_subscription_info_response.response_body)["GetSubscriptionDetailsResult"]
+        @subscription = api_response
+      end
     end
 
     if mobile_device
@@ -197,9 +205,9 @@ class UsersController < ApplicationController
 
   def unsubscribe
     if session[:linkedin_id].nil?
-       redirect_to "#{Settings.logout_redirect}?action=unsubscribe&id=#{params[:id]}"
+      redirect_to "#{Settings.logout_redirect}?action=unsubscribe&id=#{params[:id]}"
     else
-       redirect_to notifications_path
+      redirect_to notifications_path
     end
   end
 

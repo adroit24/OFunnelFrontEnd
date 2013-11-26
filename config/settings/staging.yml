@@ -137,6 +137,7 @@ api_endpoints:
   GetAllLocationList: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getAllLocationList"
   GetEmailFrequencyPreferences: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getEmailFrequencyPreferences"
   SetEmailFrequencyPreferences: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/setEmailFrequencyPreferences"
+  GetNetwrokExpandDetailsForUserId: "http://ofunnelqa.cloudapp.net/OFunnelService/AlertService.svc/getNetwrokExpandDetailsForUserId"
 
   #Payments API Endpoints
   GetSubscriptionDetails: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/getSubscriptionDetails"
@@ -144,6 +145,9 @@ api_endpoints:
   ChangeCreditCardForSubscription: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/changeCreditCardForSubscription"
   CancelSubscriptionForAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/cancelSubscriptionForAlerts"
   DeleteCreditCard: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/deleteCreditCard"
+
+  #Company API Endpoints
+  GetSimilarCompanies: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompanies"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"

@@ -1,8 +1,10 @@
 <script type="text/javascript">
-    <% if cookies.signed[:tab] ==  "ALERTS" %>
-    opener.location.href = '<%= "#{hootsuite_stream_url}?#{@query}" %>';
-    <% elsif cookies.signed[:tab] ==  "TARGETS" %>
-    opener.location.href = '<%= "#{hootsuite_targets_url}?#{@query}" %>';
+    <% if @authenticated %>
+        <% if cookies.signed[:tab] ==  "ALERTS" %>
+             opener.location.href = '<%= "#{hootsuite_stream_url}?#{@query}" %>';
+         <% elsif cookies.signed[:tab] ==  "TARGETS" %>
+             opener.location.href = '<%= "#{hootsuite_targets_url}?#{@query}" %>';
+          <% end %>
     <% end %>
     self.close();
 </script>

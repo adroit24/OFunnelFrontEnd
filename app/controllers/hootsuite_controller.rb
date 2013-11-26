@@ -28,10 +28,13 @@ class HootsuiteController < ApplicationController
     user_id = cookies.signed[:user_id]
     h_user_id = cookies.signed[:h_user_id]
     @query = cookies.signed[:query]
-
-    if set_hootsuite_account(user_id,h_user_id)
-      check_hootsuite_user_exists? h_user_id
-      cookies.permanent.signed[:return_to] = {:value => nil, :domain => :all}
+    @authenticated = false
+    unless h_user_id.blank?
+      if set_hootsuite_account(user_id,h_user_id)
+        check_hootsuite_user_exists? h_user_id
+        cookies.permanent.signed[:return_to] = {:value => nil, :domain => :all}
+        @authenticated = true
+      end
     end
     render "hootsuite/authorize_callback", :layout => false and return
   end
@@ -50,10 +53,15 @@ class HootsuiteController < ApplicationController
     response = Typhoeus.get(get_all_network_alert_api_endpoint)
 
     @alerts = nil
+    @is_subscription_expired = false
+    @subscription_message = ""
+    p response
     if response.success? && !api_contains_error("GetAllNetworkAlertsForUserId", response)
       response = JSON.parse(response.response_body)["GetAllNetworkAlertsForUserIdResult"]
       @remaining = response["alertsRemaining"]
       @alerts = response["allNetworkAlerts"]
+      @is_subscription_expired = response["isExpired"]
+      @subscription_message = response["subscriptionMessage"]
       unless params[:dataType] == "json"
         render "hootsuite/stream"
       else

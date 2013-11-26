@@ -24,8 +24,10 @@
                        is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i])
                        friend_profile = friend_profile_url(friend)
                        friend_target = friend_profile == "#" ? '' : ' target="_blank"'
-                       f_connected_profile = f_connected_profile_url(f_connected)
-                       f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
+                       unless f_connected.nil?
+                         f_connected_profile = f_connected_profile_url(f_connected)
+                         f_connected_target = f_connected_profile == "#" ? '' : ' target="_blank"'
+                       end
                     %>
                     <tr>
                       <td class="pad-T15">
@@ -50,7 +52,7 @@
                           <!--<td class="txt-C pad-T15 col-gray"> Added </td>-->
                       <% else %>
                           <!--<td class="txt-C pad-T15 col-gray">-->
-                          <!--<a class="add-to-salesforce-crm" href="<%= add_to_salesforce_path %>" firstName="<%= f_connected['connectedToFirstName'] %>" lastName="<%= f_connected['connectedToLastName'] %>" title="<%= f_connected['connectedToHeadline'] %>" company="<%= f_connected['connectedToCompany'] %>">Add</a>-->
+                          <!--<a class="add-to-salesforce-crm" href="<%#= add_to_salesforce_path %>" firstName="<%#= f_connected['connectedToFirstName'] %>" lastName="<%#= f_connected['connectedToLastName'] %>" title="<%#= f_connected['connectedToHeadline'] %>" company="<%#= f_connected['connectedToCompany'] %>">Add</a>-->
                           <!--</td>-->
                       <% end %>
                     </tr>

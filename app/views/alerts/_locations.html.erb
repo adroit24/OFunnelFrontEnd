@@ -15,6 +15,9 @@
       <ul>
         <% unless @areas.blank? %>
             <% @areas.each_with_index do |sub_area,index| %>
+                <% p @states[index] %>
+                <% p sub_area %>
+                <% p index %>
                 <div id="<%= @states[index].gsub(' ','') %>" class="sub-category<%= ' display-none' unless index == 0 %>">
                   <% sub_area.each do |area| %>
                       <li>

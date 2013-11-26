@@ -1444,6 +1444,7 @@ $(function() {
         $('p.Person-slf').hide()
         $('tr#' + $(this).val() + '-filter').show();
         $('.' + $(this).val() + '-slf').show();
+        $("div[class*='-flf-error']").hide();
     });
 
     $(document).on('mouseenter','td.filter-tooltip-container',function(){
@@ -1523,111 +1524,118 @@ $(function() {
     });
 
     $(document).on('submit','form.save-alert-changes',function() {
-        // Get first level filter details
-        filterType = $('input[name=filter-type]:checked').val();
-        targetName = $('input[name$=-name]:visible').val();
-        targetAccountId = $('input[name=alertId]').val();
-        companySizeFilter = [];
-        industryFilter = [];
-        locationFilter = [];
-        companyFilter = [];
-        roleFilter = [];
-        secondLevelFilterDetails = [];
+        $('span.alert-error').hide();
+        if($('input[name$=-name]:visible').val().match(/\S/)) {
+            // Get first level filter details
+            filterType = $('input[name=filter-type]:checked').val();
+            targetName = $('input[name$=-name]:visible').val();
+            targetAccountId = $('input[name=alertId]').val();
+            companySizeFilter = [];
+            industryFilter = [];
+            locationFilter = [];
+            companyFilter = [];
+            roleFilter = [];
+            secondLevelFilterDetails = [];
 
-        // Get second level filter details
-        $.each($('input[name=size-filter]:checked:visible'), function( index, value ) {
-            if($(value).val() != "Any")
-                companySizeFilter.push({
-                    filterText : $(value).val()
+            // Get second level filter details
+            $.each($('input[name=size-filter]:checked:visible'), function( index, value ) {
+                if($(value).val() != "Any")
+                    companySizeFilter.push({
+                        filterText : $(value).val()
+                    })
+            });
+
+            $.each($('span.company:visible'), function( index, value ) {
+                companyFilter.push({
+                    filterText : $.trim($(value).text())
                 })
-        });
+            });
 
-        $.each($('span.company:visible'), function( index, value ) {
-            companyFilter.push({
-                filterText : $.trim($(value).text())
-            })
-        });
+            $.each($('span.role:visible'), function( index, value ) {
+                roleFilter.push({
+                    filterText : $.trim($(value).text())
+                })
+            });
 
-        $.each($('span.role:visible'), function( index, value ) {
-            roleFilter.push({
-                filterText : $.trim($(value).text())
-            })
-        });
+            $.each($('span.industry:visible'), function( index, value ) {
+                industryFilter.push({
+                    filterText : $.trim($(value).text())
+                })
+            });
 
-        $.each($('span.industry:visible'), function( index, value ) {
-            industryFilter.push({
-                filterText : $.trim($(value).text())
-            })
-        });
+            $.each($('span.location:visible'), function( index, value ) {
+                locationFilter.push({
+                    filterText : $.trim($(value).text())
+                })
+            });
 
-        $.each($('span.location:visible'), function( index, value ) {
-            locationFilter.push({
-                filterText : $.trim($(value).text())
-            })
-        });
-
-        //Fill second level filter details in JSON
-        if(companyFilter.length > 0) {
-            secondLevelFilterDetails.push(
-                {
-                    subFilterType : "COMPANY",
-                    filterTextDetails : companyFilter
-                }
-            );
-        }
-
-        if(roleFilter.length > 0) {
-            secondLevelFilterDetails.push(
-                {
-                    subFilterType : "ROLE",
-                    filterTextDetails : roleFilter
-                }
-            );
-        }
-
-        if(companySizeFilter.length > 0) {
-            secondLevelFilterDetails.push(
-                {
-                    subFilterType : "COMPANYSIZE",
-                    filterTextDetails : companySizeFilter
-                }
-            );
-        }
-
-        if(industryFilter.length > 0) {
-            secondLevelFilterDetails.push(
-                {
-                    subFilterType : "INDUSTRY",
-                    filterTextDetails : industryFilter
-                }
-            );
-        }
-
-        if(locationFilter.length > 0) {
-            secondLevelFilterDetails.push(
-                {
-                    subFilterType : "LOCATION",
-                    filterTextDetails : locationFilter
-                }
-            );
-        }
-
-        targetAccountJson = [
-            {
-                filterType : filterType,
-                targetName : targetName,
-                targetAccountId : targetAccountId,
-                secondLevelFilterDetails : secondLevelFilterDetails
+            //Fill second level filter details in JSON
+            if(companyFilter.length > 0) {
+                secondLevelFilterDetails.push(
+                    {
+                        subFilterType : "COMPANY",
+                        filterTextDetails : companyFilter
+                    }
+                );
             }
-        ]
-        $.ajax({
-            type : 'POST',
-            url : $(this).attr('action'),
-            data : {targetAccount : JSON.stringify(targetAccountJson)},
-            success : function(data) {
-                window.location.href = alertsPagePath;
+
+            if(roleFilter.length > 0) {
+                secondLevelFilterDetails.push(
+                    {
+                        subFilterType : "ROLE",
+                        filterTextDetails : roleFilter
+                    }
+                );
             }
-        });
+
+            if(companySizeFilter.length > 0) {
+                secondLevelFilterDetails.push(
+                    {
+                        subFilterType : "COMPANYSIZE",
+                        filterTextDetails : companySizeFilter
+                    }
+                );
+            }
+
+            if(industryFilter.length > 0) {
+                secondLevelFilterDetails.push(
+                    {
+                        subFilterType : "INDUSTRY",
+                        filterTextDetails : industryFilter
+                    }
+                );
+            }
+
+            if(locationFilter.length > 0) {
+                secondLevelFilterDetails.push(
+                    {
+                        subFilterType : "LOCATION",
+                        filterTextDetails : locationFilter
+                    }
+                );
+            }
+
+            targetAccountJson = [
+                {
+                    filterType : filterType,
+                    targetName : targetName,
+                    targetAccountId : targetAccountId,
+                    secondLevelFilterDetails : secondLevelFilterDetails
+                }
+            ]
+            $.ajax({
+                type : 'POST',
+                url : $(this).attr('action'),
+                data : {targetAccount : JSON.stringify(targetAccountJson)},
+                success : function(data) {
+                    window.location.href = alertsPagePath;
+                }
+            });
+        }
+        else {
+            $("div[class*='-flf-error']").hide();
+            $('div.' + $('input[name=filter-type]:checked').val() + '-flf-error').show();
+        }
         return false;
     });
 
@@ -1642,7 +1650,7 @@ $(function() {
         $('a.selected2').removeClass('selected2');
         $(this).find('a').addClass('selected2');
         $('div.sub-category').hide();
-        $('div#' + id.replace(' ','')).show();
+        $('div#' + id.replace(/\s/g,'')).show();
         return false;
     });
 
