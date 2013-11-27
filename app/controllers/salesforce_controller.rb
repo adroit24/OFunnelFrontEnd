@@ -284,6 +284,50 @@ class SalesforceController < ApplicationController
     end
   end
 
+  def add_target_account
+    unless params[:q].blank?
+      alert_json = {
+          :targetAccount => [
+              {
+                  :filterType => "COMPANY",
+                  :targetName => params[:q],
+                  :targetAccountId => nil,
+                  :secondLevelFilterDetails => nil
+              }
+          ]
+      }
+
+      persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
+      persist_company_network_alert_response = nil
+
+      hydra = Typhoeus::Hydra.hydra
+      persist_company_network_alert_request = Typhoeus::Request.new(
+          persist_company_network_alert_api_endpoint,
+          method: :post,
+          body: {
+              userId: current_user_id,
+              alertJson: alert_json.to_json
+          })
+
+      hydra.queue persist_company_network_alert_request
+
+      persist_company_network_alert_request.on_complete do |response|
+        persist_company_network_alert_response = response
+      end
+
+      hydra.run
+      status = true
+      p persist_company_network_alert_response
+      if persist_company_network_alert_response.success? && !api_contains_error("PersistNetworkAlerts", persist_company_network_alert_response)
+        api_response = JSON.parse(persist_company_network_alert_response.response_body)["PersistNetworkAlertsResult"]
+        status = api_response["isNetworkAlertPersisted"] == true ? nil : true
+      end
+      render :json => {"error" => status} and return
+    else
+      render :json => {"error" => true} and return
+    end
+  end
+
   protected
 
   def salesforce_client

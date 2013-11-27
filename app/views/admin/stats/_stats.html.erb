@@ -13,7 +13,7 @@
           <input type="submit" value="Go" class="gobtn">
         </div>
       </form>
-      <% unless @network.blank? %>
+      <% unless @network.blank? and @accounts.blank? %>
           <div class="netwok_silmilar_section">
             <div class="network_section">
               <div class="netsim_hd">Network in last 7 days</div>
@@ -22,28 +22,30 @@
                     <% @network.each do |update| %>
                         <li><%= update["name"] %> <span><%= update["networkExpandCount"] %></span></li>
                     <% end %>
+                <% else %>
+                    <li>No updates found.</li>
                 <% end %>
               </ul>
             </div>
             <div class="similar_section">
               <div class="netsim_hd margin_b10">Similar Target Accounts</div>
-              <div class="account_section margin_b26">
-                <h2>Microsoft</h2>
-                <p><%= @accounts.collect {|account| account["companyName"] }.join(', ') %></p>
-              </div>
-              <div class="account_section margin_b26">
-                <h2>Nike</h2>
-                <p><%= @accounts.collect {|account| account["companyName"] }.join(', ') %></p>
-              </div>
-              <div class="account_section margin_b26">
-                <h2>Developer</h2>
-                <p><%= @accounts.collect {|account| account["companyName"] }.join(', ') %></p>
-              </div>
+              <% unless @accounts.blank? %>
+                  <% @accounts.each do |account| %>
+                      <div class="account_section margin_b26">
+                        <h2><%= account["companyName"] %></h2>
+                        <p><%= account["similarCompanies"].collect {|company| company["companyName"] }.join(', ') %></p>
+                      </div>
+                  <% end %>
+              <% else %>
+                  <div class="account_section margin_b26">
+                    <p>No similar company found.</p>
+                  </div>
+              <% end %>
             </div>
-          </div>
       <% end %>
+      </div>
     </div>
-  </div>
-  <!-- user statistics sesction start -->
-  <!-- End sent_received_section -->
-</div><!-- End Right Panel -->
+    <!-- user statistics sesction start -->
+    <!-- End sent_received_section -->
+  </div><!-- End Right Panel -->
+</div>

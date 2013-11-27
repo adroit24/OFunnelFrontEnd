@@ -148,6 +148,7 @@ api_endpoints:
 
   #Company API Endpoints
   GetSimilarCompanies: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarCompanies"
+  GetSimilarCompaniesForUser: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarCompaniesForUser"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"

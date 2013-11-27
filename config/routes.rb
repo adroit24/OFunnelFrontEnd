@@ -41,6 +41,7 @@ OFunnel::Application.routes.draw do
   match '/salesforce/add_salesforce_connection' => "salesforce#add_salesforce_connection", :as => :add_salesforce_connection
   match '/salesforce/mark_connected' => "salesforce#mark_connected", :as => :salesforce_mark_connected
   match '/salesforce/import_salesforce' => "salesforce#import_salesforce", :as => :import_salesforce
+  match '/salesforce/add_target_account' => "salesforce#add_target_account", :as => :salesforce_add_target_account
 
   match '/hootsuite' => "hootsuite#index", :as => :hootsuite
   match '/hootsuite/session_init' => "hootsuite#session_init", :as => :hootsuite_session_init
