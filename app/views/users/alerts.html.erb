@@ -27,28 +27,26 @@
         </div>
       </div>
 
-      <% unless Rails.env.production? %>
-          <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
-            <% unless @subscription.nil?
-                 if @subscription["subscriptionType"] ==  "PRO"
-                   card_details = @subscription["creditCardDetails"]
+      <div class="info float-R" style="background:#ececec; width:37%; padding:1.5%;">
+        <% unless @subscription.nil?
+             if @subscription["subscriptionType"] ==  "PRO"
+               card_details = @subscription["creditCardDetails"]
+        %>
+                <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
+                <br />
+                <strong>Payment info:</strong> <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
+                <!--<span style="color: #949494;"> | </span><a href="#" onclick='popup("delete-card");return false;'>Delete</a>-->
+                <br />
+                <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
+            <% else %>
+                <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold"><%= to_dc @subscription["subscriptionType"] %></span><span> (expires in <%= @subscription["trialDaysRemaining"] %> days)</span></a>
+                <br />
+                <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
+            <%
+               end
+               end
             %>
-                    <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
-                    <br />
-                    <strong>Payment info:</strong> <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
-                    <!--<span style="color: #949494;"> | </span><a href="#" onclick='popup("delete-card");return false;'>Delete</a>-->
-                    <br />
-                    <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>
-                <% else %>
-                    <strong>Plan type: </strong> <span style="color: #949494;">Pro &bull; </span><a href="#" style="pointer-events:none;"><span class="bold"><%= to_dc @subscription["subscriptionType"] %></span><span> (expires in <%= @subscription["trialDaysRemaining"] %> days)</span></a>
-                    <br />
-                    <div class="div_holder pad-T15 pad-B5"><a href="<%= upgrade_path %>" class="save_change_btn">Upgrade account</a></div>
-                <%
-                   end
-                   end
-                %>
-          </div>
-      <% end %>
+      </div>
     </div>
 
     <div class="profile-details-box mrg-B30 border-B pad-B30 pad-T15">

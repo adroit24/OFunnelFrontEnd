@@ -16,9 +16,15 @@
   <%= javascript_include_tag "hootsuite_app" %>
   <%= javascript_include_tag "jquery-ui-1.10.3.custom.min" %>
   <%= javascript_include_tag "jquery.localtime-0.8.0.min" %>
+  <script type="text/javascript" src="//app.payboard.com/Widget/v1.0/Payboard.js"></script>
   <%= csrf_meta_tags %>
 
   <script type="text/javascript">
+      var userId = '<%= current_user_id %>'
+      var userName = '<%= user_name %>'
+      var userEmail = '<%= user_email %>';
+      var userFirstName = '<%= user_first_name %>';
+      var userLastName = '<%= user_last_name %>';
       var hootsuiteEnabled = true;
       var hootsuiteAppKey = "<%= Settings.hootsuite.APP_KEY %>"
       var hootsuiteRecieverPath = "<%= Settings.hootsuite.RECIEVER_PATH %>";
@@ -33,6 +39,12 @@
       var activeTab = '<%= @active_tab %>';
       var query = document.location.search;
       var csrfToken = '<%= form_authenticity_token %>';
+      <% if session[:track_login_event] %>
+      var trackLoginEvent = true;
+      <%
+      session[:track_login_event] = nil
+      end
+      %>
   </script>
 
   <% if params[:action] == "index" and @theme != "magnum" %>

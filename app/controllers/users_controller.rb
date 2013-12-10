@@ -24,6 +24,11 @@ class UsersController < ApplicationController
 
     if response.success? && !api_contains_error("Logout", response)
       reset_session
+      p request.referer
+      if request.referer.match(/frame=salesforce/)
+        create_default_salesforce_session
+        redirect_to salesforce_path and return
+      end
     end
 
     redirect_to Settings.logout_redirect
@@ -114,10 +119,9 @@ class UsersController < ApplicationController
     get_email_frequency_request.on_complete do |response|
       get_email_frequency_response = response
     end
-    unless Rails.env.production?
-      get_subscription_info_request.on_complete do |response|
-        get_subscription_info_response = response
-      end
+
+    get_subscription_info_request.on_complete do |response|
+      get_subscription_info_response = response
     end
     hydra.run
 
@@ -167,12 +171,10 @@ class UsersController < ApplicationController
       @frequency = api_response["emailFrequency"]
     end
 
-    unless Rails.env.production?
-      @subscription = nil
-      if get_subscription_info_response.success? && !api_contains_error("GetSubscriptionDetails", get_subscription_info_response)
-        api_response = JSON.parse(get_subscription_info_response.response_body)["GetSubscriptionDetailsResult"]
-        @subscription = api_response
-      end
+    @subscription = nil
+    if get_subscription_info_response.success? && !api_contains_error("GetSubscriptionDetails", get_subscription_info_response)
+      @subscription = JSON.parse(get_subscription_info_response.response_body)["GetSubscriptionDetailsResult"]
+      session[:trial_days] = @subscription["trialDaysRemaining"]
     end
 
     if mobile_device
@@ -271,6 +273,10 @@ class UsersController < ApplicationController
     else
       render "all_alerts", :layout => "relationships"
     end
+  end
+
+  def win8_authentication
+    render "win8_authentication", :layout => false
   end
 
   protected

@@ -8,9 +8,14 @@
   <%= stylesheet_link_tag "colorbox", :media => "all" %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <script type="text/javascript" src="//app.payboard.com/Widget/v1.0/Payboard.js"></script>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
+      var userId = '<%= current_user_id %>'
       var userName = '<%= user_name %>'
+      var userFirstName = '<%= user_first_name %>';
+      var userLastName = '<%= user_last_name %>';
+      var userEmail = '<%= user_email %>';
       var addGroupUrl = '<%= add_group_path %>'
       var alertsPagePath = '<%= alerts_path %>';
       var getPeopleInCompanyUrl = '<%= get_people_in_company_path %>'
@@ -23,12 +28,27 @@
       <% unless current_user.nil? %>
       var userProfilePath = '<%= "#{user_path(current_user_id)}#user-tags-focus" %>'
       <% end %>
+      <% unless params[:nobust] %>
+      var bustFrame = false;
+      <% end %>
+      <% if session[:track_login_event] %>
+      var trackLoginEvent = true;
+      <%
+      session[:track_login_event] = nil
+      end
+      %>
+      <% if session[:track_alert_event] %>
+      var trackAlertEvent = true;
+      <%
+      session[:track_alert_event] = nil
+      end
+      %>
       // Commented due to bug#324
       //var showOfunnelHelp = <%#= show_ofunnel_help %>
   </script>
 
   <script>
-      if (window!= top)
+      if (window!= top && bustFrame)
           top.location.href=location.href
   </script>
 
@@ -46,6 +66,9 @@
             <div class="links">
               <a href="<%= notifications_path %>">Profile</a>
               <a href="<%= logout_path %>">Log out</a>
+              <% unless session[:trial_days].nil? or session[:trial_days].to_i < 1 %>
+                  <span class="col-orange font-16 float-L pad-T10" style="width: 100%;text-align: right;">Trial ends in <%= session[:trial_days] %> days</span>
+              <% end %>
             </div>
           </div>
         </div>
@@ -65,5 +88,17 @@
   <%= render "shared/delete_card" %>
   <%= render "shared/cancel_account" %>
 </div>
+<% if Rails.env.production? %>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-45620534-1', 'ofunnel.com');
+        ga('send', 'pageview');
+
+    </script>
+<% end %>
 </body>
 </html>

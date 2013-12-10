@@ -90,6 +90,7 @@ class AlertsController < ApplicationController
 
       hydra.run
 
+      session[:track_alert_event] = true
       if mobile_device
         @emails = nil
         if get_alerts_recipient_response.success? && !api_contains_error("GetRecipientsEmailForNetworkAlerts", get_alerts_recipient_response)
@@ -214,6 +215,7 @@ class AlertsController < ApplicationController
       if response.success? && !api_contains_error("PersistNetworkAlerts", response)
         api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
         if api_response["isNetworkAlertPersisted"].eql? true
+          session[:track_alert_event] = true
           flash[:notice] = "Changes saved."
         end
         status = {"ERROR" => false}

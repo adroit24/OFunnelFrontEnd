@@ -40,6 +40,12 @@ $(function() {
 //        });
 //    }
 
+    if(typeof trackLoginEvent != "undefined" && trackLoginEvent)
+        payBoradLoginEvent();
+
+    if(typeof trackAlertEvent != "undefined" && trackAlertEvent)
+        payBoardNewAlertEvent();
+
     $(".groupinfo").mouseenter(function(){
         adjustTooltip();
         $(".tooltip-box").show();
@@ -2317,6 +2323,34 @@ function addCompanyFilter(companyInput) {
         $('input[name="company2"]').attr('placeholder','').attr('onblur',"this.placeholder = ''");
         $(companyInput).val("");
     }
+}
+
+function payBoradLoginEvent() {
+    Payboard.Events.setApiKey('494dc013-d0b4-4f25-a787-89c05f27ea27');
+    var event = {
+        customerId: userId,
+        customerName: userName,
+        CustomerUserId: userId,
+        CustomerUserFirstName: userFirstName,
+        CustomerUserLastName: userLastName,
+        customerUserEmail: userEmail,
+        eventName: 'LoggedIn'
+    };
+    Payboard.Events.trackCustomerUserEvent(event);
+}
+
+function payBoardNewAlertEvent() {
+    Payboard.Events.setApiKey('494dc013-d0b4-4f25-a787-89c05f27ea27');
+    var event = {
+        customerId: userId,
+        customerName: userName,
+        CustomerUserId: userId,
+        CustomerUserFirstName: userFirstName,
+        CustomerUserLastName: userLastName,
+        customerUserEmail: userEmail,
+        eventName: 'New Alert Setup'
+    };
+    Payboard.Events.trackCustomerUserEvent(event);
 }
 
 

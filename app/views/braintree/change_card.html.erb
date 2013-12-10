@@ -2,7 +2,6 @@
   <div class="userprofile-box">
     <div class="topheadingwrapper">
       <div class="headings1 pad-B20">Change card</div> <a class="addnewalerts" href="<%= notifications_path %>">Cancel</a>
-      <p class="ofunnel_alert_text">OFunnel Alerts is at $9/month subscription. You get unlimited access to alerts you need for for business groth. Lorem Ipsum is simply dummy text of the printing.</p>
     </div>
   </div>
   <div class="alert_edit_sec" style="width: 65%;">
@@ -25,7 +24,7 @@
           <td valign="middle"><ul class="blue-radio-box marg_t23">
             <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio1" class="mrg-L20 font-14 font_arial">Visa</label><span></span><input type="radio" id="radio1" name="card_type" checked="checked" value="Visa"/><span></span></li>
             <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio2" class="mrg-L20 font-14 font_arial">Mastercard</label><span></span><input type="radio" id="radio2" name="card_type" value="VisaMastercard"/><span></span></li>
-            <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio3" class="mrg-L20 font-14 font_arial">Am Express</label><span></span><input type="radio" id="radio3" name="card_type" value="Am Express"/><span></span></li>
+            <li class="width_116 float-L mrg-T5 col-black-2"><label for="radio3" class="mrg-L20 font-14 font_arial">Amex</label><span></span><input type="radio" id="radio3" name="card_type" value="Am Express"/><span></span></li>
           </ul></td>
         </tr>
         <tr>
@@ -57,13 +56,13 @@
           <th valign="middle">Expiry date</th>
           <td valign="middle">
             <div class="input_block2 mrg-T10 mrg-B10">
-              <input type="text" size="2" data-encrypted-name="month" class="inputbox">
+              <input type="text" size="2" data-encrypted-name="month" class="inputbox" placeholder="MM">
               <a class="float-R edit_icn">
                 <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
               </a>
             </div>
             <div class="input_block3 mrg-T10 mrg-B10 mrg-L20">
-              <input type="text" size="4" data-encrypted-name="year" class="inputbox">
+              <input type="text" size="4" data-encrypted-name="year" class="inputbox" placeholder="YYYY">
               <a class="float-R edit_icn">
                 <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
               </a>
@@ -76,6 +75,7 @@
       </div>
     </form>
   </div> <!-- End Contoso Page -->
+  <%= render "unlimited" %>
 </div><!-- End Ofunnel Alert-box -->
 <script src="https://js.braintreegateway.com/v1/braintree.js"></script>
 <script>

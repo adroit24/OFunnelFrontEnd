@@ -8,7 +8,7 @@ class Admin::StatsController < ApplicationController
     @accounts = nil
     unless id.blank?
       get_expansion_details_api_endpoint = "#{Settings.api_endpoints.GetNetwrokExpandDetailsForUserId}/#{id}"
-      get_similar_companies_api_endpoint = "#{Settings.api_endpoints.GetSimilarCompaniesForUser}/#{current_user_id}/25/5"
+      get_similar_companies_api_endpoint = "#{Settings.api_endpoints.GetSimilarCompaniesAndRolesForUser}/#{id}/25/5"
 
       get_expansion_details_api_response = nil
       get_similar_companies_api_response = nil
@@ -32,10 +32,12 @@ class Admin::StatsController < ApplicationController
         response = JSON.parse(get_expansion_details_api_response.response_body)["GetNetwrokExpandDetailsForUserIdResult"]
         @network = response["networkExpandDetails"] if response["error"].blank?
       end
-      if get_similar_companies_api_response.success? && !api_contains_error("GetSimilarCompaniesForUser", get_similar_companies_api_response)
-        response = JSON.parse(get_similar_companies_api_response.response_body)["GetSimilarCompaniesForUserResult"]
+      if get_similar_companies_api_response.success? && !api_contains_error("GetSimilarCompaniesAndRolesForUser", get_similar_companies_api_response)
+        response = JSON.parse(get_similar_companies_api_response.response_body)["GetSimilarCompaniesAndRolesForUserResult"]
         @accounts = response["targetCompanies"] if response["error"].blank?
+        @roles = response["targetRoles"] if response["error"].blank?
       end
+      p @roles
     end
   end
 end

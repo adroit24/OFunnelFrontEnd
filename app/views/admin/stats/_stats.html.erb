@@ -13,7 +13,7 @@
           <input type="submit" value="Go" class="gobtn">
         </div>
       </form>
-      <% unless @network.blank? and @accounts.blank? %>
+      <% unless @network.blank? and @accounts.blank? and @roles.blank? %>
           <div class="netwok_silmilar_section">
             <div class="network_section">
               <div class="netsim_hd">Network in last 7 days</div>
@@ -39,6 +39,20 @@
               <% else %>
                   <div class="account_section margin_b26">
                     <p>No similar company found.</p>
+                  </div>
+              <% end %>
+
+              <div class="netsim_hd margin_b10">Similar Roles</div>
+              <% unless @roles.blank? %>
+                  <% @roles.each do |role| %>
+                      <div class="account_section margin_b26">
+                        <h2><%= role["role"] %></h2>
+                        <p><%= role["similarRoles"].collect {|s_role| s_role["role"] }.join(', ') %></p>
+                      </div>
+                  <% end %>
+              <% else %>
+                  <div class="account_section margin_b26">
+                    <p>No similar role found.</p>
                   </div>
               <% end %>
             </div>

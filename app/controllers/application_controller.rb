@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :user_tags, :initialize_ofunnel
-  helper_method :check_current_user, :current_user, :current_user_id, :current_user_id_from_cookies, :current_user_profile, :current_user_score, :show_ofunnel_help, :check_google_session, :check_facebook_session, :to_dc
+  helper_method :check_current_user, :current_user, :current_user_id, :current_user_id_from_cookies, :current_user_profile, :current_user_score, :show_ofunnel_help, :check_google_session, :check_facebook_session, :to_dc, :create_default_hootsuite_session, :create_default_salesforce_session
   rescue_from Exception, :with => :server_error if Rails.env.production?
 
   def server_error(exception)
@@ -108,6 +108,7 @@ class ApplicationController < ActionController::Base
   def check_current_user
     if session[:linkedin_id].nil?
       session[:return_to] = current_url
+      cookies.permanent.signed[:return_to] = {:value => current_url, :domain => :all}
       redirect_to Settings.linkedin_auth_url, :protocol => 'http' and return
     else
       return true
@@ -149,6 +150,26 @@ class ApplicationController < ActionController::Base
     set_current_user_id(nil)
     set_current_user_score(nil)
     set_current_user_profile(nil)
+  end
+
+  def create_default_hootsuite_session
+    theme = params[:theme].blank? ? "blue_steel" : params[:theme]
+    tab = cookies.signed[:tab].nil? ? "TARGETS" : cookies.signed[:tab]
+    cookies.permanent.signed[:user_id] = {:value => nil, :domain => :all}
+    cookies.permanent.signed[:h_user_id] = {:value => nil, :domain => :all}
+    cookies.permanent.signed[:authenticated] = {:value => false, :domain => :all}
+    cookies.permanent.signed[:connected] = {:value => false, :domain => :all}
+    cookies.permanent.signed[:theme]= {:value => theme, :domain => :all}
+    cookies.permanent.signed[:userName] = {:value => "OFunnel", :domain => :all}
+    cookies.permanent.signed[:query] = {:value => request.query_string, :domain => :all}
+    cookies.permanent.signed[:tab] = {:value => tab, :domain => :all}
+    cookies.permanent.signed[:offset] = {:value => 0, :domain => :all}
+    cookies.permanent.signed[:target_offset] = {:value => 0, :domain => :all}
+  end
+
+  def create_default_salesforce_session
+    cookies.permanent.signed[:user_id] = {:value => nil, :domain => :all}
+    cookies.permanent.signed[:sf_authenticated] = {:value => false, :domain => :all}
   end
 
   def api_contains_error(api_name, api_response)

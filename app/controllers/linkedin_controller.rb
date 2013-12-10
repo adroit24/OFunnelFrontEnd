@@ -598,6 +598,7 @@ class LinkedinController < ApplicationController
     session[:linkedin_token] = access_token.token
     back_url = session[:return_to] || cookies.signed[:return_to]
     session[:return_to] = nil
+    cookies.permanent.signed[:return_to] = {:value => nil, :domain => :all}
     #Use the access token to make an authenticated API call
     response = access_token.get('https://www.linkedin.com/v1/people/~:(id,first-name,last-name,public-profile-url,picture-url,email-address,educations,positions,headline,location:(name),skills)?format=json')
     profile = JSON.parse(response.body)
@@ -607,6 +608,8 @@ class LinkedinController < ApplicationController
         ofunnel_user_type = "OFUNNEL"
       elsif back_url.match(/hootsuite/)
         ofunnel_user_type = "HOOTSUITE"
+      elsif back_url.match(/win8_authentication/)
+        ofunnel_user_type = "Win8"
       end
     end
 
@@ -642,6 +645,7 @@ class LinkedinController < ApplicationController
     api_endpoint = "#{Settings.api_endpoints.AddOFunnelUser}"
     add_user_response = Typhoeus.post(api_endpoint, body: user_data)
     if add_user_response.success? && !api_contains_error("AddOFunnelUser", add_user_response)
+      session[:track_login_event] = true
       user_data[:position] = profile["positions"]["_total"].to_i > 0 ? profile["positions"]["values"][0]["title"] : ""
       user_data[:location] = profile["location"]
       user_data[:skills] = profile["skills"]
@@ -650,6 +654,7 @@ class LinkedinController < ApplicationController
       add_user_response = JSON.parse(add_user_response.response_body)["AddOFunnelUserResult"]
       set_current_user_id(add_user_response["userId"])
       set_current_user_score(add_user_response["score"])
+      get_subscription_info
       # Commented due to bug#324
       #set_show_ofunnel_help(true)
       if check_token_in_session
@@ -734,6 +739,15 @@ class LinkedinController < ApplicationController
       return JSON.parse(delete_token_api_response.response_body)["DeleteSignUpUserTokenResult"]["isTokenRemoved"]
     else
       false
+    end
+  end
+
+  def get_subscription_info
+    get_subscription_info_api_endpoint = "#{Settings.api_endpoints.GetSubscriptionDetails}/#{current_user_id}"
+    get_subscription_info_response = Typhoeus.get(get_subscription_info_api_endpoint)
+    if get_subscription_info_response.success? && !api_contains_error("GetSubscriptionDetails", get_subscription_info_response)
+      response = JSON.parse(get_subscription_info_response.response_body)["GetSubscriptionDetailsResult"]
+      session[:trial_days] = response["trialDaysRemaining"]
     end
   end
 

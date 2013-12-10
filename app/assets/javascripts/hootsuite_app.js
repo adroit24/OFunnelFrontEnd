@@ -11,6 +11,13 @@
 // end
 
 $( document ).ready(function() {
+
+    if(typeof trackLoginEvent != "undefined" && trackLoginEvent)
+        payBoradLoginEvent();
+
+//    if(typeof trackAlertEvent != "undefined" && trackAlertEvent)
+//        payBoardNewAlertEvent();
+
     if(typeof hootsuiteEnabled != "undefined" && hootsuiteEnabled) {
         if(hootsuiteAppInit) {
             console.log("Initializing HootSuite SDK");
@@ -177,6 +184,7 @@ $( document ).ready(function() {
                         if(data.error == null && typeof data.error != "undefined") {
                             $('div#alert-target-account-added span').text("Target accounts has been added");
                             $('div#alert-target-account-added').fadeIn();
+                            payBoardNewAlertEvent();
                         }
                         else {
                             $('div#alert-target-account-added span').text("Error occurred, please try again");
@@ -299,3 +307,30 @@ function bindScroll(){
     }
 }
 
+function payBoradLoginEvent() {
+    Payboard.Events.setApiKey('494dc013-d0b4-4f25-a787-89c05f27ea27');
+    var event = {
+        customerId: userId,
+        customerName: userName,
+        CustomerUserId: userId,
+        CustomerUserFirstName: userFirstName,
+        CustomerUserLastName: userLastName,
+        customerUserEmail: userEmail,
+        eventName: 'LoggedIn'
+    };
+    Payboard.Events.trackCustomerUserEvent(event);
+}
+
+function payBoardNewAlertEvent() {
+    Payboard.Events.setApiKey('494dc013-d0b4-4f25-a787-89c05f27ea27');
+    var event = {
+        customerId: userId,
+        customerName: userName,
+        CustomerUserId: userId,
+        CustomerUserFirstName: userFirstName,
+        CustomerUserLastName: userLastName,
+        customerUserEmail: userEmail,
+        eventName: 'New Alert Setup'
+    };
+    Payboard.Events.trackCustomerUserEvent(event);
+}

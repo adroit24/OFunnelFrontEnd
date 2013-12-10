@@ -247,19 +247,4 @@ class HootsuiteController < ApplicationController
     return status
   end
 
-  def create_default_hootsuite_session
-    theme = params[:theme].blank? ? "blue_steel" : params[:theme]
-    tab = cookies.signed[:tab].nil? ? "TARGETS" : cookies.signed[:tab]
-    cookies.permanent.signed[:user_id] = {:value => nil, :domain => :all}
-    cookies.permanent.signed[:h_user_id] = {:value => nil, :domain => :all}
-    cookies.permanent.signed[:authenticated] = {:value => false, :domain => :all}
-    cookies.permanent.signed[:connected] = {:value => false, :domain => :all}
-    cookies.permanent.signed[:theme]= {:value => theme, :domain => :all}
-    cookies.permanent.signed[:userName] = {:value => "OFunnel", :domain => :all}
-    cookies.permanent.signed[:query] = {:value => request.query_string, :domain => :all}
-    cookies.permanent.signed[:tab] = {:value => tab, :domain => :all}
-    cookies.permanent.signed[:offset] = {:value => 0, :domain => :all}
-    cookies.permanent.signed[:target_offset] = {:value => 0, :domain => :all}
-  end
-
 end

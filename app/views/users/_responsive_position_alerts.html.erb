@@ -10,8 +10,6 @@
             <% (0..(total_alerts - 1)).each do |i| %>
                 <%
                    friend = a_alert[i]["yourConnection"]
-                   f_connected = a_alert[i]["connectedTo"]
-                   is_connected_to_salesforce = f_connected_to_salesforce(a_alert[i])
                    friend_profile = friend_profile_url(friend)
                    friend_target = friend_profile == "#" ? '' : ' target="_blank"'
                 %>

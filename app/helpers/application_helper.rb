@@ -17,6 +17,18 @@ module ApplicationHelper
     return current_user_profile.nil? ? "" : "#{current_user_profile[:firstName]} #{current_user_profile[:lastName]}"
   end
 
+  def user_first_name
+    return current_user_profile.nil? ? "" : "#{current_user_profile[:firstName]}"
+  end
+
+  def user_last_name
+    return current_user_profile.nil? ? "" : "#{current_user_profile[:lastName]}"
+  end
+
+  def user_email
+    return current_user_profile[:email]
+  end
+
   def company_name
     return "#{current_user_profile[:companyName]}"
   end

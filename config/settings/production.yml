@@ -31,7 +31,7 @@ hootsuite:
   RECIEVER_PATH: "https://secure.ofunnel.com/ofunnel_receiver.html"
 
 braintree:
-  ENCRYPTION_KEY: "MIIBCgKCAQEAwKkKnyTzHlXy+8tMcmztAnC2XX0x4WC//O/NiHlYXVYaTJsNbGfUAd42Uk3KB9FOiOExOZmrgHb7MgXLyrfZvrzeZ0MVAwkqYzVWz5Sru0Yrly34mcCH8f7yPiAzpTtZ4MQPFYtA72ZgDSin7yiakyKeRsMkCQ9fF93oF/hQ4xpNBHNY+YKKm9gC0EyJk0RyG5vY+1HdX8wfyM3babgoTN3wtTkKbmDOInCLmI3g85VRwxsDrnggRfWS0ZcJUIir8elX7AsgUORJOzn/RxNRYfjzOQ+zX7BQr6mSnI69wPNEJ1gRDuR3IDheGG6r9MEj03Oy4sMVjK89n49VN5fU1QIDAQAB"
+  ENCRYPTION_KEY: "MIIBCgKCAQEAxIz/CcXzeeMiOOrI8nuZ+ZGfF5Y1znLTYyCu5ImXwLQ/DojYUeNNkDoZbiz/XnUtssaiFlv3pmP679qhxw7i5fDn5SSDvANQG4JmKtAZ5Opy7NPRQmMLiThzuW14xfJoeRhUXY5+NLg9P1v7w7bt3N1xi+YZiqqoGAQDmcpvqqxelODDNDK1qIPgrU+3DIF3tGJrqpgnZOTONXcI+Ejl1XUrqnFJhRnbArZXQJWdIMOAeF69EWB0UWLYXrUr6L9h0p+O+3Mvfp5C/39h1VpBqituMcwjApgcPdrDSXrwr7xJ/DoNQHCb6A+A9GhsIjYty6uGhtkHbJhw+UCQADWgAwIDAQAB"
 
 api_endpoints:
   #LinkedIn API Endpoints
@@ -149,6 +149,8 @@ api_endpoints:
   #Company API Endpoints
   GetSimilarCompanies: "http://ofunnelservice.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompanies"
   GetSimilarCompaniesForUser: "http://ofunnelservice.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesForUser"
+  GetSimilarRolesForQuery: "http://ofunnelservice.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarRolesForQuery"
+  GetSimilarCompaniesAndRolesForUser: "http://ofunnelservice.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesAndRolesForUser"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelService/UserService.svc/addLogs"

@@ -1,7 +1,29 @@
 class SalesforceController < ApplicationController
 
-  before_filter :check_current_user
+  before_filter :check_current_user, :except => [:index,:authorize,:authorize_callback]
   layout "salesforce"
+
+  def index
+    unless check_session
+      create_default_salesforce_session
+      render "index" , :layout => false
+    else
+      redirect_to "#{notifications_url}?nobust=true&frame=salesforce"
+    end
+  end
+
+  def authorize
+    cookies.permanent.signed[:return_to] = {:value => salesforce_authorize_callback_url, :domain => :all}
+    redirect_to "#{Settings.linkedin_auth_url}?back_url=#{salesforce_authorize_callback_url}", :protocol => 'http' and return
+  end
+
+  def authorize_callback
+    logger.fatal cookies.signed[:user_id]
+    user_id = cookies.signed[:user_id]
+    cookies.permanent.signed[:sf_authenticated] = {:value => true, :domain => :all}
+    cookies.permanent.signed[:return_to] = {:value => nil, :domain => :all}
+    render "salesforce/authorize_callback", :layout => false and return
+  end
 
   def authorize_with_salesforce
     session[:salesforce_token] = nil
@@ -317,7 +339,6 @@ class SalesforceController < ApplicationController
 
       hydra.run
       status = true
-      p persist_company_network_alert_response
       if persist_company_network_alert_response.success? && !api_contains_error("PersistNetworkAlerts", persist_company_network_alert_response)
         api_response = JSON.parse(persist_company_network_alert_response.response_body)["PersistNetworkAlertsResult"]
         status = api_response["isNetworkAlertPersisted"] == true ? nil : true
@@ -338,6 +359,10 @@ class SalesforceController < ApplicationController
         :token_url => "/services/oauth2/token",
         :site => "https://login.salesforce.com"
     )
+  end
+
+  def check_session
+    (cookies.signed[:user_id].nil? or cookies.signed[:sf_authenticated] == false or session[:linkedin_id].nil?) ? false : true
   end
 
 end

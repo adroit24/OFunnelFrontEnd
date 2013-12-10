@@ -34,6 +34,9 @@ OFunnel::Application.routes.draw do
   get "/facebook/authorize_with_facebook" => "facebook#authorize_with_facebook", :as => :authorize_with_facebook
   get "/facebook/facebook_authorization_callback" => "facebook#facebook_authorization_callback"
 
+  match "/salesforce" => "salesforce#index", :as => :salesforce
+  match '/salesforce/authorize' => "salesforce#authorize", :as => :salesforce_authorize
+  match '/salesforce/authorize_callback' => "salesforce#authorize_callback", :as => :salesforce_authorize_callback
   get "/salesforce/authorize_with_salesforce" => "salesforce#authorize_with_salesforce", :as => :authorize_with_salesforce
   get "/salesforce/salesforce_authorization_callback" => "salesforce#salesforce_authorization_callback"
   match '/salesforce/explore_relationship' => "salesforce#explore_relationship", :as => :salesforce_explore_relationship
@@ -87,6 +90,7 @@ OFunnel::Application.routes.draw do
   match '/all_alerts/:id/:type' => "users#all_alerts", :as => :all_alerts
   match '/notification_frequency' => "users#notification_frequency", :as => :notification_frequency
   match '/unsubscribe/:id' => "users#unsubscribe", :as => :unsubscribe
+  match '/win8_authentication' => "users#win8_authentication", :as => :win8_authentication
 
   match '/upgrade' => "braintree#upgrade", :as => :upgrade
   match '/create_subscription' => "braintree#create_subscription", :as => :create_subscription
