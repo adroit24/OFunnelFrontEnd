@@ -4,6 +4,12 @@ linkedin:
   REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/linkedin/linkedin_authorization_callback'
   STATE: SecureRandom.hex(15)
 
+linkedin_win8:
+  API_KEY: '755yexdbbxln4a'
+  API_SECRET: 'dKWlkS92diz3zG03'
+  REDIRECT_URI: 'http://ofunnel.cloudapp.net:4444/linkedin/linkedin_authorization_callback'
+  STATE: SecureRandom.hex(15)
+
 google:
   CLIENT_ID: '808198664488-75it57po88eolbrq29p3jg12qpurctse.apps.googleusercontent.com'
   CLIENT_SECRET: '8taACyK88qgXz1lpb9aqrp5C'
