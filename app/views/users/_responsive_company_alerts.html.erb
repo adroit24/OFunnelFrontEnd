@@ -1,6 +1,6 @@
 <% unless @alerts_for_company.nil? %>
     <% @alerts_for_company.each_with_index do |c_alert,index| %>
-        <tr class="td-heading-2">
+        <tr class="td-heading-2" id="<%= c_alert["targetAccountId"] %>">
           <td colspan="2" class="bold bg-gray-2 pad-T5 pad-B5">Target Company: <%= c_alert["targetName"] %></td>
           <td class="display-none"></td>
         </tr>

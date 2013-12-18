@@ -45,6 +45,12 @@
       session[:track_login_event] = nil
       end
       %>
+      <% if session[:track_alert_event] %>
+      var trackAlertEvent = true;
+      <%
+      session[:track_alert_event] = nil
+      end
+      %>
   </script>
 
   <% if params[:action] == "index" and @theme != "magnum" %>

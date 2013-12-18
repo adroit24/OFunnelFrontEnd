@@ -2,10 +2,21 @@
   <div class="listboxs2_catagories_outer">
     <div class="listboxs2_catagories">
       <ul>
+        <%# unless @states.blank? %>
+        <%# @states.each_with_index do |state,index| %>
+        <li class="category" rel="<%#= state %>">
+          <!--<a href="#" class="<%#= ' selected2' if index == 0 %>"><%#= state %></a>-->
+        </li>
+        <%# end %>
+        <%# end %>
+      </ul>
+    </div>
+    <div class="listboxs2_sub_catagories">
+      <ul>
         <% unless @states.blank? %>
             <% @states.each_with_index do |state,index| %>
-                <li class="category" rel="<%= state %>">
-                  <a href="#" class="<%= ' selected2' if index == 0 %>"><%= state %></a>
+                <li class="category<%= ' selected2' if index == 0 %>" rel="<%= state %>">
+                  <a class="state" href="#"><%= state %></a>
                 </li>
             <% end %>
         <% end %>
@@ -15,9 +26,6 @@
       <ul>
         <% unless @areas.blank? %>
             <% @areas.each_with_index do |sub_area,index| %>
-                <% p @states[index] %>
-                <% p sub_area %>
-                <% p index %>
                 <div id="<%= @states[index].gsub(' ','') %>" class="sub-category<%= ' display-none' unless index == 0 %>">
                   <% sub_area.each do |area| %>
                       <li>

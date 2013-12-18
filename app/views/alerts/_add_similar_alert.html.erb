@@ -1,0 +1,30 @@
+<% unless @new_alert.nil? %>
+    <tr rel=<%= @new_alert["targetAccountId"] %>>
+      <td><%= to_dc @new_alert["filterType"] %></td>
+      <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= @new_alert["targetName"] %></td>
+      <td class="filter-tooltip-container">
+        <% unless @new_alert["secondLevelFilterDetails"].blank? %>
+            <div style="position:relative">
+              <div class="arrow_box display-none">
+                <h3><%= to_dc @new_alert["filterType"] %>: <%= @new_alert["targetName"] %></h3>
+                <%
+                   @new_alert["secondLevelFilterDetails"].each_with_index do |filter,i|
+                     subfilter = (filter["subFilterType"].eql? "COMPANYSIZE") ? "Company Size" : to_dc(filter["subFilterType"])
+                %>
+                    <p class=""><i><%= subfilter %>:</i> <%= filter["filterTextDetails"].map{|filter_text| filter_text["filterText"] }.join(', ')  %></p>
+                    <% break if i == 1 %>
+                <% end %>
+                <p><a href="<%= edit_alert_path(@new_alert["targetAccountId"]) %>">more</a></p>
+              </div>
+              <a class="filter-tooltip-link" href="#"><img src="/assets/mobile_menu.png" width="20" height="14"></a>
+            </div>
+        <% end %>
+      </td>
+      <td>
+        <a href="<%= edit_alert_path(@new_alert["targetAccountId"]) %>"><img src="/assets/edit_icon.png" width="20" height="19" alt="edit"></a>
+      </td>
+      <td>
+        <a class="delete-target-account" href="<%= alert_delete_path(@new_alert["targetAccountId"]) %>"><img src="/assets/delete_icon.png" width="20" height="19" alt="delete"></a>
+      </td>
+    </tr>
+<% end %>

@@ -40,10 +40,10 @@ $(function() {
 //        });
 //    }
 
-    if(typeof trackLoginEvent != "undefined" && trackLoginEvent)
+    if(typeof trackLoginEvent != "undefined" && trackLoginEvent && typeof hootsuiteEnabled == "undefined")
         payBoradLoginEvent();
 
-    if(typeof trackAlertEvent != "undefined" && trackAlertEvent)
+    if(typeof trackAlertEvent != "undefined" && trackAlertEvent && typeof hootsuiteEnabled == "undefined")
         payBoardNewAlertEvent();
 
     $(".groupinfo").mouseenter(function(){
@@ -1247,6 +1247,10 @@ $(function() {
                 success : function(data) {
                     if(data.error == null && typeof data.error != "undefined") {
                         elementToRemove.remove();
+                        if ($(this).parent().parent('tr.active').length > 0)
+                            hideSimilarCompanyBox();
+                        else
+                            adjustSimilarBox($("div.alerts_details table tr.active").index() - 1);
                     }
                 }
             });
@@ -1653,8 +1657,8 @@ $(function() {
 
     $(document).on('click','li.category',function() {
         id = $(this).attr('rel');
-        $('a.selected2').removeClass('selected2');
-        $(this).find('a').addClass('selected2');
+        $('li.selected2').removeClass('selected2');
+        $(this).addClass('selected2');
         $('div.sub-category').hide();
         $('div#' + id.replace(/\s/g,'')).show();
         return false;
@@ -1702,6 +1706,26 @@ $(function() {
                 //TODO : Add some message here.
             }
         });
+        return false;
+    });
+
+    $(document).on("click","div.alerts_details table tr:gt(0)",function() {
+        index = $(this).index() - 1;
+        targetId = $(this).attr('rel');
+        targetType = $(this).find('td:eq(0)').text();
+        targetText = $(this).find('td:eq(1)').text();
+        $("div.alerts_details table tr.active").removeClass('active');
+        $(this).addClass('active');
+        if (targetType != "Person")
+            showSimilarCompanyBox(targetId,targetType,targetText,index);
+        else
+            hideSimilarCompanyBox();
+    });
+
+    $(document).on("click","a.add-similar-alert",function() {
+        targetText = $(this).text();
+        similarTargetId = $(this).parents().find('div.display_alertbox').attr('id');
+        addSimilarAlert(targetText,similarTargetId);
         return false;
     });
 
@@ -2348,11 +2372,59 @@ function payBoardNewAlertEvent() {
         CustomerUserFirstName: userFirstName,
         CustomerUserLastName: userLastName,
         customerUserEmail: userEmail,
-        eventName: 'New Alert Setup'
+        eventName: 'New Alert Added'
     };
     Payboard.Events.trackCustomerUserEvent(event);
 }
 
+function addSimilarAlert(targetText,similarTargetId) {
+    $.ajax({
+        url: addSimilarAlertUrl,
+        type: "POST",
+        data: {
+            similarTargetId: similarTargetId,
+            targetText: targetText
+        },
+        success: function( data ) {
+            alertToAppendTo = $("tr[rel=" + similarTargetId + "]");
+            alertToAppendTo.after((data));
+        }
+    });
+}
+
+function showSimilarCompanyBox(targetId,targetType,targetText,index) {
+    hideSimilarCompanyBox();
+    if (targetType == "Company") {
+        url = similarCompaniesUrl;
+    }
+    else if (targetType == "Role") {
+        url = similarRolesUrl;
+    }
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: {
+            targetId: targetId,
+            targetType: targetType,
+            targetText: targetText
+        },
+        success: function( data ) {
+            $('.display_alertbox').replaceWith(data);
+            adjustSimilarBox(index);
+        }
+    });
+}
+
+function hideSimilarCompanyBox() {
+    $('.display_alertbox').hide();
+}
+
+function adjustSimilarBox(index) {
+    marginTop =  index > 0 ? (
+        (50 + index * 41) + "px"
+        ) : "50px";
+    $(".display_alertbox").css("margin-top",marginTop);
+}
 
 jQuery.fn.exists = function(){
     return this.length>0;

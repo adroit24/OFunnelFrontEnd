@@ -22,11 +22,20 @@ class LinkedinController < ApplicationController
       session[:return_to] = nil
     end
 
-    ofunnel_callback = Settings.linkedin.REDIRECT_URI
+    back_url = session[:return_to] || cookies.signed[:return_to]
+    if back_url && back_url.match(/win8_authentication/)
+      l_redirect_uri = Settings.linkedin_win8.REDIRECT_URI
+      l_state = Settings.linkedin_win8.STATE
+    else
+      l_redirect_uri = Settings.linkedin.REDIRECT_URI
+      l_state = Settings.linkedin.STATE
+    end
+
+    ofunnel_callback = l_redirect_uri
     #Redirect your user in order to authenticate
     redirect_url = linkedin_client.auth_code.authorize_url(
         :scope => 'r_fullprofile r_emailaddress rw_nus r_network',
-        :state => Settings.linkedin.STATE,
+        :state => l_state,
         :redirect_uri => ofunnel_callback
     )
     logger.fatal "Redirect to linkedin for first time: #{ofunnel_callback}"
@@ -40,11 +49,20 @@ class LinkedinController < ApplicationController
       code = params[:code]
       state = params[:state]
 
-      if !state.eql?(Settings.linkedin.STATE)
+      back_url = session[:return_to] || cookies.signed[:return_to]
+      if back_url && back_url.match(/win8_authentication/)
+        l_redirect_uri = Settings.linkedin_win8.REDIRECT_URI
+        l_state = Settings.linkedin_win8.STATE
+      else
+        l_redirect_uri = Settings.linkedin.REDIRECT_URI
+        l_state = Settings.linkedin.STATE
+      end
+
+      if !state.eql?(l_state)
         #Reject the request as it may be a result of CSRF
       else
         logger.fatal request.protocol
-        ofunnel_callback = Settings.linkedin.REDIRECT_URI
+        ofunnel_callback = l_redirect_uri
         #Get token object, passing in the authorization code from the previous step
         logger.fatal "Redirect to linkedin for getting token: #{code}  ,  #{ofunnel_callback}"
         token = linkedin_client.auth_code.get_token(code, :redirect_uri => ofunnel_callback)
@@ -567,9 +585,17 @@ class LinkedinController < ApplicationController
   end
 
   def linkedin_client
+    back_url = session[:return_to] || cookies.signed[:return_to]
+    if back_url && back_url.match(/win8_authentication/)
+    api_key = Settings.linkedin_win8.API_KEY
+    api_secret = Settings.linkedin_win8.API_SECRET
+    else
+      api_key = Settings.linkedin.API_KEY
+      api_secret = Settings.linkedin.API_SECRET
+    end
     OAuth2::Client.new(
-        Settings.linkedin.API_KEY,
-        Settings.linkedin.API_SECRET,
+        api_key,
+        api_secret,
         :authorize_url => "/uas/oauth2/authorization?response_type=code",
         :token_url => "/uas/oauth2/accessToken",
         :site => "https://www.linkedin.com"
@@ -620,6 +646,7 @@ class LinkedinController < ApplicationController
       check_ofunnel_user_exists_response = JSON.parse(check_ofunnel_user_exists_response.response_body)["CheckOFunnelUserExistResult"]
       unless check_ofunnel_user_exists_response["isOFunnelUser"]
         session[:welcome_wizard] = true
+        session[:track_login_event] = true
       end
     end
 
@@ -645,7 +672,6 @@ class LinkedinController < ApplicationController
     api_endpoint = "#{Settings.api_endpoints.AddOFunnelUser}"
     add_user_response = Typhoeus.post(api_endpoint, body: user_data)
     if add_user_response.success? && !api_contains_error("AddOFunnelUser", add_user_response)
-      session[:track_login_event] = true
       user_data[:position] = profile["positions"]["_total"].to_i > 0 ? profile["positions"]["values"][0]["title"] : ""
       user_data[:location] = profile["location"]
       user_data[:skills] = profile["skills"]

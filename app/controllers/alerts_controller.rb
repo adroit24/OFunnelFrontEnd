@@ -29,9 +29,119 @@ class AlertsController < ApplicationController
     @current_page = (@offset < @count) ? 1 : ((@offset / @count) + 1)
     @page_remaining = (@total_pages > 0 and @total_pages > @current_page) ? (@total_pages - @current_page) : 0
 
+    @similar = nil
+    unless @alerts.nil? or @alerts.blank?
+      @first_alert, @first_alert_index, @first_alert_filter_type = nil
+      @alerts.each_with_index do |alert,i|
+        @first_alert_filter_type = alert["filterType"]
+        if @first_alert_filter_type.eql? "PERSON"
+          next
+        else
+          @first_alert = alert
+          @first_alert_index = i
+          break
+        end
+      end
+      target_account_id = @first_alert["targetAccountId"]
+      similar_count = 5
+      if @first_alert_filter_type.eql? "COMPANY"
+        get_similar_companies_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarCompaniesForTargetAccountId}/#{current_user_id}/#{target_account_id}/#{similar_count}")
+        response = Typhoeus.get(get_similar_companies_api_endpoint)
+        @similar = JSON.parse(response.response_body)["GetSimilarCompaniesForTargetAccountIdResult"]
+      elsif @first_alert_filter_type.eql? "ROLE"
+        get_similar_roles_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarRolesForTargetAccountId}/#{current_user_id}/#{target_account_id}/#{similar_count}")
+        response = Typhoeus.get(get_similar_roles_api_endpoint)
+        @similar = JSON.parse(response.response_body)["GetSimilarRolesForTargetAccountIdResult"]
+      end
+    end
+
     if mobile_device
       render "responsive_discover_relationships", :layout => "responsive_relationships" and return
     end
+  end
+
+  def similar_companies
+    target_id = params[:targetId]
+    target_type = params[:targetType]
+    target_text = params[:targetText]
+    @first_alert = {}
+    @first_alert["targetAccountId"] = target_id
+    @first_alert_filter_type = target_type.upcase
+    @first_alert["targetName"] = target_text
+    similar_count = 5
+    get_similar_companies_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarCompaniesForTargetAccountId}/#{current_user_id}/#{target_id}/#{similar_count}")
+    response = Typhoeus.get(get_similar_companies_api_endpoint)
+    @similar = JSON.parse(response.response_body)["GetSimilarCompaniesForTargetAccountIdResult"]
+    render :partial => "similar_companies", :layout => false
+  end
+
+  def similar_roles
+    target_id = params[:targetId]
+    target_type = params[:targetType]
+    target_text = params[:targetText]
+    @first_alert = {}
+    @first_alert["targetAccountId"] = target_id
+    @first_alert_filter_type = target_type.upcase
+    @first_alert["targetName"] = target_text
+    similar_count = 5
+    get_similar_roles_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarRolesForTargetAccountId}/#{current_user_id}/#{target_id}/#{similar_count}")
+    response = Typhoeus.get(get_similar_roles_api_endpoint)
+    @similar = JSON.parse(response.response_body)["GetSimilarRolesForTargetAccountIdResult"]
+    render :partial => "similar_roles", :layout => false
+  end
+
+  def add_similar_alert
+    alert = []
+    status = false
+    second_level_filters = nil
+    get_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlertWithTargetAccountId}/#{current_user_id}/#{params[:similarTargetId]}")
+    response = Typhoeus.get(get_alert_api_endpoint)
+    if response.success? && !api_contains_error("GetNetworkAlertWithTargetAccountId", response)
+      get_alert_api_response = JSON.parse(response.response_body)["GetNetworkAlertWithTargetAccountIdResult"]
+      alert = get_alert_api_response["targetAccount"]
+      second_level_filters = alert["secondLevelFilterDetails"] unless alert.nil?
+    end
+
+    filter_type = alert["filterType"]
+    alert_json = {
+        :targetAccount => []
+    }
+
+    alert_array = [{
+                       :filterType => filter_type,
+                       :targetName => params[:targetText],
+                       :targetAccountId => nil,
+                       :secondLevelFilterDetails => second_level_filters
+                   }]
+
+    alert_json[:targetAccount] = alert_array
+
+    persist_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
+    response = Typhoeus.post(
+        persist_network_alert_api_endpoint,
+        body: {
+            userId: current_user_id,
+            alertJson: alert_json.to_json
+        })
+
+    new_target_id = nil
+    if response.success? && !api_contains_error("PersistNetworkAlerts", response)
+      api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
+      if api_response["isNetworkAlertPersisted"].eql? true
+        status = api_response["status"]
+        new_target_id = api_response["targetAccountId"]
+      end
+    end
+
+    @new_alert
+    get_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlertWithTargetAccountId}/#{current_user_id}/#{new_target_id}")
+    response = Typhoeus.get(get_alert_api_endpoint)
+    if response.success? && !api_contains_error("GetNetworkAlertWithTargetAccountId", response)
+      get_alert_api_response = JSON.parse(response.response_body)["GetNetworkAlertWithTargetAccountIdResult"]
+      @new_alert = get_alert_api_response["targetAccount"]
+    end
+
+    render :partial => "add_similar_alert", :layout => false
   end
 
   def new
@@ -226,103 +336,111 @@ class AlertsController < ApplicationController
 
   def alerts_import_csv
     unless params[:csv].blank?
-      if [
-          "text/comma-separated-values",
-          "text/csv",
-          "application/csv",
-          "application/excel",
-          "application/vnd.ms-excel",
-          "application/vnd.msexcel",
-          "text/anytext",
-          "application/vnd.ms-excel [official]",
-          "application/msexcel",
-          "application/x-msexcel",
-          "application/x-ms-excel",
-          "application/x-excel",
-          "application/x-dos_ms_excel",
-          "application/xls",
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      ].include?(params[:csv].content_type)
-        @company_array = []
-        keywords_array = [
-            "Company",
-            "Companies",
-            "Account",
-            "Accounts",
-            "Account Name",
-            "Target Account",
-            "Target Accounts"
-        ].map(&:downcase)
-        offset = 2
-        limit = 500
-        parsed_companies = 0
-        spreadsheet = open_spreadsheet(params[:csv])
-        unless spreadsheet.nil?
-          total_companies = spreadsheet.to_a.length - 2
-          header = spreadsheet.row(1)
-          while (total_companies > parsed_companies) do
-            (offset...(offset + limit)).each do |i|
-              row = Hash[[header, spreadsheet.row(i)].transpose]
-              row_arr = row.keys.reject { |key| key.blank? }
-              original_keys = row_arr
-              unless original_keys.nil?
-                keys = row_arr.map(&:downcase)
-                key = keys & keywords_array
-                index = keys.index(key[0])
-                unless index.nil?
-                  original_key = original_keys[index]
-                  company = row[original_key]
-                  if company =~ /\S/
-                    @company_array << company
+      begin
+        if [
+            "text/comma-separated-values",
+            "text/csv",
+            "application/csv",
+            "application/excel",
+            "application/vnd.ms-excel",
+            "application/vnd.msexcel",
+            "text/anytext",
+            "application/vnd.ms-excel [official]",
+            "application/msexcel",
+            "application/x-msexcel",
+            "application/x-ms-excel",
+            "application/x-excel",
+            "application/x-dos_ms_excel",
+            "application/xls",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ].include?(params[:csv].content_type)
+          @company_array = []
+          keywords_array = [
+              "Company",
+              "Companies",
+              "Account",
+              "Accounts",
+              "Account Name",
+              "Target Account",
+              "Target Accounts"
+          ].map(&:downcase)
+          offset = 2
+          limit = 500
+          parsed_companies = 0
+          spreadsheet = open_spreadsheet(params[:csv])
+          unless spreadsheet.nil?
+            total_companies = spreadsheet.to_a.length - 2
+            header = spreadsheet.row(1)
+            while (total_companies > parsed_companies) do
+              (offset...(offset + limit)).each do |i|
+                row = Hash[[header, spreadsheet.row(i)].transpose]
+                row_arr = row.keys.reject { |key| key.blank? }
+                original_keys = row_arr
+                unless original_keys.nil?
+                  keys = row_arr.map(&:downcase)
+                  key = keys & keywords_array
+                  index = keys.index(key[0])
+                  unless index.nil?
+                    original_key = original_keys[index]
+                    company = row[original_key]
+                    if company =~ /\S/
+                      @company_array << company
+                    end
                   end
                 end
+                parsed_companies += 1
               end
-              parsed_companies += 1
-            end
-            if @company_array.blank?
-              render :text => "NO_COMPANY" and return
-            else
-              alert_json = {
-                  :alert => []
-              }
+              if @company_array.blank?
+                render :text => "NO_COMPANY" and return
+              else
+                alert_json = {
+                    :targetAccount => []
+                }
 
-              alert_array = []
-              @company_array.each do |target|
-                alert_array.push(
-                    {
-                        :type => "COMPANY",
-                        :name => target,
-                        :alertId => nil
-                    }
-                )
+                alert_array = []
+                @company_array.each do |target|
+                  alert_array.push(
+                      {
+                          :filterType => "COMPANY",
+                          :targetName => target,
+                          :targetAccountId => nil,
+                          :secondLevelFilterDetails => nil
+                      }
+                  )
+                end
+                alert_json[:targetAccount] = alert_array
+
+                persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
+                response = Typhoeus.post(
+                    persist_company_network_alert_api_endpoint,
+                    body: {
+                        userId: current_user_id,
+                        alertJson: alert_json.to_json
+                    })
               end
-              alert_json[:alert] = alert_array
 
-              persist_company_network_alert_api_endpoint = "#{Settings.api_endpoints.PersistNetworkAlerts}"
-              response = Typhoeus.post(
-                  persist_company_network_alert_api_endpoint,
-                  body: {
-                      userId: current_user_id,
-                      alertJson: alert_json.to_json
-                  })
-            end
-
-            if response.success? && !api_contains_error("PersistNetworkAlerts", response)
-              api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
-              if api_response["isNetworkAlertPersisted"] == true
-                flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
+              flash[:notice] = "Error occurred, please try again later."
+              if response.success? && !api_contains_error("PersistNetworkAlerts", response)
+                api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
+                if api_response["isNetworkAlertPersisted"] == true
+                  session[:track_alert_event] = true
+                  flash[:notice] = "Target Accounts have been imported. Click Submit to save and start receiving alerts."
+                end
               end
-            end
 
-            offset += 100
-            @company_array = []
+              offset += 100
+              @company_array = []
+            end
+            render :text => "RELOAD" and return
           end
-          render :text => "RELOAD" and return
+        else
+          render :text => "INVALID_FORMAT" and return
         end
-      else
+      rescue
         render :text => "INVALID_FORMAT" and return
       end
     end
+    render :text => "INVALID_FORMAT" and return
   end
 
   def add_recipients

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :user_tags, :initialize_ofunnel
+  before_filter :require_ssl?, :user_tags, :initialize_ofunnel
   helper_method :check_current_user, :current_user, :current_user_id, :current_user_id_from_cookies, :current_user_profile, :current_user_score, :show_ofunnel_help, :check_google_session, :check_facebook_session, :to_dc, :create_default_hootsuite_session, :create_default_salesforce_session
   rescue_from Exception, :with => :server_error if Rails.env.production?
 
@@ -202,6 +202,23 @@ class ApplicationController < ActionController::Base
   def to_dc(str)
     return str.downcase.capitalize unless str.blank?
     return ""
+  end
+
+  private
+
+  SECURE_ACTIONS = {
+      :braintree => ["upgrade", "create_subscription"]
+  }
+
+  # Called as a before_filter in controllers that have some https:// actions
+  def require_ssl?
+    if !request.ssl? and (SECURE_ACTIONS[:braintree].include? action_name)
+      redirect_to :protocol => 'https://', :host => Settings.https.host,:port=> Settings.https.port
+      # we don't want to continue with the action, so return false from the filter
+      return false
+    elsif request.ssl? and !(SECURE_ACTIONS[:braintree].include? action_name)
+      redirect_to :protocol => 'http://', :host => Settings.http.host,:port=> Settings.http.port
+    end
   end
 
 end

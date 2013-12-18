@@ -1,6 +1,6 @@
-<div class="ofunnelalert-box">
+<div class="ofunnelalert-box" style="padding-right:0px; width:98%;">
   <div class="userprofile-box">
-    <div class="topheadingwrapper">
+    <div class="topheadingwrapper" style="width:66%">
       <div class="headings1">Alerts</div> <a href="<%= new_alert_path %>" class="addnewalerts">Add new alert</a>
     </div>
   </div>
@@ -22,10 +22,10 @@
             <th width="10%">&nbsp;</th>
           </tr>
           <% unless @alerts.nil? or @alerts.blank? %>
-              <% @alerts.each do |alert| %>
-                  <tr>
+              <% @alerts.each_with_index do |alert,i| %>
+                  <tr <%= 'class=active' if i == @first_alert_index %> rel=<%= alert["targetAccountId"] %>>
                     <td><%= to_dc alert["filterType"] %></td>
-                    <td><%= alert["targetName"] %></td>
+                    <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= alert["targetName"] %></td>
                     <td class="filter-tooltip-container">
                       <% unless alert["secondLevelFilterDetails"].blank? %>
                           <div style="position:relative">
@@ -35,7 +35,7 @@
                                  alert["secondLevelFilterDetails"].each_with_index do |filter,i|
                                    subfilter = (filter["subFilterType"].eql? "COMPANYSIZE") ? "Company Size" : to_dc(filter["subFilterType"])
                               %>
-                                  <p><i><%= subfilter %>:</i> <%= filter["filterTextDetails"].map{|filter_text| filter_text["filterText"] }.join(', ')  %></p>
+                                  <p class=""><i><%= subfilter %>:</i> <%= filter["filterTextDetails"].map{|filter_text| filter_text["filterText"] }.join(', ')  %></p>
                                   <% break if i == 1 %>
                               <% end %>
                               <p><a href="<%= edit_alert_path(alert["targetAccountId"]) %>">more</a></p>
@@ -75,6 +75,13 @@
       <% end %>
       <!--<div class="send-box txt-L mrg-T15 mrg-B10"><input class="send-btn pad-L40 pad-R40 pad-T10 pad-B10 font-24" type="submit" value="Submit" name="" /></div>-->
     </div>
+    <% unless @similar.nil? %>
+        <% if @first_alert_filter_type.eql? "COMPANY" %>
+            <%= render "similar_companies" %>
+        <% elsif @first_alert_filter_type.eql? "ROLE" %>
+            <%= render "similar_roles" %>
+        <% end %>
+    <% end %>
   </div> <!-- End Contoso Page -->
 </div><!-- End Ofunnel Alert-box -->
 
@@ -129,3 +136,7 @@
     </div>
   </div><!-- START Import from salesforce LIGHT BOX -->
 </div>
+
+<script type="text/javascript">
+    adjustSimilarBox("<%= @first_alert_index %>");
+</script>

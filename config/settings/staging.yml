@@ -1,6 +1,16 @@
 linkedin:
-  API_KEY: 'b8v4ls1h2gkl'
-  API_SECRET: 'UxELT0cSRKGQcszs'
+#  API_KEY: 'b8v4ls1h2gkl'
+#  API_SECRET: 'UxELT0cSRKGQcszs'
+#  REDIRECT_URI: 'http://ofunnelfrontqa.cloudapp.net:4321/linkedin/linkedin_authorization_callback'
+#  STATE: SecureRandom.hex(15)
+  API_KEY: '755yexdbbxln4a'
+  API_SECRET: 'dKWlkS92diz3zG03'
+  REDIRECT_URI: 'http://ofunnelfrontqa.cloudapp.net:4321/linkedin/linkedin_authorization_callback'
+  STATE: SecureRandom.hex(15)
+
+linkedin_win8:
+  API_KEY: '755yexdbbxln4a'
+  API_SECRET: 'dKWlkS92diz3zG03'
   REDIRECT_URI: 'http://ofunnelfrontqa.cloudapp.net:4321/linkedin/linkedin_authorization_callback'
   STATE: SecureRandom.hex(15)
 
@@ -151,9 +161,19 @@ api_endpoints:
   GetSimilarCompaniesForUser: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesForUser"
   GetSimilarRolesForQuery: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarRolesForQuery"
   GetSimilarCompaniesAndRolesForUser: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesAndRolesForUser"
+  GetSimilarCompaniesForTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesForTargetAccountId"
+  GetSimilarRolesForTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarRolesForTargetAccountId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"
+
+http:
+  host: "ofunnelfrontqa.cloudapp.net"
+  port: "4321"
+
+https:
+  host: "ofunnelfrontqa.cloudapp.net"
+  port: "443"
 
 http_url: "http://ofunnelfrontqa.cloudapp.net:4321"
 logout_redirect: "http://ofunnelfrontqa.cloudapp.net:4322"

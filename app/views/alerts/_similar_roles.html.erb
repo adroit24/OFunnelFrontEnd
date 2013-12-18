@@ -1,0 +1,16 @@
+<div class="display_alertbox" id="<%= @first_alert["targetAccountId"] %>">
+  <span class="col-orange calibrib font-17 pad-B10 float-L width100_percnt"><%= to_dc(@first_alert_filter_type) %>: <%= @first_alert["targetName"] %></span>
+  <p class="alert_text font_bold pad-B10 float-L width100_percnt">Alerts Received: <span class="alertlink font_normal">
+    <a <%= (@similar["totalAlerts"].to_i > 0) ? "href=#{notifications_path}##{@first_alert["targetAccountId"]}" : "class=col-black" %>>
+      <%= (@similar["totalAlerts"].to_i == 0) ? "None" : @similar["totalAlerts"] %>
+    </a>
+  </span></p>
+  <% unless @similar["isSimilarRolesFound"].blank? %>
+      <p class="alert_text font_bold pad-B10 float-L width100_percnt">Similar Roles:</p>
+      <ul class="alert_list">
+        <% @similar["similarRoles"].each do |role| %>
+            <li><a class="add-similar-alert" href="#"><%= role["role"] %></a></li>
+        <% end %>
+      </ul>
+  <% end %>
+</div>

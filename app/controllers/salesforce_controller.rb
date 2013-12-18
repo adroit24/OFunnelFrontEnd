@@ -8,7 +8,7 @@ class SalesforceController < ApplicationController
       create_default_salesforce_session
       render "index" , :layout => false
     else
-      redirect_to "#{notifications_url}?nobust=true&frame=salesforce"
+      redirect_to "#{notifications_url}?nobust=true&frame=salesforce#alert-history"
     end
   end
 
@@ -294,6 +294,7 @@ class SalesforceController < ApplicationController
       if response.success? && !api_contains_error("ImportSalesForceCompaniesFromLeadOrAccount", response)
         api_response = JSON.parse(response.response_body)["ImportSalesForceCompaniesFromLeadOrAccountResult"]
         if api_response["isCompaniesPersisted"] == true
+          session[:track_alert_event] = true
           flash[:notice] = "Target Accounts have been imported."
         end
       end
@@ -307,12 +308,15 @@ class SalesforceController < ApplicationController
   end
 
   def add_target_account
+    @status = false
     unless params[:q].blank?
+      target_name = params[:q].split('$')[0]
+      @target_type = params[:q].split('$')[1]
       alert_json = {
           :targetAccount => [
               {
-                  :filterType => "COMPANY",
-                  :targetName => params[:q],
+                  :filterType => @target_type,
+                  :targetName => target_name,
                   :targetAccountId => nil,
                   :secondLevelFilterDetails => nil
               }
@@ -340,12 +344,10 @@ class SalesforceController < ApplicationController
       hydra.run
       status = true
       if persist_company_network_alert_response.success? && !api_contains_error("PersistNetworkAlerts", persist_company_network_alert_response)
+        session[:track_alert_event] = true
         api_response = JSON.parse(persist_company_network_alert_response.response_body)["PersistNetworkAlertsResult"]
-        status = api_response["isNetworkAlertPersisted"] == true ? nil : true
+        @status = api_response["isNetworkAlertPersisted"] == true ? true : false
       end
-      render :json => {"error" => status} and return
-    else
-      render :json => {"error" => true} and return
     end
   end
 

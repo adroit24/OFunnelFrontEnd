@@ -26,32 +26,34 @@ module ApplicationHelper
   end
 
   def user_email
-    return current_user_profile[:email]
+    return current_user_profile.nil? ? "" : "#{current_user_profile[:email]}"
   end
 
   def company_name
-    return "#{current_user_profile[:companyName]}"
+    return current_user_profile.nil? ? "" : "#{current_user_profile[:companyName]}"
   end
 
   def job_title
-    return "#{current_user_profile[:position]}"
+    return current_user_profile.nil? ? "" : "#{current_user_profile[:position]}"
   end
 
   def location
-    return "#{current_user_profile[:location]["name"]}"
+    return current_user_profile.nil? ? "" : "#{current_user_profile[:location]["name"]}"
   end
 
   def skills
-    skill_collection = current_user_profile[:skills]
-    unless skill_collection.nil?
-      skill_set = []
-      skill_collection["values"].each do |skill_element|
-        skill_set << skill_element["skill"]["name"]
+    skills = ""
+    unless current_user_profile.nil?
+      skill_collection = current_user_profile[:skills]
+      unless skill_collection.nil?
+        skill_set = []
+        skill_collection["values"].each do |skill_element|
+          skill_set << skill_element["skill"]["name"]
+        end
+        skills = skill_set.join(', ')
       end
-      return skill_set.join(', ')
-    else
-      return ""
     end
+    return skills
   end
 
   def request_id(request)
@@ -307,7 +309,7 @@ module ApplicationHelper
       if position.blank?
         headline = "#{company}"
       elsif company.blank?
-      headline = "#{position}"
+        headline = "#{position}"
       else
         headline = "#{position}, #{company}"
       end

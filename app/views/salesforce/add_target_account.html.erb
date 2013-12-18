@@ -1,0 +1,24 @@
+<style>
+  .s_notification_text {
+      width: 100%;
+      float: left;
+      margin-top: 50px;
+      text-align: center;
+  }
+</style>
+<% if @status %>
+    <% if @target_type == "COMPANY" %>
+        <b class="s_notification_text">Account has been added. We will notify you when you have a connection here.</b>
+    <% else %>
+        <b class="s_notification_text">Lead has been added. We will notify you when you have a connection here.</b>
+    <% end %>
+<% else %>
+    <% if @target_type == "COMPANY" %>
+        <b class="s_notification_text">Error occurred while adding Account, please close this window and try again.</b>
+    <% else %>
+        <b class="s_notification_text">Error occurred while adding Lead, please close this window and try again.</b>
+    <% end %>
+<% end %>
+
+<div class="send-box mrg-L10" style="margin-top: 80px; margin: 0 auto;
+        width: 100%; margin-top:80px; "><a href="#" onclick="self.close(); return false;" class="send-btn" style="line-height: normal; ">Close</a></div>

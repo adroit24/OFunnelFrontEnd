@@ -81,6 +81,9 @@ OFunnel::Application.routes.draw do
   match 'alerts_import_csv' => "alerts#alerts_import_csv", :as => :alerts_import_csv
   match 'add_recipients' => "alerts#add_recipients", :as => :add_recipients
   match 'remove_recipient' => "alerts#remove_recipient", :as => :remove_recipient
+  match 'alerts/similar_companies' => "alerts#similar_companies", :as => :similar_companies
+  match 'alerts/similar_roles' => "alerts#similar_roles", :as => :similar_roles
+  match 'alerts/add_similar_alert' => "alerts#add_similar_alert", :as => :add_similar_alert
 
   match '/logout' => "users#logout", :as => :logout
   match '/connections_strength/:user_name' => "users#connections_strength", :as => :connections_strength

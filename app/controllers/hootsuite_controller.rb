@@ -55,7 +55,6 @@ class HootsuiteController < ApplicationController
     @alerts = nil
     @is_subscription_expired = false
     @subscription_message = ""
-    p response
     if response.success? && !api_contains_error("GetAllNetworkAlertsForUserId", response)
       response = JSON.parse(response.response_body)["GetAllNetworkAlertsForUserIdResult"]
       @remaining = response["alertsRemaining"]
@@ -174,6 +173,7 @@ class HootsuiteController < ApplicationController
       hydra.run
       status = true
       if persist_company_network_alert_response.success? && !api_contains_error("PersistNetworkAlerts", persist_company_network_alert_response)
+        session[:track_alert_event] = true
         api_response = JSON.parse(persist_company_network_alert_response.response_body)["PersistNetworkAlertsResult"]
         status = api_response["isNetworkAlertPersisted"] == true ? nil : true
       end

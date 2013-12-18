@@ -25,6 +25,9 @@
       var searchIndustriesUrl = '<%= alert_industries_path %>'
       var searchLocationsUrl = '<%= alert_locations_path %>'
       var notificationFrequencyUrl = '<%= notification_frequency_path %>'
+      var similarCompaniesUrl = '<%= similar_companies_path %>'
+      var similarRolesUrl = '<%= similar_roles_path %>'
+      var addSimilarAlertUrl = '<%= add_similar_alert_path %>'
       <% unless current_user.nil? %>
       var userProfilePath = '<%= "#{user_path(current_user_id)}#user-tags-focus" %>'
       <% end %>
@@ -64,7 +67,7 @@
         <div class="userstatus-box width-auto">
           <div class="signout-box">
             <div class="links">
-              <a href="<%= notifications_path %>">Profile</a>
+              <a href="<%= notifications_path %>#alert-history">Alerts</a>
               <a href="<%= logout_path %>">Log out</a>
               <% unless session[:trial_days].nil? or session[:trial_days].to_i < 1 %>
                   <span class="col-orange font-16 float-L pad-T10" style="width: 100%;text-align: right;">Trial ends in <%= session[:trial_days] %> days</span>

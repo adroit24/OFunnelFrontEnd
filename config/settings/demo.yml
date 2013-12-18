@@ -151,9 +151,19 @@ api_endpoints:
   GetSimilarCompaniesForUser: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarCompaniesForUser"
   GetSimilarRolesForQuery: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarRolesForQuery"
   GetSimilarCompaniesAndRolesForUser: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarCompaniesAndRolesForUser"
+  GetSimilarCompaniesForTargetAccountId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarCompaniesForTargetAccountId"
+  GetSimilarRolesForTargetAccountId: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/CompanyService.svc/getSimilarRolesForTargetAccountId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelservice.cloudapp.net/OFunnelServiceDemo/UserService.svc/addLogs"
+
+https:
+  host: "ofunnel.cloudapp.net"
+  port: "4444"
+
+https:
+  host: "ofunnel.cloudapp.net"
+  port: "443"
 
 http_url: "http://ofunnel.cloudapp.net:4444"
 logout_redirect: "http://ofunnel.com"

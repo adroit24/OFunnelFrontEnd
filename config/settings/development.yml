@@ -4,6 +4,12 @@ linkedin:
   REDIRECT_URI: 'http://localhost:3000/linkedin/linkedin_authorization_callback'
   STATE: SecureRandom.hex(15)
 
+linkedin_win8:
+  API_KEY: '755yexdbbxln4a'
+  API_SECRET: 'dKWlkS92diz3zG03'
+  REDIRECT_URI: 'http://localhost:3000/linkedin/linkedin_authorization_callback'
+  STATE: SecureRandom.hex(15)
+
 google:
   CLIENT_ID: '808198664488-huifq4bt14oh1ru7v96otn8r772c5m7m.apps.googleusercontent.com'
   CLIENT_SECRET: '6Bc4ou6PfBJ0rTS7uluFA2iS'
@@ -151,9 +157,19 @@ api_endpoints:
   GetSimilarCompaniesForUser: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesForUser"
   GetSimilarRolesForQuery: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarRolesForQuery"
   GetSimilarCompaniesAndRolesForUser: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesAndRolesForUser"
+  GetSimilarCompaniesForTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompaniesForTargetAccountId"
+  GetSimilarRolesForTargetAccountId: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarRolesForTargetAccountId"
 
   #Logs API Endpoints
   Addlogs: "http://ofunnelqa.cloudapp.net/OFunnelService/UserService.svc/addLogs"
+
+http:
+  host: "localhost"
+  port: "3000"
+
+https:
+  host: "localhost"
+  port: "9292"
 
 http_url: "http://localhost:3000"
 logout_redirect: "http://localhost:3000"

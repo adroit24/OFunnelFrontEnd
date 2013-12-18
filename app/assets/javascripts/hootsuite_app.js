@@ -12,11 +12,11 @@
 
 $( document ).ready(function() {
 
-    if(typeof trackLoginEvent != "undefined" && trackLoginEvent)
+    if(typeof trackLoginEvent != "undefined" && trackLoginEvent && typeof hootsuiteEnabled != "undefined" && hootsuiteEnabled)
         payBoradLoginEvent();
 
-//    if(typeof trackAlertEvent != "undefined" && trackAlertEvent)
-//        payBoardNewAlertEvent();
+    if(typeof trackAlertEvent != "undefined" && trackAlertEvent && typeof hootsuiteEnabled != "undefined" && hootsuiteEnabled)
+        payBoardNewAlertEvent();
 
     if(typeof hootsuiteEnabled != "undefined" && hootsuiteEnabled) {
         if(hootsuiteAppInit) {
@@ -79,7 +79,7 @@ $( document ).ready(function() {
             alertName = $(this).prevAll("input.name-select:visible").val();
             alertId = $(this).prevAll('input[name=alertId]').val();
             elementToRemove = $(this).parents('div.ofunnel-alerts');
-            if(alertId === "" || name == "") {
+            if(!(alertId && name)) {
                 elementToRemove.remove();
             }
             else {
@@ -330,7 +330,7 @@ function payBoardNewAlertEvent() {
         CustomerUserFirstName: userFirstName,
         CustomerUserLastName: userLastName,
         customerUserEmail: userEmail,
-        eventName: 'New Alert Setup'
+        eventName: 'New Alert Added'
     };
     Payboard.Events.trackCustomerUserEvent(event);
 }
