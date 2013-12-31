@@ -24,10 +24,11 @@ class UsersController < ApplicationController
 
     if response.success? && !api_contains_error("Logout", response)
       reset_session
-      p request.referer
-      if request.referer.match(/frame=salesforce/)
-        create_default_salesforce_session
-        redirect_to salesforce_path and return
+      unless request.referer.blank?
+        if request.referer.match(/frame=salesforce/)
+          create_default_salesforce_session
+          redirect_to salesforce_path and return
+        end
       end
     end
 

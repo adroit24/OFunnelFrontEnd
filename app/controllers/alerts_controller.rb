@@ -30,7 +30,7 @@ class AlertsController < ApplicationController
     @page_remaining = (@total_pages > 0 and @total_pages > @current_page) ? (@total_pages - @current_page) : 0
 
     @similar = nil
-    unless @alerts.nil? or @alerts.blank?
+    unless @alerts.blank?
       @first_alert, @first_alert_index, @first_alert_filter_type = nil
       @alerts.each_with_index do |alert,i|
         @first_alert_filter_type = alert["filterType"]
@@ -42,16 +42,18 @@ class AlertsController < ApplicationController
           break
         end
       end
-      target_account_id = @first_alert["targetAccountId"]
-      similar_count = 5
-      if @first_alert_filter_type.eql? "COMPANY"
-        get_similar_companies_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarCompaniesForTargetAccountId}/#{current_user_id}/#{target_account_id}/#{similar_count}")
-        response = Typhoeus.get(get_similar_companies_api_endpoint)
-        @similar = JSON.parse(response.response_body)["GetSimilarCompaniesForTargetAccountIdResult"]
-      elsif @first_alert_filter_type.eql? "ROLE"
-        get_similar_roles_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarRolesForTargetAccountId}/#{current_user_id}/#{target_account_id}/#{similar_count}")
-        response = Typhoeus.get(get_similar_roles_api_endpoint)
-        @similar = JSON.parse(response.response_body)["GetSimilarRolesForTargetAccountIdResult"]
+      unless @first_alert.blank?
+        target_account_id = @first_alert["targetAccountId"]
+        similar_count = 5
+        if @first_alert_filter_type.eql? "COMPANY"
+          get_similar_companies_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarCompaniesForTargetAccountId}/#{current_user_id}/#{target_account_id}/#{similar_count}")
+          response = Typhoeus.get(get_similar_companies_api_endpoint)
+          @similar = JSON.parse(response.response_body)["GetSimilarCompaniesForTargetAccountIdResult"]
+        elsif @first_alert_filter_type.eql? "ROLE"
+          get_similar_roles_api_endpoint = URI.escape("#{Settings.api_endpoints.GetSimilarRolesForTargetAccountId}/#{current_user_id}/#{target_account_id}/#{similar_count}")
+          response = Typhoeus.get(get_similar_roles_api_endpoint)
+          @similar = JSON.parse(response.response_body)["GetSimilarRolesForTargetAccountIdResult"]
+        end
       end
     end
 
@@ -555,15 +557,21 @@ class AlertsController < ApplicationController
   end
 
   def get_all_locations
+    @countries = []
     @states = []
     @areas = []
     get_all_location_list_api_endpoint = "#{Settings.api_endpoints.GetAllLocationList}"
     response = Typhoeus.get(get_all_location_list_api_endpoint)
     if response.success? && !api_contains_error("GetAllLocationList", response)
       api_response = JSON.parse(response.response_body)["GetAllLocationListResult"]
-      location_collection = api_response["locations"]
-      @states = location_collection.collect { |industry| industry["state"] }
-      @areas = location_collection.collect { |industry| industry["area"] }
+      @location_collection = api_response["locations"]
+      #@countries = @location_collection.collect { |location|
+      #  @states.push location["state"].collect { |state|
+      #    @areas.push state["area"]
+      #    state["stateName"]
+      #  }
+      #  location["country"]
+      #}
     end
   end
 

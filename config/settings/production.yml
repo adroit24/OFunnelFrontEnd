@@ -5,8 +5,8 @@ linkedin:
   STATE: SecureRandom.hex(15)
 
 linkedin_win8:
-  API_KEY: '755yexdbbxln4a'
-  API_SECRET: 'dKWlkS92diz3zG03'
+  API_KEY: 'dr57ldqujcak'
+  API_SECRET: 'pMZTMTxzE8Ujbhem'
   REDIRECT_URI: 'http://beta.ofunnel.com/linkedin/linkedin_authorization_callback'
   STATE: SecureRandom.hex(15)
 

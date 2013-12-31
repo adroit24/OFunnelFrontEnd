@@ -207,18 +207,29 @@ class ApplicationController < ActionController::Base
   private
 
   SECURE_ACTIONS = {
-      :braintree => ["upgrade", "create_subscription"]
+      :braintree => ["upgrade", "create_subscription"],
+      :hootsuite => ["index", "authorize", "authorize_callback", "stream", "targets", "add_relationships", "remove_relationship", "get_linkedin_profile", "disconnect"],
+      :users => ["win8_authentication"]
   }
 
   # Called as a before_filter in controllers that have some https:// actions
   def require_ssl?
-    if !request.ssl? and (SECURE_ACTIONS[:braintree].include? action_name)
+    if !request.ssl? and secure_action?
       redirect_to :protocol => 'https://', :host => Settings.https.host,:port=> Settings.https.port
       # we don't want to continue with the action, so return false from the filter
       return false
-    elsif request.ssl? and !(SECURE_ACTIONS[:braintree].include? action_name)
+    elsif request.ssl? and !secure_action?
       redirect_to :protocol => 'http://', :host => Settings.http.host,:port=> Settings.http.port
     end
+  end
+
+  def secure_action?
+    status = false
+    SECURE_ACTIONS.each do |secure_controller,secure_action|
+      status = (controller_name.eql? secure_controller.to_s and secure_action.include? action_name) ? true : false
+      break if status
+    end
+    return status
   end
 
 end

@@ -38,7 +38,7 @@
 
 
 .alerts_details table{ border:none; border-collapse:collapse; margin:0px; padding:0px; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
-.alerts_details table tr{border-bottom:1px solid #d2d2d2; border-collapse:collapse;}
+.alerts_details table tr{border-bottom:1px solid #d2d2d2; border-collapse:collapse; cursor: pointer;}
 .alerts_details table th{ background:#f3f3f3; border-collapse:collapse; font:17px Arial, Helvetica, sans-serif; color:#212121; font-weight:bold; text-align:left;}
 .alerts_details table td{border-collapse:collapse; font:15px Arial, Helvetica, sans-serif; color:#212121; font-weight:400;}
 
@@ -200,7 +200,7 @@ ul.blue-radio-box  li{
 .listboxs2_catagories ul li:last-child{ border-bottom:none;}
 a.selected2 {
     color:#656565 !important;
-    background:#dcdcdc url(../assets/left-arrow4.png) 155px center no-repeat !important;
+    background:#dcdcdc url(../assets/left-arrow4.png) 130px center no-repeat !important;
 }
 
 .listboxs2_sub_catagories{ float:left; width:160px; height:200px; overflow:auto; margin:2px; overflow-x: hidden;}

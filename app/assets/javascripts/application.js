@@ -1655,12 +1655,24 @@ $(function() {
         return false;
     });
 
-    $(document).on('click','li.category',function() {
+    $(document).on('click','li.country',function() {
         id = $(this).attr('rel');
-        $('li.selected2').removeClass('selected2');
-        $(this).addClass('selected2');
-        $('div.sub-category').hide();
-        $('div#' + id.replace(/\s/g,'')).show();
+        $('div.country_wrapper li a.selected2').removeClass('selected2');
+        $(this).find('a').addClass('selected2');
+        $('div.state_wrapper div.country_' + id + ' li a').first().addClass('selected2');
+        $('div[class^=country_]').hide();
+        $('div.state_wrapper ul div.country_' + id).show();
+        state = $('div.state_wrapper ul div.country_' + id + ' li a').first().text().replace(/\s/g, '');
+        $('div.area_wrapper ul div.state_' + state).show();
+        return false;
+    });
+
+    $(document).on('click','li.state',function() {
+        id = $(this).attr('rel');
+        $('div.state_wrapper li a.selected2').removeClass('selected2');
+        $(this).find('a').addClass('selected2');
+        $('div.area_wrapper ul div[class^=country_]').hide();
+        $('div.area_wrapper ul div.state_' + id).show();
         return false;
     });
 
