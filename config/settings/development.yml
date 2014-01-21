@@ -151,6 +151,7 @@ api_endpoints:
   ChangeCreditCardForSubscription: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/changeCreditCardForSubscription"
   CancelSubscriptionForAlerts: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/cancelSubscriptionForAlerts"
   DeleteCreditCard: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/deleteCreditCard"
+  GetDiscountedPriceUsingPromoCode: "http://ofunnelqa.cloudapp.net/OFunnelService/PaymentService.svc/GetDiscountedPriceUsingPromoCode"
 
   #Company API Endpoints
   GetSimilarCompanies: "http://ofunnelqa.cloudapp.net/OFunnelService/CompanyService.svc/getSimilarCompanies"

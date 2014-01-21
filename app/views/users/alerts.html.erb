@@ -34,7 +34,12 @@
         %>
                 <strong>Plan type: </strong> <a href="#" class="bold" style="pointer-events:none;">Pro</a><span style="color: #949494;"> &bull; Trial</span>
                 <br />
-                <strong>Payment info:</strong> <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
+                <strong>Payment info:</strong>
+                <% unless card_details.blank? %>
+                    <%= card_details["cardType"] %> "....<%= card_details["lastFour"] %>"
+                <% else %>
+                    N/A
+                <% end %>
                 <!--<span style="color: #949494;"> | </span><a href="#" onclick='popup("delete-card");return false;'>Delete</a>-->
                 <br />
                 <a href="#" onclick='popup("cancel-account");return false;'>Cancel account</a>

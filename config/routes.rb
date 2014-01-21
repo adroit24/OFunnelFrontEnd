@@ -100,6 +100,7 @@ OFunnel::Application.routes.draw do
   match '/delete_card' => "braintree#delete_card", :as => :delete_card
   match '/update_card_info' => "braintree#update_card_info", :as => :update_card_info
   match '/cancel_subscription' => "braintree#cancel_subscription", :as => :cancel_subscription
+  match '/discounted_price_using_promo_code' => "braintree#discounted_price_using_promo_code", :as => :discounted_price_using_promo_code
 
   match '/group_members/:id' => "groups#members", :as => :group_members
   match '/add_group' => "groups#add", :as => :add_group

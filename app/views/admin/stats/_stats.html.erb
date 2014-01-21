@@ -1,7 +1,8 @@
 <div class="right-panel" style="width:94%; padding:3%;">
   <!-- user statistics sesction start -->
   <div class="userstat_wrapper">
-    <div class="headings1 margin_b20">User Statistics</div>
+    <div class="headings1 margin_B20">User Statistics</div>
+    <div class="col-red font-18 mrg-B25 display-none stats-alert-added-confirmation">Alerts has been added.</div>
     <div class="userstat_inner">
       <div class="userstat_hd margin_b10">User ID</div>
       <form action="<%= admin_stat_path(0) %>" method="GET">
@@ -33,7 +34,14 @@
                   <% @accounts.each do |account| %>
                       <div class="account_section margin_b26">
                         <h2><%= account["companyName"] %></h2>
-                        <p><%= account["similarCompanies"].collect {|company| company["companyName"] }.join(', ') %></p>
+                        <p>
+                          <% account["similarCompanies"].each_with_index do |company,index| %>
+                              <a href="#" id="<%= account["targetAccountId"] %>" class="admin-add-similar-alert">
+                                <%= company['companyName'] %>
+                                <%= ', ' unless index + 1 == account["similarCompanies"].length %>
+                              </a>
+                          <% end %>
+                        </p>
                       </div>
                   <% end %>
               <% else %>
@@ -47,7 +55,14 @@
                   <% @roles.each do |role| %>
                       <div class="account_section margin_b26">
                         <h2><%= role["role"] %></h2>
-                        <p><%= role["similarRoles"].collect {|s_role| s_role["role"] }.join(', ') %></p>
+                        <p>
+                          <% role["similarRoles"].each_with_index do |s_role,index| %>
+                              <a href="#" id="<%= role["targetAccountId"] %>" class="admin-add-similar-alert">
+                                <%= s_role['role'] %>
+                                <%= ', ' unless index + 1 == role["similarRoles"].length %>
+                              </a>
+                          <% end %>
+                        </p>
                       </div>
                   <% end %>
               <% else %>
@@ -63,3 +78,6 @@
     <!-- End sent_received_section -->
   </div><!-- End Right Panel -->
 </div>
+<script type="text/javascript">
+    statsUserId = <%= @user_id %>
+</script>

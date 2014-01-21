@@ -207,7 +207,7 @@ class ApplicationController < ActionController::Base
   private
 
   SECURE_ACTIONS = {
-      :braintree => ["upgrade", "create_subscription"],
+      :braintree => ["upgrade", "create_subscription", "discounted_price_using_promo_code"],
       :hootsuite => ["index", "authorize", "authorize_callback", "stream", "targets", "add_relationships", "remove_relationship", "get_linkedin_profile", "disconnect"],
       :users => ["win8_authentication"]
   }

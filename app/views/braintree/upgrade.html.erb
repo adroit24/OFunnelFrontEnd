@@ -69,6 +69,25 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <th valign="middle">Promo Code</th>
+          <td valign="middle">
+            <div class="input_block2 mrg-T10 mrg-B10">
+              <input id="promo-code" type="text" class="inputbox" name="promo_code" placeholder="Code">
+              <a class="float-R edit_icn">
+                <img src="/assets/edit_icon2.png" width="11" height="10" alt="edit">
+              </a>
+            </div>
+            <div class="div_holder pad-T15 pad-B5" style="width: 50%; float: left; margin-left: 20px; margin-top: 3px;">
+              <a href="<%= discounted_price_using_promo_code_url %>" class="save_change_btn apply_promo_code">Apply</a>
+            </div>
+            <div class="promo-error float-L width100_percnt col-red">
+              <p class="empty-promo-code display-none"> Please enter promo code to apply.</p>
+              <p class="invalid-promo-code display-none"> Invalid promo code.</p>
+              <p class="promo-code-applied display-none"> The new subscription price is $<span class="new-promo-price">15</span>. Click Save to Subscribe.</p>
+            </div>
+          </td>
+        </tr>
       </table>
       <div class="col-red mrg-T20 font-18"><%= flash[:notice] %></div>
       <div class="mrg-T20">

@@ -96,7 +96,8 @@ class AlertsController < ApplicationController
     alert = []
     status = false
     second_level_filters = nil
-    get_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlertWithTargetAccountId}/#{current_user_id}/#{params[:similarTargetId]}")
+    user_id = params[:userId] || current_user_id
+    get_alert_api_endpoint = URI.escape("#{Settings.api_endpoints.GetNetworkAlertWithTargetAccountId}/#{user_id}/#{params[:similarTargetId]}")
     response = Typhoeus.get(get_alert_api_endpoint)
     if response.success? && !api_contains_error("GetNetworkAlertWithTargetAccountId", response)
       get_alert_api_response = JSON.parse(response.response_body)["GetNetworkAlertWithTargetAccountIdResult"]

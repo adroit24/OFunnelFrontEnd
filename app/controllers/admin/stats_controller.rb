@@ -37,7 +37,7 @@ class Admin::StatsController < ApplicationController
         @accounts = response["targetCompanies"] if response["error"].blank?
         @roles = response["targetRoles"] if response["error"].blank?
       end
-      p @roles
+      @user_id = id
     end
   end
 end

@@ -12,6 +12,7 @@ class BraintreeController < ApplicationController
     cvv = params[:cvv]
     expiration_month = params[:month]
     expiration_year = params[:year]
+    promo_code = params[:promo_code]
 
     create_subscription_api_endpoint = "#{Settings.api_endpoints.CreateSubscriptionForAlerts}"
     response = Typhoeus.post(
@@ -22,7 +23,8 @@ class BraintreeController < ApplicationController
             cardNumber: card_number,
             cvvNumber: cvv,
             expirationMonth: expiration_month,
-            expirationYear: expiration_year
+            expirationYear: expiration_year,
+            promoCode: promo_code
         })
 
     if response.success? && !api_contains_error("CreateSubscriptionForAlerts", response)
@@ -93,7 +95,7 @@ class BraintreeController < ApplicationController
     response = Typhoeus.post(
         create_subscription_api_endpoint,
         body: {
-            userId: current_user_id,
+            userId: current_user_id
         })
 
     status = false
@@ -107,6 +109,26 @@ class BraintreeController < ApplicationController
       flash[:notice] = "Error occurred, please try again."
       redirect_to notifications_path
     end
+  end
+
+  def discounted_price_using_promo_code
+    response = {
+        :error=>true
+    }.to_json
+    unless params[:code].blank?
+      code = params[:code]
+      get_discounted_price_using_promo_code_api_endpoint = "#{Settings.api_endpoints.GetDiscountedPriceUsingPromoCode}"
+      response = Typhoeus.post(
+          get_discounted_price_using_promo_code_api_endpoint,
+          body: {
+              userId: current_user_id,
+              promoCode: code
+          })
+      if response.success? && !api_contains_error("GetDiscountedPriceUsingPromoCode", response)
+        response = JSON.parse(response.response_body)["GetDiscountedPriceUsingPromoCodeResult"]
+      end
+    end
+    render :json => response and return
   end
 
 end

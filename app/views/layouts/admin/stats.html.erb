@@ -6,7 +6,11 @@
   <%= stylesheet_link_tag "alerts", :media => "all" %>
   <%= stylesheet_link_tag "application.html5", :media => "all" %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript">
+      var addSimilarAlertUrl = '<%= add_similar_alert_path %>'
+  </script>
 </head>
 <body>
 <div class="wrapper">

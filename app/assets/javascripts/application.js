@@ -1246,11 +1246,15 @@ $(function() {
                 dataType : 'json',
                 success : function(data) {
                     if(data.error == null && typeof data.error != "undefined") {
-                        elementToRemove.remove();
-                        if ($(this).parent().parent('tr.active').length > 0)
+                        console.log($(this).parent())
+                        if (elementToRemove.hasClass('active')) {
                             hideSimilarCompanyBox();
-                        else
-                            adjustSimilarBox($("div.alerts_details table tr.active").index() - 1);
+                            elementToRemove.remove();
+                        }
+                        else {
+                            elementToRemove.remove();
+                            adjustSimilarBox(($("div.alerts_details table tr.active").index() - 1));
+                        }
                     }
                 }
             });
@@ -1655,6 +1659,15 @@ $(function() {
         return false;
     });
 
+    $(document).on('click','li.category',function() {
+        id = $(this).attr('rel');
+        $('li.selected2').removeClass('selected2');
+        $(this).addClass('selected2');
+        $('div.sub-category').hide();
+        $('div#' + id.replace(/\s/g,'')).show();
+        return false;
+    });
+
     $(document).on('click','li.country',function() {
         id = $(this).attr('rel');
         $('div.country_wrapper li a.selected2').removeClass('selected2');
@@ -1738,6 +1751,42 @@ $(function() {
         targetText = $(this).text();
         similarTargetId = $(this).parents().find('div.display_alertbox').attr('id');
         addSimilarAlert(targetText,similarTargetId);
+        return false;
+    });
+
+    $(document).on("click","a.admin-add-similar-alert",function() {
+        targetText = $(this).text().replace(',','').trim();
+        similarTargetId = $(this).attr('id');
+        adminAddSimilarAlert(targetText,similarTargetId,statsUserId);
+        return false;
+    });
+
+    $(document).on("click","a.apply_promo_code",function() {
+        $("p[class*=promo-code]").hide();
+        promoUrl = $(this).attr("href");
+        promoCode = $("input#promo-code").val();
+        if(promoCode.match(/\S/)) {
+            $.ajax({
+                type : 'POST',
+                url : promoUrl,
+                data : {code : promoCode},
+                success : function(data) {
+                    if(data.isValidPromoCode) {
+                        price = data.discountedPrice;
+                        $("input#promo-code").attr("readonly",true);
+                        $("span.new-promo-price").text(price);
+                        $("p.promo-code-applied").show().delay(3000).fadeOut();
+                        $("a.apply_promo_code").css("pointer-events","none");
+                    }
+                    else {
+                        $("p.invalid-promo-code").show().delay(3000).fadeOut();
+                    }
+                }
+            });
+        }
+        else {
+            $("p.empty-promo-code").show().delay(3000).fadeOut();
+        }
         return false;
     });
 
@@ -2057,6 +2106,8 @@ function getPeopleList() {
                         }
                     }
                     else {
+                        $('div.search-connection-no-result').show();
+                        $('.search-connection-loader').hide();
                     }
                 }
             })
@@ -2400,6 +2451,22 @@ function addSimilarAlert(targetText,similarTargetId) {
         success: function( data ) {
             alertToAppendTo = $("tr[rel=" + similarTargetId + "]");
             alertToAppendTo.after((data));
+        }
+    });
+}
+
+function adminAddSimilarAlert(targetText,similarTargetId,userId) {
+    $.ajax({
+        url: addSimilarAlertUrl,
+        type: "POST",
+        data: {
+            similarTargetId: similarTargetId,
+            targetText: targetText,
+            userId: userId
+        },
+        success: function( data ) {
+            $('div.stats-alert-added-confirmation').show();
+            $('div.stats-alert-added-confirmation').delay(3000).fadeOut();
         }
     });
 }
