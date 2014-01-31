@@ -123,7 +123,7 @@ class AlertsController < ApplicationController
     response = Typhoeus.post(
         persist_network_alert_api_endpoint,
         body: {
-            userId: current_user_id,
+            userId: user_id,
             alertJson: alert_json.to_json
         })
 
@@ -329,7 +329,7 @@ class AlertsController < ApplicationController
         api_response = JSON.parse(response.response_body)["PersistNetworkAlertsResult"]
         if api_response["isNetworkAlertPersisted"].eql? true
           session[:track_alert_event] = true
-          flash[:notice] = "Changes saved."
+          flash[:notice] = "Changes saved. We will notify you via email when we see a new connection that matches this filter."
         end
         status = {"ERROR" => false}
       end

@@ -65,9 +65,10 @@
       <div class="logo_menu_box">
         <a href="<%= alerts_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
         <div class="userstatus-box width-auto">
-          <div class="signout-box">
+          <div class="signout-box" style="width:225px;">
             <div class="links">
-              <a href="<%= notifications_path %>#alert-history">Alerts</a>
+              <a href="<%= notifications_path %>">Account/a>
+              <a href="<%= notifications_path %>#alert-history">Alerts History</a>
               <a href="<%= logout_path %>">Log out</a>
               <% unless session[:trial_days].nil? or session[:trial_days].to_i < 1 %>
                   <span class="col-orange font-16 float-L pad-T10" style="width: 100%;text-align: right;">Trial ends in <%= session[:trial_days] %> days</span>

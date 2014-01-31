@@ -6,7 +6,7 @@
     </a>
   </span></p>
   <% unless @similar["isSimilarCompaniesFound"].blank? %>
-      <p class="alert_text font_bold pad-B10 float-L width100_percnt">Similar Roles:</p>
+      <p class="alert_text font_bold pad-B10 float-L width100_percnt">Similar Companies:</p>
       <ul class="alert_list">
         <% @similar["similarCompanies"].each do |company| %>
             <li><a class="add-similar-alert" href="#"><%= company["companyName"] %></a></li>
