@@ -6,7 +6,21 @@
     </a>
   </span></p>
   <% unless @similar["isSimilarRolesFound"].blank? %>
-      <p class="alert_text font_bold pad-B10 float-L width100_percnt">Similar Roles:</p>
+      <table Height="20">
+        <tr>
+          <td>
+            <p class="alert_text font_bold pad-B10 float-L width100_percnt" style="padding-top: 2px;">Similar Roles:</p>
+          </td> 
+          <td class="filter-tooltip-container">
+               <div style="position:relative">
+                   <div class="arrow_box display-none" vertical-align: top>
+                      <h3>Similar Roles</h3>
+                          <p class="">Based on the current filter, titles we have seen your peers use for similar profiles. Click to add them as additional filters.</p>
+                    </div>
+                    <a class="filter-tooltip-link" href="#"><img src="/assets/information.png" width="20" height="20"></a>
+                </div>
+          </td>
+          </tr></table>
       <ul class="alert_list">
         <% @similar["similarRoles"].each do |role| %>
             <li><a class="add-similar-alert" href="#"><%= role["role"] %></a></li>

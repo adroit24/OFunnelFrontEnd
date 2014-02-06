@@ -1,12 +1,32 @@
 <div class="display_alertbox" id="<%= @first_alert["targetAccountId"] %>">
+    <script type="text/javascript">
+   
+    </script>
+
   <span class="col-orange calibrib font-17 pad-B10 float-L width100_percnt"><%= to_dc(@first_alert_filter_type) %>: <%= @first_alert["targetName"] %></span>
   <p class="alert_text font_bold pad-B10 float-L width100_percnt">Alerts Received: <span class="alertlink font_normal">
     <a <%= (@similar["totalAlerts"].to_i > 0) ? "href=#{notifications_path}##{@first_alert["targetAccountId"]}" : "class=col-black" %>>
       <%= (@similar["totalAlerts"].to_i == 0) ? "None" : @similar["totalAlerts"] %>
     </a>
   </span></p>
+
   <% unless @similar["isSimilarCompaniesFound"].blank? %>
-      <p class="alert_text font_bold pad-B10 float-L width100_percnt">Similar Companies:</p>
+      <table Height="20">
+        <tr>
+          <td>
+            <p class="alert_text font_bold pad-B10 float-L width100_percnt" style="padding-top: 2px;">Similar Companies:</p>
+          </td> 
+          <td class="filter-tooltip-container">
+               <div style="position:relative">
+                   <div class="arrow_box display-none" vertical-align: top>
+                      <h3>Similar Companies</h3>
+                          <p class="">Based on the current filter, companies we think might be of interest. Click to add them as additional filters.</p>
+                    </div>
+                    <a class="filter-tooltip-link" href="#"><img src="/assets/information.png" width="20" height="20"></a>
+                </div>
+          </td>
+          </tr></table>
+      
       <ul class="alert_list">
         <% @similar["similarCompanies"].each do |company| %>
             <li><a class="add-similar-alert" href="#"><%= company["companyName"] %></a></li>
