@@ -1,5 +1,7 @@
 OFunnel::Application.routes.draw do
 
+  get "help/index"
+
   get "stats/index"
 
   get "stats/show"
@@ -115,6 +117,8 @@ OFunnel::Application.routes.draw do
   match '/search_member_in_group' => "groups#search_member_in_group", :as => :search_member_in_group
   match 'groups/import_csv' => "groups#import_csv", :as => :groups_import_csv
   match 'groups/invite_imported_members' => "groups#invite_imported_members", :as => :invite_imported_members
+
+  match 'tutorial' => "help#index", :as => :tutorial
 
   root :to => "linkedin#index"
   #root :to => "twitter#login_with_twitter"
