@@ -66,9 +66,9 @@
         <a href="<%= alerts_path %>"><img class="logo" src="/assets/logo.jpg" width="200"  alt="OFunnel" title="OFunnel" /></a>
         <div class="userstatus-box width-auto">
           <div class="signout-box" style="width:225px;">
-            <div class="links">
-              <a href="<%= notifications_path %>">Account/a>
-              <a href="<%= notifications_path %>#alert-history">Alerts History</a>
+            <div class="links" >
+              <a href="<%= notifications_path %>#alert-history">Account</a>
+		<a href="<%= notifications_path %>#alert-history">Alerts History</a>
               <a href="<%= logout_path %>">Log out</a>
               <% unless session[:trial_days].nil? or session[:trial_days].to_i < 1 %>
                   <span class="col-orange font-16 float-L pad-T10" style="width: 100%;text-align: right;">Trial ends in <%= session[:trial_days] %> days</span>
@@ -85,7 +85,7 @@
   </div><!-- END MAIN DIV-->
   <!-- START FOOTER -->
   <div class="footer">
-    <div class="footer_box"> &copy; 2013 OFunnel </div>
+    <div class="footer_box" style="width: 630px;"> Need suggestion on right filters? Email kushal@ofunnel.com or call at 425-985-3735 </div>
   </div><!-- START FOOTER -->
   <div id="black_overlay" style="display: none;"></div>
   <%= render "shared/welcome_wizard" %>

@@ -182,7 +182,7 @@ $( document ).ready(function() {
                     crossDomain: true,
                     success : function(data) {
                         if(data.error == null && typeof data.error != "undefined") {
-                            $('div#alert-target-account-added span').text("Target accounts has been added");
+                            $('div#alert-target-account-added span').text("Filter added");
                             $('div#alert-target-account-added').fadeIn();
                             payBoardNewAlertEvent();
                         }

@@ -1,7 +1,7 @@
 <div class="ofunnelalert-box" style="padding-right:0px; width:98%;">
   <div class="userprofile-box">
     <div class="topheadingwrapper" style="width:66%">
-      <div class="headings1">Filters</div> <a href="<%= new_alert_path %>" class="addnewalerts">Add new filter</a>
+      <div class="headings1">Filters</div> <a href="<%= new_alert_path %>" class="addnewalerts" style="margin-right: 8px;">Add new filter</a>
     </div>
   </div>
   <div class="contoso-page">
@@ -18,8 +18,8 @@
             <th width="22%">Filter type</th>
             <th width="48%">Target</th>
             <th width="10%">&nbsp;</th>
-            <th width="10%">&nbsp;</th>
-            <th width="10%">&nbsp;</th>
+            <th colspan="2" width="20%"><a href="http://blog.ofunnel.com/blog/2014/01/21/ofunnel-use-cases/"  target="_blank" class="font-12 bold float-R"> (Where do I start?) </a></th>
+            
           </tr>
           <% unless @alerts.nil? or @alerts.blank? %>
               <% @alerts.each_with_index do |alert,i| %>
@@ -54,11 +54,11 @@
               <% end %>
           <% end %>
         </table>
-        <a href="<%= new_alert_path %>" class="font-11 bold float-L mrg-T20"> (Add more) </a>
-        <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-add-target-account-list"> (Import target account list) </a>
+        <a href="#" class="font-11 bold float-L mrg-T20" id="alert-add-target-account-list"> (Import target account list) </a>
         <a href="#" class="font-11 bold float-L mrg-L15 mrg-T20" id="alert-import-salesforce"> (Salesforce users) </a>
+        
       </div>
-      <% if @total_pages > 1 %>
+            <% if @total_pages > 1 %>
           <div class="alert-pagination">
             <% if @current_page != 1 %>
                 <a href="<%= alerts_path({:offset => @offset - @count}) %>" class="last-text pl-active"><span class="font-12">◄</span> Last 25</a>

@@ -1,8 +1,4 @@
-<div class="display_alertbox" id="<%= @first_alert["targetAccountId"] %>">
-    <script type="text/javascript">
-   
-    </script>
-
+<div class="display_alertbox" id="<%= @first_alert["targetAccountId"] %>">   
   <span class="col-orange calibrib font-17 pad-B10 float-L width100_percnt"><%= to_dc(@first_alert_filter_type) %>: <%= @first_alert["targetName"] %></span>
   <p class="alert_text font_bold pad-B10 float-L width100_percnt">Alerts Received: <span class="alertlink font_normal">
     <a <%= (@similar["totalAlerts"].to_i > 0) ? "href=#{notifications_path}##{@first_alert["targetAccountId"]}" : "class=col-black" %>>

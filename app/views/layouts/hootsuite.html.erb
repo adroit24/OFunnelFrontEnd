@@ -78,7 +78,7 @@
         </div>
         <% unless current_user_id_from_cookies.blank? %>
             <a href="<%= "#{hootsuite_stream_path}?#{@query}" %>" class="right-border"<%= ' style=font-weight:bold' if @active_tab == "ALERTS" %>>Alerts</a>
-            <a href="<%= "#{hootsuite_targets_path}?#{@query}" %>"<%= ' style=font-weight:bold' if @active_tab == "TARGETS" %>>Target Accounts</a>
+            <a href="<%= "#{hootsuite_targets_path}?#{@query}" %>"<%= ' style=font-weight:bold' if @active_tab == "TARGETS" %>>Filters</a>
         <% end %>
       </div>
       <div class="hs_dropdown" style="display: none;">
@@ -89,9 +89,11 @@
             </div>
         <% end %>
         <div class="_menuList hs_btns-right" style="display: none;">
-          <a href="https://help.hootsuite.com/forums/20882944-OFunnel-App" target="ofunnel">Help</a>
+		  <a href="https://help.hootsuite.com/forums/20882944-OFunnel-App" target="ofunnel">Help</a>
           <hr style="margin: 5px 0 5px 0;">
           <a href="http://feedback.hootsuite.com/forums/228018-hootsuite-app-ofunnel" target="ofunnel">Feedback</a>
+          <hr style="margin: 5px 0 5px 0;">
+		  <a href="http://blog.ofunnel.com/blog/2014/01/21/ofunnel-use-cases/" target="ofunnel">OFunnel Use Cases</a>
           <hr style="margin: 5px 0 5px 0;">
           <a href="http://ofunnel.com" target="ofunnel">Developer: OFunnel</a>
         </div>
