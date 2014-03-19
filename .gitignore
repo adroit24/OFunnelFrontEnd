@@ -5,6 +5,7 @@
 .bundle
 .config
 development.sqlite3
+atlassian-ide-plugin.xml
 coverage
 InstalledFiles
 lib/bundler/man

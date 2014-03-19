@@ -34,7 +34,7 @@ class LinkedinController < ApplicationController
     ofunnel_callback = l_redirect_uri
     #Redirect your user in order to authenticate
     redirect_url = linkedin_client.auth_code.authorize_url(
-        :scope => 'r_fullprofile r_emailaddress rw_nus r_network',
+        :scope => 'r_fullprofile r_emailaddress rw_nus r_network w_messages',
         :state => l_state,
         :redirect_uri => ofunnel_callback
     )
