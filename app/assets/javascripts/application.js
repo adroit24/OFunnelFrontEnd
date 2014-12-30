@@ -26,6 +26,7 @@ var gConnectedSalesForce = {
     contactsId: []
 };
 
+
 $(function() {
 
 // Commented due to bug#324
