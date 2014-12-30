@@ -1472,6 +1472,17 @@ $(function() {
         return false;
     });
 
+    $(document).on('mouseenter','div.help-tooltip-container',function(){
+        $('div.arrow_box').not($(this).find('div.arrow_box')).hide();
+        $(this).find('div.arrow_box').show();
+        return false;
+    });
+
+    $(document).on('mouseleave','div.help-tooltip-container',function(){
+        $(this).find('div.arrow_box').hide();
+        return false;
+    });
+
     $(document).on('click','.remove-darkgray',function(e){
         if($(this).parents('div.input_block').find('a.remove-darkgray').length == 1) {
             if($(this).parent('span').hasClass('industry'))

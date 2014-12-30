@@ -29,6 +29,28 @@
 
 .userprofile-box .addnewalerts:hover{ text-decoration:none;  color:#0068a4;}
 
+.UpperHdr
+{
+        height:48px;
+        width:100%;
+        background-color:#0168A2;
+}
+    
+.UpperHdr p
+{
+    color: #FFFFFF;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    line-height: 50px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.UpperHdr p a
+{
+        color:White;
+}
 
 .alerts_details{
     width:100%;
