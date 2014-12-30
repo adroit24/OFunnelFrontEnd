@@ -65,7 +65,7 @@ OFunnel::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  Whatever::Application.config.middleware.use ExceptionNotification::Rack,
+  config.middleware.use ExceptionNotification::Rack,
   :email => {
     :email_prefix => "Exception at FrontEnd Server ",
                         :sender_address => %{"OFunnel" <info@ofunnel.com>},
