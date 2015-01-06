@@ -101,8 +101,7 @@ html, body {
     position:relative;
     padding-left: 2%;
 }
-.logo_menu_box .logo{ float:left; height: 50px;
-    margin-top: -15px;}
+.logo_menu_box .logo{ float:left;}
 
 .logo_menu_box ul.topmenu {
     float: left;
