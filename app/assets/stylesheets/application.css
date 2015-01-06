@@ -2536,3 +2536,8 @@ ul.summary_list li{
     line-height:20px;
     text-align:center;
 }
+
+.logo_menu_box a > .logo {
+    height: 50px;
+    margin-top: -15px;
+}
