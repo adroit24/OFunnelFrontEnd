@@ -167,7 +167,7 @@ api_endpoints:
 
 http:
   host: "beta.ofunnel.com"
-  port: "8080"
+  port: "80"
 
 https:
   host: "secure.ofunnel.com"
